@@ -22,6 +22,11 @@ class TaxonomiaContenidoApp extends Eloquent {
         }
     }
 
+    /** Obtiene un modelo de Taxonomia del usuario dado su nombre
+     * 
+     * @param type $nombreTax Nombre de la taxonomia
+     * @return TaxonomiaContenidoApp Retorna el objeto en caso de exito de lo contrario Null
+     */
     static function obtener($nombreTax) {
         $taxs = TaxonomiaContenidoApp::where("id_usuario", "=", Auth::user()->id)->where("nombre", "=", $nombreTax)->get();
         if (count($taxs) > 0) {
@@ -30,6 +35,13 @@ class TaxonomiaContenidoApp extends Eloquent {
         } else {
             return null;
         }
+    }
+
+    //***********************************************
+    //RELACION CON OTROS MODELOS*********************
+    //***********************************************
+    public function terminocontenidoapps() {
+        return $this->hasMany('TerminoContenidoApp', 'id_taxonomia');
     }
 
 }

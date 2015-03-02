@@ -14,7 +14,7 @@ class Contenido_Noticias {
     //********************************************************
     //CONFIGURACION DE ADMINISTRACION*************************
     //********************************************************
-    const taxonomia = "categorias_"; //Indica el prefijo de la taxonomia de este tipo de contenido
+    const taxonomia = "categorias_noticias"; //Indica el prefijo de la taxonomia de este tipo de contenido
 
     /** Prepara los requisitos de administracion de las noticias
      * 
@@ -23,8 +23,6 @@ class Contenido_Noticias {
 
     static function prepararRequisitos($app) {
 
-        $nombreTax = Contenido_Noticias::taxonomia . Contenido_Noticias::nombre;
-
         if (TaxonomiaContenidoApp::existe($nombreTax))
             return;
 
@@ -32,7 +30,7 @@ class Contenido_Noticias {
         $tax = new TaxonomiaContenidoApp;
         $tax->id_aplicacion = $app->id;
         $tax->id_usuario = Auth::user()->id;
-        $tax->nombre = $nombreTax;
+        $tax->nombre = Contenido_Noticias::taxonomia;
         $tax->descripcion = "Taxonomia de Categorias de Noticias";
         $tax->save();
 

@@ -80,11 +80,25 @@ Route::group(array('before' => 'auth'), function() {
     //*ADMINISTRACIÓN DE CONTENIDOS DE APLICACIÓN********************************
     //***************************************************************************
 
-    Route::get("aplicacion/administrar/institucional", "UPanelControladorTiposContenidosApp@institucional");
-    Route::get("aplicacion/administrar/noticias", "UPanelControladorTiposContenidosApp@noticias");
-    /* NOTICIAS - AGREGAR */Route::get("aplicacion/administrar/noticias/agregar", "UPanelControladorTiposContenidosApp@noticias_agregar");
+    Route::get("aplicacion/administrar/institucional", "UPanelControladorContenidoNoticias@institucional");
+    Route::get("aplicacion/administrar/noticias", "UPanelControladorContenidoNoticias@noticias");
+    /* NOTICIAS - AGREGAR */Route::get("aplicacion/administrar/noticias/agregar", "UPanelControladorContenidoNoticias@noticias_agregar");
     Route::get("aplicacion/administrar/encuestas", "UPanelControladorTiposContenidosApp@encuestas");
     Route::get("aplicacion/administrar/pqr", "UPanelControladorTiposContenidosApp@pqr");
+    
+    
+    //AJAX
+    Route::post("aplicacion/administrar/noticias/ajax/agregar/categoria", "UPanelControladorContenidoNoticias@ajax_noticias_agregarCategoria");
+    
+    
+    
+    
+    
+    //**************************************************************************
+    //**************************************************************************
+    //**************************************************************************
+    
+    
 });
 
 

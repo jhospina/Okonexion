@@ -304,3 +304,8 @@ span.simplecolorpicker.icon {
 .well{
     clear: both;
 }
+
+#content-cats{
+    overflow: auto;
+    max-height: 200px;
+}
