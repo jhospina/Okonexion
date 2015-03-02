@@ -1,0 +1,1318 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Doctype\n"
+"POT-Creation-Date: 2015-01-01 13:57+0530\n"
+"PO-Revision-Date: 2015-01-01 13:57+0530\n"
+"Last-Translator: Ram Ratan Maurya <ram@codestag.com>\n"
+"Language-Team: Ram Ratan Maurya <ram@codestag.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: 404.php:15
+msgid "Oops! That page can&rsquo;t be found."
+msgstr ""
+
+#: 404.php:16
+msgid ""
+"It looks like nothing was found at this location. Maybe try one of the links "
+"below or a search?"
+msgstr ""
+
+#. translators: %1$s: smiley
+#: 404.php:27
+#, php-format
+msgid "Try looking in the monthly archives. %1$s"
+msgstr ""
+
+#: archive.php:30
+#, php-format
+msgid "Author: %s"
+msgstr ""
+
+#: archive.php:34
+#, php-format
+msgid "Day: %s"
+msgstr ""
+
+#: archive.php:37
+#, php-format
+msgid "Month: %s"
+msgstr ""
+
+#: archive.php:40
+#, php-format
+msgid "Year: %s"
+msgstr ""
+
+#: archive.php:43
+msgid "Asides"
+msgstr ""
+
+#: archive.php:46
+msgid "Images"
+msgstr ""
+
+#: archive.php:49
+msgid "Videos"
+msgstr ""
+
+#: archive.php:52
+msgid "Quotes"
+msgstr ""
+
+#: archive.php:55
+msgid "Links"
+msgstr ""
+
+#: archive.php:58
+#, php-format
+msgid "Skill: %s"
+msgstr ""
+
+#: archive.php:61
+msgid "Archives"
+msgstr ""
+
+#: comments.php:29
+#, php-format
+msgctxt "comments title"
+msgid "1 Comment"
+msgid_plural "%1$s Comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: comments.php:48
+msgid "Comment navigation"
+msgstr ""
+
+#: comments.php:49
+msgid "&larr; Older Comments"
+msgstr ""
+
+#: comments.php:50
+msgid "Newer Comments &rarr;"
+msgstr ""
+
+#: comments.php:61
+msgid "Comments are closed."
+msgstr ""
+
+#: comments.php:67
+msgid "Leave a Comment"
+msgstr ""
+
+#: content-page.php:21 content-single.php:26 content.php:34
+#: inc/widgets/widget-hero.php:56 inc/widgets/widget-static-content.php:52
+#: single-portfolio.php:53
+msgid "Pages:"
+msgstr ""
+
+#: content-page.php:28
+msgid "Last 10 Posts"
+msgstr ""
+
+#: content-page.php:30
+msgid "Archives by Month"
+msgstr ""
+
+#: content-page.php:32
+msgid "Archives by Subject"
+msgstr ""
+
+#: content-portfolio.php:13
+msgid "Details"
+msgstr ""
+
+#: content-single.php:41
+msgid "Previous Post"
+msgstr ""
+
+#: content-single.php:47
+msgid "Next Post"
+msgstr ""
+
+#: content.php:31 functions.php:197 inc/widgets/widget-hero.php:55
+#: inc/widgets/widget-static-content.php:51
+msgid "Read More&hellip;"
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:32
+msgid "Settings Backup"
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:32
+#: framework/classes/class-admin-backup.php:47
+msgid "Backup Settings"
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:49
+msgid "Import Settings"
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:51
+msgid ""
+"If you have settings in a backup file on your computer, the StagFramework "
+"can import those into this site. To get started, upload your backup file to "
+"import from below."
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:56
+#, php-format
+msgid "Upload File: (Maximum Size: %s)"
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:59
+msgid "Upload File and Import"
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:63
+msgid "Export Settings"
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:64
+msgid ""
+"When you click the button below, the StagFramework will create a text file "
+"for you to save to your computer."
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:65
+#, php-format
+msgid ""
+"This text file can be used to restore your settings here on \"%s\", or to "
+"easily setup another website with the same settings\"."
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:69
+msgid "All Content"
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:70
+msgid "This will contain all of your theme options."
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:73
+msgid "Download Export File"
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:88
+#, php-format
+msgid ""
+"Please note that this backup manager backs up only your settings and not "
+"your content. To backup your content, please use the %sWordPress Export Tool"
+"%s."
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:91
+msgid "There was a problem importing your settings. Please Try again."
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:93
+msgid "There was a problem exporting your settings. Please Try again."
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:95
+msgid "The import file you've provided is invalid. Please try again."
+msgstr ""
+
+#: framework/classes/class-admin-backup.php:97
+#, php-format
+msgid "Settings successfully imported. Return to %sTheme Options%s"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:155
+msgid "Install Required Plugins"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:156
+msgid "Install Plugins"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:157
+#, php-format
+msgid "Installing Plugin: %s"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:158
+msgid "Something went wrong."
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:159
+#, php-format
+msgid "This theme requires the following plugin: %1$s."
+msgid_plural "This theme requires the following plugins: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: framework/classes/class-tgm-plugin-activation.php:160
+#, php-format
+msgid "This theme recommends the following plugin: %1$s."
+msgid_plural "This theme recommends the following plugins: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: framework/classes/class-tgm-plugin-activation.php:161
+#, php-format
+msgid ""
+"Sorry, but you do not have the correct permissions to install the %s plugin. "
+"Contact the administrator of this site for help on getting the plugin "
+"installed."
+msgid_plural ""
+"Sorry, but you do not have the correct permissions to install the %s "
+"plugins. Contact the administrator of this site for help on getting the "
+"plugins installed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: framework/classes/class-tgm-plugin-activation.php:162
+#, php-format
+msgid "The following required plugin is currently inactive: %1$s."
+msgid_plural "The following required plugins are currently inactive: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: framework/classes/class-tgm-plugin-activation.php:163
+#, php-format
+msgid "The following recommended plugin is currently inactive: %1$s."
+msgid_plural "The following recommended plugins are currently inactive: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: framework/classes/class-tgm-plugin-activation.php:164
+#, php-format
+msgid ""
+"Sorry, but you do not have the correct permissions to activate the %s "
+"plugin. Contact the administrator of this site for help on getting the "
+"plugin activated."
+msgid_plural ""
+"Sorry, but you do not have the correct permissions to activate the %s "
+"plugins. Contact the administrator of this site for help on getting the "
+"plugins activated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: framework/classes/class-tgm-plugin-activation.php:165
+#, php-format
+msgid ""
+"The following plugin needs to be updated to its latest version to ensure "
+"maximum compatibility with this theme: %1$s."
+msgid_plural ""
+"The following plugins need to be updated to their latest version to ensure "
+"maximum compatibility with this theme: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: framework/classes/class-tgm-plugin-activation.php:166
+#, php-format
+msgid ""
+"Sorry, but you do not have the correct permissions to update the %s plugin. "
+"Contact the administrator of this site for help on getting the plugin "
+"updated."
+msgid_plural ""
+"Sorry, but you do not have the correct permissions to update the %s plugins. "
+"Contact the administrator of this site for help on getting the plugins "
+"updated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: framework/classes/class-tgm-plugin-activation.php:167
+msgid "Begin installing plugin"
+msgid_plural "Begin installing plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: framework/classes/class-tgm-plugin-activation.php:168
+msgid "Activate installed plugin"
+msgid_plural "Activate installed plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: framework/classes/class-tgm-plugin-activation.php:169
+msgid "Return to Required Plugins Installer"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:170
+msgid "Return to the dashboard"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:171
+#: framework/classes/class-tgm-plugin-activation.php:1840
+msgid "Plugin activated successfully."
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:172
+#: framework/classes/class-tgm-plugin-activation.php:1538
+msgid "The following plugin was activated successfully:"
+msgid_plural "The following plugins were activated successfully:"
+msgstr[0] ""
+msgstr[1] ""
+
+#: framework/classes/class-tgm-plugin-activation.php:173
+#, php-format
+msgid "All plugins installed and activated successfully. %1$s"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:174
+msgid "Dismiss this notice"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1085
+msgid "External Link"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1090
+msgid "Private Repository"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1093
+msgid "Pre-Packaged"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1097
+msgid "WordPress Repository"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1100
+msgid "Required"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1100
+msgid "Recommended"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1103
+msgid "Not Installed"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1105
+msgid "Installed But Not Activated"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1275
+#, php-format
+msgid ""
+"No plugins to install or activate. <a href=\"%1$s\" title=\"Return to the "
+"Dashboard\">Return to the Dashboard</a>"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1291
+msgid "Plugin"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1292
+msgid "Source"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1293
+msgid "Type"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1294
+msgid "Status"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1312
+msgid "Install"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1313
+msgid "Activate"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1823
+msgid "Install package not available."
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1824
+#, php-format
+msgid "Downloading install package from <span class=\"code\">%s</span>&#8230;"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1825
+msgid "Unpacking the package&#8230;"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1826
+msgid "Installing the plugin&#8230;"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1827
+msgid "Plugin install failed."
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1828
+msgid "Plugin installed successfully."
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1839
+msgid "Plugin activation failed."
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1949
+msgid ""
+"The installation and activation process is starting. This process may take a "
+"while on some hosts, so please be patient."
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1950
+#, php-format
+msgid "%1$s installed and activated successfully."
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1950
+#: framework/classes/class-tgm-plugin-activation.php:1959
+msgid "Show Details"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1950
+#: framework/classes/class-tgm-plugin-activation.php:1959
+msgid "Hide Details"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1951
+msgid "All installations and activations have been completed."
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1952
+#, php-format
+msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1956
+msgid ""
+"The installation process is starting. This process may take a while on some "
+"hosts, so please be patient."
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1957
+#, php-format
+msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1958
+#, php-format
+msgid "The installation of %1$s failed."
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1959
+#, php-format
+msgid "%1$s installed successfully."
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1960
+msgid "All installations have been completed."
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:1961
+#, php-format
+msgid "Installing Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: framework/classes/class-tgm-plugin-activation.php:2052
+msgid "Return to the Dashboard"
+msgstr ""
+
+#: framework/stag-admin-functions.php:77
+msgid "Select"
+msgstr ""
+
+#: framework/stag-admin-functions.php:167
+msgid "Upload"
+msgstr ""
+
+#: framework/stag-admin-functions.php:196
+msgid "Remove"
+msgstr ""
+
+#: framework/stag-admin-functions.php:216
+msgid "Upload or Choose your own Image file"
+msgstr ""
+
+#: framework/stag-admin-functions.php:218
+#: framework/stag-admin-metaboxes.php:77
+msgid "Insert"
+msgstr ""
+
+#: framework/stag-admin-init.php:29
+msgid "Theme Options"
+msgstr ""
+
+#: framework/stag-admin-interface.php:15
+#, php-format
+msgid ""
+"<strong>%s activated.</strong> Please save settings before leaving this page."
+msgstr ""
+
+#: framework/stag-admin-interface.php:19
+msgid "Settings saved!"
+msgstr ""
+
+#: framework/stag-admin-interface.php:19
+msgid "Error saving settings!"
+msgstr ""
+
+#: framework/stag-admin-interface.php:30
+msgid "v"
+msgstr ""
+
+#: framework/stag-admin-interface.php:34
+#, php-format
+msgid ""
+"By <a href=\"%1$s\" target=\"_blank\">%2$s</a> <span class=\"divider\">&#47;"
+"</span> <a href=\"%3$s\" target=\"_blank\">Documentation</a> <span class="
+"\"divider\">&#47;</span> <a href=\"%4$s\" target=\"_blank\">Support</a>"
+msgstr ""
+
+#: framework/stag-admin-interface.php:86
+msgid "Reset Options"
+msgstr ""
+
+#: framework/stag-admin-interface.php:87
+msgid "Save Changes"
+msgstr ""
+
+#: framework/stag-admin-interface.php:130
+msgid "You do not have sufficient permissions to save these options."
+msgstr ""
+
+#: framework/stag-admin-interface.php:144
+msgid "Settings saved"
+msgstr ""
+
+#: framework/stag-admin-interface.php:159
+msgid "You do not have sufficient permissions to reset these options."
+msgstr ""
+
+#: framework/stag-admin-metaboxes.php:117
+msgid "Create Featured Gallery"
+msgstr ""
+
+#: framework/stag-admin-metaboxes.php:124
+#: framework/stag-admin-metaboxes.php:132
+msgid "Edit Featured Gallery"
+msgstr ""
+
+#: framework/stag-admin-metaboxes.php:168
+msgid "Save Featured Gallery"
+msgstr ""
+
+#: framework/stag-admin-metaboxes.php:177
+msgid "Saving..."
+msgstr ""
+
+#: framework/stag-admin-metaboxes.php:240
+#: framework/stag-admin-metaboxes.php:242
+msgid "Edit Gallery"
+msgstr ""
+
+#: functions.php:33
+msgid "Primary Menu"
+msgstr ""
+
+#: functions.php:77
+msgid "Footer Widgets"
+msgstr ""
+
+#: functions.php:83
+msgid "Footer Widgets Area."
+msgstr ""
+
+#: functions.php:87
+msgid "Homepage Sections"
+msgstr ""
+
+#: functions.php:93
+msgid "Here you can configure the layout of the Homepage."
+msgstr ""
+
+#: inc/meta/page-meta.php:9
+msgid "Page Settings"
+msgstr ""
+
+#: inc/meta/page-meta.php:10
+msgid "Customize your page details."
+msgstr ""
+
+#: inc/meta/page-meta.php:16 inc/meta/portfolio-meta.php:23
+msgid "Subtitle"
+msgstr ""
+
+#: inc/meta/page-meta.php:17
+msgid "Enter the subtitle for this page."
+msgstr ""
+
+#: inc/meta/portfolio-meta.php:9 inc/options/portfolio-settings.php:69
+msgid "Portfolio Settings"
+msgstr ""
+
+#: inc/meta/portfolio-meta.php:10
+msgid "Here you can customize your project details."
+msgstr ""
+
+#: inc/meta/portfolio-meta.php:16
+msgid "Project Images"
+msgstr ""
+
+#: inc/meta/portfolio-meta.php:17
+msgid "Choose project images, ideal size 1170px x unlimited."
+msgstr ""
+
+#: inc/meta/portfolio-meta.php:20
+msgid "Upload Images"
+msgstr ""
+
+#: inc/meta/portfolio-meta.php:24
+msgid "Enter the subtitle for this portfolio item"
+msgstr ""
+
+#: inc/meta/portfolio-meta.php:30
+msgid "Client Name"
+msgstr ""
+
+#: inc/meta/portfolio-meta.php:31
+msgid "Enter the client name of the project"
+msgstr ""
+
+#: inc/meta/portfolio-meta.php:37
+msgid "Project Date"
+msgstr ""
+
+#: inc/meta/portfolio-meta.php:38
+msgid "Choose the project date in MM/DD/YYYY format. E.g. 12/23/2012"
+msgstr ""
+
+#: inc/meta/portfolio-meta.php:44 single-portfolio.php:63
+msgid "Project URL"
+msgstr ""
+
+#: inc/meta/portfolio-meta.php:45
+msgid "Enter the project URL"
+msgstr ""
+
+#: inc/options/blog-settings.php:6
+msgid "Customize your blog settings."
+msgstr ""
+
+#: inc/options/blog-settings.php:9
+msgid "Blog Title"
+msgstr ""
+
+#: inc/options/blog-settings.php:10
+msgid "Enter the default title for the blog header section."
+msgstr ""
+
+#: inc/options/blog-settings.php:17
+msgid "Blog Subtitle"
+msgstr ""
+
+#: inc/options/blog-settings.php:18
+msgid "Enter the default subtitle for the blog header section."
+msgstr ""
+
+#: inc/options/blog-settings.php:24
+msgid "Blog Settings"
+msgstr ""
+
+#: inc/options/general-settings.php:6
+msgid ""
+"Configure general settings of your theme. Upload your preferred logo, "
+"favicon, and insert your analytics tracking code."
+msgstr ""
+
+#: inc/options/general-settings.php:9
+msgid "Plain Text Logo"
+msgstr ""
+
+#: inc/options/general-settings.php:10
+msgid ""
+"Check this box to enable a plain text logo rather than an image logo. Will "
+"use your site title."
+msgstr ""
+
+#: inc/options/general-settings.php:17
+msgid "Custom Logo Upload"
+msgstr ""
+
+#: inc/options/general-settings.php:18
+msgid "Upload a logo for your theme."
+msgstr ""
+
+#: inc/options/general-settings.php:21 inc/options/general-settings.php:29
+msgid "Upload Image"
+msgstr ""
+
+#: inc/options/general-settings.php:25
+msgid "Custom Favicon Upload"
+msgstr ""
+
+#: inc/options/general-settings.php:26
+msgid ""
+"Upload a 16px x 16px Png/Gif image that will represent your website's "
+"favicon. Use <a href=\"//www.xiconeditor.com/\" target=\"_blank\" rel="
+"\"nofollow\">X-Icon Editor</a> to easily create a favicon."
+msgstr ""
+
+#: inc/options/general-settings.php:33
+msgid "Contact Form Email Address"
+msgstr ""
+
+#: inc/options/general-settings.php:34
+msgid ""
+"Enter the email address where you'd like to receive emails from the contact "
+"form, or leave blank to use admin email."
+msgstr ""
+
+#: inc/options/general-settings.php:40
+msgid "Tracking Code"
+msgstr ""
+
+#: inc/options/general-settings.php:41
+msgid ""
+"Paste your Google Analytics (or other) tracking code here. It will be "
+"inserted before the closing body tag of your theme."
+msgstr ""
+
+#: inc/options/general-settings.php:47
+msgid "Footer Copyright Text (Left)"
+msgstr ""
+
+#: inc/options/general-settings.php:48
+msgid "Enter the text to display in footer copyright area for left side."
+msgstr ""
+
+#: inc/options/general-settings.php:51
+msgid "http://wordpress.org/"
+msgstr ""
+
+#: inc/options/general-settings.php:51
+msgid "Semantic Personal Publishing Platform"
+msgstr ""
+
+#: inc/options/general-settings.php:55
+msgid "Footer Copyright Text (Right)"
+msgstr ""
+
+#: inc/options/general-settings.php:56
+msgid "Enter the text to display in footer copyright area for right side."
+msgstr ""
+
+#: inc/options/general-settings.php:63
+msgid "Enable Sticky Navigation"
+msgstr ""
+
+#: inc/options/general-settings.php:64
+msgid "Enable sticky navigation."
+msgstr ""
+
+#: inc/options/general-settings.php:71
+msgid "Disable Admin Bar"
+msgstr ""
+
+#: inc/options/general-settings.php:72
+msgid "Enable/Disable WordPress Admin Bar for all users."
+msgstr ""
+
+#: inc/options/general-settings.php:78
+msgid "General Settings"
+msgstr ""
+
+#: inc/options/portfolio-settings.php:6
+msgid "Customize your portfolio settings."
+msgstr ""
+
+#: inc/options/portfolio-settings.php:9
+msgid "Portfolio Title"
+msgstr ""
+
+#: inc/options/portfolio-settings.php:10
+msgid "Enter the default title for the portfolio page template header section."
+msgstr ""
+
+#: inc/options/portfolio-settings.php:17
+msgid "Portfolio Subtitle"
+msgstr ""
+
+#: inc/options/portfolio-settings.php:18
+msgid ""
+"Enter the default subtitle for the portfolio page template header section."
+msgstr ""
+
+#: inc/options/portfolio-settings.php:25
+msgid "Related Project Text"
+msgstr ""
+
+#: inc/options/portfolio-settings.php:26
+msgid "Enter the text for related projects."
+msgstr ""
+
+#: inc/options/portfolio-settings.php:33
+msgid "Show Related Projects?"
+msgstr ""
+
+#: inc/options/portfolio-settings.php:34
+msgid "Enable to show related projects on portfolio single page."
+msgstr ""
+
+#: inc/options/portfolio-settings.php:41
+msgid "Show Portfolio CTA?"
+msgstr ""
+
+#: inc/options/portfolio-settings.php:42
+msgid "Enable to show call to action on portfolio page."
+msgstr ""
+
+#: inc/options/portfolio-settings.php:49
+msgid "CTA Text"
+msgstr ""
+
+#: inc/options/portfolio-settings.php:50
+msgid "Enter the text for call to action on portfolio page."
+msgstr ""
+
+#: inc/options/portfolio-settings.php:56
+msgid "CTA Button Text"
+msgstr ""
+
+#: inc/options/portfolio-settings.php:57
+msgid "Enter the text for call to action button on portfolio page."
+msgstr ""
+
+#: inc/options/portfolio-settings.php:63
+msgid "CTA Button Link"
+msgstr ""
+
+#: inc/options/portfolio-settings.php:64
+msgid "Enter the url for call to action button link on portfolio page."
+msgstr ""
+
+#: inc/options/styling-options.php:6
+msgid ""
+"Configure the visual appearance of your theme, or insert any custom CSS."
+msgstr ""
+
+#: inc/options/styling-options.php:9
+msgid "Background Color"
+msgstr ""
+
+#: inc/options/styling-options.php:10
+msgid "Choose the background color of your site"
+msgstr ""
+
+#: inc/options/styling-options.php:17
+msgid "Accent Color"
+msgstr ""
+
+#: inc/options/styling-options.php:18
+msgid "Choose the accent color of your site"
+msgstr ""
+
+#: inc/options/styling-options.php:25
+msgid "Body Font"
+msgstr ""
+
+#: inc/options/styling-options.php:26
+msgid ""
+"Quickly add a custom Google Font for body from <a href=\"//www.google.com/"
+"webfonts/\" target=\"_blank\">Google Font Directory.</a>\n"
+"\t\t\t\t   <code>Example font name: \"Source Sans Pro\"</code>, for "
+"including font weights type <code>Source Sans Pro:400,700,400italic</code>."
+msgstr ""
+
+#: inc/options/styling-options.php:34
+msgid "Heading Font"
+msgstr ""
+
+#: inc/options/styling-options.php:35
+msgid ""
+"Quickly add a custom Google Font for heading from <a href=\"//www.google.com/"
+"webfonts/\" target=\"_blank\">Google Font Directory</a>."
+msgstr ""
+
+#: inc/options/styling-options.php:42
+msgid "Google Font Script"
+msgstr ""
+
+#: inc/options/styling-options.php:43
+msgid "Choose the character sets you want for Google Web Font"
+msgstr ""
+
+#: inc/options/styling-options.php:48
+msgid "Cyrillic"
+msgstr ""
+
+#: inc/options/styling-options.php:49
+msgid "Cyrillic Extended"
+msgstr ""
+
+#: inc/options/styling-options.php:50
+msgid "Greek"
+msgstr ""
+
+#: inc/options/styling-options.php:51
+msgid "Greek Extended"
+msgstr ""
+
+#: inc/options/styling-options.php:52
+msgid "Khmer"
+msgstr ""
+
+#: inc/options/styling-options.php:53
+msgid "Latin"
+msgstr ""
+
+#: inc/options/styling-options.php:54
+msgid "Latin Extended"
+msgstr ""
+
+#: inc/options/styling-options.php:55
+msgid "Vietnamese"
+msgstr ""
+
+#: inc/options/styling-options.php:60
+msgid "Custom CSS"
+msgstr ""
+
+#: inc/options/styling-options.php:61
+msgid "Quickly add some CSS to your theme by adding it to this block."
+msgstr ""
+
+#: inc/options/styling-options.php:66
+msgid "Styling Options"
+msgstr ""
+
+#: inc/template-tags.php:24
+msgid "Pingback:"
+msgstr ""
+
+#: inc/template-tags.php:24 inc/template-tags.php:48 inc/template-tags.php:181
+msgid "Edit"
+msgstr ""
+
+#: inc/template-tags.php:41
+#, php-format
+msgid "%s"
+msgstr ""
+
+#: inc/template-tags.php:44
+msgid "ago"
+msgstr ""
+
+#: inc/template-tags.php:52
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: inc/template-tags.php:92
+msgid "Post navigation"
+msgstr ""
+
+#: inc/template-tags.php:96
+msgctxt "Previous post link"
+msgid "&larr;"
+msgstr ""
+
+#: inc/template-tags.php:97
+msgctxt "Next post link"
+msgid "&rarr;"
+msgstr ""
+
+#: inc/template-tags.php:102
+msgid "<span class=\"fa fa-chevron-left\"></span>"
+msgstr ""
+
+#: inc/template-tags.php:128
+msgid "<span class=\"fa fa-chevron-right\"></span>"
+msgstr ""
+
+#: inc/template-tags.php:155
+#, php-format
+msgid "<span class=\"posted-on\">Published at %1$s</span>"
+msgstr ""
+
+#: inc/template-tags.php:163 inc/template-tags.php:170
+msgid ", "
+msgstr ""
+
+#: inc/template-tags.php:166
+#, php-format
+msgid "In Category %1$s"
+msgstr ""
+
+#: inc/template-tags.php:173
+#, php-format
+msgid "Tags: %1$s"
+msgstr ""
+
+#: inc/template-tags.php:178
+msgid "Leave a comment"
+msgstr ""
+
+#: inc/template-tags.php:178
+msgid "1 Comment"
+msgstr ""
+
+#: inc/template-tags.php:178
+msgid "% Comments"
+msgstr ""
+
+#: inc/widgets/widget-contact.php:6
+msgid "Displays contact information."
+msgstr ""
+
+#: inc/widgets/widget-contact.php:8
+msgid "Section: Contact Info"
+msgstr ""
+
+#: inc/widgets/widget-contact.php:70
+msgid "Get in Touch"
+msgstr ""
+
+#: inc/widgets/widget-contact.php:83 inc/widgets/widget-cta.php:64
+#: inc/widgets/widget-hero.php:102 inc/widgets/widget-recent-projects.php:99
+#: inc/widgets/widget-static-content.php:112
+msgid "Title:"
+msgstr ""
+
+#: inc/widgets/widget-contact.php:88
+#: inc/widgets/widget-recent-projects.php:104
+msgid "Subtitle:"
+msgstr ""
+
+#: inc/widgets/widget-contact.php:93
+msgid "Google Map Latitude:"
+msgstr ""
+
+#: inc/widgets/widget-contact.php:95
+#, php-format
+msgid ""
+"Enter the latitude of Google Map, which can be found <a href=\"%s\" target="
+"\"_blank\">here</a>."
+msgstr ""
+
+#: inc/widgets/widget-contact.php:99
+msgid "Google Map Longitude:"
+msgstr ""
+
+#: inc/widgets/widget-contact.php:101
+msgid "Enter the longitude of Google map."
+msgstr ""
+
+#: inc/widgets/widget-contact.php:105
+msgid "Contact Information:"
+msgstr ""
+
+#: inc/widgets/widget-cta.php:6
+msgid "Displays a call to action."
+msgstr ""
+
+#: inc/widgets/widget-cta.php:8
+msgid "Section: Call To Action"
+msgstr ""
+
+#: inc/widgets/widget-cta.php:69
+msgid "Button Link:"
+msgstr ""
+
+#: inc/widgets/widget-cta.php:74 inc/widgets/widget-recent-projects.php:115
+msgid "Button Text:"
+msgstr ""
+
+#: inc/widgets/widget-hero.php:6
+msgid "Displays content like a boss."
+msgstr ""
+
+#: inc/widgets/widget-hero.php:8
+msgid "Section: Hero"
+msgstr ""
+
+#: inc/widgets/widget-hero.php:107 inc/widgets/widget-static-content.php:117
+msgid "Select Page:"
+msgstr ""
+
+#: inc/widgets/widget-hero.php:129 inc/widgets/widget-static-content.php:143
+msgid "Background Image URL:"
+msgstr ""
+
+#: inc/widgets/widget-hero.php:134
+msgid "Hero Button Text:"
+msgstr ""
+
+#: inc/widgets/widget-hero.php:139
+msgid "Hero Button Link:"
+msgstr ""
+
+#: inc/widgets/widget-intro.php:6
+msgid "Displays a basic intro."
+msgstr ""
+
+#: inc/widgets/widget-intro.php:8
+msgid "Section: Intro"
+msgstr ""
+
+#: inc/widgets/widget-intro.php:40
+msgid ""
+"I am a <span>dedicated</span> designer who enjoys <span>awesome</span> "
+"projects."
+msgstr ""
+
+#: inc/widgets/widget-intro.php:51
+msgid "Use &lt;span&gt; tag to highlight text."
+msgstr ""
+
+#: inc/widgets/widget-recent-projects.php:6
+msgid "Displays recent portfolio items."
+msgstr ""
+
+#: inc/widgets/widget-recent-projects.php:8
+msgid "Section: Recent Projects"
+msgstr ""
+
+#: inc/widgets/widget-recent-projects.php:109
+msgid "Portfolio Link:"
+msgstr ""
+
+#: inc/widgets/widget-recent-projects.php:111
+msgid "Enter the portfolio page URL."
+msgstr ""
+
+#: inc/widgets/widget-recent-projects.php:117
+msgid "Enter text for the portfolio button."
+msgstr ""
+
+#: inc/widgets/widget-recent-projects.php:121
+msgid "Post Count:"
+msgstr ""
+
+#: inc/widgets/widget-recent-projects.php:123
+msgid "Enter the number of recent portfolio items to display at homepage."
+msgstr ""
+
+#: inc/widgets/widget-static-content.php:6
+msgid "Displays content from a specific page."
+msgstr ""
+
+#: inc/widgets/widget-static-content.php:8
+msgid "Section: Static Content"
+msgstr ""
+
+#: inc/widgets/widget-static-content.php:138
+msgid "Background Color:"
+msgstr ""
+
+#: inc/widgets/widget-static-content.php:148
+msgid "Background Opacity:"
+msgstr ""
+
+#: inc/widgets/widget-static-content.php:153
+msgid "Text Color:"
+msgstr ""
+
+#: inc/widgets/widget-static-content.php:159
+msgid "Link Color:"
+msgstr ""
+
+#: no-results.php:13
+msgid "Nothing Found"
+msgstr ""
+
+#: no-results.php:19
+#, php-format
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+
+#: no-results.php:23
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with "
+"different keywords."
+msgstr ""
+
+#: no-results.php:28
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+
+#: search.php:16
+#, php-format
+msgid "Search Results for: %s"
+msgstr ""
+
+#: searchform.php:10
+msgctxt "label"
+msgid "Search"
+msgstr ""
+
+#: searchform.php:11
+msgctxt "label"
+msgid "Search for:"
+msgstr ""
+
+#: searchform.php:13
+msgctxt "submit button"
+msgid "Search"
+msgstr ""
+
+#: single-portfolio.php:71
+msgid "Client:"
+msgstr ""
+
+#: single-portfolio.php:77
+msgid "Skills:"
+msgstr ""
+
+#: single-portfolio.php:81
+msgid "Project Date:"
+msgstr ""
+
+#: template-contact.php:8
+msgid "Please enter your name."
+msgstr ""
+
+#: template-contact.php:9
+msgid "Please enter your email address."
+msgstr ""
+
+#: template-contact.php:10
+msgid "You entered an invalid email address."
+msgstr ""
+
+#: template-contact.php:11
+msgid "Please enter a message."
+msgstr ""
+
+#: template-contact.php:84
+msgid "Thanks, your email was sent successfully."
+msgstr ""
+
+#: template-contact.php:90
+msgid "Send a Direct Message"
+msgstr ""
+
+#: template-contact.php:94
+msgid "Name"
+msgstr ""
+
+#: template-contact.php:102
+msgid "Email"
+msgstr ""
+
+#: template-contact.php:114
+msgid "Comment"
+msgstr ""
+
+#: template-contact.php:122
+msgid "Send Message"
+msgstr ""
+
+#: template-portfolio-filterable.php:23
+msgid "All"
+msgstr ""

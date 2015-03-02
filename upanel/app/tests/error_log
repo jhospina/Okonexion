@@ -1,0 +1,4 @@
+[11-Feb-2015 22:19:24 America/New_York] PHP Fatal error:  Class 'Illuminate\Foundation\Testing\TestCase' not found in /home/dgzhlbvq/public_html/okonexion.com/app/tests/TestCase.php on line 3
+[11-Feb-2015 22:19:33 America/New_York] PHP Fatal error:  Class 'TestCase' not found in /home/dgzhlbvq/public_html/okonexion.com/app/tests/ExampleTest.php on line 3
+[11-Feb-2015 22:23:35 America/New_York] PHP Fatal error:  Class 'Illuminate\Foundation\Testing\TestCase' not found in /home/dgzhlbvq/public_html/okonexion.com/app/tests/TestCase.php on line 3
+[11-Feb-2015 22:23:48 America/New_York] PHP Fatal error:  Class 'TestCase' not found in /home/dgzhlbvq/public_html/okonexion.com/app/tests/ExampleTest.php on line 3

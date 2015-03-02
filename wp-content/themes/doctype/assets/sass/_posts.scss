@@ -1,0 +1,142 @@
+.entry-content,
+.comment-content{
+	@extend %clearfix;
+	@include rem('margin-top', 60px);
+	// -webkit-hyphens: auto;
+	// -moz-hyphens:    auto;
+	// -ms-hyphens:     auto;
+	// hyphens:         auto;
+	word-wrap: break-word;
+	max-width: $content_width;
+	margin-left: auto;
+	margin-right: auto;
+	p{
+		line-height: 1.6;
+		margin-bottom: 2em;
+		&:first-child{
+			margin-top: 0;
+		}
+		&:last-child{
+			margin-bottom: 0;
+		}
+	}
+	blockquote{
+		font-family: 'Rokkitt', serif;
+		font-weight: bold;
+		font-size: 27px;
+		border: none;
+		text-align: center;
+		line-height: 1;
+		margin: 50px auto;
+		max-width: 90%;
+		p{
+			line-height: inherit;
+		}
+		&::before, 
+		&::after{
+			display: inline-block;
+			content: '';
+			width: 126px;
+			margin-left: auto;
+			margin-right: auto;
+			height: 1px;
+			background: $body_color;
+			position: relative;
+		}
+		&::before{
+			top: -30px;
+		}
+		&::after{
+			bottom: -20px;
+		}
+	}
+
+	table{
+		width: 100%;
+		td,
+		th{
+			padding: 10px 10px;
+		}
+		th{
+			text-align: left;
+		}
+		.odd{
+			background: $footer_color;
+		}
+	}
+	li{
+		margin-bottom: 5px;
+		list-style: none;
+		&:before{
+			margin-right: 6px;
+			color: #b6b6b6;
+		}
+	}
+
+	ul{
+		padding: 0;
+		li{
+			&:before{
+				@include icon-font(){
+					content: "\f00c";
+				}
+			}
+		}
+	}
+
+	ol{
+		padding: 0;
+		counter-reset: section;
+		li{
+			&:before{
+				font-weight: bold;
+				counter-increment: section;
+				content: counters(section, ".") ". ";
+			}
+		}
+	}
+
+	h1{ @include rem('font-size', 28px); font-weight: 300; }
+	h2{ @include rem('font-size', 23px); font-weight: bold; }
+	h3{ @include rem('font-size', 20px); font-weight: bold; text-transform: none; }
+	h4{ @include rem('font-size', 15px); font-weight: bold; }
+	h5{ @include rem('font-size', 13px); font-weight: bold; color: #808080; }
+	h6{ @include rem('font-size', 12px); font-weight: bold; color: #808080; }
+
+}//.entry-content
+
+.stag-intro-text{
+	@include rem('font-size', 22px);
+	font-weight: 300;
+	text-transform: uppercase;
+	line-height: 1.6;
+	margin-bottom: 2em;
+}
+
+.post-thumbnail{
+	@include rem('margin-top', 60px);
+	@include rem('margin-bottom', 60px);	
+	text-align: center;
+}
+
+.entry-title{
+	line-height: 1.2;
+	// @include rem('font-size', 43px);
+	margin-top: 0;
+	-ms-word-wrap: break-word;
+	word-wrap: break-word;
+}
+
+.entry-title a{
+	color: inherit;
+}
+
+
+.screen-reader-text{
+	display: none;
+}
+
+.page-content{
+	@extend %content-width;
+	text-align: center;
+}

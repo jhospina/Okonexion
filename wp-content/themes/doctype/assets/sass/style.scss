@@ -1,0 +1,27 @@
+/*!
+Theme Name: Doctype
+Theme URI: https://codestag.com/themes/doctype
+Description: A Flat and Minimal Portfolio Theme
+Author: Codestag
+Author URI: https://codestag.com
+Version: 1.0.12
+License: GNU General Public License v2.0
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Tags: theme-options, flexible-width, editor-style, featured-images, translation-ready, one-column, custom-menu
+Text Domain: stag
+*/
+@import "compass/css3";
+@import "normalize";
+@import "preboot";
+@import "grids";
+@import "scaffolding";
+@import "elements";
+@import "patterns";
+@import "posts";
+@import "index";
+@import "pages";
+@import "sidebar";
+@import "comments";
+@import "forms";
+@import "third-party";
+@import "media";

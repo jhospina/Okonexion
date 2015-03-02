@@ -1,0 +1,10 @@
+[11-Feb-2015 22:19:10 America/New_York] PHP Fatal error:  Class 'Eloquent' not found in /home/dgzhlbvq/public_html/okonexion.com/app/models/User.php on line 8
+[11-Feb-2015 22:19:20 America/New_York] PHP Fatal error:  Class 'Eloquent' not found in /home/dgzhlbvq/public_html/okonexion.com/app/models/Ticket.php on line 3
+[11-Feb-2015 22:19:20 America/New_York] PHP Fatal error:  Class 'Eloquent' not found in /home/dgzhlbvq/public_html/okonexion.com/app/models/Correo.php on line 8
+[11-Feb-2015 22:19:32 America/New_York] PHP Fatal error:  Class 'Eloquent' not found in /home/dgzhlbvq/public_html/okonexion.com/app/models/Aplicacion.php on line 3
+[11-Feb-2015 22:19:34 America/New_York] PHP Fatal error:  Class 'Eloquent' not found in /home/dgzhlbvq/public_html/okonexion.com/app/models/MensajeTicket.php on line 3
+[11-Feb-2015 22:23:18 America/New_York] PHP Fatal error:  Class 'Eloquent' not found in /home/dgzhlbvq/public_html/okonexion.com/app/models/User.php on line 8
+[11-Feb-2015 22:23:29 America/New_York] PHP Fatal error:  Class 'Eloquent' not found in /home/dgzhlbvq/public_html/okonexion.com/app/models/Correo.php on line 8
+[11-Feb-2015 22:23:30 America/New_York] PHP Fatal error:  Class 'Eloquent' not found in /home/dgzhlbvq/public_html/okonexion.com/app/models/Ticket.php on line 3
+[11-Feb-2015 22:23:49 America/New_York] PHP Fatal error:  Class 'Eloquent' not found in /home/dgzhlbvq/public_html/okonexion.com/app/models/Aplicacion.php on line 3
+[11-Feb-2015 22:24:07 America/New_York] PHP Fatal error:  Class 'Eloquent' not found in /home/dgzhlbvq/public_html/okonexion.com/app/models/MensajeTicket.php on line 3

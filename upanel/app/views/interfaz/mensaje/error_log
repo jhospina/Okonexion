@@ -1,0 +1,2 @@
+[11-Feb-2015 22:33:42 America/New_York] PHP Fatal error:  Class 'Session' not found in /home/dgzhlbvq/public_html/okonexion.com/app/views/interfaz/mensaje/index.blade.php on line 2
+[13-Feb-2015 03:29:06 America/New_York] PHP Fatal error:  Class 'Session' not found in /home/dgzhlbvq/public_html/okonexion.com/app/views/interfaz/mensaje/index.blade.php on line 2

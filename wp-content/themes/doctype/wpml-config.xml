@@ -1,0 +1,23 @@
+<wpml-config>  
+	<custom-types>
+	    <custom-type translate="1">portfolio</custom-type>
+	</custom-types>
+	<taxonomies>
+	    <taxonomy translate="1">skills</taxonomy>
+	</taxonomies>
+    <admin-texts>
+    	<key name="stag_framework_values">
+	        <key name="general_footer_text_left" />
+	        <key name="general_footer_text_right" />
+	        <key name="style_font_script" />
+	        <key name="blog_title" />
+	        <key name="blog_subtitle" />
+	        <key name="blog_subtitle" />
+	        <key name="portfolio_title" />
+	        <key name="portfolio_subtitle" />
+	        <key name="portfolio_related_project_text" />
+	        <key name="portfolio_cta_text" />
+	        <key name="portfolio_cta_button_text" />
+        </key>
+    </admin-texts>
+</wpml-config>

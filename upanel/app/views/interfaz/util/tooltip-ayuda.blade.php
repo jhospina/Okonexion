@@ -1,0 +1,1 @@
+<a class="tooltip-top" rel="tooltip" title="{{$descripcion}}"><span class="glyphicon glyphicon-question-sign"></span></a>

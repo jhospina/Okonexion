@@ -1,0 +1,80 @@
+input,
+button,
+.button,
+textarea{
+	-webkit-font-smoothing: inherit;
+	background: $footer_color;
+	border: 1px solid transparent;
+	padding: 13px 10px;
+	@include border-radius(3px);
+	max-width: 100%;
+	&:focus{
+		outline: 0;
+		border: 1px solid darken($footer_color, 10%);
+		background: white;
+	}
+}
+
+.stag-button{
+	@include border-radius(3px);
+}
+
+.stag-button--stroke{
+	background-color: transparent;
+}
+
+
+.stag-button--green{
+	&:not(.stag-button--stroke){
+		background-color: $accent;
+	}
+	&.stag-button--stroke{
+		border-color: $accent;
+		color: $accent !important;
+		&:hover{
+			background: $accent;
+		}
+	}
+}
+
+
+
+.stag-button--black{
+	&:not(.stag-button--stroke){
+		background-color: $footer_bg;
+	}
+	&.stag-button--stroke{
+		border-color: $footer_bg;
+		color: $footer_bg !important;
+		&:hover{
+			background: $footer_bg;
+		}
+	}
+}
+
+input[type=submit],
+button,
+.button{
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+	text-transform: uppercase;
+	line-height: 1;
+	@include transition(all .35s);
+	&:hover{
+		@include opacity(.85);
+	}
+}
+
+.button{
+	display: inline-block;
+	&:hover{
+		color: white;
+	}
+}
+
+.search-form{
+	.screen-reader-text{
+		display: none;
+	}
+}

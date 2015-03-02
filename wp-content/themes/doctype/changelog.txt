@@ -1,0 +1,65 @@
+== Doctype Changelog ==
+
+= 1.0.12: Jan 01, 2015 =
+* Fix a warning on new installations
+
+= 1.0.11: July 19, 2014 =
+* Fix localisation issues
+
+= 1.0.10: July 01, 2014 =
+* Fix - Contact Form typo, caused error on the page
+* Fix - FontAwesome icons issues
+* Note - Replace full files and folders to ensure maximum compatibility
+
+= 1.0.9: June 24, 2014 =
+* style.css - updated version number
+* template-contact.php - Better WP compatibility
+* inc/options/styling-options.php - Fixes issue with Background color conflict for headings
+
+= 1.0.8: February 08, 2014 =
+* style.css - updated version number and map styling
+* inc/widgets/widget-contact.php - Update contact widget, now accepts latitude and longitude. Needed to update contact widget.
+
+= 1.0.7: November 18, 2013 =
+* style.css - updated version number
+* assets/js/jquery.custom.js - Fix mobile navigation icon
+
+= 1.0.6: November 10, 2013 =
+* style.css - updated version number
+* functions.php
+* inc/widgets/widget-cta.php
+* NEW: template-widgetized.php - New template for Stag Custom Sidebars plugin (http://wordpress.org/plugins/stag-custom-sidebars/)
+
+= 1.0.5: October 22, 2013 =
+* style.css - updated version number
+* includes/options/styling-options.php - Fixed an issue with Google Web Font
+
+= 1.0.4: October 07, 2013 =
+* style.css - fixed styling issues with navigation in Firefox
+
+= 1.0.3: October 03, 2013 =
+* style.css - updated version number
+* header.php - fixed an issue with site tagline
+
+= 1.0.2: September 23, 2013 =
+* style.css - updated version number, updated styling for navigation
+* Fix: archive.php - added missing paging function
+* jquery.custom.js - replace entity character for menu with FontAwesome Icon, optional sticky navigation feature
+* inc/options/styling-options.php - Added options to change heading font
+* inc/options/general-settings.php - Sticky Navigation Option
+* functions.php - pass vars to JS
+* assets/js/plugins.js - updated Retina script with localStorage cache, added nav script
+* header.php - remove auto retina
+* content-single.php - Added single page navigation
+
+= 1.0.1: September 15, 2013 =
+* style.css - updated version number
+* footer.php - Updated the Portfolio CTA conditions
+* inc/widgets/widget-recent-projects.php - Use WP_Query instead of query_posts
+* functions.php - Portfolio filter classes
+* assets/js/jquery.custom.js - Portfolio Filter
+* NEW: template-portfolio-filterable.php
+* NEW: assets/js/jquery.mixitup.min.js
+
+= 1.0: September 13, 2013 =
+* Initial release!

@@ -1,0 +1,50 @@
+*,*:after,*:before{
+  @include box-sizing(border-box);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+  color: $footer_bg;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+/* Make sure videos and embeds fit their containers. */
+embed,
+iframe,
+object,
+video {
+  max-width: 100%;
+}
+
+p{
+  margin: 0;
+}
+
+img{
+  max-width: 100%;
+  height: auto;
+}
+
+iframe{
+  max-height: 100%;
+}
+
+img{
+  vertical-align: bottom;
+  &:not([src]) {
+    visibility: hidden;
+  }
+}
+
+a{
+  text-decoration: none;
+  @include transition(all .25s ease-in-out);
+  &:hover{
+    color: inherit;
+  }
+}

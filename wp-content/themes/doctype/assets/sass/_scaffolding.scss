@@ -1,0 +1,397 @@
+html{
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body{
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body{
+  font: 17px/1.4 "Helvetica Neue", sans-serif, normal;
+  color: #2b353a;
+  // @include hyphens(auto);
+  @include for(max, 1200px){
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+%site-width{
+  max-width: 1170px;
+  margin: 0 auto;
+}
+
+.inside, %inside{
+  @extend %site-width;
+}
+
+.site-header{
+  @extend %clearfix;
+  position: relative;
+  background: white;
+  @include transition(padding .1s ease-in);
+  @include rem('padding-top', 40px);
+  @include rem('padding-bottom', 40px);
+}
+
+@media (min-width: 900px){
+  .sticky-nav .site-header--fixed{
+    position: fixed;
+    z-index: 10;
+    right: 0;
+    left: 0;
+    top: 0;
+  }
+
+  .sticky-nav.admin-bar .site-header--fixed{
+    top: 28px;
+  }
+}
+
+.site-branding{
+  display: inline-block;
+  float: left;
+  line-height: 80px;
+  height: 100%;
+  img{
+    vertical-align: middle;
+    padding: 20px 0;
+  }
+  h1{
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
+  }
+}
+
+.navbar{
+  float: right;
+  line-height: 80px;
+  font-size: 15px;
+  li{
+    margin-left: 10px;
+    line-height: 1;
+  }
+  a{
+    text-transform: uppercase;
+    color: inherit;
+  }
+}
+
+.site-content{
+  @extend %site-width;
+  @include rem('margin-bottom', 70px);
+}
+
+.site-footer{
+  background-color: $footer-bg;
+  padding: 26px 0;
+  color: white;
+  font-size: 14px;
+  text-transform: uppercase;
+  .site-info{
+    @extend %site-width;
+  }
+  .grid-6:nth-child(2){
+    text-align: right;
+  }
+}
+
+.footer-widget-area{
+  background: $footer_color;
+  position: relative;
+  @include rem('padding-top', 65px);
+  .widget-title{
+    margin: 0;
+    @include rem('font-size', 17px);
+    font-weight: bold;
+    color: $body_color;
+    @include rem('margin-bottom', 45px);
+    position: relative;
+    span{
+      display: inline-block;
+      background: $footer_color;
+      position: relative;
+      z-index: 1;
+      max-width: 250px;
+      padding-right: 10px;
+    }
+    &::before{
+      content: '';
+      background: $body_color;
+      height: 1px;
+      width: 100%;
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      bottom: 50%;
+    }
+  }
+  ul{
+    margin: 0;
+    padding: 0;
+  }
+  li{
+    list-style: none;
+    margin-bottom: 7px;
+  }
+  .widget{
+    @include rem('padding-bottom', 65px);
+  }
+
+  .search-field{
+    border: 1px solid darken($footer_color, 20%);
+    &:focus{
+      outline: 0;
+      border-color: darken($footer_color, 25%);
+    }
+  }
+  .search-submit{
+    border: 1px solid transparent;
+  }
+}
+
+.widget{
+  .rss-date,
+  .post-date{
+    // display: inline-block;
+    font-size: 13px;
+    color: #c2c2c2;
+    margin-top: 5px;
+  }
+  cite{
+    color: #c2c2c2;
+  }
+
+
+
+  .children{
+    padding-left: 20px;
+  }
+  table{
+    width: 100%;
+    td,
+    th{
+      padding: 10px 10px;
+    }
+    th{
+      text-align: left;
+    }
+    .odd{
+      background: $footer_color;
+    }
+  }
+}
+
+.flickr-photos{
+  li{
+    display: inline-block;
+    margin: 0 5px 5px 0;
+  }
+}
+
+.widget_rss{
+  cite{
+    text-transform: none;
+    font-size: 13px;
+    &:before{
+      content: '· By ';
+    }
+  }
+}
+
+.widget_recent_entries,
+.widget_rss{
+  text-transform: uppercase;
+  .widget-title{
+    span{
+      display: inline;
+      vertical-align: middle;
+    }
+    img{
+      position: relative;
+      top: -5px;
+    }
+    a{
+      display: inline;
+    }
+  }
+  a{
+    color: inherit;
+    display: block;
+  }
+  li{
+    margin-bottom: 20px;
+  }
+}
+
+.widget_categories,
+.widget_archive{
+  color: #c2c2c2;
+}
+
+.js #primary-menu {
+  clip: rect(0 0 0 0);
+  max-height: 0;
+  position: absolute;
+  display: block;
+  zoom: 1;
+  @include for (max, 900px){
+    overflow: hidden;
+  }
+}
+
+#primary-menu.opened {
+  max-height: 9999px;
+}
+
+@media screen and (min-width: 900px) {
+  .js #primary-menu {
+    position: relative;
+  }
+  .js #primary-menu.closed {
+    max-height: none;
+  }
+  #nav-toggle {
+    display: none;
+  }
+}
+
+#nav-toggle{
+  font-size: 28px;
+  line-height: 1;
+  text-align: right;
+  position: relative;
+}
+
+.sfHover a{
+  color: #fff;
+}
+
+@media screen and (max-width: 900px) {
+  .navbar{
+    width: 100%;
+    margin: 0;
+    line-height: 1;
+    a{
+      &:hover{
+        background: transparent !important;
+      }
+    }
+  }
+
+  .site-header{
+    padding: 0px 0px 30px;
+  }
+
+  #nav-toggle{
+    display: inline-block;
+    float: right;
+    bottom: -40px;
+  }
+
+  .sub-menu:before{
+    display: none;
+  }
+
+  .main-navigation{
+    .primary-menu{
+      background: $footer_color;
+      margin-left: -20px;
+      margin-right: -20px;
+      padding-left: 20px;
+      padding-right: 20px;
+      position: relative;
+      top: 0px;
+      li{
+        width: 100%;
+        display: block;
+        margin: 0;
+      }
+      a{
+        display: block;
+        border-bottom: 1px solid white;
+        padding: 10px 0;
+      }
+    }
+  }
+}
+@media (min-width: 900px){
+  .primary-menu{
+    li{
+      position: relative;
+    }
+    > li > a{
+      margin-bottom: 10px;
+    }
+    ul{
+      position: absolute;
+      display: none;
+      top: 100%;
+      left: 0;
+      min-width: 12em;
+      z-index: 99;
+    }
+  }
+}
+
+@media (max-width: 900px){
+  .primary-menu{
+    .sub-menu{
+      visibility: visible !important;
+      display: block !important;
+      width: 100% !important;
+      padding: 0 !important;
+      background: transparent !important;
+      a{
+        color: inherit;
+      }
+    }
+  }
+}
+
+.sub-menu{
+  padding: 15px 0 !important;
+  @include border-radius(5px);
+  &:before{
+    bottom: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(136, 183, 213, 0);
+    border-top-color: #fff;
+    border-width: 10px;
+    left: 50%;
+    top: 0px;
+    left: 20px;
+  }
+  li{
+    margin: 0;
+    background: transparent;
+    line-height: 1;
+  }
+  a{
+    color: #fff;
+    background: transparent;
+    display: block !important;
+    &:hover{
+      opacity: .85;
+    }
+  }
+  ul{
+    top: 0;
+    &:before{
+      display: none;
+    }
+  }
+}
+
+.primary-menu li:hover > ul,
+.primary-menu li.sfHover > ul { display: block; }
