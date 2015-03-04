@@ -36,7 +36,7 @@ if (Aplicacion::existe()) {
 ?>
 
 <div class="col-lg-12 block">
-    <div class="progress">
+    <div class="progress" id="progress-app">
         <div id="progress-bar" class="progress-bar {{$classColor}}  active progress-bar-striped" role="progressbar" aria-valuenow="{{$progreso}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$progreso}}%">
             @if($progreso>5)     
             <span class="progress-text in" id="text-progress">&nbsp; {{$progreso}}% ({{$texto}})</span>

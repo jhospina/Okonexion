@@ -181,7 +181,7 @@ class UPanelControladorAplicacion extends Controller {
                 $size = Input::file($index)->getSize();
 
                 $path = 'usuarios/uploads/' . Auth::user()->id . "/";
-                $archivo = date("YmdGis") . "." . $extension;
+                $archivo = Util::obtenerTimeStamp() . "." . $extension;
 
                 Input::file($index)->move($path, $archivo);
 

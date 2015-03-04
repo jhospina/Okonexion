@@ -82,23 +82,25 @@ Route::group(array('before' => 'auth'), function() {
 
     Route::get("aplicacion/administrar/institucional", "UPanelControladorContenidoNoticias@institucional");
     Route::get("aplicacion/administrar/noticias", "UPanelControladorContenidoNoticias@noticias");
-    /* NOTICIAS - AGREGAR */Route::get("aplicacion/administrar/noticias/agregar", "UPanelControladorContenidoNoticias@noticias_agregar");
+    /* NOTICIAS - AGREGAR */ Route::get("aplicacion/administrar/noticias/agregar", "UPanelControladorContenidoNoticias@noticias_agregar");
+    /* NOTICIAS - AGREGAR - Publicar */ Route::post("aplicacion/administrar/noticias/agregar/publicar", "UPanelControladorContenidoNoticias@noticias_agregarPublicar");
+    /* NOTICIAS - AGREGAR - Guardar */ Route::post("aplicacion/administrar/noticias/agregar/guardar", "UPanelControladorContenidoNoticias@noticias_agregarGuardar");
+
     Route::get("aplicacion/administrar/encuestas", "UPanelControladorTiposContenidosApp@encuestas");
     Route::get("aplicacion/administrar/pqr", "UPanelControladorTiposContenidosApp@pqr");
-    
-    
+
+
     //AJAX
     Route::post("aplicacion/administrar/noticias/ajax/agregar/categoria", "UPanelControladorContenidoNoticias@ajax_noticias_agregarCategoria");
-    
-    
-    
-    
-    
+    Route::post("aplicacion/administrar/noticias/ajax/subir/imagen", "UPanelControladorContenidoNoticias@ajax_noticias_subirImagen");
+
+
+
+
+
     //**************************************************************************
     //**************************************************************************
     //**************************************************************************
-    
-    
 });
 
 
