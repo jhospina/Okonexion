@@ -12,8 +12,6 @@ class TablaRelacionContenidosTerminosApp extends Migration {
      */
     public function up() {
         Schema::create('relacion_contenidos_terminos_App', function($table) {
-            $table->integer("id_usuario");
-            $table->integer("id_aplicacion");
             $table->integer("id_contenido");
             $table->integer("id_termino");     
         });

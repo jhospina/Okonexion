@@ -106,5 +106,3 @@ Route::filter('app', function() {
 
 //Todas las rutas que empiecen por app/* son el area de conexion para los dispositivos moviles
 Route::when('app/*', 'app');
-
-

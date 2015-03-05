@@ -40,7 +40,7 @@ class TaxonomiaContenidoApp extends Eloquent {
     //***********************************************
     //RELACION CON OTROS MODELOS*********************
     //***********************************************
-    public function terminocontenidoapps() {
+    public function terminos() {
         return $this->hasMany('TerminoContenidoApp', 'id_taxonomia');
     }
 

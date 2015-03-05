@@ -9,9 +9,8 @@
         {{--ICONO DE LA APLICACION--}}
         <div class="col-lg-12 uploadIconMenu">
             <a  href="#" class="tooltip-left" rel="tooltip" title="Extensiones permitidas: png, jpeg. Max 500Kb"> 
-                <input name="logoApp" id="logoApp" class="iconoMenu" accept="image/*" type="file" multiple=true>
+                <input name="logoApp" id="logoApp" accept="image/*" type="file" multiple=true>
             </a>
-
         </div>
 
     </div>

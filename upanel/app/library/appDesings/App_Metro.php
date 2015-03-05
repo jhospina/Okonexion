@@ -97,5 +97,3 @@ class App_Metro {
     }
 
 }
-
-?> 

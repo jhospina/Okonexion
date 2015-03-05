@@ -8,7 +8,10 @@ class UPanelControladorContenidoNoticias extends Controller {
         $app = Aplicacion::obtener();
         if (!Aplicacion::estaTerminada($app->estado))
             return Redirect::to("/");
-        return View::make("usuarios/tipo/regular/app/administracion/noticias/index")->with("app", $app);
+
+        $noticias = ContenidoApp::where("tipo", Contenido_Noticias::nombre)->where("id_usuario", Auth::user()->id)->paginate(30);
+
+        return View::make("usuarios/tipo/regular/app/administracion/noticias/index")->with("app", $app)->with("noticias", $noticias);
     }
 
     public function noticias_agregar() {
@@ -21,41 +24,62 @@ class UPanelControladorContenidoNoticias extends Controller {
 
         $tax = TaxonomiaContenidoApp::obtener(Contenido_Noticias::taxonomia);
         //Obtiene las categorias de las noticias de la taxonomia
-        $cats = $tax->terminocontenidoapps;
-
+        $cats = $tax->terminos;
 
         return View::make("usuarios/tipo/regular/app/administracion/noticias/agregar")->with("app", $app)->with("cats", $cats)->with("tax", $tax);
     }
 
     public function noticias_agregarPublicar() {
+
         $data = Input::all();
         $app = Aplicacion::obtener();
         $nombreTC = TipoContenido::obtenerNombre($app->diseno, Contenido_Noticias::nombre);
 
-        $contenido = new ContenidoApp;
-        $contenido->id_aplicacion = Aplicacion::ID();
-        $contenido->id_usuario = Auth::user()->id;
-        $contenido->tipo = Contenido_Noticias::nombre;
-        $contenido->titulo = $data[Contenido_Noticias::configTitulo];
-        $contenido->contenido = $data[Contenido_Noticias::configDescripcion];
-        $contenido->estado = ContenidoApp::ESTADO_PUBLICO;
+        //Valida los datos enviados
+        if (!is_null($valid = Contenido_Noticias::validar($data)))
+            return $valid;
 
-        @$contenido->save();
-
-        if (is_int((int) $data[Contenido_Noticias::configImagen . "_id"]))
-            ContenidoApp::agregarMetaDato($contenido->id, Contenido_Noticias::configImagen . "_principal", $data[Contenido_Noticias::configImagen . "_id"]);
-
-        $cats = array(); //almacenara los ID de las categorias
-
-        foreach ($data as $indice => $valor) {
-            if (strpos($indice, "cat-") !== false) {
-                $cats[] = $valor;
-            }
-        }
-
-        ContenidoApp::establecerTerminosTaxonomia($contenido->id, $cats, Contenido_Noticias::taxonomia);
+        Contenido_Noticias::agregar($data, ContenidoApp::ESTADO_PUBLICO);
 
         return Redirect::to("aplicacion/administrar/noticias")->with(User::mensaje("exito", null, "¡" . Util::eliminarPluralidad($nombreTC) . " publicada con exito!", 2));
+    }
+
+    public function noticias_agregarGuardar() {
+
+        $data = Input::all();
+        $app = Aplicacion::obtener();
+        $nombreTC = TipoContenido::obtenerNombre($app->diseno, Contenido_Noticias::nombre);
+
+        //Valida los datos enviados
+        if (!is_null($valid = Contenido_Noticias::validar($data)))
+            return $valid;
+
+        Contenido_Noticias::agregar($data, ContenidoApp::ESTADO_GUARDADO);
+
+        return Redirect::to("aplicacion/administrar/noticias")->with(User::mensaje("exito", null, "¡" . Util::eliminarPluralidad($nombreTC) . " guardada con exito!", 2));
+    }
+
+    public function noticias_editar($id_noticia) {
+        if (!Aplicacion::existe())
+            return Redirect::to("/");
+        $app = Aplicacion::obtener();
+        if (!Aplicacion::estaTerminada($app->estado))
+            return Redirect::to("/");
+
+        $noticia = ContenidoApp::find($id_noticia);
+
+        if (is_null($noticia))
+            return Redirect::to("/");
+
+        //Evita que se puedan editar las noticias de otros usuarios
+        if ($noticia->id_usuario != Auth::user()->id)
+            return Redirect::to("/");
+
+        $tax = TaxonomiaContenidoApp::obtener(Contenido_Noticias::taxonomia);
+        //Obtiene las categorias de las noticias de la taxonomia
+        $cats = $tax->terminos;
+
+        return View::make("usuarios/tipo/regular/app/administracion/noticias/editar")->with("app", $app)->with("cats", $cats)->with("tax", $tax)->with("noticia", $noticia);
     }
 
     function ajax_noticias_agregarCategoria() {
@@ -88,6 +112,13 @@ class UPanelControladorContenidoNoticias extends Controller {
 
 
         return json_encode($output);
+    }
+
+    function ajax_noticias_eliminarImagen() {
+        $id_imagen = Input::get("id_imagen");
+
+        if (ContenidoApp::eliminarImagen($id_imagen))
+            MetaContenidoApp::where("clave", Contenido_Noticias::nombre . "_principal")->where("valor", $id_imagen)->delete();
     }
 
 }

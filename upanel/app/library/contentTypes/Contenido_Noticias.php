@@ -41,4 +41,46 @@ class Contenido_Noticias {
         $term->save();
     }
 
+    static function agregar($data, $estado) {
+        $contenido = new ContenidoApp;
+        $contenido->id_aplicacion = Aplicacion::ID();
+        $contenido->id_usuario = Auth::user()->id;
+        $contenido->tipo = Contenido_Noticias::nombre;
+        $contenido->titulo = $data[Contenido_Noticias::configTitulo];
+        $contenido->contenido = $data[Contenido_Noticias::configDescripcion];
+        $contenido->estado = $estado;
+
+        @$contenido->save();
+
+        if (strlen($data[Contenido_Noticias::configImagen . "_id"]) > 0)
+            ContenidoApp::agregarMetaDato($contenido->id, Contenido_Noticias::configImagen . "_principal", $data[Contenido_Noticias::configImagen . "_id"]);
+
+        $cats = array(); //almacenara los ID de las categorias
+
+        foreach ($data as $indice => $valor) {
+            if (strpos($indice, "term-") !== false) {
+                $cats[] = $valor;
+            }
+        }
+
+        //Si no se tiene ninguna categoria elegida se le asinga la primera "Sin categoria"
+        if (count($cats) == 0) {
+            $cats[] = 1;
+        }
+        //Establece las categorias de la noticia
+        ContenidoApp::establecerTerminos($contenido->id, $cats);
+    }
+
+    static function validar($data) {
+        if (strlen($data[Contenido_Noticias::configTitulo]) < 1) {
+            return Redirect::back()->withInput()->with(User::mensaje("error", null, "Debes escribir un titulo.", 2));
+        }
+
+        if (strlen($data[Contenido_Noticias::configDescripcion]) < 5) {
+            return Redirect::back()->withInput()->with(User::mensaje("error", null, "Debes escribir una descripción.", 2));
+        }
+
+        return null;
+    }
+
 }

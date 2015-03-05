@@ -455,7 +455,7 @@ else
             multiple: false,
             showPreview: true,
             showRemove: true,
-            showUpload:<?php echo(!is_null($logo)) ? "false" : "true" ?>,
+            showUpload: false,
             initialPreview: <?php echo(!is_null($logo)) ? "\"<img src='" . $logo . "' class='file-preview-image'/>\"" : "false"; ?>,
             maxFileCount: 1,
             previewFileType: "image",
@@ -486,7 +486,7 @@ else
                 multiple: false,
                 showPreview: true,
                 showRemove: true,
-                showUpload:<?php echo($configIcono && !ConfiguracionApp::esPredeterminado($ID)) ? "false" : "true" ?>,
+                showUpload: false,
                 initialPreview: <?php echo($configIcono && !ConfiguracionApp::esPredeterminado($ID)) ? "\"<img src='" . ConfiguracionApp::obtenerValorConfig($ID) . "' class='file-preview-image'/>\"" : "false"; ?>,
                 maxFileCount: 1,
                 previewFileType: "image",
@@ -514,7 +514,7 @@ else
 
     });
 
-
+    //Cuando se borra la imagen
     $('.iconoMenu').on('fileclear', function (event) {
         var idIcono = jQuery(this).attr("id");
 
@@ -530,6 +530,11 @@ else
 
     });
 
+    //Sube la imagen una vez seleccionada
+    $('.iconoMenu').on('fileimageloaded', function (event, previewId) {
+        $('.iconoMenu').fileinput('upload');
+    });
+
 
     $('#logoApp').on('fileclear', function (event) {
 
@@ -542,6 +547,12 @@ else
             }
 
         }, "json");
+    });
+
+
+    //Sube la imagen una vez seleccionada
+    $('#logoApp').on('fileimageloaded', function (event, previewId) {
+        $("#logoApp").fileinput('upload');
     });
 
 

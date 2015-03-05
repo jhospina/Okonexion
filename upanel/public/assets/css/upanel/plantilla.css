@@ -309,3 +309,7 @@ span.simplecolorpicker.icon {
     overflow: auto;
     max-height: 200px;
 }
+
+#error-js{
+    display:none;
+}

@@ -5,6 +5,17 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
 $tituloID = Contenido_Noticias::configTitulo;
 $descripcionID = Contenido_Noticias::configDescripcion;
 $imagenID = Contenido_Noticias::configImagen;
+
+$categorias = $noticia->terminos;
+
+//Obtiene la imagen principa de la noticia
+$metaImagen = ContenidoApp::obtenerMetadato($noticia->id, Contenido_Noticias::configImagen . "_principal");
+
+if (!is_null($metaImagen)) {
+    $imagen = ContenidoApp::find($metaImagen->valor);
+} else {
+    $imagen = null;
+}
 ?>
 
 @extends('interfaz/plantilla')
@@ -23,14 +34,14 @@ $imagenID = Contenido_Noticias::configImagen;
 
 
 
-<h2> Agregar {{$singNombre}}</h2> 
+<h2> Editar {{$singNombre}}</h2> 
 <hr/>
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
 <div class="alert alert-danger" id="error-js"></div>
 <div class="col-lg-12" style="margin-bottom: 30px;margin-top: 10px;">
     <form method="POST" id="form">
         <div class="col-lg-12" style="margin-bottom: 20px;">
-            <div class="col-lg-12"><input name="{{$tituloID}}" id="{{$tituloID}}" type="text"  placeholder="Introduce el titulo aquí" class="form-control input-lg"></div>
+            <div class="col-lg-12"><input name="{{$tituloID}}" id="{{$tituloID}}" type="text"  placeholder="Introduce el titulo aquí" class="form-control input-lg" value="{{$noticia->titulo}}"></div>
             <div class="col-lg-12">
                 <div id="editor"></div>
                 <textarea style="display: none;" id="{{$descripcionID}}" name="{{$descripcionID}}"></textarea>
@@ -44,7 +55,7 @@ $imagenID = Contenido_Noticias::configImagen;
                         <div class="col-lg-12" style="text-align: center;">
                             <input name="{{$imagenID}}" id="{{$imagenID}}" accept="image/*" type="file" multiple=false>
                         </div>
-                        <input type="hidden" name="{{$imagenID}}_id" id="{{$imagenID}}_id"/>
+                        <input type="hidden" name="{{$imagenID}}_id" id="{{$imagenID}}_id" value="@if(!is_null($imagen)){{$imagen->id}}@endif"/>
                     </div>
                 </div>
             </div>
@@ -53,7 +64,7 @@ $imagenID = Contenido_Noticias::configImagen;
                 <div class="panel panel-default">
                     <div class="panel-heading">Categorias <span class="label label-success" id="msj-agregar-cat" style="display: none;"></span></div>
                     <div class="panel-body" id="content-cats">
-                        @include("interfaz/app/listar_terms",array("terms"=>$cats))
+                        @include("interfaz/app/listar_terms",array("terms"=>$cats,"seleccionados"=>$categorias))
                     </div>
                     {{--SECCION PARA AGREGAR CATEGORIA--}}
                     <div class="panel-footer" id="content-agregar-categoria">
@@ -93,13 +104,16 @@ $imagenID = Contenido_Noticias::configImagen;
         jQuery(".tooltip-left").tooltip({placement: "left"});
         jQuery(".tooltip-top").tooltip({placement: "top"});
         jQuery('#editor').Editor({"bold": true});
+
+        $("#editor").Editor("setText", "{{$noticia->contenido}}");
+
         jQuery("#{{$imagenID}}").fileinput({
             multiple: false,
             showPreview: true,
             showRemove: true,
             showUpload: false,
             showCaption: false,
-            initialPreview: false,
+            initialPreview: <?php echo(!is_null($imagen)) ? "\"<img src='" . $imagen->contenido . "' class='file-preview-image'/>\"" : "false"; ?>,
             maxFileCount: 1,
             previewFileType: "image",
             allowedFileExtensions: ['jpg', 'png'],
@@ -146,11 +160,11 @@ $imagenID = Contenido_Noticias::configImagen;
         $("#{{$imagenID}}_id").val(data["{{$imagenID}}_id"]);
     });
 
+
     //Sube la imagen una vez seleccionada
     $('#{{$imagenID}}').on('fileimageloaded', function (event, previewId) {
         $("#{{$imagenID}}").fileinput('upload');
     });
-
 
     //Eliminar imagen
     $('#{{$imagenID}}').on('fileclear', function (event) {
@@ -163,9 +177,8 @@ $imagenID = Contenido_Noticias::configImagen;
                 $("#{{$imagenID}}_id").val("");
             }
 
-        }, "json");
+        }, "json"); 
     });
-
 
 </script>
 

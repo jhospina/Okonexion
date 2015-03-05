@@ -285,11 +285,12 @@ class UPanelControladorAplicacion extends Controller {
 
     public function ajax_eliminarLogo() {
 
-        $config = ConfiguracionApp::find(ConfiguracionApp::obtenerIdConfigDesdeClave("logoApp"));
+        $app = Aplicacion::obtener();
         //Elimina la imagen anterior si existe
-        if (File::exists(str_replace(URL::to("") . "/", "", $config->valor))) {
-            File::delete(str_replace(URL::to("") . "/", "", $config->valor));
-            $config->delete();
+        if (File::exists(Util::convertirUrlPath($app->url_logo))) {
+            File::delete(Util::convertirUrlPath($app->url_logo));
+            $app->url_logo = null;
+            $app->save();
         }
     }
 

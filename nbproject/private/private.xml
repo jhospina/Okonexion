@@ -8,11 +8,10 @@
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/routes.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/tiposContenido/UPanelControladorContenidoNoticias.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/noticias/agregar.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/ControlTiposContenido/TerminoContenidoApp.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/library/contentTypes/Contenido_Noticias.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/soporteGeneral/app/colaDesarrollo.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/ControlTiposContenido/TaxonomiaContenidoApp.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/noticias/index.blade.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorAplicacion.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/noticias/editar.blade.php</file>
         </group>
     </open-files>
 </project-private>

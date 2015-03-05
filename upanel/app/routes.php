@@ -12,8 +12,6 @@
  */
 
 
-
-
 // Para validar los datos de inicio de sesión.
 Route::post('login', 'ControladorAcceso@iniciarSesion');
 
@@ -85,7 +83,7 @@ Route::group(array('before' => 'auth'), function() {
     /* NOTICIAS - AGREGAR */ Route::get("aplicacion/administrar/noticias/agregar", "UPanelControladorContenidoNoticias@noticias_agregar");
     /* NOTICIAS - AGREGAR - Publicar */ Route::post("aplicacion/administrar/noticias/agregar/publicar", "UPanelControladorContenidoNoticias@noticias_agregarPublicar");
     /* NOTICIAS - AGREGAR - Guardar */ Route::post("aplicacion/administrar/noticias/agregar/guardar", "UPanelControladorContenidoNoticias@noticias_agregarGuardar");
-
+    /* NOTICIAS - EDITAR */ Route::get("aplicacion/administrar/noticias/editar/{id_noticia}", "UPanelControladorContenidoNoticias@noticias_editar");
     Route::get("aplicacion/administrar/encuestas", "UPanelControladorTiposContenidosApp@encuestas");
     Route::get("aplicacion/administrar/pqr", "UPanelControladorTiposContenidosApp@pqr");
 
@@ -93,14 +91,7 @@ Route::group(array('before' => 'auth'), function() {
     //AJAX
     Route::post("aplicacion/administrar/noticias/ajax/agregar/categoria", "UPanelControladorContenidoNoticias@ajax_noticias_agregarCategoria");
     Route::post("aplicacion/administrar/noticias/ajax/subir/imagen", "UPanelControladorContenidoNoticias@ajax_noticias_subirImagen");
-
-
-
-
-
-    //**************************************************************************
-    //**************************************************************************
-    //**************************************************************************
+     Route::post("aplicacion/administrar/noticias/ajax/eliminar/imagen", "UPanelControladorContenidoNoticias@ajax_noticias_eliminarImagen");
 });
 
 
