@@ -57,4 +57,54 @@ class Util {
         return $public . substr($URL, $posRaiz + strlen($ultimo));
     }
 
+    /** Recorta un texto hasta la longitud dada.
+     * 
+     * @param type $texto El texto a recortar
+     * @param type $longitud La longitud en caracteres
+     * @return string El texto recortado
+     */
+    static function recortarTexto($texto, $longitud) {
+        $texto = strip_tags($texto);
+        $texto_final = "";
+        $palabras = explode(" ", $texto);
+        for ($i = 0; $i < count($palabras); $i++) {
+            $texto_final.=$palabras[$i] . " ";
+            if (strlen($texto_final) >= $longitud)
+                return substr($texto_final, 0, strlen($texto_final) - 1) . "...";
+        }
+    }
+
+    /** Da formato de salida a un listado de objetos dado por la propiedad a imprimir del objeto.
+     *  
+     * @param Object $objetos Listado de objetos de una misma clase
+     * @param String $propiedad  El nombre del a propiedad del objeto a imprimir
+     * @param String $separador [, ] Un String separador entre cada propiedad del objeto
+     * @param String $prefijo [null] Un String a colocar antecedido de la propiedad  del objeto 
+     * @param String $sufijo [null] Un String a colocar posteriormente al valor de la propiedad del objeto
+     * @return string Retorna un string en formato indicado. 
+     */
+    static function formatearResultadosObjetos($objetos, $propiedad, $separador = ", ", $prefijo = null, $sufijo = null) {
+        $contenido = ""; //Almacena el resultado final
+
+        foreach ($objetos as $objeto)
+            $contenido.=$prefijo . $objeto[$propiedad] . $sufijo . $separador;
+
+        return substr($contenido, 0, strlen($contenido) - strlen($separador));
+    }
+
+    /** Extraer la extension de un archivo
+     * 
+     * @param type $nombre
+     * @return type
+     */
+    static function extraerExtensionArchivo($nombre) {
+        $desc = explode(".", $nombre);
+        return end($desc);
+    }
+
+    static function extraerNombreArchivo($nombre) {
+        $desc = explode(".", $nombre);
+        return $desc[count($desc) - 2];
+    }
+
 }

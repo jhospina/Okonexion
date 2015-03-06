@@ -59,6 +59,12 @@ class ContenidoApp extends Eloquent {
         $meta->save();
     }
 
+    /** Obtiene el valor de un metadado dado por su valor clave
+     * 
+     * @param type $id_contenido Id del contenido al que pertenece el metadato
+     * @param type $clave El valor clave que identifica el metadato
+     * @return type Retorna el valor del metadato en caso de exito, de lo contrario Null. 
+     */
     static function obtenerMetadato($id_contenido, $clave) {
         $metas = MetaContenidoApp::where("id_contenido", $id_contenido)->where("clave", $clave)->get();
         foreach ($metas as $meta)
@@ -72,11 +78,24 @@ class ContenidoApp extends Eloquent {
      * @param array $terms Arreglo que contiene los Ids de los terminos a asociar con el contenido 
      */
     static function establecerTerminos($id_contenido, $terms) {
+        ContenidoApp::eliminarTerminos($id_contenido);
         $contenido = ContenidoApp::find($id_contenido);
         foreach ($terms as $indice => $id_term) {
             $contenido->terminos()->attach($id_term);
         }
     }
+
+    /** Elimina todos los terminos establecidos a un contenido
+     * 
+     * @param type $id_contenido Id del contenido
+     */
+    static function eliminarTerminos($id_contenido) {
+        DB::table("relacion_contenidos_terminos_App")->where("id_contenido", $id_contenido)->delete();
+    }
+
+    //***********************************************
+    //MODIFICACION DE ATRIBUTOS*********************
+    //***********************************************
 
     function getContenidoAttribute($contenido) {
         return str_replace("\"", "'", $contenido);

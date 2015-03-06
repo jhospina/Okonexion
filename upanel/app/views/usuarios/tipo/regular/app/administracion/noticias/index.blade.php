@@ -7,6 +7,10 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
 
 @section("titulo") {{$app->nombre}} | Administrar {{$nombreContenido}} @stop
 
+@section("css")
+{{ HTML::style('assets/css/upanel/noticias.css', array('media' => 'screen')) }}
+@stop
+
 @section("contenido") 
 
 <h1>ADMINISTRAR {{strtoupper($nombreContenido)}}</h1>
@@ -18,30 +22,40 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
 </div>
 
 
-<table class="table table-striped">
-    <tr><th>TITULO</th><th>ESTADO</th><th>CATEGORIAS</th><th>FECHA CREACIÓN</th><th></th></tr>
-
+<div class="col-lg-12" id="listado-noticias">
     @foreach($noticias as $noticia)
-    <tr>
-        <?php $cats = $noticia->terminos; ?>
-        <td>{{$noticia->titulo}}</td><td>{{$noticia->estado}}</td>
-        <td>
-            @foreach($cats as $cat)
-            <a href="">{{$cat->nombre}}</a>, 
-            @endforeach
-        </td>
+    <div class="col-lg-12 content-noticia"> 
+        <?php
+        $cats = $noticia->terminos;
+        $imagen = Contenido_Noticias::obtenerImagen($noticia->id, Contenido_Noticias::IMAGEN_URL);
+        ?>
+        <div class="col-lg-10 titulo-noticia"><span class="glyphicon glyphicon-globe"></span>  {{$noticia->titulo}}</div>
+        <div class="col-lg-2 estado-noticia {{$noticia->estado}}">
+            @if($noticia->estado==ContenidoApp::ESTADO_PUBLICO)
+            <span class="glyphicon glyphicon-flag"></span> 
+            @endif
+            @if($noticia->estado==ContenidoApp::ESTADO_GUARDADO)
+            <span class="glyphicon glyphicon-save"></span> 
+            @endif
+            {{$noticia->estado}}
 
-        <td>{{$noticia->created_at}}</td>
-        <td>
-            <a class="btn btn-primary">Ver</a>
+        </div>
+        <div class="col-lg-12 descripcion-noticia">
+            {{Util::recortarTexto($noticia->contenido,400)}}
+        </div>
+        <div class="col-lg-10"><span class="glyphicon glyphicon-tags"></span>&nbsp; 
+            {{Util::formatearResultadosObjetos($noticia->terminos,"nombre")}}
+        </div>
+        <div class="col-lg-2">
+            <span class="glyphicon glyphicon-calendar"></span> {{$noticia->created_at}}
+        </div>
+        {{--
             <a href="{{URL::to("aplicacion/administrar/noticias/editar/".$noticia->id)}}" class="btn btn-warning">Editar</a>
-            <a class="btn btn-danger">Eliminar</a>
-        </td>
-    </tr>
+        <a class="btn btn-danger">Eliminar</a>
+        --}}
+    </div> 
     @endforeach
-
-</table>
-
+</div>
 
 {{$noticias->links()}}
 

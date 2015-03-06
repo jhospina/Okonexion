@@ -15,12 +15,17 @@ class Contenido_Noticias {
     //CONFIGURACION DE ADMINISTRACION*************************
     //********************************************************
     const taxonomia = "categorias_noticias"; //Indica el prefijo de la taxonomia de este tipo de contenido
+    //********************************************************
+    //ATRIBUTOS DE IMAGEN*************************
+    //********************************************************
+    const IMAGEN_MIME_TYPE = "MIME_TYPE";
+    const IMAGEN_URL = "URL";
+    const IMAGEN_TITULO = "TITULO";
 
     /** Prepara los requisitos de administracion de las noticias
      * 
      * @param Aplicacion $app El modelo objeto de la aplicacion del usuario 
      */
-
     static function prepararRequisitos($app) {
 
         if (TaxonomiaContenidoApp::existe($nombreTax))
@@ -71,6 +76,35 @@ class Contenido_Noticias {
         ContenidoApp::establecerTerminos($contenido->id, $cats);
     }
 
+    static function editar($id_noticia, $data, $estado) {
+        $contenido = ContenidoApp::find($id_noticia);
+        $contenido->tipo = Contenido_Noticias::nombre;
+        $contenido->titulo = $data[Contenido_Noticias::configTitulo];
+        $contenido->contenido = $data[Contenido_Noticias::configDescripcion];
+        $contenido->estado = $estado;
+
+        @$contenido->save();
+
+        if (!Contenido_Noticias::tieneImagen($id_noticia)) {
+            if (strlen($data[Contenido_Noticias::configImagen . "_id"]) > 0)
+                ContenidoApp::agregarMetaDato($contenido->id, Contenido_Noticias::configImagen . "_principal", $data[Contenido_Noticias::configImagen . "_id"]);
+        }
+
+        $cats = array(); //almacenara los ID de las categorias
+
+        foreach ($data as $indice => $valor) {
+            if (strpos($indice, "term-") !== false) {
+                $cats[] = $valor;
+            }
+        }
+        //Si no se tiene ninguna categoria elegida se le asinga la primera "Sin categoria"
+        if (count($cats) == 0) {
+            $cats[] = 1;
+        }
+        //Establece las categorias de la noticia
+        ContenidoApp::establecerTerminos($contenido->id, $cats);
+    }
+
     static function validar($data) {
         if (strlen($data[Contenido_Noticias::configTitulo]) < 1) {
             return Redirect::back()->withInput()->with(User::mensaje("error", null, "Debes escribir un titulo.", 2));
@@ -81,6 +115,50 @@ class Contenido_Noticias {
         }
 
         return null;
+    }
+
+    /** Indica si una noticia contiene imagen principap
+     * 
+     * @param Int $id_noticia Id de la noticia
+     * @return boolean
+     */
+    static function tieneImagen($id_noticia) {
+        $meta = MetaContenidoApp::where("clave", Contenido_Noticias::configImagen . "_principal")->where("id_contenido", $id_noticia)->get();
+        if (count($meta) > 0)
+            return true;
+        else
+            return false;
+    }
+
+    /** Obtiene la imagen de una noticia, si se indica el atributo retornara solo este. 
+     *  
+     * @param Int $id_noticia Id de la notica a la que pertene la imagen
+     * @param String $atributo (Opcional) Atributo de la imagen a obtener
+     * @return type Si no se indica el atributo, retorna el objeto modelo que contiene la imagen. Si se indica el atributo [TITULO, URL, MIME_TYPE] se retorna el atributo de la imagen. En caso de que la imagen no existe retornara NULL. 
+     */
+    static function obtenerImagen($id_noticia, $atributo = null) {
+
+        $metas = MetaContenidoApp::where("clave", Contenido_Noticias::configImagen . "_principal")->where("id_contenido", $id_noticia)->get();
+        if (count($metas) > 0) {
+            foreach ($metas as $meta)
+                break;
+
+            $imagen = ContenidoApp::find($meta->valor);
+            //Retorna el atributo indicado
+            switch ($atributo) {
+                case Contenido_Noticias::IMAGEN_MIME_TYPE:
+                    $imagen->mime_type;
+                case Contenido_Noticias::IMAGEN_TITULO:
+                    return $imagen->titulo;
+                case Contenido_Noticias::IMAGEN_URL:
+                    return $imagen->contenido;
+                default :
+                    return $imagen;
+                    break;
+            }
+        } else {
+            return null;
+        }
     }
 
 }

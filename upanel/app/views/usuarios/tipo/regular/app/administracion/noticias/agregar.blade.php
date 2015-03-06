@@ -23,6 +23,11 @@ $imagenID = Contenido_Noticias::configImagen;
 
 
 
+{{--NAVEGACION--}}
+<div class="well well-sm">
+    <a href="{{URL::to("aplicacion/administrar/noticias")}}" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Volver</a>
+</div>
+<hr/>
 <h2> Agregar {{$singNombre}}</h2> 
 <hr/>
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
@@ -65,10 +70,10 @@ $imagenID = Contenido_Noticias::configImagen;
             {{--PUBLICAR--}}
             <div class="col-lg-3">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Publicar</div>
+                    <div class="panel-heading">Acciones</div>
                     <div class="panel-body">
                         <div class="col-lg-12" style="text-align: center;">
-                            <button id="btn-publicar" type="button" onClick="publicar(this);" class="btn btn-success col-lg-12 text-center" style="margin-bottom: 5px;"><span class="glyphicon glyphicon glyphicon-ok-circle"></span> PUBLICAR {{strtoupper($singNombre)}}</button>
+                            <button id="btn-publicar" type="button" onClick="publicar(this);" class="btn btn-success col-lg-12 text-center" style="margin-bottom: 5px;"><span class="glyphicon glyphicon glyphicon-ok-circle"></span> PUBLICAR </button>
                             <button id="btn-guardar" type="button" onClick="guardar(this);" class="btn btn-default col-lg-12"><span class="glyphicon glyphicon glyphicon glyphicon-save"></span> Guardar</button>     
                         </div>
                     </div>
@@ -196,7 +201,7 @@ $imagenID = Contenido_Noticias::configImagen;
 
         if (!validar())
             return;
-        $("#form").attr("action", "agregar/publicar");
+        $("#form").attr("action", "publicar");
         jQuery(btn).attr("disabled", "disabled");
         jQuery("#btn-guardar").attr("disabled", "disabled");
         jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Publicando...");
@@ -211,7 +216,7 @@ $imagenID = Contenido_Noticias::configImagen;
 
         if (!validar())
             return;
-        $("#form").attr("action", "agregar/guardar");
+        $("#form").attr("action", "guardar");
         jQuery(btn).attr("disabled", "disabled");
         jQuery("#btn-publicar").attr("disabled", "disabled");
         jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Guardando...");

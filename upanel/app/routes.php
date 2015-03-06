@@ -80,10 +80,10 @@ Route::group(array('before' => 'auth'), function() {
 
     Route::get("aplicacion/administrar/institucional", "UPanelControladorContenidoNoticias@institucional");
     Route::get("aplicacion/administrar/noticias", "UPanelControladorContenidoNoticias@noticias");
-    /* NOTICIAS - AGREGAR */ Route::get("aplicacion/administrar/noticias/agregar", "UPanelControladorContenidoNoticias@noticias_agregar");
-    /* NOTICIAS - AGREGAR - Publicar */ Route::post("aplicacion/administrar/noticias/agregar/publicar", "UPanelControladorContenidoNoticias@noticias_agregarPublicar");
-    /* NOTICIAS - AGREGAR - Guardar */ Route::post("aplicacion/administrar/noticias/agregar/guardar", "UPanelControladorContenidoNoticias@noticias_agregarGuardar");
-    /* NOTICIAS - EDITAR */ Route::get("aplicacion/administrar/noticias/editar/{id_noticia}", "UPanelControladorContenidoNoticias@noticias_editar");
+    /* NOTICIAS - AGREGAR */ Route::get("aplicacion/administrar/noticias/agregar", "UPanelControladorContenidoNoticias@noticias_vistaAgregar");
+    /* NOTICIAS - Publicar */ Route::post("aplicacion/administrar/noticias/publicar", "UPanelControladorContenidoNoticias@noticias_publicar");
+    /* NOTICIAS - Guardar */ Route::post("aplicacion/administrar/noticias/guardar", "UPanelControladorContenidoNoticias@noticias_guardar");
+    /* NOTICIAS - EDITAR */ Route::get("aplicacion/administrar/noticias/editar/{id_noticia}", "UPanelControladorContenidoNoticias@noticias_vistaEditar");
     Route::get("aplicacion/administrar/encuestas", "UPanelControladorTiposContenidosApp@encuestas");
     Route::get("aplicacion/administrar/pqr", "UPanelControladorTiposContenidosApp@pqr");
 
@@ -91,7 +91,7 @@ Route::group(array('before' => 'auth'), function() {
     //AJAX
     Route::post("aplicacion/administrar/noticias/ajax/agregar/categoria", "UPanelControladorContenidoNoticias@ajax_noticias_agregarCategoria");
     Route::post("aplicacion/administrar/noticias/ajax/subir/imagen", "UPanelControladorContenidoNoticias@ajax_noticias_subirImagen");
-     Route::post("aplicacion/administrar/noticias/ajax/eliminar/imagen", "UPanelControladorContenidoNoticias@ajax_noticias_eliminarImagen");
+    Route::post("aplicacion/administrar/noticias/ajax/eliminar/imagen", "UPanelControladorContenidoNoticias@ajax_noticias_eliminarImagen");
 });
 
 

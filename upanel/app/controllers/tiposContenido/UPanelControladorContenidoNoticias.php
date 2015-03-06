@@ -14,7 +14,7 @@ class UPanelControladorContenidoNoticias extends Controller {
         return View::make("usuarios/tipo/regular/app/administracion/noticias/index")->with("app", $app)->with("noticias", $noticias);
     }
 
-    public function noticias_agregar() {
+    public function noticias_vistaAgregar() {
         if (!Aplicacion::existe())
             return Redirect::to("/");
         $app = Aplicacion::obtener();
@@ -29,37 +29,7 @@ class UPanelControladorContenidoNoticias extends Controller {
         return View::make("usuarios/tipo/regular/app/administracion/noticias/agregar")->with("app", $app)->with("cats", $cats)->with("tax", $tax);
     }
 
-    public function noticias_agregarPublicar() {
-
-        $data = Input::all();
-        $app = Aplicacion::obtener();
-        $nombreTC = TipoContenido::obtenerNombre($app->diseno, Contenido_Noticias::nombre);
-
-        //Valida los datos enviados
-        if (!is_null($valid = Contenido_Noticias::validar($data)))
-            return $valid;
-
-        Contenido_Noticias::agregar($data, ContenidoApp::ESTADO_PUBLICO);
-
-        return Redirect::to("aplicacion/administrar/noticias")->with(User::mensaje("exito", null, "¡" . Util::eliminarPluralidad($nombreTC) . " publicada con exito!", 2));
-    }
-
-    public function noticias_agregarGuardar() {
-
-        $data = Input::all();
-        $app = Aplicacion::obtener();
-        $nombreTC = TipoContenido::obtenerNombre($app->diseno, Contenido_Noticias::nombre);
-
-        //Valida los datos enviados
-        if (!is_null($valid = Contenido_Noticias::validar($data)))
-            return $valid;
-
-        Contenido_Noticias::agregar($data, ContenidoApp::ESTADO_GUARDADO);
-
-        return Redirect::to("aplicacion/administrar/noticias")->with(User::mensaje("exito", null, "¡" . Util::eliminarPluralidad($nombreTC) . " guardada con exito!", 2));
-    }
-
-    public function noticias_editar($id_noticia) {
+    public function noticias_vistaEditar($id_noticia) {
         if (!Aplicacion::existe())
             return Redirect::to("/");
         $app = Aplicacion::obtener();
@@ -80,6 +50,48 @@ class UPanelControladorContenidoNoticias extends Controller {
         $cats = $tax->terminos;
 
         return View::make("usuarios/tipo/regular/app/administracion/noticias/editar")->with("app", $app)->with("cats", $cats)->with("tax", $tax)->with("noticia", $noticia);
+    }
+
+    public function noticias_publicar() {
+
+        $data = Input::all();
+        $app = Aplicacion::obtener();
+        $nombreTC = TipoContenido::obtenerNombre($app->diseno, Contenido_Noticias::nombre);
+
+        //Valida los datos enviados
+        if (!is_null($valid = Contenido_Noticias::validar($data)))
+            return $valid;
+
+        //Agrega una nueva noticia
+        if (!isset($data["id_noticia"])) {
+            Contenido_Noticias::agregar($data, ContenidoApp::ESTADO_PUBLICO);
+            return Redirect::to("aplicacion/administrar/noticias")->with(User::mensaje("exito", null, "¡" . Util::eliminarPluralidad($nombreTC) . " publicada con exito!", 2));
+        } else {
+            //Edita una noticia
+            Contenido_Noticias::editar($data["id_noticia"], $data, ContenidoApp::ESTADO_PUBLICO);
+            return Redirect::to("aplicacion/administrar/noticias")->with(User::mensaje("info", null, "¡" . Util::eliminarPluralidad($nombreTC) . " editada y publicada con exito!", 2));
+        }
+    }
+
+    public function noticias_guardar() {
+
+        $data = Input::all();
+        $app = Aplicacion::obtener();
+        $nombreTC = TipoContenido::obtenerNombre($app->diseno, Contenido_Noticias::nombre);
+
+        //Valida los datos enviados
+        if (!is_null($valid = Contenido_Noticias::validar($data)))
+            return $valid;
+
+        //Agrega una nueva noticia
+        if (!isset($data["id_noticia"])) {
+            Contenido_Noticias::agregar($data, ContenidoApp::ESTADO_GUARDADO);
+            return Redirect::to("aplicacion/administrar/noticias")->with(User::mensaje("exito", null, "¡" . Util::eliminarPluralidad($nombreTC) . " guardada con exito!", 2));
+        } else {
+            //Edita una noticia
+            Contenido_Noticias::editar($data["id_noticia"], $data, ContenidoApp::ESTADO_GUARDADO);
+            return Redirect::to("aplicacion/administrar/noticias")->with(User::mensaje("info", null, "¡" . Util::eliminarPluralidad($nombreTC) . " editada y guardada!", 2));
+        }
     }
 
     function ajax_noticias_agregarCategoria() {
