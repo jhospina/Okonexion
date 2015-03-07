@@ -412,50 +412,20 @@ class UPanelControladorAplicacion extends Controller {
         }
 
 
-        // Crea la imagen dimensionada 256x256
-        $nombreImagen256 = "icon-256.png";
-        $imagen256 = imagecreatetruecolor(256, 256);
-        imagecopyresized($imagen256, $origen, 0, 0, 0, 0, 256, 256, $ancho, $alto);
-        imagepng($imagen256, $ruta . "/" . $nombreImagen256);
-        //Agrega la imagen de 256 al archivo sip
-        $zip->addFile($ruta . "/" . $nombreImagen256, $nombreImagen256);
+        $dims = Aplicacion::$dim_logos;
 
-        // Crea la imagen dimensionada 128x128
-        $nombreImagen128 = "icon-128.png";
-        $imagen128 = imagecreatetruecolor(128, 128);
-        imagecopyresized($imagen128, $origen, 0, 0, 0, 0, 128, 128, $ancho, $alto);
-        imagepng($imagen128, $ruta . "/" . $nombreImagen128);
-        //Agrega la imagen de 256 al archivo sip
-        $zip->addFile($ruta . "/" . $nombreImagen128, $nombreImagen128);
-
-        // Crea la imagen dimensionada 114x114
-        $nombreImagen114 = "icon-114.png";
-        $imagen114 = imagecreatetruecolor(114, 114);
-        imagecopyresized($imagen114, $origen, 0, 0, 0, 0, 114, 114, $ancho, $alto);
-        imagepng($imagen114, $ruta . "/" . $nombreImagen114);
-        //Agrega la imagen de 256 al archivo sip
-        $zip->addFile($ruta . "/" . $nombreImagen114, $nombreImagen114);
-
-        // Crea la imagen dimensionada 32x32
-        $nombreImagen32 = "icon-32.png";
-        $imagen32 = imagecreatetruecolor(32, 32);
-        imagecopyresized($imagen32, $origen, 0, 0, 0, 0, 32, 32, $ancho, $alto);
-        imagepng($imagen32, $ruta . "/" . $nombreImagen32);
-        //Agrega la imagen de 256 al archivo sip
-        $zip->addFile($ruta . "/" . $nombreImagen32, $nombreImagen32);
-
-
-        // Crea la imagen dimensionada 16x16
-        $nombreImagen16 = "icon-16.png";
-        $imagen16 = imagecreatetruecolor(16, 16);
-        imagecopyresized($imagen16, $origen, 0, 0, 0, 0, 16, 16, $ancho, $alto);
-        imagepng($imagen16, $ruta . "/" . $nombreImagen16);
-        //Agrega la imagen de 256 al archivo sip
-        $zip->addFile($ruta . "/" . $nombreImagen16, $nombreImagen16);
-
+        for ($i = 0; $i < count($dims); $i++) {
+            // Crea la imagen dimensionada
+            $nombreImagen = "icon-" . $dims[$i] . ".png";
+            $imagen = imagecreatetruecolor($dims[$i], $dims[$i]);
+            imagecopyresized($imagen, $origen, 0, 0, 0, 0, $dims[$i], $dims[$i], $ancho, $alto);
+            imagepng($imagen, $ruta . "/" . $nombreImagen);
+            //Agrega la imagen de 256 al archivo sip
+            $zip->addFile($ruta . "/" . $nombreImagen, $nombreImagen);
+        }
 
         //IMAGEN DE LOADING
-        $zip->addFile($ruta . "/" . $nombreImagen256, "loading-logo.png");
+        $zip->addFile($ruta . "/" . "icon-" . $dims[0] . ".png", "loading-logo.png");
         $zip->close();
 
         //Mueve la el archivo zip a la ruta final

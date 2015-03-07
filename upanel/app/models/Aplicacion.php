@@ -4,6 +4,7 @@ Class Aplicacion extends Eloquent {
 
     protected $table = 'aplicaciones';
     protected $fillable = array('id_usuario', 'nombre', 'key_app', 'url_logo', 'diseno', "estado", "configuracion");
+    public static $dim_logos = array(256, 128, 114, 32, 16); // Arreglo que contiene los tamaños del logo en pixeles de la aplicaion, cuando se va exportar.
 
     //********************************************************
     //ESTADOS DE LA APLICACION********************************

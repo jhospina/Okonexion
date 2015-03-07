@@ -47,7 +47,9 @@ $imagenID = Contenido_Noticias::configImagen;
                     <div class="panel-heading">Imagen principal</div>
                     <div class="panel-body">
                         <div class="col-lg-12" style="text-align: center;">
-                            <input name="{{$imagenID}}" id="{{$imagenID}}" accept="image/*" type="file" multiple=false>
+                            <a class="tooltip-left" title="Extensiones permitidas: png, jpg, jpeg. Max: 1,5 Mb. ">
+                                <input name="{{$imagenID}}" id="{{$imagenID}}" accept="image/*" type="file" multiple=false>
+                            </a>
                         </div>
                         <input type="hidden" name="{{$imagenID}}_id" id="{{$imagenID}}_id"/>
                     </div>
@@ -119,7 +121,7 @@ $imagenID = Contenido_Noticias::configImagen;
             dropZoneTitle: "Arrastra imagen...",
             uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
             msgSelected: '{n} imagen',
-            maxFileSize: 1000,
+            maxFileSize: 1500,
             msgInvalidFileExtension: "El archivo que has escogido no es valido. Solo se permiten imagenes en formatos {extensions}.",
             msgInvalidFileType: "El archivo que has escogido no es valido. Solo se permiten imagenes en formatos {extensions}.",
             msgSizeTooLarge: "El tamaño de la imagen es demasiado grande. Maximo <b>{maxSize} KB</b>. Esta imagen pesa <b>{size} KB.</b>",

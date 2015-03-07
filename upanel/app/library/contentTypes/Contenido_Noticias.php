@@ -21,6 +21,19 @@ class Contenido_Noticias {
     const IMAGEN_MIME_TYPE = "MIME_TYPE";
     const IMAGEN_URL = "URL";
     const IMAGEN_TITULO = "TITULO";
+    //********************************************************
+    //ATRIBUTOS DE MINIATURAS*********************************
+    //********************************************************
+    const IMAGEN_FORMATO_NOMBRE_MINIATURA = "-%dx%d";
+    const IMAGEN_ANCHO_MINIATURA_BG = 621; // Miniatura Grande
+    const IMAGEN_ALTURA_MINIATURA_BG = 483;
+    const IMAGEN_ANCHO_MINIATURA_MD = 450; // Miniatura Media
+    const IMAGEN_ALTURA_MINIATURA_MD = 350;
+    const IMAGEN_ANCHO_MINIATURA_SM = 207; // Miniatura Pequeña
+    const IMAGEN_ALTURA_MINIATURA_SM = 161;
+    const IMAGEN_NOMBRE_MINIATURA_BG = "BG"; //Nombre de miniaturas
+    const IMAGEN_NOMBRE_MINIATURA_MD = "MD";
+    const IMAGEN_NOMBRE_MINIATURA_SM = "SM";
 
     /** Prepara los requisitos de administracion de las noticias
      * 
@@ -46,6 +59,11 @@ class Contenido_Noticias {
         $term->save();
     }
 
+    /** Agrega un nuevo contenido de noticias
+     * 
+     * @param type $data Un array con los datos de la noticia a agregar. 
+     * @param type $estado El estado en el que debe quedar la noticia
+     */
     static function agregar($data, $estado) {
         $contenido = new ContenidoApp;
         $contenido->id_aplicacion = Aplicacion::ID();
@@ -57,8 +75,13 @@ class Contenido_Noticias {
 
         @$contenido->save();
 
-        if (strlen($data[Contenido_Noticias::configImagen . "_id"]) > 0)
+        if (strlen($data[Contenido_Noticias::configImagen . "_id"]) > 0) {
             ContenidoApp::agregarMetaDato($contenido->id, Contenido_Noticias::configImagen . "_principal", $data[Contenido_Noticias::configImagen . "_id"]);
+            $imagenPrincipal = ContenidoApp::find($data[Contenido_Noticias::configImagen . "_id"]);
+            Contenido_Noticias::crearMiniaturaImagen($imagenPrincipal->contenido, Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_BG);
+            Contenido_Noticias::crearMiniaturaImagen($imagenPrincipal->contenido, Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_MD);
+            Contenido_Noticias::crearMiniaturaImagen($imagenPrincipal->contenido, Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_SM);
+        }
 
         $cats = array(); //almacenara los ID de las categorias
 
@@ -76,6 +99,12 @@ class Contenido_Noticias {
         ContenidoApp::establecerTerminos($contenido->id, $cats);
     }
 
+    /** Edita el contenido de una noticia
+     * 
+     * @param type $id_noticia El id de la noticia a editar
+     * @param type $data Los datos a editar en un array
+     * @param type $estado El estado en que debe quedar la noticia
+     */
     static function editar($id_noticia, $data, $estado) {
         $contenido = ContenidoApp::find($id_noticia);
         $contenido->tipo = Contenido_Noticias::nombre;
@@ -86,8 +115,13 @@ class Contenido_Noticias {
         @$contenido->save();
 
         if (!Contenido_Noticias::tieneImagen($id_noticia)) {
-            if (strlen($data[Contenido_Noticias::configImagen . "_id"]) > 0)
+            if (strlen($data[Contenido_Noticias::configImagen . "_id"]) > 0) {
                 ContenidoApp::agregarMetaDato($contenido->id, Contenido_Noticias::configImagen . "_principal", $data[Contenido_Noticias::configImagen . "_id"]);
+                $imagenPrincipal = ContenidoApp::find($data[Contenido_Noticias::configImagen . "_id"]);
+                Contenido_Noticias::crearMiniaturaImagen($imagenPrincipal->contenido, Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_BG);
+                Contenido_Noticias::crearMiniaturaImagen($imagenPrincipal->contenido, Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_MD);
+                Contenido_Noticias::crearMiniaturaImagen($imagenPrincipal->contenido, Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_SM);
+            }
         }
 
         $cats = array(); //almacenara los ID de las categorias
@@ -159,6 +193,77 @@ class Contenido_Noticias {
         } else {
             return null;
         }
+    }
+
+    /** Crear una imagen miniatura en formato de noticia para la URL de imagen dada. 
+     * 
+     * @param String $url La Url de la imagen original
+     * @param String $tamano El tamaño de la miniatura a obtener
+     */
+    static function crearMiniaturaImagen($url, $tamano = null) {
+
+        if (is_null($tamano))
+            $tamano = Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_BG;
+
+        $imagen = new Imagen($url);
+        switch ($tamano) {
+            case Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_BG:
+                $imagen->crearCopia(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_BG, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_BG, Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_BG, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_BG), $imagen->getRuta());
+                break;
+            case Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_MD:
+                $imagen->crearCopia(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_MD, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_MD, Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_MD, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_MD), $imagen->getRuta());
+                break;
+            case Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_SM:
+                $imagen->crearCopia(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_SM, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_SM, Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_SM, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_SM), $imagen->getRuta());
+                break;
+            default :
+                $imagen->crearCopia(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_BG, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_BG, Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_BG, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_BG), $imagen->getRuta());
+                break;
+        }
+    }
+
+    /** Obtiene la url de una imagen miniatura dada por la url de la imagen original
+     * 
+     * @param type $url Url de la imagen original
+     * @param String $tamano El tamaño de la miniatura a obtener
+     * @return String Retorna la Url de la imagen miniatura si existe, si no retornara la url de la imagen original dada. 
+     */
+    static function obtenerUrlMiniaturaImagen($url, $tamano = null) {
+
+        if (is_null($tamano))
+            $tamano = Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_BG;
+
+        $imagen = new Imagen($url);
+
+        switch ($tamano) {
+            case Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_BG:
+                $imagen_min = $imagen->getRuta_url() . $imagen->getNombre() . Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_BG, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_BG) . "." . $imagen->getExtension();
+                break;
+            case Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_MD:
+                $imagen_min = $imagen->getRuta_url() . $imagen->getNombre() . Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_MD, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_MD) . "." . $imagen->getExtension();
+                break;
+            case Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_SM:
+                $imagen_min = $imagen->getRuta_url() . $imagen->getNombre() . Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_SM, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_SM) . "." . $imagen->getExtension();
+                break;
+            default :
+                $imagen_min = $imagen->getRuta_url() . $imagen->getNombre() . Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_BG, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_BG) . "." . $imagen->getExtension();
+                break;
+        }
+
+        if (Util::existeURL($imagen_min))
+            return $imagen_min;
+        else
+            return $url;
+    }
+
+    /** Retorna un texto con el formato indicado para el nombre de una miniatura
+     * 
+     * @param type $ancho
+     * @param type $altura
+     * @return type
+     */
+    static function obtenerNombreMiniatura($ancho, $altura) {
+        return sprintf(Contenido_Noticias::IMAGEN_FORMATO_NOMBRE_MINIATURA, $ancho, $altura);
     }
 
 }

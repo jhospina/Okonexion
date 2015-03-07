@@ -102,9 +102,58 @@ class Util {
         return end($desc);
     }
 
+    /** Extrae el nombre de un archivo. (Puede ser una url)
+     * 
+     * @param String $nombre El nombre del archivo, con extension.
+     * @return String El nombre de archivo
+     */
     static function extraerNombreArchivo($nombre) {
+
+        $nombre = str_replace("\\", "/", $nombre);
+
         $desc = explode(".", $nombre);
-        return $desc[count($desc) - 2];
+        $nombre = $desc[count($desc) - 2];
+        if (strpos($nombre, "/")) {
+            $desc = explode("/", $nombre);
+            return $desc[count($desc) - 1];
+        }
+        return $nombre;
+    }
+
+    /** Indica si una url existe
+     * 
+     * @param String $url La Url a verificar
+     * @return boolean
+     */
+    static function existeURL($url) {
+        $url = @parse_url($url);
+        if (!$url)
+            return false;
+
+        $url = array_map('trim', $url);
+        $url['port'] = (!isset($url['port'])) ? 80 : (int) $url['port'];
+
+        $path = (isset($url['path'])) ? $url['path'] : '/';
+        $path .= (isset($url['query'])) ? "?$url[query]" : '';
+
+        if (isset($url['host']) && $url['host'] != gethostbyname($url['host'])) {
+
+            $fp = fsockopen($url['host'], $url['port'], $errno, $errstr, 30);
+
+            if (!$fp)
+                return false; //socket not opened
+
+            fputs($fp, "HEAD $path HTTP/1.1\r\nHost: $url[host]\r\n\r\n"); //socket opened
+            $headers = fread($fp, 4096);
+            fclose($fp);
+
+            if (preg_match('#^HTTP/.*\s+[(200|301|302)]+\s#i', $headers)) {//matching header
+                return true;
+            } else
+                return false;
+        } // if parse url
+        else
+            return false;
     }
 
 }

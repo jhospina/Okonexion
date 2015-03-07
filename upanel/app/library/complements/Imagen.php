@@ -16,18 +16,19 @@ class Imagen {
     public $ruta;
     public $path;
     public $objectImage;
+    public $ruta_url;
 
-    function __construct($nombre, $url) {
+    function __construct($url) {
 
-        $this->nombre = Util::extraerNombreArchivo($nombre);
-        $this->extension = Util::extraerExtensionArchivo($nombre);
+        $this->nombre = Util::extraerNombreArchivo($url);
+        $this->extension = Util::extraerExtensionArchivo($url);
         $this->path = Util::convertirUrlPath($url);
-        $this->ruta = str_replace($nombre, "", $this->path);
+        $this->ruta = str_replace($this->nombre . "." . $this->extension, "", $this->path);
+        $this->ruta_url = str_replace($this->nombre . "." . $this->extension, "", $url);
         $this->mime_type = mime_content_type($this->path);
         $dimensiones = getimagesize($this->path);
         $this->ancho = $dimensiones[0];
         $this->altura = $dimensiones[1];
-        $this->objectImage = $this->crearImagenDesdeOriginal();
     }
 
     /** Crea una copia redimensionada y recortada adecuadamente sin defases de la imagen original y la almacena en el servidor con nuevo nombre
@@ -38,6 +39,9 @@ class Imagen {
      * @param type $ruta La ruta donde se almacenara la copia
      */
     public function crearCopia($ancho, $altura, $nombre, $ruta) {
+
+        $this->objectImage = $this->crearImagenDesdeOriginal();
+
         //Calcula los valores optimos a redimensioar sin desfasarse en los tamaños requeridos
         list($ancho_redim, $altura_redim) = $this->calcularRedimensionMinimaProporcional($ancho, $altura);
 
@@ -54,7 +58,7 @@ class Imagen {
         //Genera el recorte adecuado de la imagen
         imagecopy($copia_rec, $copia_redim, 0, 0, $x_recorte, $y_recorte, $ancho_redim, $altura_redim);
 
-        $destino = $ruta . $nombre . "." . $this->extension;
+        $destino = $ruta . $this->getNombre() . $nombre . "." . $this->extension;
 
         $this->almacenarImagen($copia_rec, $destino);
     }
@@ -155,12 +159,13 @@ class Imagen {
     }
 
     public function __toString() {
-        return "Nombre: " . $this->nombre . "</br>" .
-                "Extension: " . $this->extension . "</br>" .
-                "Mime Type: " . $this->mime_type . "</br>" .
-                "Ruta: " . $this->ruta . "</br>" .
-                "Path: " . $this->path . "</br>" .
-                "Ancho: " . $this->ancho . " px</br>" .
+        return "Nombre: " . $this->nombre . "<br/>" .
+                "Extension: " . $this->extension . "<br/>" .
+                "Mime Type: " . $this->mime_type . "<br/>" .
+                "Ruta: " . $this->ruta . "<br/>" .
+                "Rura_URL" . $this->ruta_url . "<br/>";
+        "Path: " . $this->path . "<br/>" .
+                "Ancho: " . $this->ancho . " px<br/>" .
                 "Altura: " . $this->altura . " px";
     }
 
@@ -193,6 +198,10 @@ class Imagen {
 
     function getPath() {
         return $this->path;
+    }
+
+    function getRuta_url() {
+        return $this->ruta_url;
     }
 
     function getObjectImage() {

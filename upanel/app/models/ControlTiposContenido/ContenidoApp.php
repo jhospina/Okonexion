@@ -36,13 +36,34 @@ class ContenidoApp extends Eloquent {
             return null;
     }
 
-    static function eliminarImagen($id_imagen) {
+    /** Elimina una imagen del sistema
+     * 
+     * @param type $id_imagen El Id de la imagen a eliminar
+     * @param Array $miniaturas Un array con las miniaturas de la imagen, si es que existes, para eliminar tambien. 
+     * @return boolean
+     */
+    static function eliminarImagen($id_imagen, $miniaturas = null) {
         $imagen = ContenidoApp::find($id_imagen);
+
+        $img = new Imagen($imagen->contenido);
 
         if (File::exists(Util::convertirUrlPath($imagen->contenido))) {
             File::delete(Util::convertirUrlPath($imagen->contenido));
+
+            //Elimina imagenes miniatura de la imagen original si existeb
+            for ($i = 0; $i < count($miniaturas); $i++) {
+
+                $url = $img->getRuta_url() . $img->getNombre() . $miniaturas[$i] . "." . $img->getExtension();
+
+                if (Util::existeURL($url))
+                    File::delete(Util::convertirUrlPath($url));
+            }
+
             $imagen->delete();
+            return true;
         }
+
+        return false;
     }
 
     /** Agrega un metadato a un contenido

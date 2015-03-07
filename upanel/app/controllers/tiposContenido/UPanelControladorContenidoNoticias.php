@@ -9,7 +9,7 @@ class UPanelControladorContenidoNoticias extends Controller {
         if (!Aplicacion::estaTerminada($app->estado))
             return Redirect::to("/");
 
-        $noticias = ContenidoApp::where("tipo", Contenido_Noticias::nombre)->where("id_usuario", Auth::user()->id)->paginate(30);
+        $noticias = ContenidoApp::where("tipo", Contenido_Noticias::nombre)->where("id_usuario", Auth::user()->id)->paginate(10);
 
         return View::make("usuarios/tipo/regular/app/administracion/noticias/index")->with("app", $app)->with("noticias", $noticias);
     }
@@ -129,8 +129,18 @@ class UPanelControladorContenidoNoticias extends Controller {
     function ajax_noticias_eliminarImagen() {
         $id_imagen = Input::get("id_imagen");
 
-        if (ContenidoApp::eliminarImagen($id_imagen))
-            MetaContenidoApp::where("clave", Contenido_Noticias::nombre . "_principal")->where("valor", $id_imagen)->delete();
+        if (strlen($id_imagen) < 1)
+            return;
+
+        //Formato de miniaturas de la imagen
+        $miniaturas = array(Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_BG, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_BG),
+            Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_MD, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_MD),
+            Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_SM, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_SM)
+        );
+
+        //Elima la imagen y sus posibles miniaturas
+        if (ContenidoApp::eliminarImagen($id_imagen, $miniaturas))
+            MetaContenidoApp::where("clave", Contenido_Noticias::configImagen . "_principal")->where("valor", $id_imagen)->delete();
     }
 
 }
