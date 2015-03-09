@@ -21,6 +21,7 @@ class Contenido_Noticias {
     const IMAGEN_MIME_TYPE = "MIME_TYPE";
     const IMAGEN_URL = "URL";
     const IMAGEN_TITULO = "TITULO";
+    const IMAGEN_ID = "ID";
     //********************************************************
     //ATRIBUTOS DE MINIATURAS*********************************
     //********************************************************
@@ -181,14 +182,15 @@ class Contenido_Noticias {
             //Retorna el atributo indicado
             switch ($atributo) {
                 case Contenido_Noticias::IMAGEN_MIME_TYPE:
-                    $imagen->mime_type;
+                    return $imagen->mime_type;
                 case Contenido_Noticias::IMAGEN_TITULO:
                     return $imagen->titulo;
                 case Contenido_Noticias::IMAGEN_URL:
                     return $imagen->contenido;
+                case Contenido_Noticias::IMAGEN_ID:
+                    return $imagen->id;
                 default :
                     return $imagen;
-                    break;
             }
         } else {
             return null;
@@ -233,20 +235,20 @@ class Contenido_Noticias {
         if (is_null($tamano))
             $tamano = Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_BG;
 
-        $imagen = new Imagen($url);
+        $nombre_imagen = Util::extraerNombreArchivo($url);
 
         switch ($tamano) {
             case Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_BG:
-                $imagen_min = $imagen->getRuta_url() . $imagen->getNombre() . Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_BG, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_BG) . "." . $imagen->getExtension();
+                $imagen_min = str_replace($nombre_imagen, $nombre_imagen . Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_BG, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_BG), $url);
                 break;
             case Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_MD:
-                $imagen_min = $imagen->getRuta_url() . $imagen->getNombre() . Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_MD, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_MD) . "." . $imagen->getExtension();
+                $imagen_min = str_replace($nombre_imagen, $nombre_imagen . Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_MD, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_MD), $url);
                 break;
             case Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_SM:
-                $imagen_min = $imagen->getRuta_url() . $imagen->getNombre() . Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_SM, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_SM) . "." . $imagen->getExtension();
+                $imagen_min = str_replace($nombre_imagen, $nombre_imagen . Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_SM, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_SM), $url);
                 break;
             default :
-                $imagen_min = $imagen->getRuta_url() . $imagen->getNombre() . Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_BG, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_BG) . "." . $imagen->getExtension();
+                $imagen_min = str_replace($nombre_imagen, $nombre_imagen . Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_BG, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_BG), $url);
                 break;
         }
 
@@ -264,6 +266,18 @@ class Contenido_Noticias {
      */
     static function obtenerNombreMiniatura($ancho, $altura) {
         return sprintf(Contenido_Noticias::IMAGEN_FORMATO_NOMBRE_MINIATURA, $ancho, $altura);
+    }
+
+    static function eliminarImagen($id_imagen) {
+        //Formato de miniaturas de la imagen
+        $miniaturas = array(Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_BG, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_BG),
+            Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_MD, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_MD),
+            Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_SM, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_SM)
+        );
+
+        //Elima la imagen y sus posibles miniaturas
+        if (ContenidoApp::eliminarImagen($id_imagen, $miniaturas))
+            MetaContenidoApp::where("clave", Contenido_Noticias::configImagen . "_principal")->where("valor", $id_imagen)->delete();
     }
 
 }

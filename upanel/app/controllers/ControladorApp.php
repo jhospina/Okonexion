@@ -3,22 +3,27 @@
 class ControladorApp extends \BaseController {
 
     function conectar() {
-        return '{"c2dictionary":true,"data":{' .
-                '"colorBarraApp":"c23",' .
-                '"colorFondoMenuBt_1":"c40",' .
-                '"colorFondoMenuBt_2":"c40",' .
-                '"colorFondoMenuBt_3":"c40",' .
-                '"colorFondoMenuBt_4":"c40",' .
-                '"txt_menuBtn_1":"Universidad",' .
-                '"txt_menuBtn_2":"Boletines",' .
-                '"txt_menuBtn_3":"Preguntas",' .
-                '"txt_menuBtn_4":"Quejas",' .
-                '"colorNombreApp":"rgb(255,255,255)",' .
-                '"txt_menuBtn_1_color":"rgb(255,255,255)",' .
-                '"txt_menuBtn_2_color":"rgb(255,255,255)",' .
-                '"txt_menuBtn_3_color":"rgb(255,255,255)",' .
-                '"txt_menuBtn_4_color":"rgb(255,255,255)"' .
-                '}}';
+
+        //$key_app = Input::get("key_app");
+        $key_app = "I2uqHDXS3RR8lgmaCOG9eZmcO15w7O6x0kxFoKYfbpbCLDdNR";
+
+        $apps = Aplicacion::where("key_app", $key_app)->get();
+        foreach ($apps as $app)
+            break;
+
+        $noticias = ContenidoApp::where("tipo", Contenido_Noticias::nombre)->where("id_aplicacion", $app->id)->get();
+
+        $data_noticias = array();
+        $n = 1;
+
+        foreach ($noticias as $noticia) {
+            $data_noticias["titulo" . $n] = $noticia->titulo;
+            $data_noticias["descripcion" . $n] = $noticia->contenido;
+            $data_noticias["imagen" . $n] = Contenido_Noticias::obtenerUrlMiniaturaImagen(Contenido_Noticias::obtenerImagen($noticia->id, Contenido_Noticias::IMAGEN_URL),  Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_BG);
+            $n++;
+        }
+
+        return Aplicacion::prepararDatosParaApp($data_noticias);
     }
 
 }

@@ -52,6 +52,22 @@ class UPanelControladorContenidoNoticias extends Controller {
         return View::make("usuarios/tipo/regular/app/administracion/noticias/editar")->with("app", $app)->with("cats", $cats)->with("tax", $tax)->with("noticia", $noticia);
     }
 
+    public function noticias_categorias() {
+
+        if (!Aplicacion::existe())
+            return Redirect::to("/");
+        $app = Aplicacion::obtener();
+        if (!Aplicacion::estaTerminada($app->estado))
+            return Redirect::to("/");
+
+        $tax = TaxonomiaContenidoApp::obtener(Contenido_Noticias::taxonomia);
+
+        //Obtiene las categorias de las noticias de la taxonomia
+        $cats = $tax->terminos;
+
+        return View::make("usuarios/tipo/regular/app/administracion/noticias/categorias")->with("app", $app)->with("cats", $cats)->with("tax", $tax);
+    }
+
     public function noticias_publicar() {
 
         $data = Input::all();
@@ -104,6 +120,37 @@ class UPanelControladorContenidoNoticias extends Controller {
         return $cat->id;
     }
 
+    function ajax_noticias_editarCategoria() {
+        $data = Input::all();
+        $cat = TerminoContenidoApp::find($data["id_cat"]);
+        $cat->nombre = $data["cat"];
+        $cat->save();
+    }
+
+    function ajax_noticias_eliminarCategoria() {
+        $data = Input::all();
+        $cat = TerminoContenidoApp::find($data["id_cat"]);
+        $cat->delete();
+
+        //Elimina cualquier relacion de los contenidos con el termino
+        DB::table("relacion_contenidos_terminos_App")->where("id_termino", $data["id_cat"])->delete();
+    }
+
+    function ajax_noticias_eliminarNoticia() {
+        $data = Input::all();
+        $noticia = ContenidoApp::find($data["id_noticia"]);
+        $noticia->delete();
+        //Elimina cualquier relacion del contenido con los terminos
+        DB::table("relacion_contenidos_terminos_App")->where("id_contenido", $data["id_noticia"])->delete();
+
+        $id_imagen = $data["id_imagen"];
+
+        if (strlen($id_imagen) < 1)
+            return;
+
+        Contenido_Noticias::eliminarImagen($id_imagen);
+    }
+
     function ajax_noticias_subirImagen() {
 
         $output = [];
@@ -132,15 +179,7 @@ class UPanelControladorContenidoNoticias extends Controller {
         if (strlen($id_imagen) < 1)
             return;
 
-        //Formato de miniaturas de la imagen
-        $miniaturas = array(Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_BG, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_BG),
-            Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_MD, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_MD),
-            Contenido_Noticias::obtenerNombreMiniatura(Contenido_Noticias::IMAGEN_ANCHO_MINIATURA_SM, Contenido_Noticias::IMAGEN_ALTURA_MINIATURA_SM)
-        );
-
-        //Elima la imagen y sus posibles miniaturas
-        if (ContenidoApp::eliminarImagen($id_imagen, $miniaturas))
-            MetaContenidoApp::where("clave", Contenido_Noticias::configImagen . "_principal")->where("valor", $id_imagen)->delete();
+        Contenido_Noticias::eliminarImagen($id_imagen);
     }
 
 }

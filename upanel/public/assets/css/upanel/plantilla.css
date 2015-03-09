@@ -313,3 +313,11 @@ span.simplecolorpicker.icon {
 #error-js{
     display:none;
 }
+
+.input-red{
+    border:1px red solid;
+}
+
+.input-red:focus{
+    border:1px red solid;
+}

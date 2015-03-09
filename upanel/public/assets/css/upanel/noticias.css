@@ -91,7 +91,7 @@ and open the template in the editor.
     min-height: 93px;
 }
 
-#listado-noticias .acciones-noticia a{
+#listado-noticias .acciones-noticia a,#listado-noticias .acciones-noticia button{
     width: 100%;
     margin-bottom: 5px;
 }

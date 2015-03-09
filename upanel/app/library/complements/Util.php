@@ -108,16 +108,11 @@ class Util {
      * @return String El nombre de archivo
      */
     static function extraerNombreArchivo($nombre) {
-
-        $nombre = str_replace("\\", "/", $nombre);
-
-        $desc = explode(".", $nombre);
-        $nombre = $desc[count($desc) - 2];
-        if (strpos($nombre, "/")) {
-            $desc = explode("/", $nombre);
-            return $desc[count($desc) - 1];
-        }
-        return $nombre;
+       $nombre = explode("/", $nombre);
+        end($nombre);
+        $nombre = explode(".", pos($nombre));
+        reset($nombre);
+        return $nombre[0];
     }
 
     /** Indica si una url existe

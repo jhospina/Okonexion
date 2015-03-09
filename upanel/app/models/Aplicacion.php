@@ -126,6 +126,18 @@ Class Aplicacion extends Eloquent {
             return false;
     }
 
+    /** Prepara los datos en un Json de la manera como le recibe la aplicacion movil
+     * 
+     * @param Array $datos Los datos a preparar
+     * @return String Retorna una cadena JSON si el proceso se realizo con exito, de lo contrario Null 
+     */
+    static function prepararDatosParaApp($datos) {
+        if (is_array($datos))
+            return '{"c2dictionary":true,"data":' . json_encode($datos) . '}';
+        else
+            return null;
+    }
+
     //****************************************************
     //RELACIONES CON OTROS MODELOS***************************
     //****************************************************
