@@ -1,5 +1,5 @@
 <?php
-$tipoContenido = "noticias";
+$tipoContenido = Contenido_Noticias::nombre;
 $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
 ?>
 
@@ -13,7 +13,7 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
 
 @section("contenido") 
 
-<h1>ADMINISTRAR {{strtoupper($nombreContenido)}}</h1>
+<h2>ADMINISTRAR {{strtoupper($nombreContenido)}}</h2>
 <hr/>
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
 

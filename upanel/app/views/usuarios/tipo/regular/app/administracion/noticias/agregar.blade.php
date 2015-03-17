@@ -15,7 +15,6 @@ $imagenID = Contenido_Noticias::configImagen;
 @section("css")
 {{ HTML::style('assets/plugins/fileinput/css/fileinput.css', array('media' => 'screen')) }}
 {{ HTML::style('assets/plugins/font-awesome/css/font-awesome.css', array('rel' => 'stylesheet')) }}
-{{ HTML::style('assets/plugins/wysiwyg/editor.css', array('media' => 'screen')) }}
 @stop
 
 
@@ -37,8 +36,7 @@ $imagenID = Contenido_Noticias::configImagen;
         <div class="col-lg-12" style="margin-bottom: 20px;">
             <div class="col-lg-12"><input name="{{$tituloID}}" id="{{$tituloID}}" type="text"  placeholder="Introduce el titulo aquí" class="form-control input-lg"></div>
             <div class="col-lg-12">
-                <div id="editor"></div>
-                <textarea style="display: none;" id="{{$descripcionID}}" name="{{$descripcionID}}"></textarea>
+                <textarea class="form-control" style="margin-top: 10px;" rows="10" id="{{$descripcionID}}" name="{{$descripcionID}}" placeholder="Escribe el contenido aquí..."></textarea>
             </div>
         </div>
         <div class="col-lg-12">
@@ -91,7 +89,6 @@ $imagenID = Contenido_Noticias::configImagen;
 @section("script")
 {{ HTML::script('assets/js/bootstrap-filestyle.min.js') }}
 {{ HTML::script('assets/js/bootstrap-tooltip.js') }}
-{{ HTML::script('assets/plugins/wysiwyg/editor.js') }}
 {{ HTML::script('assets/plugins/fileinput/js/fileinput.js') }}
 
 <script>
@@ -99,7 +96,6 @@ $imagenID = Contenido_Noticias::configImagen;
 
         jQuery(".tooltip-left").tooltip({placement: "left"});
         jQuery(".tooltip-top").tooltip({placement: "top"});
-        jQuery('#editor').Editor({"bold": true});
         jQuery("#{{$imagenID}}").fileinput({
             multiple: false,
             showPreview: true,
@@ -187,7 +183,7 @@ $imagenID = Contenido_Noticias::configImagen;
             data: {id_tax: idTax, cat: nuevaCat},
             success: function (response) {
 
-                jQuery("#content-cats").append('<div class="checkbox" style="margin: 0px;"><label><input type="checkbox" name="cat-' + response + '"  value="' + response + '"/> ' + nuevaCat + '</label></div>');
+                jQuery("#content-cats").append('<div class="checkbox" style="margin: 0px;"><label><input type="checkbox" name="term-' + response + '"  value="' + response + '"/> ' + nuevaCat + '</label></div>');
                 jQuery("#input-agregar-cat").fadeOut();
                 jQuery("#msj-agregar-cat").html("Categoria agregada");
                 jQuery("#msj-agregar-cat").fadeIn();
@@ -198,8 +194,6 @@ $imagenID = Contenido_Noticias::configImagen;
     }
 
     function publicar(btn) {
-
-        $("#{{$descripcionID}}").html($("#editor").Editor("getText"));
 
         if (!validar())
             return;
@@ -214,8 +208,6 @@ $imagenID = Contenido_Noticias::configImagen;
 
     function guardar(btn) {
 
-        $("#{{$descripcionID}}").html($("#editor").Editor("getText"));
-
         if (!validar())
             return;
         $("#form").attr("action", "guardar");
@@ -224,7 +216,6 @@ $imagenID = Contenido_Noticias::configImagen;
         jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Guardando...");
         setTimeout(function () {
             $("#form").submit();
-            $("#{{$descripcionID}}").html($("#editor").Editor("getText"));
         }, 2000);
     }
 

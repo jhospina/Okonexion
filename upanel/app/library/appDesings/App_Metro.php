@@ -96,4 +96,14 @@ class App_Metro {
         Contenido_Noticias::prepararRequisitos($app);
     }
 
+    /** Obtiene los datos JSON de los tipos de contenidos asociados al diseño Metro.
+     * 
+     * @param Int $id_app Id de la aplicacion
+     * @return JSON
+     */
+    public static function cargarDatosJson($id_app) {
+        return Contenido_Institucional::cargarDatosJson($id_app) .
+                Contenido_Noticias::cargarDatosJson($id_app);
+    }
+
 }

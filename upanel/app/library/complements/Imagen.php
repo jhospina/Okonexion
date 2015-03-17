@@ -122,6 +122,7 @@ class Imagen {
                 $imagen = imagecreatefromjpeg($this->path);
                 break;
             case "jpeg":
+                $this->extension = "jpg";
                 $imagen = imagecreatefromjpeg($this->path);
                 break;
             case "png":

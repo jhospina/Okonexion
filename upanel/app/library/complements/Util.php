@@ -17,6 +17,8 @@ class Util {
 
         if ($palabra[strlen($palabra) - 1] == "s")
             return substr($palabra, 0, strlen($palabra) - 1);
+
+        return $palabra;
     }
 
     /** Obtiene el timeStamp del servidor indicado por año-mes-dia-hora-minutos-segundos
@@ -108,7 +110,7 @@ class Util {
      * @return String El nombre de archivo
      */
     static function extraerNombreArchivo($nombre) {
-       $nombre = explode("/", $nombre);
+        $nombre = explode("/", $nombre);
         end($nombre);
         $nombre = explode(".", pos($nombre));
         reset($nombre);
@@ -149,6 +151,19 @@ class Util {
         } // if parse url
         else
             return false;
+    }
+
+    static function eliminarExtensionArchivo($url) {
+        $nombre = explode("/", $url);
+        end($nombre);
+        $nombre = explode(".", pos($nombre));
+        reset($nombre);
+        return str_replace("." . $nombre[1], "", $url);
+    }
+
+    static function obtenerUrlActual() {
+        $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        return $url;
     }
 
 }

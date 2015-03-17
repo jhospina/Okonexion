@@ -138,6 +138,12 @@ Class Aplicacion extends Eloquent {
             return null;
     }
 
+    static function aumentarNumeroBaseInfo() {
+        $app = Aplicacion::obtener();
+        $app->num_base_info = intval($app->num_base_info) + 1;
+        $app->save();
+    }
+
     //****************************************************
     //RELACIONES CON OTROS MODELOS***************************
     //****************************************************

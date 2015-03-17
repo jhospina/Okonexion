@@ -77,7 +77,7 @@ class UPanelControladorSoporte extends \BaseController {
         $ticket->usuario_cliente = Auth::user()->id;
         $ticket->tipo = $data["tipo"];
         $ticket->asunto = $data["asunto"];
-        $ticket->mensaje = $data["mensaje"];
+        $ticket->mensaje = str_replace("\n", "<br/>", $data["mensaje"]);
         $ticket->fecha = date('Y-m-d H:i:s');
         if ($ticket->save()) {
 

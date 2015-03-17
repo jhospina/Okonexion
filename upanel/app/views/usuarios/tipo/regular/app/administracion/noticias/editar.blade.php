@@ -26,7 +26,7 @@ if (!is_null($metaImagen)) {
 @section("css")
 {{ HTML::style('assets/plugins/fileinput/css/fileinput.css', array('media' => 'screen')) }}
 {{ HTML::style('assets/plugins/font-awesome/css/font-awesome.css', array('rel' => 'stylesheet')) }}
-{{ HTML::style('assets/plugins/wysiwyg/editor.css', array('media' => 'screen')) }}
+
 @stop
 
 
@@ -50,8 +50,7 @@ if (!is_null($metaImagen)) {
         <div class="col-lg-12" style="margin-bottom: 20px;">
             <div class="col-lg-12"><input name="{{$tituloID}}" id="{{$tituloID}}" type="text"  placeholder="Introduce el titulo aquí" class="form-control input-lg" value="{{$noticia->titulo}}"></div>
             <div class="col-lg-12">
-                <div id="editor"></div>
-                <textarea style="display: none;" id="{{$descripcionID}}" name="{{$descripcionID}}"></textarea>
+                  <textarea class="form-control" style="margin-top: 10px;" rows="10" id="{{$descripcionID}}" name="{{$descripcionID}}" placeholder="Escribe el contenido aquí...">{{$noticia->contenido}}</textarea>
             </div>
         </div>
         <div class="col-lg-12">
@@ -108,7 +107,6 @@ if (!is_null($metaImagen)) {
 @section("script")
 {{ HTML::script('assets/js/bootstrap-filestyle.min.js') }}
 {{ HTML::script('assets/js/bootstrap-tooltip.js') }}
-{{ HTML::script('assets/plugins/wysiwyg/editor.js') }}
 {{ HTML::script('assets/plugins/fileinput/js/fileinput.js') }}
 
 <script>
@@ -116,9 +114,6 @@ if (!is_null($metaImagen)) {
 
         jQuery(".tooltip-left").tooltip({placement: "left"});
         jQuery(".tooltip-top").tooltip({placement: "top"});
-        jQuery('#editor').Editor({"bold": true});
-
-        $("#editor").Editor("setText", "{{$noticia->contenido}}");
 
         jQuery("#{{$imagenID}}").fileinput({
             multiple: false,
@@ -218,9 +213,7 @@ if (!is_null($metaImagen)) {
 
     function publicar(btn) {
 
-        $("#{{$descripcionID}}").html($("#editor").Editor("getText"));
-
-        if (!validar())
+         if (!validar())
             return;
         $("#form").attr("action", "../publicar");
         jQuery(btn).attr("disabled", "disabled");
@@ -233,8 +226,6 @@ if (!is_null($metaImagen)) {
 
     function guardar(btn) {
 
-        $("#{{$descripcionID}}").html($("#editor").Editor("getText"));
-
         if (!validar())
             return;
         $("#form").attr("action", "../guardar");
@@ -243,7 +234,6 @@ if (!is_null($metaImagen)) {
         jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Guardando...");
         setTimeout(function () {
             $("#form").submit();
-            $("#{{$descripcionID}}").html($("#editor").Editor("getText"));
         }, 2000);
     }
 

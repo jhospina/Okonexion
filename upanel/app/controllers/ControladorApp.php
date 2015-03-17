@@ -4,26 +4,48 @@ class ControladorApp extends \BaseController {
 
     function conectar() {
 
-        //$key_app = Input::get("key_app");
-        $key_app = "I2uqHDXS3RR8lgmaCOG9eZmcO15w7O6x0kxFoKYfbpbCLDdNR";
+        $key_app = Input::get("key_app");
+        $base_info = Input::get("num_base_info");
+        // $key_app = "I2uqHDXS3RR8lgmaCOG9eZmcO15w7O6x0kxFoKYfbpbCLDdNR";
 
         $apps = Aplicacion::where("key_app", $key_app)->get();
         foreach ($apps as $app)
             break;
 
-        $noticias = ContenidoApp::where("tipo", Contenido_Noticias::nombre)->where("id_aplicacion", $app->id)->get();
+        $data_app["num_base_info"] = $app->num_base_info;
 
-        $data_noticias = array();
-        $n = 1;
+        if ($app->num_base_info > $base_info)
+            return "@app@" . Aplicacion::prepararDatosParaApp($data_app) . "@app@" . AppDesing::cargarDatosJson($app);
+        else
+            return "@app@" . Aplicacion::prepararDatosParaApp($data_app) . "@app@";
+    }
 
-        foreach ($noticias as $noticia) {
-            $data_noticias["titulo" . $n] = $noticia->titulo;
-            $data_noticias["descripcion" . $n] = $noticia->contenido;
-            $data_noticias["imagen" . $n] = Contenido_Noticias::obtenerUrlMiniaturaImagen(Contenido_Noticias::obtenerImagen($noticia->id, Contenido_Noticias::IMAGEN_URL),  Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_BG);
-            $n++;
+    //RUTA DE ACCESO: usuarios/uploads/{usuario}/{imagen}/{mime_type}
+    //Carga una imagen
+    function cargarImagen($usuario, $imagen, $mime_type) {
+        //$mime_type="jpg";
+        Header("Content-type:image/" . $mime_type);
+
+        $url = str_replace("/$mime_type", ".$mime_type", Util::obtenerUrlActual());
+
+        switch ($mime_type) {
+            case "jpg":
+                $img = imagecreatefromjpeg(Util::convertirUrlPath($url));
+                imagejpeg($img);
+                break;
+            case "jpeg":
+                $img = imagecreatefromjpeg(Util::convertirUrlPath(str_replace("/$mime_type", ".jpg", Util::obtenerUrlActual())));
+                imagejpeg($img);
+                break;
+            case "png":
+                $img = imagecreatefrompng(Util::convertirUrlPath($url));
+                imagepng($img);
+                break;
+            case "gif":
+                $img = imagecreatefromgif(Util::convertirUrlPath($url));
+                imagegif($img);
+                break;
         }
-
-        return Aplicacion::prepararDatosParaApp($data_noticias);
     }
 
 }

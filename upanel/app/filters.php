@@ -12,7 +12,7 @@
  */
 
 App::before(function($request) {
-    //
+    
 });
 
 
@@ -104,5 +104,27 @@ Route::filter('app', function() {
 });
 
 
+Route::filter('app-image', function() {
+
+   // Header("Content-type:image/jpeg");
+    // Enable CORS 
+    // In production, replace * with http://yourdomain.com 
+    header("Access-Control-Allow-Origin: *");
+    header('Access-Control-Allow-Credentials: true');
+
+    if (Request::getMethod() == "OPTIONS") {
+        // The client-side application can set only headers allowed in Access-Control-Allow-Headers
+        $headers = [
+            'Access-Control-Allow-Methods' => 'POST, GET, OPTIONS, PUT, DELETE',
+            'Access-Control-Allow-Headers' => 'X-Requested-With, Content-Type, X-Auth-Token, Origin, Authorization'
+        ];
+        return Response::make('You are connected to the API', 200, $headers);
+    }
+});
+
+
+
+
 //Todas las rutas que empiecen por app/* son el area de conexion para los dispositivos moviles
 Route::when('app/*', 'app');
+Route::when('usuarios/uploads/*', 'app-image');

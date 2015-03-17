@@ -16,10 +16,11 @@ class TablaAplicaciones extends Migration {
             $table->integer("id_usuario");
             $table->string("nombre");
             $table->string("url_logo")->nullable();
-            $table->string("key_app",50);
+            $table->string("key_app", 50);
             $table->char("diseno", 2);
             $table->char("estado", 2)->default("DI"); //indica el estado de la aplicacion ["CO"=> En Construcción,"CD"=>"En cola para desarrollo","DE"=>"En desarrollo","PC" => En Proceso de Actualización,"AC"=> Activa, "PE"=>En Proceso de Eliminación]
-            $table->text("configuracion")->nullable();//Aqui se almacena un texto JSON con todos los parametros de la configuracion
+            $table->text("configuracion")->nullable(); //Aqui se almacena un texto JSON con todos los parametros de la configuracion
+            $table->integer("num_base_info");
             $table->timestamps();
         });
     }

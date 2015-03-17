@@ -321,3 +321,11 @@ span.simplecolorpicker.icon {
 .input-red:focus{
     border:1px red solid;
 }
+
+#listado-institucional .guardado{
+    color:gray;
+}
+
+#listado-institucional .publico{
+    color:green;
+}

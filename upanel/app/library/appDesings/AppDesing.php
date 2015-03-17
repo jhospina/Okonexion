@@ -36,4 +36,17 @@ class AppDesing {
         }
     }
 
+    /** Carga los datos JSON de los tipos de contenido de diseño de app
+     * 
+     * @param Aplicacion $app 
+     * @return JSON
+     */
+    public static function cargarDatosJson($app) {
+        switch ($app->diseno) {
+            case App_Metro::sigla:
+                return App_Metro::cargarDatosJson($app->id);
+                break;
+        }
+    }
+
 }

@@ -117,10 +117,10 @@ class ContenidoApp extends Eloquent {
     //***********************************************
     //MODIFICACION DE ATRIBUTOS*********************
     //***********************************************
-
-    function getContenidoAttribute($contenido) {
-        return str_replace("\"", "'", $contenido);
-    }
+    /*
+      function getContenidoAttribute($contenido) {
+      return str_replace("\"", "'", $contenido);
+      } */
 
     //***********************************************
     //RELACION CON OTROS MODELOS*********************
