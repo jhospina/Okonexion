@@ -152,6 +152,12 @@ $imagenID = Contenido_Noticias::configImagen;
     //Sube la imagen una vez seleccionada
     $('#{{$imagenID}}').on('fileimageloaded', function (event, previewId) {
         $("#{{$imagenID}}").fileinput('upload');
+        deshabilitarBotones();
+    });
+
+
+    $('#{{$imagenID}}').on('fileuploaded', function (event, data, previewId, index) {
+         habilitarBotones();
     });
 
 
@@ -198,8 +204,7 @@ $imagenID = Contenido_Noticias::configImagen;
         if (!validar())
             return;
         $("#form").attr("action", "publicar");
-        jQuery(btn).attr("disabled", "disabled");
-        jQuery("#btn-guardar").attr("disabled", "disabled");
+        deshabilitarBotones();
         jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Publicando...");
         setTimeout(function () {
             $("#form").submit();
@@ -211,12 +216,24 @@ $imagenID = Contenido_Noticias::configImagen;
         if (!validar())
             return;
         $("#form").attr("action", "guardar");
-        jQuery(btn).attr("disabled", "disabled");
-        jQuery("#btn-publicar").attr("disabled", "disabled");
+
+        deshabilitarBotones();
+
         jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Guardando...");
         setTimeout(function () {
             $("#form").submit();
         }, 2000);
+    }
+
+
+    function deshabilitarBotones() {
+        jQuery("#btn-publicar").attr("disabled", "disabled");
+        jQuery("#btn-guardar").attr("disabled", "disabled");
+    }
+
+    function habilitarBotones() {
+        jQuery("#btn-publicar").removeAttr("disabled");
+        jQuery("#btn-guardar").removeAttr("disabled");
     }
 
 

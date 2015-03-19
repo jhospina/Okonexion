@@ -50,7 +50,7 @@ if (!is_null($metaImagen)) {
         <div class="col-lg-12" style="margin-bottom: 20px;">
             <div class="col-lg-12"><input name="{{$tituloID}}" id="{{$tituloID}}" type="text"  placeholder="Introduce el titulo aquí" class="form-control input-lg" value="{{$noticia->titulo}}"></div>
             <div class="col-lg-12">
-                  <textarea class="form-control" style="margin-top: 10px;" rows="10" id="{{$descripcionID}}" name="{{$descripcionID}}" placeholder="Escribe el contenido aquí...">{{$noticia->contenido}}</textarea>
+                <textarea class="form-control" style="margin-top: 10px;" rows="10" id="{{$descripcionID}}" name="{{$descripcionID}}" placeholder="Escribe el contenido aquí...">{{$noticia->contenido}}</textarea>
             </div>
         </div>
         <div class="col-lg-12">
@@ -121,7 +121,7 @@ if (!is_null($metaImagen)) {
             showRemove: true,
             showUpload: false,
             showCaption: false,
-            initialPreview: <?php echo(!is_null($imagen)) ? "\"<img src='" . $imagen->contenido . "' class='file-preview-image'/>\"" : "false"; ?>,
+            initialPreview: <?php echo(!is_null($imagen)) ? "\"<img src='" . $imagen->contenido . "' class='file-preview-image' style='width:100%;'/>\"" : "false"; ?>,
             maxFileCount: 1,
             previewFileType: "image",
             allowedFileExtensions: ['jpg', 'png'],
@@ -172,6 +172,12 @@ if (!is_null($metaImagen)) {
     //Sube la imagen una vez seleccionada
     $('#{{$imagenID}}').on('fileimageloaded', function (event, previewId) {
         $("#{{$imagenID}}").fileinput('upload');
+        deshabilitarBotones();
+    });
+
+
+    $('#{{$imagenID}}').on('fileuploaded', function (event, data, previewId, index) {
+        habilitarBotones();
     });
 
     //Eliminar imagen
@@ -191,6 +197,17 @@ if (!is_null($metaImagen)) {
 </script>
 
 <script>
+
+
+    function deshabilitarBotones() {
+        jQuery("#btn-publicar").attr("disabled", "disabled");
+        jQuery("#btn-guardar").attr("disabled", "disabled");
+    }
+
+    function habilitarBotones() {
+        jQuery("#btn-publicar").removeAttr("disabled");
+        jQuery("#btn-guardar").removeAttr("disabled");
+    }
 
     function agregarNuevaCategoria() {
         var idTax =<?php print($tax->id); ?>;
@@ -213,11 +230,10 @@ if (!is_null($metaImagen)) {
 
     function publicar(btn) {
 
-         if (!validar())
+        if (!validar())
             return;
         $("#form").attr("action", "../publicar");
-        jQuery(btn).attr("disabled", "disabled");
-        jQuery("#btn-guardar").attr("disabled", "disabled");
+        deshabilitarBotones();
         jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Publicando...");
         setTimeout(function () {
             $("#form").submit();
@@ -229,8 +245,7 @@ if (!is_null($metaImagen)) {
         if (!validar())
             return;
         $("#form").attr("action", "../guardar");
-        jQuery(btn).attr("disabled", "disabled");
-        jQuery("#btn-publicar").attr("disabled", "disabled");
+        deshabilitarBotones();
         jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Guardando...");
         setTimeout(function () {
             $("#form").submit();

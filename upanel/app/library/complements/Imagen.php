@@ -142,7 +142,7 @@ class Imagen {
      * @param type $calidad [90] La calidad de la imagen con la que se guardara
      * @return type
      */
-    private function almacenarImagen($imagen, $destino, $calidad = 90) {
+    private function almacenarImagen($imagen, $destino, $calidad = 9) {
         switch ($this->extension) {
             case "jpg":
                 return imagejpeg($imagen, $destino, $calidad);

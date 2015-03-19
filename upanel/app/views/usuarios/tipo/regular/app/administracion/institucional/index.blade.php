@@ -13,7 +13,7 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
 
 @section("contenido") 
 
-<h2><span class="glyphicon glyphicon-education"></span> ADMINISTRAR {{strtoupper($nombreContenido)}}</h2>
+<h2><span class="glyphicon {{Contenido_Institucional::icono}}glyphicon-education"></span> ADMINISTRAR {{strtoupper($nombreContenido)}}</h2>
 <hr/>
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
 
