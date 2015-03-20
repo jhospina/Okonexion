@@ -5,6 +5,7 @@
         <group>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/public/assets/css/upanel/plantilla.css</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/encuestas/agregar.blade.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/ControlTiposContenido/ContenidoApp.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/encuestas/index.blade.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/tiposContenido/UPanelControladorContenidoEncuestas.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/routes.php</file>

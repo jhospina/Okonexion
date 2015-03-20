@@ -97,6 +97,7 @@ Route::group(array('before' => 'auth'), function() {
     /* ENCUESTAS************************************** */
     Route::get("aplicacion/administrar/encuestas", "UPanelControladorContenidoEncuestas@index");
     /* ENCUESTAS - AGREGAR */ Route::get("aplicacion/administrar/encuestas/agregar", "UPanelControladorContenidoEncuestas@vista_agregar");
+    /* ENCUESTAS - Publicar */ Route::post("aplicacion/administrar/encuestas/publicar", "UPanelControladorContenidoEncuestas@publicar");
 
     //AJAX
     /* NOTICIAS - CATEGORIA - AGREGAR */Route::post("aplicacion/administrar/noticias/ajax/agregar/categoria", "UPanelControladorContenidoNoticias@ajax_noticias_agregarCategoria");

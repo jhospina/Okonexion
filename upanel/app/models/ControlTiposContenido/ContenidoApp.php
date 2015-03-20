@@ -6,6 +6,7 @@ class ContenidoApp extends Eloquent {
 
     const ESTADO_PUBLICO = "publico";
     const ESTADO_GUARDADO = "guardado";
+    const ESTADO_ARCHIVADO = "archivado";
     const TIPO_IMAGEN = "imagen";
 
     /** Añade una imagen como contenido
@@ -93,6 +94,42 @@ class ContenidoApp extends Eloquent {
         return null;
     }
 
+    /** Obtiene el de un metadato de un contenido
+     * 
+     * @param type $id_contenido
+     * @param type $clave
+     * @return String Retorna el valro del metatado o null si no existe
+     */
+    static function obtenerValorMetadato($id_contenido, $clave) {
+        $metas = MetaContenidoApp::where("id_contenido", $id_contenido)->where("clave", $clave)->get();
+        foreach ($metas as $meta)
+            return $meta->valor;
+        return null;
+    }
+
+    /** Indica si el metadato de un tipo de contenido exite 
+     * 
+     * @param Int $id_contenido Id del tipo de contenido
+     * @param String $clave La clave del metadato
+     * @return boolean
+     */
+    static function existeMetadato($id_contenido, $clave) {
+        $metas = MetaContenidoApp::where("id_contenido", $id_contenido)->where("clave", $clave)->get();
+
+        if (count($metas) > 0)
+            return true;
+        else
+            return false;
+    }
+
+    /** Elimina todos los metadatos de un contenido
+     * 
+     * @param type $id_contenido El id del contenido
+     */
+    static function vaciarMetadatos($id_contenido) {
+        $metas = MetaContenidoApp::where("id_contenido", $id_contenido)->delete();
+    }
+
     /** Establece los terminos(categorias) a un contenido
      * 
      * @param int $id_contenido ID del contenido
@@ -112,6 +149,15 @@ class ContenidoApp extends Eloquent {
      */
     static function eliminarTerminos($id_contenido) {
         DB::table("relacion_contenidos_terminos_App")->where("id_contenido", $id_contenido)->delete();
+    }
+
+    public function obtenerNombreTabla() {
+        return $this->table;
+    }
+
+    static function nombreTabla() {
+        $cont = new ContenidoApp;
+        return $cont->obtenerNombreTabla();
     }
 
     //***********************************************

@@ -367,3 +367,16 @@ span.simplecolorpicker.icon {
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
 }
+
+
+#content-respuestas .item.nuevo .glyphicon-remove-circle{
+    display: none;
+}
+
+.tooltip-error .tooltip-inner{
+    background: red;
+}
+
+.tooltip.left.tooltip-error  .tooltip-arrow{
+    border-left-color: red;
+}
