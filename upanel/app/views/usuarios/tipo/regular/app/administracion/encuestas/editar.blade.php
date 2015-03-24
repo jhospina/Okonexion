@@ -2,6 +2,7 @@
 $tipoContenido = Contenido_Encuestas::nombre;
 $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
 $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
+$respuestas = Contenido_Encuestas::obtenerRespuestas($encuesta->id);
 ?>
 
 @extends('interfaz/plantilla')
@@ -14,9 +15,9 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
 {{--NAVEGACION--}}
 <div class="well well-sm">
     <a href="{{URL::to("aplicacion/administrar/encuestas")}}" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Volver</a>
+    <a href="{{URL::to("aplicacion/administrar/encuestas/agregar")}}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Agregar nuevo</a>
 </div>
-
-<h2><span class="glyphicon {{Contenido_Encuestas::icono}}"></span> Agregar {{$singNombre}}</h2>
+<h2><span class="glyphicon {{Contenido_Encuestas::icono}}"></span> Editar {{$singNombre}}</h2>
 <hr/>
 <div class="well well-lg">
     <p><b>ATENCIÓN:</b> Al crear una nueva {{$singNombre}} y publicarla, esto ocasionara que cualquier otra {{$singNombre}} en vigencia sera archivara y pasara a ser parte los históricos. Ten en cuenta que en tu aplicación móvil solo puede haber una encuesta en vigencia. Cualquier {{$singNombre}} publicada no se podra editar despues.</p>
@@ -26,12 +27,14 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
 
 <form id="form" method="POST">
 
+    <input type="hidden" name="id_encuesta" value="{{$encuesta->id}}"/>
+    
     <div class="col-lg-12">
-        <input class="form-control input-lg" id="{{Contenido_Encuestas::configTitulo}}" name="{{Contenido_Encuestas::configTitulo}}" placeholder="Titulo o pregunta...">
+        <input class="form-control input-lg" id="{{Contenido_Encuestas::configTitulo}}" name="{{Contenido_Encuestas::configTitulo}}" placeholder="Titulo o pregunta..." value="{{$encuesta->titulo}}">
     </div>
 
     <div class="col-lg-10">
-        <textarea class="form-control" style="display:none;margin-top: 5px;" name="{{Contenido_Encuestas::configDescripcion}}" placeholder="Si deseas escribir una descripción, hazlo aquí..."></textarea>
+        <textarea class="form-control" style="@if(strlen($encuesta->contenido)==0)display:none;@endif margin-top: 5px;" name="{{Contenido_Encuestas::configDescripcion}}" placeholder="Si deseas escribir una descripción, hazlo aquí...">{{$encuesta->contenido}}</textarea>
     </div>
 
     <div class="col-lg-2 text-right" style="margin-top: 5px;">
@@ -45,11 +48,16 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
         </div>
         <div class="col-lg-12"> 
             <div class="col-lg-9" id="content-respuestas"> 
-                <div class="col-lg-12 item set" id="item-1"> 
-                    <div class="col-lg-1 div-item" id="div-item-1">1</div>
-                    <div class="col-lg-10 div-resp"><input id="{{Contenido_Encuestas::configRespuesta}}1" class="form-control resp" data-item="1" name="{{Contenido_Encuestas::configRespuesta}}[]" placeholder="Inserte respuesta..." value=""></div>
-                    <div class="col-lg-1 div-ctrl"></div>
-                </div> 
+                <?php for ($i = 0; $i < count($respuestas) / 2; $i++): $num = $i + 1; ?>
+
+                    <div class="col-lg-12 item set" id="item-{{$num}}"> 
+                        <div class="col-lg-1 div-item" id="div-item-{{$num}}">{{$num}}</div>
+                        <div class="col-lg-10 div-resp"><input id="{{Contenido_Encuestas::configRespuesta}}{{$num}}" class="form-control resp" data-item="{{$num}}" name="{{Contenido_Encuestas::configRespuesta}}[]" placeholder="Inserte respuesta..." value="{{$respuestas["resp".$i]}}"></div>
+                        <div class="col-lg-1 div-ctrl"></div>
+                    </div> 
+
+                <?php endfor; ?>
+
             </div>
             <div class="col-lg-3">
                 <div class="panel panel-default" style="clear: both;">
@@ -71,7 +79,7 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
 @section("script")
 <script>
 
-    var n_resps = 1; //Numero de respuestas
+    var n_resps = {{$num}}; //Numero de respuestas
     var tooltip_template = '<div class="tooltip tooltip-error" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>';
 
 
@@ -205,7 +213,7 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
 
         $(btn).tooltip("hide");
 
-        $("#form").attr("action", "publicar");
+        $("#form").attr("action", "../publicar");
         jQuery(btn).attr("disabled", "disabled");
         jQuery("#btn-guardar").attr("disabled", "disabled");
         jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Publicando...");
@@ -218,7 +226,7 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
 
         if (!validar())
             return;
-        $("#form").attr("action", "guardar");
+        $("#form").attr("action", "../guardar");
         jQuery(btn).attr("disabled", "disabled");
         jQuery("#btn-publicar").attr("disabled", "disabled");
         jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Guardando...");

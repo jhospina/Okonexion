@@ -1,6 +1,7 @@
 <?php
 $tipoContenido = Contenido_Institucional::nombre;
 $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
+$singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
 ?>
 
 @extends('interfaz/plantilla')
@@ -43,7 +44,7 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
 </div>
 
 @else
-<div class="col-lg-12 text-center h3">NO INFORMACIÓN PARA MOSTRAR</div>
+<div class="col-lg-12 text-center h3">NO HAY INFORMACIÓN PARA MOSTRAR</div>
 @endif
 
 
@@ -101,7 +102,7 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
                     });
                             setTimeout(function(){
                             $("#titulo-modal").html("¡REALIZADO CON EXITO!");
-                                    $("#contenido-modal").html("{{ucwords(strtolower($nombreContenido))}} eliminada.");
+                                    $("#contenido-modal").html("{{ucwords(strtolower($singNombre))}} eliminada.");
                                     setTimeout(function(){
                                     $('#modal-eliminacion').modal('hide');
                                     }, 2000);

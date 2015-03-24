@@ -97,7 +97,10 @@ Route::group(array('before' => 'auth'), function() {
     /* ENCUESTAS************************************** */
     Route::get("aplicacion/administrar/encuestas", "UPanelControladorContenidoEncuestas@index");
     /* ENCUESTAS - AGREGAR */ Route::get("aplicacion/administrar/encuestas/agregar", "UPanelControladorContenidoEncuestas@vista_agregar");
+    /* ENCUESTAS - EDITAR */ Route::get("aplicacion/administrar/encuestas/editar/{id}", "UPanelControladorContenidoEncuestas@vista_editar");
+    /* ENCUESTAS - HISTORICO */ Route::get("aplicacion/administrar/encuestas/historico/{id}", "UPanelControladorContenidoEncuestas@vista_historico");
     /* ENCUESTAS - Publicar */ Route::post("aplicacion/administrar/encuestas/publicar", "UPanelControladorContenidoEncuestas@publicar");
+    /* ENCUESTAS - Guardar */ Route::post("aplicacion/administrar/encuestas/guardar", "UPanelControladorContenidoEncuestas@guardar");
 
     //AJAX
     /* NOTICIAS - CATEGORIA - AGREGAR */Route::post("aplicacion/administrar/noticias/ajax/agregar/categoria", "UPanelControladorContenidoNoticias@ajax_noticias_agregarCategoria");
@@ -106,6 +109,8 @@ Route::group(array('before' => 'auth'), function() {
     /* NOTICIAS - ELIMINAR */Route::post("aplicacion/administrar/noticias/ajax/eliminar/noticia", "UPanelControladorContenidoNoticias@ajax_noticias_eliminarNoticia");
 
     /* Institucional - ELIMINAR */Route::post("aplicacion/administrar/institucional/ajax/eliminar/institucional", "UPanelControladorContenidoInstitucional@ajax_institucional_eliminarInstitucional");
+    /* Encuesta - ELIMINAR */Route::post("aplicacion/administrar/encuesta/ajax/eliminar/encuesta", "UPanelControladorContenidoEncuestas@ajax_eliminar_encuesta");
+
     Route::post("aplicacion/administrar/noticias/ajax/subir/imagen", "UPanelControladorContenidoNoticias@ajax_noticias_subirImagen");
     Route::post("aplicacion/administrar/noticias/ajax/eliminar/imagen", "UPanelControladorContenidoNoticias@ajax_noticias_eliminarImagen");
 });
