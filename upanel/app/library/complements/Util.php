@@ -74,6 +74,8 @@ class Util {
             if (strlen($texto_final) >= $longitud)
                 return substr($texto_final, 0, strlen($texto_final) - 1) . "...";
         }
+        
+        return $texto;
     }
 
     /** Da formato de salida a un listado de objetos dado por la propiedad a imprimir del objeto.
@@ -166,4 +168,11 @@ class Util {
         return $url;
     }
 
+    
+    static function descodificarTexto($texto){
+        $buscar=array("Á","É","Í","Ó","Ú","á","é","í","ó","ú","ñ","Ñ");
+        $reemplazar=array("&Aacute;","&Eacute;","&Iacute;","&Oacute;","&Uacute;","&aacute;","&eacute;","&iacute;","&oacute;","&uacute;","&Ntilde;","&ntilde;");
+        return str_replace($buscar, $reemplazar, $texto);
+    }
+    
 }

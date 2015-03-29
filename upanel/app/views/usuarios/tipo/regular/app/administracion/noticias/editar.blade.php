@@ -26,7 +26,7 @@ if (!is_null($metaImagen)) {
 @section("css")
 {{ HTML::style('assets/plugins/fileinput/css/fileinput.css', array('media' => 'screen')) }}
 {{ HTML::style('assets/plugins/font-awesome/css/font-awesome.css', array('rel' => 'stylesheet')) }}
-
+{{ HTML::style('assets/plugins/wysiwyg/editor.css', array('media' => 'screen')) }}
 @stop
 
 
@@ -50,7 +50,8 @@ if (!is_null($metaImagen)) {
         <div class="col-lg-12" style="margin-bottom: 20px;">
             <div class="col-lg-12"><input name="{{$tituloID}}" id="{{$tituloID}}" type="text"  placeholder="Introduce el titulo aquí" class="form-control input-lg" value="{{$noticia->titulo}}"></div>
             <div class="col-lg-12">
-                <textarea class="form-control" style="margin-top: 10px;" rows="10" id="{{$descripcionID}}" name="{{$descripcionID}}" placeholder="Escribe el contenido aquí...">{{$noticia->contenido}}</textarea>
+                <div id="editor"></div>
+                <textarea style="display: none;" id="{{$descripcionID}}" name="{{$descripcionID}}"></textarea>    
             </div>
         </div>
         <div class="col-lg-12">
@@ -107,16 +108,20 @@ if (!is_null($metaImagen)) {
 @section("script")
 {{ HTML::script('assets/js/bootstrap-filestyle.min.js') }}
 {{ HTML::script('assets/js/bootstrap-tooltip.js') }}
+{{ HTML::script('assets/plugins/wysiwyg/editor.js') }}
 {{ HTML::script('assets/plugins/fileinput/js/fileinput.js') }}
 
 <script>
-    jQuery(document).ready(function () {
+            jQuery(document).ready(function () {
 
-        jQuery(".tooltip-left").tooltip({placement: "left"});
-        jQuery(".tooltip-top").tooltip({placement: "top"});
+    jQuery(".tooltip-left").tooltip({placement: "left"});
+            jQuery(".tooltip-top").tooltip({placement: "top"});
+            @include("interfaz/app/opciones_editor", array("id" => "editor"))
 
-        jQuery("#{{$imagenID}}").fileinput({
-            multiple: false,
+            $("#editor").Editor("setText", "{{str_replace("\"", "'",$noticia->contenido)}}");
+
+            jQuery("#{{$imagenID}}").fileinput({
+    multiple: false,
             showPreview: true,
             showRemove: true,
             showUpload: false,
@@ -142,136 +147,134 @@ if (!is_null($metaImagen)) {
             msgSizeTooLarge: "El tamaño de la imagen es demasiado grande. Maximo <b>{maxSize} KB</b>. Esta imagen pesa <b>{size} KB.</b>",
             uploadAsync: true,
             uploadUrl: "{{URL::to('aplicacion/administrar/noticias/ajax/subir/imagen')}}" // your upload server url
-        });
+    });
     });</script>
 
 
 <script>
-    jQuery("#btn-agregar-cat").click(function () {
+            jQuery("#btn-agregar-cat").click(function () {
 
-        if (jQuery("#input-agregar-cat").css("display") == "none")
-        {
-            jQuery("#input-agregar-cat").fadeIn();
+    if (jQuery("#input-agregar-cat").css("display") == "none")
+    {
+    jQuery("#input-agregar-cat").fadeIn();
             jQuery("#input-agregar-cat").focus();
-        } else {
-            agregarNuevaCategoria();
-        }
+    } else {
+    agregarNuevaCategoria();
+    }
     });
-    jQuery("#input-agregar-cat").keypress(function (event) {
-        var keycode = (event.keyCode ? event.keyCode : event.which);
-        if (keycode == '13') {
-            agregarNuevaCategoria();
-        }
+            jQuery("#input-agregar-cat").keypress(function (event) {
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == '13') {
+    agregarNuevaCategoria();
+    }
     });
-    $("#{{$imagenID}}").on('fileuploaded', function (event, data, previewId, index) {
-        var data = data.response;
-        $("#{{$imagenID}}_id").val(data["{{$imagenID}}_id"]);
+            $("#{{$imagenID}}").on('fileuploaded', function (event, data, previewId, index) {
+    var data = data.response;
+            $("#{{$imagenID}}_id").val(data["{{$imagenID}}_id"]);
     });
-
-
-    //Sube la imagen una vez seleccionada
-    $('#{{$imagenID}}').on('fileimageloaded', function (event, previewId) {
-        $("#{{$imagenID}}").fileinput('upload');
-        deshabilitarBotones();
+            //Sube la imagen una vez seleccionada
+            $('#{{$imagenID}}').on('fileimageloaded', function (event, previewId) {
+    $("#{{$imagenID}}").fileinput('upload');
+            deshabilitarBotones();
     });
-
-
-    $('#{{$imagenID}}').on('fileuploaded', function (event, data, previewId, index) {
-        habilitarBotones();
+            $('#{{$imagenID}}').on('fileuploaded', function (event, data, previewId, index) {
+    habilitarBotones();
     });
+            //Eliminar imagen
+            $('#{{$imagenID}}').on('fileclear', function (event) {
 
-    //Eliminar imagen
-    $('#{{$imagenID}}').on('fileclear', function (event) {
-
-        $.ajax({
-            type: "POST",
+    $.ajax({
+    type: "POST",
             url: "{{URL::to('aplicacion/administrar/noticias/ajax/eliminar/imagen')}}",
             data: {id_imagen: $("#{{$imagenID}}_id").val()},
             success: function (response) {
-                $("#{{$imagenID}}_id").val("");
+            $("#{{$imagenID}}_id").val("");
             }
 
-        }, "json");
-    });
-
-</script>
+    }, "json");
+    });</script>
 
 <script>
 
 
-    function deshabilitarBotones() {
-        jQuery("#btn-publicar").attr("disabled", "disabled");
-        jQuery("#btn-guardar").attr("disabled", "disabled");
-    }
+            function deshabilitarBotones() {
+            jQuery("#btn-publicar").attr("disabled", "disabled");
+                    jQuery("#btn-guardar").attr("disabled", "disabled");
+            }
 
     function habilitarBotones() {
-        jQuery("#btn-publicar").removeAttr("disabled");
-        jQuery("#btn-guardar").removeAttr("disabled");
+    jQuery("#btn-publicar").removeAttr("disabled");
+            jQuery("#btn-guardar").removeAttr("disabled");
     }
 
     function agregarNuevaCategoria() {
-        var idTax =<?php print($tax->id); ?>;
-        var nuevaCat = jQuery("#input-agregar-cat").val();
-        jQuery.ajax({
+    var idTax =<?php print($tax->id); ?>;
+            var nuevaCat = jQuery("#input-agregar-cat").val();
+            jQuery.ajax({
             type: "POST",
-            url: "{{URL::to('aplicacion/administrar/noticias/ajax/agregar/categoria')}}",
-            data: {id_tax: idTax, cat: nuevaCat},
-            success: function (response) {
+                    url: "{{URL::to('aplicacion/administrar/noticias/ajax/agregar/categoria')}}",
+                    data: {id_tax: idTax, cat: nuevaCat},
+                    success: function (response) {
 
-                jQuery("#content-cats").append('<div class="checkbox" style="margin: 0px;"><label><input type="checkbox" name="cat-' + response + '"  value="' + response + '"/> ' + nuevaCat + '</label></div>');
-                jQuery("#input-agregar-cat").fadeOut();
-                jQuery("#msj-agregar-cat").html("Categoria agregada");
-                jQuery("#msj-agregar-cat").fadeIn();
-                setTimeout(function () {
-                    jQuery("#msj-agregar-cat").fadeOut();
-                }, 5000);
-            }}, "html");
+                    jQuery("#content-cats").append('<div class="checkbox" style="margin: 0px;"><label><input type="checkbox" name="cat-' + response + '"  value="' + response + '"/> ' + nuevaCat + '</label></div>');
+                            jQuery("#input-agregar-cat").fadeOut();
+                            jQuery("#msj-agregar-cat").html("Categoria agregada");
+                            jQuery("#msj-agregar-cat").fadeIn();
+                            setTimeout(function () {
+                            jQuery("#msj-agregar-cat").fadeOut();
+                            }, 5000);
+                    }}, "html");
     }
 
     function publicar(btn) {
 
-        if (!validar())
+    $("#{{$descripcionID}}").html($("#editor").Editor("getText"));
+            $("#{{$descripcionID}}").html($("#editor").Editor("getText"));
+            if (!validar())
             return;
-        $("#form").attr("action", "../publicar");
-        deshabilitarBotones();
-        jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Publicando...");
-        setTimeout(function () {
+            $("#form").attr("action", "../publicar");
+            deshabilitarBotones();
+            jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Publicando...");
+            setTimeout(function () {
+
             $("#form").submit();
-        }, 2000);
+            }, 2000);
     }
 
     function guardar(btn) {
 
-        if (!validar())
+    $("#{{$descripcionID}}").html($("#editor").Editor("getText"));
+            if (!validar())
             return;
-        $("#form").attr("action", "../guardar");
-        deshabilitarBotones();
-        jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Guardando...");
-        setTimeout(function () {
+            $("#form").attr("action", "../guardar");
+            deshabilitarBotones();
+            jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Guardando...");
+            setTimeout(function () {
+
             $("#form").submit();
-        }, 2000);
+            }, 2000);
     }
 
 
     function validar() {
-        var titulo = $("#{{$tituloID}}").val();
-        var descripcion = $("#{{$descripcionID}}").val();
-        var errores = "";
-        if (titulo.length < 1) {
-            errores += "<li>Debes escribir un titulo.</li>";
-        }
+    var titulo = $("#{{$tituloID}}").val();
+            var descripcion = $("#{{$descripcionID}}").val();
+            var errores = "";
+            if (titulo.length < 1) {
+    errores += "<li>Debes escribir un titulo.</li>";
+    }
 
-        if (descripcion.length < 1) {
-            errores += "<li>Debes escribir una descripción.</li>";
-        }
+    if (descripcion.length < 1) {
+    errores += "<li>Debes escribir una descripción.</li>";
+    }
 
-        if (errores.length > 0) {
-            $("#error-js").html("Debe corregir los siguientes errores: </br><lu>" + errores + "</lu>");
+    if (errores.length > 0) {
+    $("#error-js").html("Debe corregir los siguientes errores: </br><lu>" + errores + "</lu>");
             $("#error-js").toggle();
             return false;
-        } else {
-            return true;
-        }
+    } else {
+    return true;
+    }
     }
 
 </script>

@@ -1582,4 +1582,4 @@ You should have received a copy of the GNU General Public License along with thi
 			$.error( 'Method ' +  method + ' does not exist on jQuery.Editor' );
 		}    
 	}; 
-})( jQuery );
+})(jQuery);

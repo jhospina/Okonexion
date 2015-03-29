@@ -102,8 +102,10 @@ class App_Metro {
      * @return JSON
      */
     public static function cargarDatosJson($id_app) {
-        return Contenido_Institucional::cargarDatosJson($id_app) .
-                Contenido_Noticias::cargarDatosJson($id_app);
+        $data = [];
+        $data[Contenido_Institucional::nombre] = Contenido_Institucional::cargarDatosJson($id_app);
+        $data[Contenido_Noticias::nombre] = Contenido_Noticias::cargarDatosJson($id_app);
+        return json_encode($data);
     }
 
 }

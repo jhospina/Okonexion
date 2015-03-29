@@ -133,7 +133,8 @@ Class Aplicacion extends Eloquent {
      */
     static function prepararDatosParaApp($datos) {
         if (is_array($datos))
-            return '{"c2dictionary":true,"data":' . json_encode($datos) . '}';
+        //return '{"c2dictionary":true,"data":' . json_encode($datos) . '}';
+            return json_encode($datos);
         else
             return null;
     }

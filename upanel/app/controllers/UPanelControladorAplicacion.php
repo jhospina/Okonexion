@@ -340,10 +340,10 @@ class UPanelControladorAplicacion extends Controller {
             return;
         }
 
-        $id_aplicacion = Input::get("id_aplicacion");
-        $id_proceso = Input::get("id_proceso");
-        $colores = Aplicacion::coloresFondo();
+        $id_proceso = Input::get("id_proceso");   
+        $colores = AppDesing::coloresFondo();
         $proceso = ProcesoApp::find($id_proceso);
+       
 
         $json = json_decode($proceso->json_config);
         $json_nuevo = [];

@@ -3,15 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/encuestas/agregar.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/encuestas/index.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/tiposContenido/UPanelControladorContenidoEncuestas.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/routes.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/encuestas/editar.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/encuestas/historico.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/library/contentTypes/Contenido_Encuestas.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/tiposContenido/UPanelControladorContenidoInstitucional.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/institucional/index.blade.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/tiposContenido/UPanelControladorContenidoNoticias.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/library/contentTypes/Contenido_Institucional.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/noticias/agregar.blade.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/library/contentTypes/Contenido_Noticias.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/ProcesoApp.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/institucional/editar.blade.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/ControladorApp.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/noticias/editar.blade.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/institucional/agregar.blade.php</file>
         </group>
     </open-files>
 </project-private>

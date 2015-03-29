@@ -71,7 +71,7 @@ class Contenido_Noticias {
         $contenido->id_usuario = Auth::user()->id;
         $contenido->tipo = Contenido_Noticias::nombre;
         $contenido->titulo = $data[Contenido_Noticias::configTitulo];
-        $contenido->contenido = strip_tags($data[Contenido_Noticias::configDescripcion]);
+        $contenido->contenido = Util::descodificarTexto($data[Contenido_Noticias::configDescripcion]);
         $contenido->estado = $estado;
 
         @$contenido->save();
@@ -110,7 +110,7 @@ class Contenido_Noticias {
         $contenido = ContenidoApp::find($id_noticia);
         $contenido->tipo = Contenido_Noticias::nombre;
         $contenido->titulo = $data[Contenido_Noticias::configTitulo];
-        $contenido->contenido = strip_tags($data[Contenido_Noticias::configDescripcion]);
+        $contenido->contenido = Util::descodificarTexto($data[Contenido_Noticias::configDescripcion]);
         $contenido->estado = $estado;
 
         @$contenido->save();
@@ -280,20 +280,24 @@ class Contenido_Noticias {
             MetaContenidoApp::where("clave", Contenido_Noticias::configImagen . "_principal")->where("valor", $id_imagen)->delete();
     }
 
-    /** Obtiene un JSON preparado de las noticias para el envio a la aplicaciòn movil
+    /** Obtiene un JSON de las noticias
      * 
      * @param Int $id_app id de la aplicacion
+     * @param Int $take Indica el numero de registros a obtener
+     * @param Int $skip Indica el numero de registros a omitir
      * @return String JSON
      */
-    static function cargarDatosJson($id_app) {
-        $noticias = ContenidoApp::where("tipo", Contenido_Noticias::nombre)->where("id_aplicacion", $id_app)->where("estado", ContenidoApp::ESTADO_PUBLICO)->orderBy("id", "DESC")->get();
+    static function cargarDatosJson($id_app,$take=16,$skip=0) {
+        $noticias = ContenidoApp::where("tipo", Contenido_Noticias::nombre)->where("id_aplicacion", $id_app)->where("estado", ContenidoApp::ESTADO_PUBLICO)->orderBy("updated_at", "DESC")->take($take)->skip($skip)->get();
 
         $data_noticias = array();
         $n = 1;
 
         foreach ($noticias as $noticia) {
+            $data_noticias["id".$n]=$noticia->id;
             $data_noticias["titulo" . $n] = $noticia->titulo;
-            $data_noticias["descripcion" . $n] = strip_tags($noticia->contenido); //str_replace("\n", "<br/>", Input::get("mensaje"));
+            $data_noticias["descripcion" . $n] = $noticia->contenido; //str_replace("\n", "<br/>", Input::get("mensaje"));
+            $data_noticias["fecha".$n]=$noticia->updated_at;
             if (Contenido_Noticias::tieneImagen($noticia->id)) {
                 $imagen = Contenido_Noticias::obtenerImagen($noticia->id);
                 $data_noticias["imagen" . $n] = Util::eliminarExtensionArchivo(Contenido_Noticias::obtenerUrlMiniaturaImagen($imagen->contenido, Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_BG)) . "/" . str_replace("image/", "", $imagen->mime_type);
@@ -302,8 +306,12 @@ class Contenido_Noticias {
             }
             $n++;
         }
-
-        return "@" . Contenido_Noticias::nombre . "@" . Aplicacion::prepararDatosParaApp($data_noticias) . "@" . Contenido_Noticias::nombre . "@";
+        //Construct 2
+        //return "@" . Contenido_Noticias::nombre . "@" . Aplicacion::prepararDatosParaApp($data_noticias) . "@" . Contenido_Noticias::nombre . "@";
+        //Android
+        if(count($data_noticias)>0)
+        return Aplicacion::prepararDatosParaApp($data_noticias);
+        return null;
     }
 
 }

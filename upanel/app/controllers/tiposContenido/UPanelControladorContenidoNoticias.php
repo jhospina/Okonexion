@@ -9,8 +9,8 @@ class UPanelControladorContenidoNoticias extends Controller {
         if (!Aplicacion::estaTerminada($app->estado))
             return Redirect::to("/");
 
-        $noticias = ContenidoApp::where("tipo", Contenido_Noticias::nombre)->where("id_usuario", Auth::user()->id)->orderBy("id", "DESC")->paginate(10);
-
+        $noticias = ContenidoApp::where("tipo", Contenido_Noticias::nombre)->where("id_usuario", Auth::user()->id)->orderBy("updated_at", "DESC")->paginate(10);
+      
         return View::make("usuarios/tipo/regular/app/administracion/noticias/index")->with("app", $app)->with(Contenido_Noticias::nombre, $noticias);
     }
 

@@ -15,6 +15,7 @@ $imagenID = Contenido_Noticias::configImagen;
 @section("css")
 {{ HTML::style('assets/plugins/fileinput/css/fileinput.css', array('media' => 'screen')) }}
 {{ HTML::style('assets/plugins/font-awesome/css/font-awesome.css', array('rel' => 'stylesheet')) }}
+{{ HTML::style('assets/plugins/wysiwyg/editor.css', array('media' => 'screen')) }}
 @stop
 
 
@@ -36,7 +37,8 @@ $imagenID = Contenido_Noticias::configImagen;
         <div class="col-lg-12" style="margin-bottom: 20px;">
             <div class="col-lg-12"><input name="{{$tituloID}}" id="{{$tituloID}}" type="text"  placeholder="Introduce el titulo aquí" class="form-control input-lg"></div>
             <div class="col-lg-12">
-                <textarea class="form-control" style="margin-top: 10px;" rows="10" id="{{$descripcionID}}" name="{{$descripcionID}}" placeholder="Escribe el contenido aquí..."></textarea>
+                <div id="editor"></div>
+                <textarea style="display: none;" id="{{$descripcionID}}" name="{{$descripcionID}}"></textarea>    
             </div>
         </div>
         <div class="col-lg-12">
@@ -89,6 +91,7 @@ $imagenID = Contenido_Noticias::configImagen;
 @section("script")
 {{ HTML::script('assets/js/bootstrap-filestyle.min.js') }}
 {{ HTML::script('assets/js/bootstrap-tooltip.js') }}
+{{ HTML::script('assets/plugins/wysiwyg/editor.js') }}
 {{ HTML::script('assets/plugins/fileinput/js/fileinput.js') }}
 
 <script>
@@ -96,6 +99,7 @@ $imagenID = Contenido_Noticias::configImagen;
 
         jQuery(".tooltip-left").tooltip({placement: "left"});
         jQuery(".tooltip-top").tooltip({placement: "top"});
+        @include("interfaz/app/opciones_editor", array("id" => "editor"))
         jQuery("#{{$imagenID}}").fileinput({
             multiple: false,
             showPreview: true,
@@ -157,7 +161,7 @@ $imagenID = Contenido_Noticias::configImagen;
 
 
     $('#{{$imagenID}}').on('fileuploaded', function (event, data, previewId, index) {
-         habilitarBotones();
+        habilitarBotones();
     });
 
 
@@ -201,6 +205,7 @@ $imagenID = Contenido_Noticias::configImagen;
 
     function publicar(btn) {
 
+        $("#{{$descripcionID}}").html($("#editor").Editor("getText"));
         if (!validar())
             return;
         $("#form").attr("action", "publicar");
@@ -212,7 +217,7 @@ $imagenID = Contenido_Noticias::configImagen;
     }
 
     function guardar(btn) {
-
+        $("#{{$descripcionID}}").html($("#editor").Editor("getText"));
         if (!validar())
             return;
         $("#form").attr("action", "guardar");

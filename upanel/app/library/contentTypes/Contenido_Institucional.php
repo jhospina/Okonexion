@@ -34,7 +34,7 @@ class Contenido_Institucional {
         $contenido->id_usuario = Auth::user()->id;
         $contenido->tipo = Contenido_Institucional::nombre;
         $contenido->titulo = $data[Contenido_Institucional::configTitulo];
-        $contenido->contenido = strip_tags($data[Contenido_Institucional::configDescripcion]);
+        $contenido->contenido = Util::descodificarTexto($data[Contenido_Institucional::configDescripcion]);
         $contenido->estado = $estado;
 
         @$contenido->save();
@@ -50,7 +50,7 @@ class Contenido_Institucional {
         $contenido = ContenidoApp::find($id_inst);
         $contenido->tipo = Contenido_Institucional::nombre;
         $contenido->titulo = $data[Contenido_Institucional::configTitulo];
-        $contenido->contenido = strip_tags($data[Contenido_Institucional::configDescripcion]);
+        $contenido->contenido = Util::descodificarTexto($data[Contenido_Institucional::configDescripcion]);
         $contenido->estado = $estado;
         @$contenido->save();
     }
@@ -71,8 +71,9 @@ class Contenido_Institucional {
             $data_inst["descripcion" . $n] = $inst->contenido; //str_replace("\n", "<br/>", Input::get("mensaje"));
             $n++;
         }
-
-        return "@" . Contenido_Institucional::nombre . "@" . Aplicacion::prepararDatosParaApp($data_inst) . "@" . Contenido_Institucional::nombre . "@";
+        //Construct 2
+        //return "@" . Contenido_Institucional::nombre . "@" . Aplicacion::prepararDatosParaApp($data_inst) . "@" . Contenido_Institucional::nombre . "@";
+        return Aplicacion::prepararDatosParaApp($data_inst);
     }
 
 }

@@ -10,7 +10,10 @@ $descripcionID = Contenido_Institucional::configDescripcion;
 
 @section("titulo") {{$app->nombre}} | Administrar {{$nombreContenido}} @stop
 
-
+@section("css")
+{{ HTML::style('assets/plugins/font-awesome/css/font-awesome.css', array('rel' => 'stylesheet')) }}
+{{ HTML::style('assets/plugins/wysiwyg/editor.css', array('media' => 'screen')) }}
+@stop
 
 @section("contenido") 
 
@@ -29,7 +32,8 @@ $descripcionID = Contenido_Institucional::configDescripcion;
         <div class="col-lg-9" style="margin-bottom: 20px;">
             <div class="col-lg-12"><input name="{{$tituloID}}" id="{{$tituloID}}" type="text"  placeholder="Introduce el titulo aquí" class="form-control input-lg"></div>
             <div class="col-lg-12">
-                <textarea class="form-control" style="margin-top: 10px;" rows="10" id="{{$descripcionID}}" name="{{$descripcionID}}" placeholder="Escribe el contenido aquí..."></textarea>
+                <div id="editor"></div>
+                <textarea style="display: none;" id="{{$descripcionID}}" name="{{$descripcionID}}"></textarea>  
             </div>
         </div>      
         <div class="col-lg-3">
@@ -54,19 +58,20 @@ $descripcionID = Contenido_Institucional::configDescripcion;
 
 @section("script")
 {{ HTML::script('assets/js/bootstrap-tooltip.js') }}
-
+{{ HTML::script('assets/plugins/wysiwyg/editor.js') }}
 <script>
     jQuery(document).ready(function () {
 
         jQuery(".tooltip-left").tooltip({placement: "left"});
         jQuery(".tooltip-top").tooltip({placement: "top"});
+        @include("interfaz/app/opciones_editor", array("id"=> "editor"))
     });</script>
 
 
 <script>
 
     function publicar(btn) {
-
+        $("#{{$descripcionID}}").html($("#editor").Editor("getText"));
         if (!validar())
             return;
         $("#form").attr("action", "publicar");
@@ -74,12 +79,13 @@ $descripcionID = Contenido_Institucional::configDescripcion;
         jQuery("#btn-guardar").attr("disabled", "disabled");
         jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Publicando...");
         setTimeout(function () {
+            $("#{{$descripcionID}}").html($("#editor").Editor("getText"));
             $("#form").submit();
         }, 2000);
     }
 
     function guardar(btn) {
-
+        $("#{{$descripcionID}}").html($("#editor").Editor("getText"));
         if (!validar())
             return;
         $("#form").attr("action", "guardar");

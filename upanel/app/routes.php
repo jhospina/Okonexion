@@ -122,6 +122,6 @@ Route::group(array('before' => 'auth'), function() {
 //******************************************************************************
 //******************************************************************************
 //Las apps se conectan para obtener informacion
-Route::post("app/conectar", "ControladorApp@conectar");
+Route::post("app/descargar/noticias", "ControladorApp@descargar_noticias");
 //Las apps se conectan para cargar imagenes
 Route::get("usuarios/uploads/{usuario}/{imagen}/{mime_type}", "ControladorApp@cargarImagen");

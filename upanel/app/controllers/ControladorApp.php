@@ -2,24 +2,23 @@
 
 class ControladorApp extends \BaseController {
 
-    function conectar() {
+    function descargar_noticias() {
 
         $key_app = Input::get("key_app");
-        $base_info = Input::get("num_base_info");
-        // $key_app = "I2uqHDXS3RR8lgmaCOG9eZmcO15w7O6x0kxFoKYfbpbCLDdNR";
+        $cant=Input::get("cant");
+        //$base_info = Input::get("num_base_info");
+       //$key_app = "I2uqHDXS3RR8lgmaCOG9eZmcO15w7O6x0kxFoKYfbpbCLDdNR";
 
         $apps = Aplicacion::where("key_app", $key_app)->get();
         foreach ($apps as $app)
             break;
 
-        $data_app["num_base_info"] = $app->num_base_info;
-
-        if ($app->num_base_info > $base_info)
-            return "@app@" . Aplicacion::prepararDatosParaApp($data_app) . "@app@" . AppDesing::cargarDatosJson($app);
-        else
-            return "@app@" . Aplicacion::prepararDatosParaApp($data_app) . "@app@";
+        return Contenido_Noticias::cargarDatosJson($app->id,16,  intval($cant));
     }
 
+    
+    
+    
     //RUTA DE ACCESO: usuarios/uploads/{usuario}/{imagen}/{mime_type}
     //Carga una imagen
     function cargarImagen($usuario, $imagen, $mime_type) {
