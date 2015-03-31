@@ -38,6 +38,15 @@ class Contenido_Institucional {
         $contenido->estado = $estado;
 
         @$contenido->save();
+
+        if ($estado == ContenidoApp::ESTADO_PUBLICO) {
+            //Obtiene la ultima posicion indicada del orden de ubicacion para el contenido insittucional
+            $orden_pos = MetaContenidoApp::where("id_usuario", Auth::user()->id)->where("clave", Contenido_Institucional::nombre . "_pos")->orderBy("valor", "DESC")->take(1)->get();
+            foreach ($orden_pos as $meta_orden)
+                break;
+            //Agrega un metadato con la ultima posicion en el orden indicando
+            ContenidoApp::agregarMetaDato($contenido->id, Contenido_Institucional::nombre . "_pos", (($meta_orden->valor) + 1));
+        }
     }
 
     /** Edita el contenido de una informacion institucional
@@ -55,25 +64,37 @@ class Contenido_Institucional {
         @$contenido->save();
     }
 
-    /** Obtiene un JSON preparado de las informacion institucional para el envio a la aplicaciòn movil
-     * 
+    static function obtenerOrden($id_usuario) {
+        return MetaContenidoApp::where("id_usuario", $id_usuario)->where("clave", Contenido_Institucional::nombre . "_pos")->orderBy("valor", "ASC")->get();
+    }
+
+    /** Obtiene un JSON informacion institucional
+     *
      * @param Int $id_app id de la aplicacion
+     * @param Int $take Indica el numero de registros a obtener
+     * @param Int $skip Indica el numero de registros a omitir
      * @return String JSON
      */
-    static function cargarDatosJson($id_app) {
-        $insts = ContenidoApp::where("tipo", Contenido_Institucional::nombre)->where("id_aplicacion", $id_app)->where("estado", ContenidoApp::ESTADO_PUBLICO)->orderBy("id", "DESC")->get();
+    static function cargarDatosJson($id_app,$id_usuario) {
 
+        $orden_insts = Contenido_Institucional::obtenerOrden($id_usuario);
         $data_inst = array();
         $n = 1;
 
-        foreach ($insts as $inst) {
-            $data_inst["titulo" . $n] = $inst->titulo;
-            $data_inst["descripcion" . $n] = $inst->contenido; //str_replace("\n", "<br/>", Input::get("mensaje"));
-            $n++;
+        foreach ($orden_insts as $meta) {
+
+            $inst = ContenidoApp::find(intval($meta->id_contenido));
+            if ($inst->estado == ContenidoApp::ESTADO_PUBLICO) {
+                $data_inst["id" . $n] = $inst->id;
+                $data_inst["titulo" . $n] = $inst->titulo;
+                $data_inst["descripcion" . $n] = $inst->contenido; //str_replace("\n", "<br/>", Input::get("mensaje"));
+                $data_inst["fecha" . $n] = $inst->updated_at;
+                $n++;
+            }
         }
-        //Construct 2
-        //return "@" . Contenido_Institucional::nombre . "@" . Aplicacion::prepararDatosParaApp($data_inst) . "@" . Contenido_Institucional::nombre . "@";
-        return Aplicacion::prepararDatosParaApp($data_inst);
+        if (count($data_inst) > 0)
+            return Aplicacion::prepararDatosParaApp($data_inst);
+        return null;
     }
 
 }

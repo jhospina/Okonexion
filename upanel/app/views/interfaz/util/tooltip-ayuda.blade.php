@@ -1,1 +1,1 @@
-<a class="tooltip-top" rel="tooltip" title="{{$descripcion}}"><span class="glyphicon glyphicon-question-sign"></span></a>
+<a class="tooltip-top" rel="tooltip" title='{{str_replace("'","\"",$descripcion)}}'><span class="glyphicon glyphicon-question-sign"></span></a>

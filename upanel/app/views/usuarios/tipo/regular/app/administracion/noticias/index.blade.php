@@ -62,7 +62,7 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
             {{Util::formatearResultadosObjetos($noticia->terminos,"nombre")}}
         </div>
         <div class="col-lg-2 creacion">
-            <span title="Ultima modificación" class="glyphicon glyphicon-calendar"></span> {{$noticia->updated_at}}
+            <span title="Fecha creación" class="glyphicon glyphicon-calendar"></span> {{$noticia->created_at}}
         </div>
 
     </div> 

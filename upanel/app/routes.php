@@ -109,6 +109,8 @@ Route::group(array('before' => 'auth'), function() {
     /* NOTICIAS - ELIMINAR */Route::post("aplicacion/administrar/noticias/ajax/eliminar/noticia", "UPanelControladorContenidoNoticias@ajax_noticias_eliminarNoticia");
 
     /* Institucional - ELIMINAR */Route::post("aplicacion/administrar/institucional/ajax/eliminar/institucional", "UPanelControladorContenidoInstitucional@ajax_institucional_eliminarInstitucional");
+    /* Institucional - GUARDAR ORDEN */Route::post("aplicacion/administrar/institucional/ajax/guardar/orden", "UPanelControladorContenidoInstitucional@ajax_institucional_guardarOrden");
+    
     /* Encuesta - ELIMINAR */Route::post("aplicacion/administrar/encuesta/ajax/eliminar/encuesta", "UPanelControladorContenidoEncuestas@ajax_eliminar_encuesta");
 
     Route::post("aplicacion/administrar/noticias/ajax/subir/imagen", "UPanelControladorContenidoNoticias@ajax_noticias_subirImagen");
@@ -123,5 +125,6 @@ Route::group(array('before' => 'auth'), function() {
 //******************************************************************************
 //Las apps se conectan para obtener informacion
 Route::post("app/descargar/noticias", "ControladorApp@descargar_noticias");
+Route::post("app/descargar/institucional", "ControladorApp@descargar_institucional"); 
 //Las apps se conectan para cargar imagenes
 Route::get("usuarios/uploads/{usuario}/{imagen}/{mime_type}", "ControladorApp@cargarImagen");

@@ -380,3 +380,37 @@ span.simplecolorpicker.icon {
 .tooltip.left.tooltip-error  .tooltip-arrow{
     border-left-color: red;
 }
+
+#posicionar-inst{
+padding: 20px;
+}
+
+#posicionar-inst li{
+    list-style: none;
+    padding: 5px;
+    background: ghostwhite;
+    margin-bottom: 5px;
+    border: 1px darkgray solid;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    cursor:n-resize;
+}
+
+#content-posicionar-inst{
+    padding: 0px;
+    background: rgb(205, 205, 205);
+    border: 1px darkgray solid;
+    margin-bottom: 20px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+
+#msj-respuesta{
+    color:green;
+    font-family:console;
+    display:none;
+    font-size:15pt;
+}

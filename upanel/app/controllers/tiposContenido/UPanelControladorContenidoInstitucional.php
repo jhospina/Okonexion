@@ -9,9 +9,11 @@ class UPanelControladorContenidoInstitucional extends Controller {
         if (!Aplicacion::estaTerminada($app->estado))
             return Redirect::to("/");
 
-        $insts = ContenidoApp::where("tipo", Contenido_Institucional::nombre)->where("id_usuario", Auth::user()->id)->orderBy("id", "DESC")->paginate(20);
+        $insts = ContenidoApp::where("tipo", Contenido_Institucional::nombre)->where("id_usuario", Auth::user()->id)->orderBy("id", "DESC")->paginate(10);
 
-        return View::make("usuarios/tipo/regular/app/administracion/institucional/index")->with("app", $app)->with("insts", $insts);
+        $orden_insts = Contenido_Institucional::obtenerOrden(Auth::user()->id); 
+
+        return View::make("usuarios/tipo/regular/app/administracion/institucional/index")->with("app", $app)->with("insts", $insts)->with("orden_insts", $orden_insts);
     }
 
     public function institucional_vistaAgregar() {
@@ -92,6 +94,14 @@ class UPanelControladorContenidoInstitucional extends Controller {
         $data = Input::all();
         $inst = ContenidoApp::find($data["id_inst"]);
         $inst->delete();
+    }
+
+    function ajax_institucional_guardarOrden() {
+        $data = Input::all();
+        $orden = explode(",", $data["orden"]);
+        for ($i = 0; $i < count($orden); $i++) {
+            ContenidoApp::actualizarMetadato(intval($orden[$i]), Contenido_Institucional::nombre . "_pos", ($i + 1));
+        }
     }
 
 }

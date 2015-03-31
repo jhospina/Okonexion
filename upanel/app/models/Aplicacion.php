@@ -74,6 +74,27 @@ Class Aplicacion extends Eloquent {
         }
     }
 
+    /** Busca y obtiene el objeto Aplicacion dado por su id o key_app
+     * 
+     * @param (Int|String) $id_app Id de la aplicacion a buscar
+     * @return type Retorna el objeto de Aplicacion o null en caso de no encontrarlo.
+     */
+    public static function buscar($id_app) {
+        $apps = null;
+        if (is_int($id_app))
+            $apps = Aplicacion::where("id", "=", $id_app)->get();
+        if (is_string($id_app))
+            $apps = Aplicacion::where("key_app", $id_app)->get();
+
+        if (count($apps) > 0) {
+            foreach ($apps as $app)
+                break;
+            return $app;
+        } else {
+            return null;
+        }
+    }
+
     /** Retorna el ID de la aplicacion del usuario
      * 
      * @return Int Retorna el ID en caso de exito, de lo contrario Null
@@ -133,7 +154,6 @@ Class Aplicacion extends Eloquent {
      */
     static function prepararDatosParaApp($datos) {
         if (is_array($datos))
-        //return '{"c2dictionary":true,"data":' . json_encode($datos) . '}';
             return json_encode($datos);
         else
             return null;

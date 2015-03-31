@@ -76,6 +76,7 @@ class ContenidoApp extends Eloquent {
     static function agregarMetaDato($id_contenido, $clave, $valor) {
         $meta = new MetaContenidoApp;
         $meta->id_contenido = $id_contenido;
+        $meta->id_usuario=Auth::user()->id;
         $meta->clave = $clave;
         $meta->valor = $valor;
         $meta->save();
@@ -92,6 +93,19 @@ class ContenidoApp extends Eloquent {
         foreach ($metas as $meta)
             return $meta;
         return null;
+    }
+    
+    /** Actualiza el valor de un metadato de un contenido
+     * 
+     * @param Int $id_contenido Id del contenido al que pertenece el metadato
+     * @param String $clave La clave del metadato
+     * @param String $valor El valor del metadato a actualizar
+     * @return boolean El resultado de la operacion
+     */
+    static function actualizarMetadato($id_contenido,$clave,$valor){
+        $meta=ContenidoApp::obtenerMetadato($id_contenido, $clave);
+        $meta->valor=$valor;
+        return $meta->save();
     }
 
     /** Obtiene el de un metadato de un contenido
