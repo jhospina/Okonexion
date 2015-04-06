@@ -11,6 +11,10 @@ class Contenido_Noticias {
     const configTitulo = "titulo"; //Indica el titulo de la noticia
     const configDescripcion = "descripcion"; //Indica la descripcion de la imagen
     const configImagen = "imagen"; //Indica la url del imagen principal de la noticia
+    const configId="id";
+    const configFecha="fecha";
+      const NUMERO_REGISTROS_DESCARGAR = 16; // Indica la tanda de registros a descargar por parte de la app
+    
     //********************************************************
     //CONFIGURACION DE ADMINISTRACION*************************
     //********************************************************
@@ -294,15 +298,15 @@ class Contenido_Noticias {
         $n = 1;
 
         foreach ($noticias as $noticia) {
-            $data_noticias["id".$n]=$noticia->id;
-            $data_noticias["titulo" . $n] = $noticia->titulo;
-            $data_noticias["descripcion" . $n] = $noticia->contenido; //str_replace("\n", "<br/>", Input::get("mensaje"));
-            $data_noticias["fecha".$n]=$noticia->updated_at;
+            $data_noticias[Contenido_Noticias::configId.$n]=$noticia->id;
+            $data_noticias[Contenido_Noticias::configTitulo . $n] = $noticia->titulo;
+            $data_noticias[Contenido_Noticias::configDescripcion . $n] = $noticia->contenido; //str_replace("\n", "<br/>", Input::get("mensaje"));
+            $data_noticias[Contenido_Noticias::configFecha.$n]=$noticia->updated_at;
             if (Contenido_Noticias::tieneImagen($noticia->id)) {
                 $imagen = Contenido_Noticias::obtenerImagen($noticia->id);
-                $data_noticias["imagen" . $n] = Util::eliminarExtensionArchivo(Contenido_Noticias::obtenerUrlMiniaturaImagen($imagen->contenido, Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_BG)) . "/" . str_replace("image/", "", $imagen->mime_type);
+                $data_noticias[Contenido_Noticias::configImagen . $n] = Util::eliminarExtensionArchivo(Contenido_Noticias::obtenerUrlMiniaturaImagen($imagen->contenido, Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_BG)) . "/" . str_replace("image/", "", $imagen->mime_type);
             } else {
-                $data_noticias["imagen" . $n] = "";
+                $data_noticias[Contenido_Noticias::configImagen . $n] = "";
             }
             $n++;
         }

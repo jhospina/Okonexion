@@ -1,6 +1,7 @@
 <?php
 $tipoContenido = Contenido_Noticias::nombre;
 $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
+$singNombre=Util::eliminarPluralidad($nombreContenido);
 ?>
 
 @extends('interfaz/plantilla')
@@ -132,7 +133,7 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
                     });
                             setTimeout(function(){
                             $("#titulo-modal").html("¡REALIZADO CON EXITO!");
-                                    $("#contenido-modal").html("{{ucwords(strtolower($nombreContenido))}} eliminada.");
+                                    $("#contenido-modal").html("{{ucwords(strtolower($singNombre))}} eliminada");
                                     setTimeout(function(){
                                     $('#modal-eliminacion').modal('hide');
                                     }, 2000);

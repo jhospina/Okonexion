@@ -12,7 +12,7 @@ class TablaMetacontenidosApp extends Migration {
      */
     public function up() {
         Schema::create('metacontenidosApp', function($table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->integer("id_contenido");
             $table->integer("id_usuario");
             $table->string("clave");

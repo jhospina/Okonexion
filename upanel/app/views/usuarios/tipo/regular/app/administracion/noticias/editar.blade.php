@@ -118,7 +118,7 @@ if (!is_null($metaImagen)) {
             jQuery(".tooltip-top").tooltip({placement: "top"});
             @include("interfaz/app/opciones_editor", array("id" => "editor"))
 
-            $("#editor").Editor("setText", "{{str_replace("\"", "'",$noticia->contenido)}}");
+            $("#editor").Editor("setText", "{{$noticia->contenido}}");
 
             jQuery("#{{$imagenID}}").fileinput({
     multiple: false,

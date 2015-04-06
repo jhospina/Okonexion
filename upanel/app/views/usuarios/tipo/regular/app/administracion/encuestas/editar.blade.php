@@ -48,11 +48,11 @@ $respuestas = Contenido_Encuestas::obtenerRespuestas($encuesta->id);
         </div>
         <div class="col-lg-12"> 
             <div class="col-lg-9" id="content-respuestas"> 
-                <?php for ($i = 0; $i < count($respuestas) / 2; $i++): $num = $i + 1; ?>
+                <?php for ($i = 0; $i < count($respuestas) / Contenido_Encuestas::configNumeroParametrosRespuesta; $i++): $num = $i + 1; ?>
 
                     <div class="col-lg-12 item set" id="item-{{$num}}"> 
                         <div class="col-lg-1 div-item" id="div-item-{{$num}}">{{$num}}</div>
-                        <div class="col-lg-10 div-resp"><input id="{{Contenido_Encuestas::configRespuesta}}{{$num}}" class="form-control resp" data-item="{{$num}}" name="{{Contenido_Encuestas::configRespuesta}}[]" placeholder="Inserte respuesta..." value="{{$respuestas["resp".$i]}}"></div>
+                        <div class="col-lg-10 div-resp"><input id="{{Contenido_Encuestas::configRespuesta}}{{$num}}" class="form-control resp" data-item="{{$num}}" name="{{Contenido_Encuestas::configRespuesta}}[]" placeholder="Inserte respuesta..." value="{{$respuestas["resp".$num]}}"></div>
                         <div class="col-lg-1 div-ctrl"></div>
                     </div> 
 

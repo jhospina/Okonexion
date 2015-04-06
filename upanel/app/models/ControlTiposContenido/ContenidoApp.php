@@ -73,10 +73,14 @@ class ContenidoApp extends Eloquent {
      * @param String $clave La clave del metadato
      * @param String $valor El valor del metadato
      */
-    static function agregarMetaDato($id_contenido, $clave, $valor) {
+    static function agregarMetaDato($id_contenido, $clave, $valor, $id_usuario = null) {
         $meta = new MetaContenidoApp;
         $meta->id_contenido = $id_contenido;
-        $meta->id_usuario=Auth::user()->id;
+        if (is_null($id_usuario))
+            $meta->id_usuario = Auth::user()->id;
+        else
+            $meta->id_usuario = $id_usuario;
+
         $meta->clave = $clave;
         $meta->valor = $valor;
         $meta->save();
@@ -94,7 +98,7 @@ class ContenidoApp extends Eloquent {
             return $meta;
         return null;
     }
-    
+
     /** Actualiza el valor de un metadato de un contenido
      * 
      * @param Int $id_contenido Id del contenido al que pertenece el metadato
@@ -102,9 +106,9 @@ class ContenidoApp extends Eloquent {
      * @param String $valor El valor del metadato a actualizar
      * @return boolean El resultado de la operacion
      */
-    static function actualizarMetadato($id_contenido,$clave,$valor){
-        $meta=ContenidoApp::obtenerMetadato($id_contenido, $clave);
-        $meta->valor=$valor;
+    static function actualizarMetadato($id_contenido, $clave, $valor) {
+        $meta = ContenidoApp::obtenerMetadato($id_contenido, $clave);
+        $meta->valor = $valor;
         return $meta->save();
     }
 
@@ -172,6 +176,21 @@ class ContenidoApp extends Eloquent {
     static function nombreTabla() {
         $cont = new ContenidoApp;
         return $cont->obtenerNombreTabla();
+    }
+    
+    
+     /** Verifica el estado de un contenido
+     * 
+     * @param type $id_post Id del contenido
+     * @param String $estado Estado a verificar
+      * @return boolean
+     */
+    static function verificarEstado($id_post,$estado){
+        $post=ContenidoApp::find($id_post);
+        if(!is_null($post)){
+            return ($post->estado==$estado);
+        }
+        return false;
     }
 
     //***********************************************

@@ -126,5 +126,9 @@ Route::group(array('before' => 'auth'), function() {
 //Las apps se conectan para obtener informacion
 Route::post("app/descargar/noticias", "ControladorApp@descargar_noticias");
 Route::post("app/descargar/institucional", "ControladorApp@descargar_institucional"); 
+Route::post("app/descargar/encuestas/vigente", "ControladorApp@descargar_encuestas_vigente");
+Route::post("app/descargar/encuestas/archivadas", "ControladorApp@descargar_encuestas_archivadas");
+Route::post("app/enviar/encuestas/respuesta","ControladorApp@enviar_encuestas_respuesta");
+
 //Las apps se conectan para cargar imagenes
 Route::get("usuarios/uploads/{usuario}/{imagen}/{mime_type}", "ControladorApp@cargarImagen");

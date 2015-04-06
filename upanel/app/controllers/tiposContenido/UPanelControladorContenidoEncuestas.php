@@ -11,15 +11,11 @@ class UPanelControladorContenidoEncuestas extends Controller {
         if (!Aplicacion::estaTerminada($app->estado))
             return Redirect::to("/");
 
-        $consulta = ContenidoApp::where("tipo", Contenido_Encuestas::nombre)->where("id_usuario", Auth::user()->id)->where("estado", ContenidoApp::ESTADO_PUBLICO)->take(1)->get();
-
-        foreach ($consulta as $encuesta_vigente)
-            break;
+        $encuesta_vigente=Contenido_Encuestas::obtenerEncuestaVigente( Auth::user()->id);
 
         $guardados = ContenidoApp::where("tipo", Contenido_Encuestas::nombre)->where("id_usuario", Auth::user()->id)->where("estado", ContenidoApp::ESTADO_GUARDADO)->get();
         $historial = ContenidoApp::where("tipo", Contenido_Encuestas::nombre)->where("id_usuario", Auth::user()->id)->where("estado", ContenidoApp::ESTADO_ARCHIVADO)->paginate(20);
-
-
+        
         return View::make("usuarios/tipo/regular/app/administracion/encuestas/index")->with("app", $app)->with("encuesta_vigente", $encuesta_vigente)->with("guardados", $guardados)->with("historial", $historial);
     }
 

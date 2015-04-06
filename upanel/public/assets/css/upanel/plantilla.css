@@ -382,7 +382,7 @@ span.simplecolorpicker.icon {
 }
 
 #posicionar-inst{
-padding: 20px;
+    padding: 20px;
 }
 
 #posicionar-inst li{
@@ -413,4 +413,22 @@ padding: 20px;
     font-family:console;
     display:none;
     font-size:15pt;
+}
+
+
+.header-list{
+      background-image: -webkit-linear-gradient(top, #f5f5f5 0%, #e8e8e8 100%);
+  background-image: -o-linear-gradient(top, #f5f5f5 0%, #e8e8e8 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#e8e8e8));
+  background-image: linear-gradient(to bottom, #f5f5f5 0%, #e8e8e8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8', GradientType=0);
+  background-repeat: repeat-x;
+  border: 1px gainsboro solid;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+a.link{
+      color: rgb(0, 148, 255);
 }

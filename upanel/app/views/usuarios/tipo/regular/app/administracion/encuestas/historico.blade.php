@@ -34,18 +34,18 @@ $total_votos = intval(ContenidoApp::obtenerValorMetadato($encuesta->id, "total")
                 <table class="table table-hover">
                     <?php
                     $total = 0;
-                    for ($i = 0; $i < count($respuestas) / 2; $i++):
+                    for ($i = 0; $i < count($respuestas) / Contenido_Encuestas::configNumeroParametrosRespuesta; $i++):
                         $num = $i + 1;
-                        ($total_votos > 0) ? $porcentaje = round(($respuestas["total_resp" . $i] / $total_votos) * 100, 2) : $porcentaje = 0;
+                        ($total_votos > 0) ? $porcentaje = round(($respuestas["total_resp" . $num] / $total_votos) * 100, 2) : $porcentaje = 0;
                         ?>
 
                         <tr>
                             <td style="width: 2%;background: gainsboro;">{{$num}}</td>
-                            <td style="width: 45%;">{{$respuestas["resp".$i]}}</td>
+                            <td style="width: 45%;">{{$respuestas["resp".$num]}}</td>
                             <td style="width: 51%" class="progress">
                                 <div class="progress-bar tooltip-top" title="{{$porcentaje}}%" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:{{$porcentaje}}%;">{{$porcentaje}}%</div>
                             </td>
-                            <td style="width: 3%;text-align: center;">{{$respuestas["total_resp".$i]}}</td>
+                            <td style="width: 3%;text-align: center;">{{$respuestas["total_resp".$num]}}</td>
                         </tr>
 
 
