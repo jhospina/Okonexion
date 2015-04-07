@@ -32,7 +32,7 @@ if (Aplicacion::existe()) {
     <hr/>
 
 
-    @if(is_null($estado) || $estado==Aplicacion::ESTADO_EN_DISENO || $estado==Aplicacion::ESTADO_TERMINADA)
+    @if(is_null($estado) || $app->estado==Aplicacion::ESTADO_LISTA_PARA_ENVIAR || $app->estado==Aplicacion::ESTADO_EN_DISENO || $app->estado==Aplicacion::ESTADO_TERMINADA)
 
     @include("interfaz/mensaje/index",array("id_mensaje"=>3))
 

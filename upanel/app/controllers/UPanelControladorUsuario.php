@@ -124,5 +124,11 @@ class UPanelControladorUsuario extends \BaseController {
         else
             return Redirect::to('cambiar-contrasena')->with(User::mensaje("error", null, "La contraseña actual ingresada es erronea", 2));
     }
+    
+    
+    public function cambiarIdioma(){
+        User::actualizarMetadato(OpcionesUsuario::OP_IDIOMA,Input::get("idioma"));
+    }
+    
 
 }

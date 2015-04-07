@@ -3,6 +3,7 @@
 class UPanelControladorPresentacion extends Controller {
 
     function index() {
+        
         // Verificamos que el usuario esté autenticado
         if (Auth::check()) {
             if (Auth::user()->tipo == User::USUARIO_REGULAR)

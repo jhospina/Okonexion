@@ -149,5 +149,99 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         else
             return null;
     }
+    
+    
+    
+     /** Agrega un metadato a un usuario
+     * 
+     * @param String $clave La clave del metadato
+     * @param String $valor El valor del metadato
+     * @param Int $id_usuario (Opcional) Si no se especifica se toma el de la sesion actual
+     */
+    static function agregarMetaDato($clave, $valor,$id_usuario=null) {
+        $meta = new UsuarioMetadato;
+        $meta->id_contenido = $id_contenido;
+        if (is_null($id_usuario))
+            $meta->id_usuario = Auth::user()->id;
+        else
+            $meta->id_usuario = $id_usuario;
+        $meta->clave = $clave;
+        $meta->valor = $valor;
+        $meta->save();
+    }
+
+    /** Obtiene el valor de un metadado dado por su valor clave
+     * 
+     * @param type $clave El valor clave que identifica el metadato
+     * @param Int $id_usuario (Opcional) Si no se especifica se toma el de la sesion actual
+     * @return type Retorna el valor del metadato en caso de exito, de lo contrario Null. 
+     */
+    static function obtenerMetadato($clave,$id_usuario=null) {
+        if (is_null($id_usuario))
+            $id_usuario = Auth::user()->id;
+ 
+        $metas = UsuarioMetadato::where("id_usuario", $id_usuario)->where("clave", $clave)->get();
+        foreach ($metas as $meta)
+            return $meta;
+        return null;
+    }
+
+    /** Actualiza el valor de un metadato de un usuario, y si no existe lo crea
+     * 
+     * @param String $clave La clave del metadato
+     * @param String $valor El valor del metadato a actualizar
+     * @param Int $id_usuario (Opcional) Si no se especifica se toma el de la sesion actual
+     * @return boolean El resultado de la operacion
+     */
+    static function actualizarMetadato($clave, $valor,$id_usuario=null) {
+        
+        if (is_null($id_usuario))
+            $id_usuario = Auth::user()->id;
+        
+        $meta = User::obtenerMetadato($clave,$id_usuario);
+        //Si no existe lo agrega
+        if(is_null($meta))
+            return User::agregarMetaDato ($clave, $valor,$id_usuario);
+        
+        $meta->valor = $valor;
+        return $meta->save();
+    }
+
+    /** Obtiene el valor de un metadato dado por su nombre clave
+     * 
+     * @param type $clave
+     * @param Int $id_usuario (Opcional) Si no se especifica se toma el de la sesion actual
+     * @return String Retorna el valro del metatado o null si no existe
+     */
+    static function obtenerValorMetadato($clave,$id_usuario=null) {
+        
+        if (is_null($id_usuario))
+            $id_usuario = Auth::user()->id;
+        
+        $metas = UsuarioMetadato::where("id_usuario", $id_usuario)->where("clave", $clave)->get();
+        foreach ($metas as $meta)
+            return $meta->valor;
+        return null;
+    }
+
+    /** Indica si el metadato de un usuario existe o esta definido
+     * 
+     * @param String $clave La clave del metadato
+     * @param Int $id_usuario (Opcional) Si no se especifica se toma el de la sesion actual
+     * @return boolean
+     */
+    static function existeMetadato($clave,$id_usuario=null) {
+        
+        if (is_null($id_usuario))
+            $id_usuario = Auth::user()->id;
+        
+        $metas = UsuarioMetadato::where("id_usuario", $id_usuario)->where("clave", $clave)->get();
+
+        if (count($metas) > 0)
+            return true;
+        else
+            return false;
+    }
+
 
 }

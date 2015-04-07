@@ -6,7 +6,9 @@ class App_Metro {
 
     public static $tipos_contenidos = array(Contenido_Institucional::nombre, Contenido_Noticias::nombre, Contenido_Encuestas::nombre, Contenido_PQR::nombre); // Tipos de contenidos
     public static $configDefecto = array("iconoMenu1" => "Predeterminado", "iconoMenu2" => "Predeterminado", "iconoMenu3" => "Predeterminado", "iconoMenu4" => "Predeterminado");
-
+    //Ids de configuracion que no se deben guardar cuando se establesca el diseño. Su guardado es especial y se realiza por ajax. 
+    public static $configExcepciones=array("iconoMenu1","iconoMenu2","iconoMenu3","iconoMenu4","logoApp");
+    
     //********************************************************
     //DATOS DE CONFIGURACION DEL DISEÑO***********************
     //********************************************************
@@ -67,16 +69,20 @@ class App_Metro {
         $errores = [];
 
         if (is_null($app->url_logo))
-            return $errores[0] = "Sube una imagen que sea tu logo de aplicación. Es importante el logo porque representa tu aplicación en el mercado.";
+            return $errores[0] = "Sube una imagen que sea tu logo de aplicación. Es importante el logo porque representa tu aplicación.";
 
         foreach ($data as $clave => $valor) {
-            if (strpos($clave, "iconoMenu") === false && strpos($clave, "logoApp") === false) {
+            if (!in_array($clave, App_Metro::$configExcepciones)) {
                 $config = new ConfiguracionApp;
 
                 ConfiguracionApp::eliminarConfigDesdeClave($clave);
 
                 $config->id_aplicacion = $app->id;
                 $config->clave = $clave;
+                
+                if(Util::esColorRGB($valor))
+                    $valor=Util::rgb2hex ($valor);
+                
                 $config->valor = $valor;
                 $config->save();
             }

@@ -13,7 +13,7 @@ class TablaUsuarios extends Migration {
     public function up() {
         //Crea el esquema de la tabla
         Schema::create('usuarios', function($table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('nombres');
             $table->string('apellidos');
             $table->string('empresa')->nullable();

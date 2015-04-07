@@ -46,7 +46,7 @@ class Contenido_Noticias {
      */
     static function prepararRequisitos($app) {
 
-        if (TaxonomiaContenidoApp::existe($nombreTax))
+        if (TaxonomiaContenidoApp::existe(Contenido_Noticias::taxonomia))
             return;
 
         //Crear una taxonomia de categorias para las noticias

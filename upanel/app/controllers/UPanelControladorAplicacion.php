@@ -341,26 +341,9 @@ class UPanelControladorAplicacion extends Controller {
         }
 
         $id_proceso = Input::get("id_proceso");   
-        $colores = AppDesing::coloresFondo();
         $proceso = ProcesoApp::find($id_proceso);
        
-
-        $json = json_decode($proceso->json_config);
-        $json_nuevo = [];
-        //CONVIERTE LAS PROPIEDADES DE COLOR DE HEXADECIMAL A UN VALOR NOMINAL (Ejemplo: c30) 
-        //Que indica el color correspondiente dentro de la aplicacion
-        foreach ($json as $propiedad => $valor) {
-            if (strpos($propiedad, "color") !== false) {
-                if ($indice = array_search($valor, $colores))
-                    $json_nuevo[$propiedad] = $valor . " (c" . (intval($indice) + 1) . ")";
-                else
-                    $json_nuevo[$propiedad] = $valor;
-            }else {
-                $json_nuevo[$propiedad] = $valor;
-            }
-        }
-
-        return json_encode($json_nuevo);
+        return $proceso->json_config;
     }
 
     //Descarga el logo de la aplicacion en tamaños de 256,128,114,56 pixeles complimidos en un zip

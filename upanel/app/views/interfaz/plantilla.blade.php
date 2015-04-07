@@ -51,6 +51,11 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> {{Auth::user()->nombres}}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
+                                {{--SELECCION DE IDIOMA--}}
+                                <li><div id="seleccion-idioma">
+                                        <span data-lang="{{Idioma::LANG_ES}}" @if(OP_IDIOMA==Idioma::LANG_ES)class="select"@endif><img src="{{URL::to(Idioma::PATH_ICON.Idioma::LANG_ES.".png")}}"/></span>
+                                        <span data-lang="{{Idioma::LANG_EN}}" @if(OP_IDIOMA==Idioma::LANG_EN)class="select"@endif><img src="{{URL::to(Idioma::PATH_ICON.Idioma::LANG_EN.".png")}}"/></span></div>
+                                </li>
                                 <li><a href="{{Route("usuario.index")}}"><span class="glyphicon glyphicon-user"></span> Mi perfil</a></li>
                                 <li><a href="{{URL::to("cambiar-contrasena")}}"><span class="glyphicon glyphicon-lock"></span> Cambiar contraseña</a></li>
                                 {{--MENU DE USUARIO--}}
@@ -69,7 +74,7 @@
 
             </div>
         </div>
-        <div class="container navbar-inverse" id="footer" > &copy; Okonexion Colombia {{date("Y")}} - Todos los derechos reservados</div>
+        <div class="container navbar-inverse" id="footer" > &copy; Okonexion {{date("Y")}} - {{trans('interfaz/plantilla.mensaje_pie_pagina')}}</div>
 
         {{-- Include all compiled plugins (below), or include individual files as needed --}}
         {{ HTML::script('assets/plugins/bootstrap/js/bootstrap.js') }}
@@ -86,6 +91,22 @@
                 });
 
                 $('.dropdown-submenu > a').submenupicker();
+                
+        {{--FUNCIONALIDAD QUE ESTABLECE EL IDIOMA DEL USUARIO--}}
+                $("#seleccion-idioma span").click(function(){
+                    $("#seleccion-idioma span").removeClass("select");
+                    $(this).addClass("select");
+                    
+                    var lang=$(this).attr("data-lang");
+                    
+                      jQuery.ajax({
+            type: "POST",
+                    url: "{{URL::to('usuario/opciones/idioma/set')}}",
+                    data: {idioma: lang},
+                    success: function (response) {
+                        location.reload();
+                    }}, "html");
+                });
 
             });
         </script>

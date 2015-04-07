@@ -58,6 +58,7 @@ class Util {
         $posRaiz = strpos($URL, $ultimo);
         return $public . substr($URL, $posRaiz + strlen($ultimo));
     }
+    
 
     /** Recorta un texto hasta la longitud dada.
      * 
@@ -155,6 +156,11 @@ class Util {
             return false;
     }
 
+    /** Elimna la extesion de un nombre de archivo y devuelve el nombre del archivo
+     * 
+     * @param type $url
+     * @return type
+     */
     static function eliminarExtensionArchivo($url) {
         $nombre = explode("/", $url);
         end($nombre);
@@ -163,17 +169,73 @@ class Util {
         return str_replace("." . $nombre[1], "", $url);
     }
 
+    /** Retorna la url actual
+     * 
+     * @return string La url
+     */
     static function obtenerUrlActual() {
         $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         return $url;
     }
 
+    /** Reemplaza todos los caracteres especiales por codigo html
+     * 
+     * @param type $texto El texto a descodificar
+     * @return type 
+     */
     static function descodificarTexto($texto) {
         $buscar = array("Á", "É", "Í", "Ó", "Ú", "á", "é", "í", "ó", "ú", "ñ", "Ñ", "\"");
         $reemplazar = array("&Aacute;", "&Eacute;", "&Iacute;", "&Oacute;", "&Uacute;", "&aacute;", "&eacute;", "&iacute;", "&oacute;", "&uacute;", "&Ntilde;", "&ntilde;", "&quot;");
         return str_replace($buscar, $reemplazar, $texto);
     }
 
+    /** Indica si un color esta en formato RGB
+     * 
+     * @param type $color
+     * @return type
+     */
+    static function esColorRGB($color){
+       return preg_match('/rgb\([0-9]+,[0-9]+,[0-9]+\)$/', Util::eliminarEspacios($color));
+    }
+    
+    /** Convierte un color RGB en formato Hexadecimal
+     * 
+     * @param type $rgb [array|r,g,b|rgb(#,#,#)]
+     * @return type Color hexadecimal
+     */
+    static function rgb2hex($rgb) {
+        $rgb=Util::eliminarEspacios($rgb);
+        if(is_string($rgb)){
+            if(strpos($rgb,"rgb")!==false){
+                $rgb=  str_replace("rgb(","", str_replace(")","", $rgb));
+            }
+            $rgb=explode(",", $rgb);
+        }  
+        
+   $hex = "#";
+   $hex .= str_pad(dechex($rgb[0]), 2, "0", STR_PAD_LEFT);
+   $hex .= str_pad(dechex($rgb[1]), 2, "0", STR_PAD_LEFT);
+   $hex .= str_pad(dechex($rgb[2]), 2, "0", STR_PAD_LEFT);
+
+   return $hex; // returns the hex value including the number sign (#)
+}
+    
+    /** Elimina todos los espacios en blanco de un texto
+     * 
+     * @param type $texto
+     * @return type
+     */
+    static function eliminarEspacios($texto){
+        return (is_string($texto))?str_replace(" ","",$texto):$texto;
+    }
+    
+    
+    /** Retorna un color màs oscuro que el ingresado
+     * 
+     * @param type $color
+     * @param type $cant
+     * @return string
+     */
     static function oscurecerColor($color, $cant) {
 //voy a extraer las tres partes del color
         $rojo = substr($color, 1, 2);

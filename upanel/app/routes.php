@@ -60,7 +60,9 @@ Route::group(array('before' => 'auth'), function() {
 
     Route::get('aplicacion/cola-desarrollo', 'UPanelControladorAplicacion@colaDesarrollo');
 
-    //AJAX
+    //***************************************************************************
+    //*AJAX *********************************************************************
+    //***************************************************************************
     Route::post("aplicacion/ajax/guardarIconoMenu", "UPanelControladorAplicacion@ajax_guardarIconoMenu");
     Route::post("aplicacion/ajax/eliminarIconoMenu", "UPanelControladorAplicacion@ajax_eliminarIconoMenu");
     Route::post("aplicacion/ajax/guardarLogo", "UPanelControladorAplicacion@ajax_guardarLogo");
@@ -71,7 +73,13 @@ Route::group(array('before' => 'auth'), function() {
 
     //DESCARGAS BLANK
     Route::get("aplicacion/ajax/desarrollo/descargar/logoApp/", "UPanelControladorAplicacion@blank_desarrolloDescargarLogoApp");
-
+    
+    
+    //***************************************
+    // OPCIONES DE USUARIO - AJAX
+    //***************************************
+    
+     Route::post("usuario/opciones/idioma/set", "UPanelControladorUsuario@cambiarIdioma");
 
 
     //***************************************************************************

@@ -1,7 +1,6 @@
 <?php
 $logo = $app->url_logo;
 
-
 //ID de las claves de las configuraciones de los iconos del menu principal
 $iconosMenuID = array(App_Metro::iconoMenu1, App_Metro::iconoMenu2, App_Metro::iconoMenu3, App_Metro::iconoMenu4);
 
@@ -177,9 +176,11 @@ else
                     <div class="panel-body">
                         {{--COLOR DEL FONDO DE LA BARRA (1)--}}
                         <div class="col-lg-4 text-default input-lg">Color de la barra @include("interfaz/util/tooltip-ayuda",array("descripcion"=>"Selecciona el color barra que aparacera en la parte superior de la pantalla de tu aplicación."))  </div>
-                        <div class="col-lg-8 input-lg">
-                            @include("interfaz/app/select_colores",array("name"=>"colorBarraApp","class"=>"colorSelect","colorDefecto"=>$colorBarraApp))
+                       <div class="col-lg-8 input-lg">
+                            <div class="colorSelector" id="colorSelector_{{App_Metro::colorBarraApp}}"><div style="background-color:{{$colorBarraApp}}"></div></div>
                         </div>
+                         <input type="hidden" name="{{App_Metro::colorBarraApp}}" id="{{App_Metro::colorBarraApp}}" value="{{$colorBarraApp}}" />
+                        
 
                         {{--PROPIEDADES DEL NOMBRE--}}
                         <div class="col-lg-4 input-lg">
@@ -202,7 +203,7 @@ else
                         {{--COLOR DEL NOMBRE DE LA APLICACIÒN--}}
                         <div class="col-lg-4 text-default input-lg">Color del nombre @include("interfaz/util/tooltip-ayuda",array("descripcion"=>"Selecciona el color del texto que tendra el nombre de la aplicación en la barra superior de la pantalla.")) </div>
                         <div class="col-lg-8 input-lg">
-                            <div class="colorSelector" id="colorNombreAppSelector"><div style="background-color:{{$colorNombreApp}}"></div></div>
+                            <div class="colorSelector" id="colorSelector_{{App_Metro::colorNombreApp}}"><div style="background-color:{{$colorNombreApp}}"></div></div>
                         </div>
 
                         <input type="hidden" name="{{App_Metro::colorNombreApp}}" id="{{App_Metro::colorNombreApp}}" value="{{$colorNombreApp}}" />
@@ -235,13 +236,14 @@ else
                         {{--COLOR DEL FONDO (1)--}}
                         <div class="col-lg-4 text-default input-lg">Color de fondo</div> 
                         <div class="col-lg-8 input-lg">
-                            @include("interfaz/app/select_colores",array("name"=>App_Metro::colorFondoMenuBt_1,"class"=>"colorSelect","colorDefecto"=>$colorFondoMenuBt_1))
+                            <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_1}}"><div style="background-color:{{$colorFondoMenuBt_1}}"></div></div>
                         </div>
+                         <input type="hidden" name="{{App_Metro::colorFondoMenuBt_1}}" id="{{App_Metro::colorFondoMenuBt_1}}" value="{{$colorFondoMenuBt_1}}" />
 
                         {{--COLOR DEL TEXTO (1)--}}
                         <div class="col-lg-4 text-default input-lg">Color del texto</div>
                         <div class="col-lg-8 input-lg">
-                            <div class="colorSelector" id="colorSelector_txtMenu1"><div style="background-color:{{$txt_menuBtn_1_color}}"></div></div>
+                            <div class="colorSelector" id="colorSelector_{{App_Metro::txt_menuBtn_1_color}}"><div style="background-color:{{$txt_menuBtn_1_color}}"></div></div>
                         </div>
 
                         <input type="hidden" name="{{App_Metro::txt_menuBtn_1_color}}" id="{{App_Metro::txt_menuBtn_1_color}}" value="{{$txt_menuBtn_1_color}}" />
@@ -265,21 +267,22 @@ else
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Primera Opción</h3>
+                        <h3 class="panel-title">Segunda Opción</h3>
                     </div>
                     <div class="panel-body">
                         <div class="col-lg-4 text-default input-lg">Titulo</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_2}}" id="{{App_Metro::txt_menuBtn_2}}" class="form-control input-lg" value="{{$txt_menuBtn_2}}"/></div>
 
-                        {{--COLOR DEL FONDO (1)--}}
-                        <div class="col-lg-4 text-default input-lg">Color de fondo</div> 
+                        {{--COLOR DEL FONDO (2)--}}
+                        <div class="col-lg-4 text-default input-lg">Color del fondo</div>
                         <div class="col-lg-8 input-lg">
-                            @include("interfaz/app/select_colores",array("name"=>App_Metro::colorFondoMenuBt_2,"class"=>"colorSelect","colorDefecto"=>$colorFondoMenuBt_2))
+                            <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_2}}"><div style="background-color:{{$colorFondoMenuBt_2}}"></div></div>
                         </div>
+                         <input type="hidden" name="{{App_Metro::colorFondoMenuBt_2}}" id="{{App_Metro::colorFondoMenuBt_2}}" value="{{$colorFondoMenuBt_2}}" />
 
                         {{--COLOR DEL TEXTO (2)--}}
                         <div class="col-lg-4 text-default input-lg">Color del texto</div>
                         <div class="col-lg-8 input-lg">
-                            <div class="colorSelector" id="colorSelector_txtMenu2"><div style="background-color:{{$txt_menuBtn_2_color}}"></div></div>
+                            <div class="colorSelector" id="colorSelector_{{App_Metro::txt_menuBtn_2_color}}"><div style="background-color:{{$txt_menuBtn_2_color}}"></div></div>
                         </div>
 
                         <input type="hidden" name="{{App_Metro::txt_menuBtn_2_color}}" id="{{App_Metro::txt_menuBtn_2_color}}" value="{{$txt_menuBtn_2_color}}" />
@@ -303,21 +306,22 @@ else
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Primera Opción</h3>
+                        <h3 class="panel-title">Tercera Opción</h3>
                     </div>
                     <div class="panel-body">
                         <div class="col-lg-4 text-default input-lg">Titulo</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_3}}" id="{{App_Metro::txt_menuBtn_3}}" class="form-control input-lg" value="{{$txt_menuBtn_3}}"/></div>
 
                         {{--COLOR DEL FONDO (3)--}}
                         <div class="col-lg-4 text-default input-lg">Color de fondo</div> 
-                        <div class="col-lg-8 input-lg">
-                            @include("interfaz/app/select_colores",array("name"=>App_Metro::colorFondoMenuBt_3,"class"=>"colorSelect","colorDefecto"=>$colorFondoMenuBt_3))
+                         <div class="col-lg-8 input-lg">
+                            <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_3}}"><div style="background-color:{{$colorFondoMenuBt_3}}"></div></div>
                         </div>
+                         <input type="hidden" name="{{App_Metro::colorFondoMenuBt_3}}" id="{{App_Metro::colorFondoMenuBt_3}}" value="{{$colorFondoMenuBt_3}}" />
 
                         {{--COLOR DEL TEXTO (3)--}}
                         <div class="col-lg-4 text-default input-lg">Color del texto</div>
                         <div class="col-lg-8 input-lg">
-                            <div class="colorSelector" id="colorSelector_txtMenu3"><div style="background-color:{{$txt_menuBtn_3_color}}"></div></div>
+                            <div class="colorSelector" id="colorSelector_{{App_Metro::txt_menuBtn_3_color}}"><div style="background-color:{{$txt_menuBtn_3_color}}"></div></div>
                         </div>
 
                         <input type="hidden" name="{{App_Metro::txt_menuBtn_3_color}}" id="{{App_Metro::txt_menuBtn_3_color}}" value="{{$txt_menuBtn_3_color}}" />
@@ -341,21 +345,22 @@ else
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Primera Opción</h3>
+                        <h3 class="panel-title">Cuarta Opción</h3>
                     </div>
                     <div class="panel-body">
                         <div class="col-lg-4 text-default input-lg">Titulo</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_4}}" id="{{App_Metro::txt_menuBtn_4}}" class="form-control input-lg" value="{{$txt_menuBtn_4}}"/></div>
 
                         {{--COLOR DEL FONDO (4)--}}
                         <div class="col-lg-4 text-default input-lg">Color de fondo</div> 
-                        <div class="col-lg-8 input-lg">
-                            @include("interfaz/app/select_colores",array("name"=>App_Metro::colorFondoMenuBt_4,"class"=>"colorSelect","colorDefecto"=>$colorFondoMenuBt_4))
+                         <div class="col-lg-8 input-lg">
+                            <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_4}}"><div style="background-color:{{$colorFondoMenuBt_4}}"></div></div>
                         </div>
+                         <input type="hidden" name="{{App_Metro::colorFondoMenuBt_4}}" id="{{App_Metro::colorFondoMenuBt_4}}" value="{{$colorFondoMenuBt_4}}" />
 
                         {{--COLOR DEL TEXTO (4)--}}
                         <div class="col-lg-4 text-default input-lg">Color del texto</div>
                         <div class="col-lg-8 input-lg">
-                            <div class="colorSelector" id="colorSelector_txtMenu4"><div style="background-color:{{$txt_menuBtn_4_color}}"></div></div>
+                            <div class="colorSelector" id="colorSelector_{{App_Metro::txt_menuBtn_4_color}}"><div style="background-color:{{$txt_menuBtn_4_color}}"></div></div>
                         </div>
 
                         <input type="hidden" name="{{App_Metro::txt_menuBtn_4_color}}" id="{{App_Metro::txt_menuBtn_4_color}}" value="{{$txt_menuBtn_4_color}}" />
@@ -427,19 +432,13 @@ else
                 },
                 onChange: function (hsb, hex, rgb) {
                     $('#' + idSelector + ' div').css('backgroundColor', '#' + hex);
-                    var id = idSelector.replace("colorSelector_txtMenu", "");
-
-                    if (isNaN(parseInt(id)))
-                        jQuery("#" + idSelector.replace("Selector", "")).val("rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")");
-                    else
-                        jQuery("#txt_menuBtn_" + id + "_color").val("rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")");
+                    var id = idSelector.replace("colorSelector_", "");
+                        jQuery("#" + id + "").val("rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")");
                 },
                 onSubmit: function (hsb, hex, rgb, el) {
-                    var id = idSelector.replace("colorSelector_txtMenu", "");
-                    if (isNaN(parseInt(id)))
-                        jQuery("#" + idSelector.replace("Selector", "")).val("rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")");
-                    else
-                        jQuery("#txt_menuBtn_" + id + "_color").val("rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")");
+                   $('#' + idSelector + ' div').css('backgroundColor', '#' + hex);
+                    var id = idSelector.replace("colorSelector_", "");
+                        jQuery("#" + id + "").val("rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")");
                 }
             });
 
