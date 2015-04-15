@@ -11,13 +11,22 @@ class Contenido_Institucional {
     const configTitulo = "titulo"; //Indica el titulo de la inst
     const configDescripcion = "descripcion"; //Indica la descripcion de la imagen
 
+    /** Obtiene el nombre por defecto de este tipo de contenido
+     * 
+     * @return type
+     */
+
+    static function nombreDefecto() {
+        return trans("app.tipo.contenido.institucional");
+    }
+
     static function validar($data) {
         if (strlen($data[Contenido_Institucional::configTitulo]) < 1) {
-            return Redirect::back()->withInput()->with(User::mensaje("error", null, "Debes escribir un titulo.", 2));
+            return Redirect::back()->withInput()->with(User::mensaje("error", null, trans("app.admin.inst.info.titulo.error"), 2));
         }
 
         if (strlen($data[Contenido_Institucional::configDescripcion]) < 5) {
-            return Redirect::back()->withInput()->with(User::mensaje("error", null, "Debes escribir una descripción.", 2));
+            return Redirect::back()->withInput()->with(User::mensaje("error", null, trans("app.admin.inst.info.descripcion.error"), 2));
         }
 
         return null;
@@ -42,10 +51,14 @@ class Contenido_Institucional {
         if ($estado == ContenidoApp::ESTADO_PUBLICO) {
             //Obtiene la ultima posicion indicada del orden de ubicacion para el contenido insittucional
             $orden_pos = MetaContenidoApp::where("id_usuario", Auth::user()->id)->where("clave", Contenido_Institucional::nombre . "_pos")->orderBy("valor", "DESC")->take(1)->get();
-            foreach ($orden_pos as $meta_orden)
-                break;
-            //Agrega un metadato con la ultima posicion en el orden indicando
-            ContenidoApp::agregarMetaDato($contenido->id, Contenido_Institucional::nombre . "_pos", (($meta_orden->valor) + 1));
+            if (count($orden_pos) > 0) {
+                foreach ($orden_pos as $meta_orden)
+                    break;
+                //Agrega un metadato con la ultima posicion en el orden indicando
+                ContenidoApp::agregarMetaDato($contenido->id, Contenido_Institucional::nombre . "_pos", (($meta_orden->valor) + 1));
+            }else{
+                     ContenidoApp::agregarMetaDato($contenido->id, Contenido_Institucional::nombre . "_pos",1);
+            }
         }
     }
 
@@ -75,7 +88,7 @@ class Contenido_Institucional {
      * @param Int $skip Indica el numero de registros a omitir
      * @return String JSON
      */
-    static function cargarDatosJson($id_app,$id_usuario) {
+    static function cargarDatosJson($id_app, $id_usuario) {
 
         $orden_insts = Contenido_Institucional::obtenerOrden($id_usuario);
         $data_inst = array();

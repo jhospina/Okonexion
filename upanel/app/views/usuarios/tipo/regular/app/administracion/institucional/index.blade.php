@@ -6,19 +6,28 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
 
 @extends('interfaz/plantilla')
 
-@section("titulo") {{$app->nombre}} | Administrar {{$nombreContenido}} @stop
+@section("titulo") {{$app->nombre}} | {{trans("otros.info.administrar")}} {{$nombreContenido}} @stop
 
 @section("css")
+<style>
+    #listado-institucional .{{ContenidoApp::ESTADO_GUARDADO}}{
+    color:gray;
+}
+
+#listado-institucional .{{ContenidoApp::ESTADO_PUBLICO}}{
+    color:green;
+}
+    </style>
 @stop
 
 @section("contenido") 
 
-<h2><span class="glyphicon {{Contenido_Institucional::icono}}glyphicon-education"></span> ADMINISTRAR {{strtoupper($nombreContenido)}}</h2>
+<h2><span class="glyphicon {{Contenido_Institucional::icono}}"></span> {{Util::convertirMayusculas(trans("otros.info.administrar")." ".$nombreContenido)}}</h2>
 <hr/>
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
 
 <div class="well well-sm" style="margin-top:10px;">
-    <a href="{{URL::to("aplicacion/administrar/".$tipoContenido."/agregar")}}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Agregar nuevo</a>
+    <a href="{{URL::to("aplicacion/administrar/".$tipoContenido."/agregar")}}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {{trans("app.admin.btn.info.agregar_nuevo")}}</a>
 </div>
 
 @if(count($insts)>0)
@@ -26,12 +35,16 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
 
 <div class="col-lg-12" id="listado-institucional">
     <table class="table table-striped">
-        <tr><th>TITULO</th><th>FECHA DE CREACIÓN</th><th>ULTIMA ACTUALIZACIÓN</th><th>ESTADO</th><th></th></tr>
+        <tr><th>{{Util::convertirMayusculas(trans("otros.info.titulo"))}}</th>
+            <th>{{Util::convertirMayusculas(trans("otros.info.fecha_creacion"))}}</th>
+            <th>{{Util::convertirMayusculas(trans("otros.info.ultima_actualizacion"))}}</th>
+            <th>{{Util::convertirMayusculas(trans("otros.info.estado"))}}</th><th>
+            </th></tr>
         @foreach($insts as $inst)
-        <tr id="inst-{{$inst->id}}"><td>{{$inst->titulo}}</td><td>{{$inst->created_at}}</td><td>{{$inst->updated_at}}</td><td class="{{$inst->estado}}">{{ucfirst($inst->estado)}}</td>
+        <tr id="inst-{{$inst->id}}"><td>{{$inst->titulo}}</td><td>{{$inst->created_at}}</td><td>{{$inst->updated_at}}</td><td class="{{$inst->estado}}">{{ContenidoApp::obtenerNombreEstado($inst->estado)}}</td>
             <td>
-                <a title="Editar" href="{{URL::to("aplicacion/administrar/institucional/editar/".$inst->id)}}" class="btn-sm btn-warning"><span class="glyphicon glyphicon-edit"></span></a>
-                <span title="Eliminar" class="btn-sm btn-danger" onclick="eliminarInst({{$inst->id}},'{{str_replace("'","\"",$inst->titulo);}}');"><span class="glyphicon glyphicon-remove-circle"></span></span>
+                <a title="{{trans('otros.info.editar')}}" href="{{URL::to("aplicacion/administrar/institucional/editar/".$inst->id)}}" class="btn-sm btn-warning"><span class="glyphicon glyphicon-edit"></span></a>
+                <span title="{{trans('otros.info.eliminar')}}" class="btn-sm btn-danger" onclick="eliminarInst({{$inst->id}},'{{str_replace("'","\"",$inst->titulo);}}');"><span class="glyphicon glyphicon-remove-circle"></span></span>
             </td>
         </tr>
         @endforeach
@@ -46,11 +59,11 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
 
 <div class="col-lg-12" style="margin-top: 40px;margin-bottom: 10px">
     <div class="col-lg-6" style="font-size: 24px;padding: 0px;">
-        <span class="glyphicon glyphicon-sort"></span> Ordenar @include("interfaz/util/tooltip-ayuda",array("descripcion"=>'Organiza el orden en la que se mostrara este contenido en tu aplicación movil. Arrastra cada elemento de la lista en el orden que deseas que aparezcan y pulsa en el botón "Guardar orden".'))
-        <span id="msj-respuesta">El orden ha sido guardado</span>
+        <span class="glyphicon glyphicon-sort"></span> {{trans("app.admin.inst.info.ordenar")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.admin.inst.info.ordenar.ayuda")))
+        <span id="msj-respuesta">{{trans("app.admin.inst.info.orden_guardado")}}</span>
     </div>
     <div class="col-lg-6 text-right" style="padding-right: 0px;">
-        <button onClick="guardarOrden();" id="btn-guardar-orden" class="btn btn-info"><span class="glyphicon glyphicon-save"></span> Guardar orden</button>
+        <button onClick="guardarOrden();" id="btn-guardar-orden" class="btn btn-info"><span class="glyphicon glyphicon-save"></span> {{trans("app.admin.inst.btn.info.guardar_orden")}}</button>
     </div>
 </div>
 
@@ -58,7 +71,7 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
     <ul id="posicionar-inst">
         <?php foreach ($orden_insts as $meta): $inst = ContenidoApp::find(intval($meta->id_contenido)); ?>
             
-        @if($inst->estado==ContenidoApp::ESTADO_PUBLICO)
+        @if($inst->esPublico())
             <li data-id-inst="{{$inst->id}}" id="orden-{{$inst->id}}"><span class="glyphicon glyphicon-resize-vertical"></span> {{$inst->titulo}}</li>
         @endif
         <?php endforeach ?>
@@ -69,7 +82,7 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
 
 
 @else
-<div class="col-lg-12 text-center h3">NO HAY INFORMACIÓN PARA MOSTRAR</div>
+<div class="col-lg-12 text-center h3">{{Util::convertirMayusculas(trans("app.admin.info.no_hay_informacion"))}}</div>
 @endif
 
 
@@ -80,15 +93,14 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="titulo-modal">PREACUCIÓN</h4>
+                <h4 class="modal-title" id="titulo-modal"></h4>
             </div>
             <div class="modal-body" id="contenido-modal" style='text-align: center;'>
-                ¿Estas seguro de eliminar <span id="nombre-inst" style="font-weight: bold;"></span>?
             </div>
             <div class="modal-footer">
                 <div id="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-confirmar-eliminacion">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{trans("otros.info.cancelar")}}</button>
+                    <button type="button" class="btn btn-primary" id="btn-confirmar-eliminacion">{{trans("otros.info.aceptar")}}</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -114,8 +126,9 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
 
 
             function eliminarInst(id_inst, titulo){
-            $("#titulo-modal").html("PRECAUCIÓN");
-                    $("#contenido-modal").html('¿Estas seguro que quieres eliminar <span id="inst-titulo-modal" data-inst="' + id_inst + '" style="font-weight: bold;">' + titulo + '</span>?');
+            $("#titulo-modal").html("{{Util::convertirMayusculas(trans('otros.info.precaucion'))}}");
+                    $("#contenido-modal").html("{{trans('app.admin.msj.eliminar',array('nombre'=>"<span id='inst-titulo-modal' data-inst='\"+id_inst+\"' style='font-weight: bold;'>\"+titulo+\"</span>"))}}");
+                                    
                     $('#modal-eliminacion').modal('show');
                     $("#modal-footer").show();
             }
@@ -123,7 +136,7 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
     //Envia los datos confirmados para eliminar la inst
     jQuery("#btn-confirmar-eliminacion").click(function(){
     var id_inst = $("#inst-titulo-modal").attr("data-inst");
-            $("#titulo-modal").html("PROCESANDO...");
+            $("#titulo-modal").html("{{Util::convertirMayusculas(trans('otros.info.procesando'))}}...");
             $("#contenido-modal").html("<div class='block' style='text-align:center;'><img src='{{URL::to('assets/img/loaders/gears.gif')}}'/></div>");
             $("#modal-footer").hide();
             jQuery.ajax({
@@ -137,8 +150,9 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
                             $("#orden-" + id_inst).remove();
                     });
                             setTimeout(function(){
-                            $("#titulo-modal").html("¡REALIZADO CON EXITO!");
-                                    $("#contenido-modal").html("{{ucwords(strtolower($singNombre))}} eliminada.");
+                            $("#titulo-modal").html("{{Util::convertirMayusculas(trans('otros.info.realizado_exito'))}}");
+                                    $("#contenido-modal").html("<h4>{{trans('otros.info.msj.cont.eliminado',array('tipo'=>ucwords(strtolower($singNombre))))}}</h4>");
+                                    
                                     setTimeout(function(){
                                     $('#modal-eliminacion').modal('hide');
                                     }, 2000);
@@ -148,7 +162,7 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
             function guardarOrden(){
             var orden = "";
                     jQuery("#btn-guardar-orden").attr("disabled", "disabled");
-                    jQuery("#btn-guardar-orden").html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Guardando...");
+                    jQuery("#btn-guardar-orden").html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('otros.info.guardando')}}...");
                     $("#posicionar-inst li").each(function(){
             orden += $(this).attr("data-id-inst") + ",";
             });
@@ -166,7 +180,7 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
                                     },2000);
                                 });
                             jQuery("#btn-guardar-orden").removeAttr("disabled");
-                                    jQuery("#btn-guardar-orden").html("<span class='glyphicon glyphicon-save'></span> Guardar orden");
+                                    jQuery("#btn-guardar-orden").html("<span class='glyphicon glyphicon-save'></span> {{trans('app.admin.inst.btn.info.guardar_orden')}}");
                             }}, "html");
             }
 

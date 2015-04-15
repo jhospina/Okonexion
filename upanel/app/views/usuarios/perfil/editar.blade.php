@@ -4,32 +4,32 @@ $form_data = array('route' => array('usuario.update', $usuario->id), 'method' =>
 
 @extends('interfaz/plantilla')
 
-@section("titulo") Perfil {{Auth::user()->nombres}}@stop
+@section("titulo"){{trans("menu_usuario.mi_perfil.editar.titulo")}} {{Auth::user()->nombres}}@stop
 
 @section("contenido") 
 
-<h1>Editar mi perfil</h1>
+<h1>{{trans("menu_usuario.mi_perfil.editar.titulo")}}</h1>
 
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
 
 {{Form::model($usuario, $form_data, array('role' => 'form')) }}
 
 <table class="table table-striped">
-    <tr><th>Nombre: </th><td>    {{ Form::text('nombres', null, array('placeholder' => 'Introduce tu nombre', 'class' => 'form-control')) }}</td></tr>
-    <tr><th>Apellidos: </th><td>{{ Form::text('apellidos', null, array('placeholder' => 'Introduce tus apellidos', 'class' => 'form-control')) }}</td></tr>
-    <tr><th>Correo Electrónico</th><td>{{ Form::text('email', null, array('placeholder' => 'Escribe un correo electrónico', 'class' => 'form-control')) }}</td></tr>
-    <tr><th>DNI/NIT</th><td>{{ Form::text('dni', null, array('placeholder' => 'Escribe el número de identificación de ti o de tu empresa', 'class' => 'form-control')) }}</td></tr>
-    <tr><th>Empresa: </th><td>{{ Form::text('empresa', null, array('placeholder' => '¿Como se llama la empresa en donde trabajas?', 'class' => 'form-control')) }}</td></tr>
-    <tr><th>Pais</th><td>{{ Form::text('pais', null, array('placeholder' => '¿En que pais vives?', 'class' => 'form-control')) }}</td></tr>
-    <tr><th>Region/Estado</th><td>{{ Form::text('region', null, array('placeholder' => '¿En que Estado/Region/Departamento te encuestras?', 'class' => 'form-control')) }}</td></tr>
-    <tr><th>Ciudad</th><td>{{ Form::text('ciudad', null, array('placeholder' => '¿En que ciudad vives?', 'class' => 'form-control')) }}</td></tr>
-    <tr><th>Dirección</th><td>{{ Form::text('direccion', null, array('placeholder' => '¿Cual es tu dirección?', 'class' => 'form-control')) }}</td></tr>
-    <tr><th>Teléfono</th><td>{{ Form::text('telefono', null, array('placeholder' => '¿Tienes un telefono fijo?', 'class' => 'form-control')) }}</td></tr>
-    <tr><th>Celular</th><td>{{ Form::text('celular', null, array('placeholder' => '¿Cual es tu número de celular?', 'class' => 'form-control')) }}</td></tr>
+    <tr><th>{{trans("menu_usuario.mi_perfil.info.nombre")}} </th><td>    {{ Form::text('nombres', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.nombre.placeholder"), 'class' => 'form-control')) }}</td></tr>
+    <tr><th>{{trans("menu_usuario.mi_perfil.info.apellidos")}} </th><td>{{ Form::text('apellidos', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.apellidos.placeholder"), 'class' => 'form-control')) }}</td></tr>
+    <tr><th>{{trans("menu_usuario.mi_perfil.info.email")}}</th><td>{{ Form::text('email', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.email.placeholder"), 'class' => 'form-control')) }}</td></tr>
+    <tr><th>{{trans("menu_usuario.mi_perfil.info.dni")}}</th><td>{{ Form::text('dni', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.dni.placeholder"), 'class' => 'form-control')) }}</td></tr>
+    <tr><th>{{trans("menu_usuario.mi_perfil.info.empresa")}} </th><td>{{ Form::text('empresa', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.empresa.placeholder"), 'class' => 'form-control')) }}</td></tr>
+    <tr><th>{{trans("menu_usuario.mi_perfil.info.pais")}}</th><td>{{ Form::text('pais', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.pais.placeholder"), 'class' => 'form-control')) }}</td></tr>
+    <tr><th>{{trans("menu_usuario.mi_perfil.info.region")}}</th><td>{{ Form::text('region', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.region.placeholder"), 'class' => 'form-control')) }}</td></tr>
+    <tr><th>{{trans("menu_usuario.mi_perfil.info.ciudad")}}</th><td>{{ Form::text('ciudad', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.ciudad.placeholder"), 'class' => 'form-control')) }}</td></tr>
+    <tr><th>{{trans("menu_usuario.mi_perfil.info.direccion")}}</th><td>{{ Form::text('direccion', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.direccion.placeholder"), 'class' => 'form-control')) }}</td></tr>
+    <tr><th>{{trans("menu_usuario.mi_perfil.info.telefono")}}</th><td>{{ Form::text('telefono', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.telefono.placeholder"), 'class' => 'form-control')) }}</td></tr>
+    <tr><th>{{trans("menu_usuario.mi_perfil.info.celular")}}</th><td>{{ Form::text('celular', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.celular.placeholder"), 'class' => 'form-control')) }}</td></tr>
 </table>
 
 <div class="well-lg text-center">
-    {{ Form::button("Editar Perfil", array('type' => 'submit', 'class' => 'btn btn-primary')) }}    
+    {{ Form::button(trans("menu_usuario.mi_perfil.editar.submit"), array('type' => 'submit', 'class' => 'btn btn-primary')) }}    
     {{ Form::close() }}
 </div>
 

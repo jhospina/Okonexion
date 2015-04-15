@@ -3,28 +3,29 @@ $form_data = array('action' => 'UPanelControladorUsuario@cambiarContrasenaPost',
 ?>
 @extends('interfaz/plantilla')
 
-@section("titulo") Perfil {{Auth::user()->nombres}}@stop
+@section("titulo"){{trans("menu_usuario.cambiar_contrasena.titulo")}}@stop
 
 @section("contenido") 
 
-<h1>Cambia tu contraseña</h1>
+<h1>{{trans("menu_usuario.cambiar_contrasena.titulo")}}</h1>
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
 
 {{Form::model(null, $form_data, array('role' => 'form')) }}
 <table class="table table-striped">
-    <tr><th>Contraseña actual</th><td>    {{ Form::password('contra-actual',array('placeholder' => 'Escribe tu contraseña actual', 'class' => 'form-control')) }}</td></tr>
-    <tr><th>Contraseña nueva</th><td>{{ Form::password('contra-nueva',array('placeholder' => 'Escribe una nueva contraseña', 'class' => 'form-control')) }}</td></tr>
-    <tr><th>Repetir nueva contraseña</th><td>{{ Form::password('contra-nueva-rep',array('placeholder' => 'Vuelve a escribir la nueva contraseña', 'class' => 'form-control')) }}</td></tr>
+    <tr><th>{{trans("menu_usuario.cambiar_contrasena.contrasena_actual")}}</th><td>    {{ Form::password('contra-actual',array('placeholder' => trans("menu_usuario.cambiar_contrasena.contrasena_actual.placeholder"), 'class' => 'form-control')) }}</td></tr>
+    <tr><th>{{trans("menu_usuario.cambiar_contrasena.contrasena_nueva")}}</th><td>{{ Form::password('contra-nueva',array('placeholder' => trans("menu_usuario.cambiar_contrasena.contrasena_nueva.placeholder"), 'class' => 'form-control')) }}</td></tr>
+    <tr><th>{{trans("menu_usuario.cambiar_contrasena.repetir_nueva_contrasena")}}</th><td>{{ Form::password('contra-nueva-rep',array('placeholder' => trans("menu_usuario.cambiar_contrasena.repetir_nueva_contrasena.placeholder"), 'class' => 'form-control')) }}</td></tr>
 </table>
 
 <div class="well-lg text-center">
-    {{ Form::button("Cambiar contraseña", array('type' => 'submit', 'class' => 'btn btn-primary')) }}    
+    {{ Form::button(trans("menu_usuario.cambiar_contrasena.submit"), array('type' => 'submit', 'class' => 'btn btn-primary')) }}    
     {{ Form::close() }}
 </div>
 
 <hr>
 <hr>
 
+<!--
 <div class="panel panel-info">
     <div class="panel-heading">
         <h3 class="panel-title">Consejos para escoger una contraseña de calidad</h3>
@@ -55,6 +56,6 @@ $form_data = array('action' => 'UPanelControladorUsuario@cambiarContrasenaPost',
             </li><li>Cambie la contraseña de vez en cuando (1 vez cada 2 ó 3 meses) 
             </li></ul>
     </div>
-</div>
+</div> -->
 
 @stop

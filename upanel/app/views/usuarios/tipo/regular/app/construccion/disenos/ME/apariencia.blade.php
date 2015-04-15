@@ -1,4 +1,5 @@
 <?php
+
 $logo = $app->url_logo;
 
 //ID de las claves de las configuraciones de los iconos del menu principal
@@ -33,25 +34,25 @@ else
 if (ConfiguracionApp::existeConfig(App_Metro::txt_menuBtn_1))
     $txt_menuBtn_1 = ConfiguracionApp::obtenerValorConfig(App_Metro::txt_menuBtn_1);
 else
-    $txt_menuBtn_1 = "Institucional";
+    $txt_menuBtn_1 = Contenido_Institucional::nombreDefecto();
 
 //Texto del boton del menu  #2
 if (ConfiguracionApp::existeConfig(App_Metro::txt_menuBtn_2))
     $txt_menuBtn_2 = ConfiguracionApp::obtenerValorConfig(App_Metro::txt_menuBtn_2);
 else
-    $txt_menuBtn_2 = "Noticias";
+    $txt_menuBtn_2 = Contenido_Noticias::nombreDefecto();
 
 //Texto del boton del menu  #3
 if (ConfiguracionApp::existeConfig(App_Metro::txt_menuBtn_3))
     $txt_menuBtn_3 = ConfiguracionApp::obtenerValorConfig(App_Metro::txt_menuBtn_3);
 else
-    $txt_menuBtn_3 = "Encuestas";
+    $txt_menuBtn_3 = Contenido_Encuestas::nombreDefecto();
 
 //Texto del boton del menu  #4
 if (ConfiguracionApp::existeConfig(App_Metro::txt_menuBtn_4))
     $txt_menuBtn_4 = ConfiguracionApp::obtenerValorConfig(App_Metro::txt_menuBtn_4);
 else
-    $txt_menuBtn_4 = "PQR";
+    $txt_menuBtn_4 = Contenido_PQR::nombreDefecto();
 
 
 //COLOR DE FONDO DE LA OPCION #1
@@ -121,7 +122,7 @@ else
 ?>
 @extends('interfaz/plantilla')
 
-@section("titulo")Mi aplicación @stop
+@section("titulo"){{trans("app.hd.mi_aplicacion")}} @stop
 
 
 @section("css")
@@ -146,7 +147,7 @@ else
 
 <div class="col-lg-9" id="content-config">
 
-    <h2 class="text-right">APARIENCIA</h2>
+    <h2 class="text-right">{{Util::convertirMayusculas(trans("interfaz.menu.principal.mi_aplicacion.configuracion.apariencia"))}}</h2>
 
     <hr/>
 
@@ -163,7 +164,7 @@ else
 
         <div class="block">
 
-            <h3 class="text-right col-lg-12">General</h3>
+            <h3 class="text-right col-lg-12">{{trans("app.config.info.titulo.general")}}</h3>
             <div class="col-lg-12">
 
                 @include("usuarios/tipo/regular/app/construccion/secciones/logoApp")
@@ -171,11 +172,11 @@ else
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Barra de aplicación</h3>
+                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.barra_aplicacion")}}</h3>
                     </div>
                     <div class="panel-body">
                         {{--COLOR DEL FONDO DE LA BARRA (1)--}}
-                        <div class="col-lg-4 text-default input-lg">Color de la barra @include("interfaz/util/tooltip-ayuda",array("descripcion"=>"Selecciona el color barra que aparacera en la parte superior de la pantalla de tu aplicación."))  </div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("app.config.di.me.info.colorbarraapp")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans('app.config.di.me.info.colorbarraapp.ayuda')))</div>
                        <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Metro::colorBarraApp}}"><div style="background-color:{{$colorBarraApp}}"></div></div>
                         </div>
@@ -184,24 +185,24 @@ else
 
                         {{--PROPIEDADES DEL NOMBRE--}}
                         <div class="col-lg-4 input-lg">
-                            Mostrar nombre @include("interfaz/util/tooltip-ayuda",array("descripcion"=>"Indica como quieres que se muestre el nombre de tu aplicación en la barra superior de la pantalla.")) 
+                            {{trans("app.config.di.me.info.mostrar_nombre")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.di.me.info.mostrar_nombre.ayuda"))) 
                         </div>
-                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Metro::mostrarNombre}}" value="soloTexto" class="radio-inline" @if($mostrarNombre=="soloTexto") checked @endif> <span class="radio-value">Solo Texto</span></div>
-                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Metro::mostrarNombre}}" value="textoLogo" class="radio-inline" @if($mostrarNombre=="textoLogo") checked @endif> <span class="radio-value">Texto y Logo</span></div>
-                        <div class="col-lg-2 input-lg"><input type="radio" name="{{App_Metro::mostrarNombre}}" value="soloLogo" class="radio-inline" @if($mostrarNombre=="soloLogo") checked @endif> <span class="radio-value">Solo Logo</span></div>
+                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Metro::mostrarNombre}}" value="soloTexto" class="radio-inline" @if($mostrarNombre=="soloTexto") checked @endif> <span class="radio-value">{{trans("app.config.di.me.info.mostrar_nombre.op.solo_texto")}}</span></div>
+                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Metro::mostrarNombre}}" value="textoLogo" class="radio-inline" @if($mostrarNombre=="textoLogo") checked @endif> <span class="radio-value">{{trans("app.config.di.me.info.mostrar_nombre.op.texto_logo")}}</span></div>
+                        <div class="col-lg-2 input-lg"><input type="radio" name="{{App_Metro::mostrarNombre}}" value="soloLogo" class="radio-inline" @if($mostrarNombre=="soloLogo") checked @endif> <span class="radio-value">{{trans("app.config.di.me.info.mostrar_nombre.op.solo_logo")}}</span></div>
 
 
                         {{--ALINEACIÓN--}}
                         <div class="col-lg-4 input-lg">
-                            Alineación del nombre @include("interfaz/util/tooltip-ayuda",array("descripcion"=>"Indica la alineación en donde se posicionara el nombre de tu aplicaciòn en la barra superior de la pantalla.")) 
+                            {{trans("app.config.di.me.info.alineacion_nombre")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.di.me.info.alineacion_nombre.ayuda"))) 
                         </div>
-                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Metro::alineacionNombre}}" value="izquierda" class="radio-inline" @if($alineacionNombre=="izquierda") checked @endif> <span class="radio-value">Izquierda</span></div>
-                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Metro::alineacionNombre}}" value="centro" class="radio-inline" @if($alineacionNombre=="centro") checked @endif> <span class="radio-value">Centro</span></div>
-                        <div class="col-lg-2 input-lg"><input type="radio" name="{{App_Metro::alineacionNombre}}" value="derecha" class="radio-inline" @if($alineacionNombre=="derecha") checked @endif> <span class="radio-value">Derecha</span></div>
+                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Metro::alineacionNombre}}" value="izquierda" class="radio-inline" @if($alineacionNombre=="izquierda") checked @endif> <span class="radio-value">{{trans("otros.info.izquierda")}}</span></div>
+                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Metro::alineacionNombre}}" value="centro" class="radio-inline" @if($alineacionNombre=="centro") checked @endif> <span class="radio-value">{{trans("otros.info.centro")}}</span></div>
+                        <div class="col-lg-2 input-lg"><input type="radio" name="{{App_Metro::alineacionNombre}}" value="derecha" class="radio-inline" @if($alineacionNombre=="derecha") checked @endif> <span class="radio-value">{{trans("otros.info.derecha")}}</span></div>
 
 
                         {{--COLOR DEL NOMBRE DE LA APLICACIÒN--}}
-                        <div class="col-lg-4 text-default input-lg">Color del nombre @include("interfaz/util/tooltip-ayuda",array("descripcion"=>"Selecciona el color del texto que tendra el nombre de la aplicación en la barra superior de la pantalla.")) </div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("app.config.di.me.info.color_nombre")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.di.me.info.color_nombre.ayuda"))) </div>
                         <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Metro::colorNombreApp}}"><div style="background-color:{{$colorNombreApp}}"></div></div>
                         </div>
@@ -220,7 +221,7 @@ else
 
         <div class="block">
 
-            <h3 class="text-right col-lg-12">Menú principal</h3>
+            <h3 class="text-right col-lg-12">{{trans("app.config.info.titulo.menu_principal")}}</h3>
 
             {{--OPCION #1 (UNO) DEL MENU***************************************************--}}
 
@@ -228,20 +229,20 @@ else
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Primera Opción</h3>
+                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.primera_opcion")}}</h3>
                     </div>
                     <div class="panel-body">
-                        <div class="col-lg-4 text-default input-lg">Titulo</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_1}}" id="{{App_Metro::txt_menuBtn_1}}" class="form-control input-lg" value="{{$txt_menuBtn_1}}"/></div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_1}}" id="{{App_Metro::txt_menuBtn_1}}" class="form-control input-lg" value="{{$txt_menuBtn_1}}"/></div>
 
                         {{--COLOR DEL FONDO (1)--}}
-                        <div class="col-lg-4 text-default input-lg">Color de fondo</div> 
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_fondo")}}</div> 
                         <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_1}}"><div style="background-color:{{$colorFondoMenuBt_1}}"></div></div>
                         </div>
                          <input type="hidden" name="{{App_Metro::colorFondoMenuBt_1}}" id="{{App_Metro::colorFondoMenuBt_1}}" value="{{$colorFondoMenuBt_1}}" />
 
                         {{--COLOR DEL TEXTO (1)--}}
-                        <div class="col-lg-4 text-default input-lg">Color del texto</div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_texto")}}</div>
                         <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Metro::txt_menuBtn_1_color}}"><div style="background-color:{{$txt_menuBtn_1_color}}"></div></div>
                         </div>
@@ -250,10 +251,9 @@ else
 
                         {{--ICONO DE LA OPCIÓN (1)--}}
                         <div class="col-lg-12 uploadIconMenu">
-                            <a  href="#" class="tooltip-left" rel="tooltip" title="Extensiones permitidas: png, jpeg. Max 500Kb."> 
+                            <a  href="#" class="tooltip-left" rel="tooltip" title="{{trans('otros.extensiones_permitidas')}}: png, jpeg. Max 500Kb."> 
                                 <input name="{{App_Metro::iconoMenu1}}" id="{{App_Metro::iconoMenu1}}" class="iconoMenu" accept="image/*" type="file" multiple=true>
                             </a>
-
                         </div>
                     </div>
                 </div>
@@ -267,20 +267,20 @@ else
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Segunda Opción</h3>
+                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.segunda_opcion")}}</h3>
                     </div>
                     <div class="panel-body">
-                        <div class="col-lg-4 text-default input-lg">Titulo</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_2}}" id="{{App_Metro::txt_menuBtn_2}}" class="form-control input-lg" value="{{$txt_menuBtn_2}}"/></div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_2}}" id="{{App_Metro::txt_menuBtn_2}}" class="form-control input-lg" value="{{$txt_menuBtn_2}}"/></div>
 
                         {{--COLOR DEL FONDO (2)--}}
-                        <div class="col-lg-4 text-default input-lg">Color del fondo</div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_fondo")}}</div>
                         <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_2}}"><div style="background-color:{{$colorFondoMenuBt_2}}"></div></div>
                         </div>
                          <input type="hidden" name="{{App_Metro::colorFondoMenuBt_2}}" id="{{App_Metro::colorFondoMenuBt_2}}" value="{{$colorFondoMenuBt_2}}" />
 
                         {{--COLOR DEL TEXTO (2)--}}
-                        <div class="col-lg-4 text-default input-lg">Color del texto</div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_texto")}}</div>
                         <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Metro::txt_menuBtn_2_color}}"><div style="background-color:{{$txt_menuBtn_2_color}}"></div></div>
                         </div>
@@ -289,7 +289,7 @@ else
 
                         {{--ICONO DE LA OPCIÓN (2)--}}
                         <div class="col-lg-12 uploadIconMenu">
-                            <a  href="#" class="tooltip-left" rel="tooltip" title="Extensiones permitidas: png, jpeg. Max 500Kb."> 
+                            <a  href="#" class="tooltip-left" rel="tooltip" title="{{trans('otros.extensiones_permitidas')}}: png, jpeg. Max 500Kb."> 
                                 <input name="{{App_Metro::iconoMenu2}}" id="{{App_Metro::iconoMenu2}}" class="iconoMenu" accept="image/*" type="file" multiple=true>
                             </a>
 
@@ -306,20 +306,20 @@ else
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Tercera Opción</h3>
+                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.tercera_opcion")}}</h3>
                     </div>
                     <div class="panel-body">
-                        <div class="col-lg-4 text-default input-lg">Titulo</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_3}}" id="{{App_Metro::txt_menuBtn_3}}" class="form-control input-lg" value="{{$txt_menuBtn_3}}"/></div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_3}}" id="{{App_Metro::txt_menuBtn_3}}" class="form-control input-lg" value="{{$txt_menuBtn_3}}"/></div>
 
                         {{--COLOR DEL FONDO (3)--}}
-                        <div class="col-lg-4 text-default input-lg">Color de fondo</div> 
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_fondo")}}</div> 
                          <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_3}}"><div style="background-color:{{$colorFondoMenuBt_3}}"></div></div>
                         </div>
                          <input type="hidden" name="{{App_Metro::colorFondoMenuBt_3}}" id="{{App_Metro::colorFondoMenuBt_3}}" value="{{$colorFondoMenuBt_3}}" />
 
                         {{--COLOR DEL TEXTO (3)--}}
-                        <div class="col-lg-4 text-default input-lg">Color del texto</div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_texto")}}</div>
                         <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Metro::txt_menuBtn_3_color}}"><div style="background-color:{{$txt_menuBtn_3_color}}"></div></div>
                         </div>
@@ -328,7 +328,7 @@ else
 
                         {{--ICONO DE LA OPCIÓN (3)--}}
                         <div class="col-lg-12 uploadIconMenu">
-                            <a  href="#" class="tooltip-left" rel="tooltip" title="Extensiones permitidas: png, jpeg. Max 500Kb."> 
+                            <a  href="#" class="tooltip-left" rel="tooltip" title="{{trans('otros.extensiones_permitidas')}}: png, jpeg. Max 500Kb."> 
                                 <input name="{{App_Metro::iconoMenu3}}" id="{{App_Metro::iconoMenu3}}" class="iconoMenu" accept="image/*" type="file" multiple=true>
                             </a>
 
@@ -345,20 +345,20 @@ else
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Cuarta Opción</h3>
+                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.cuarta_opcion")}}</h3>
                     </div>
                     <div class="panel-body">
-                        <div class="col-lg-4 text-default input-lg">Titulo</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_4}}" id="{{App_Metro::txt_menuBtn_4}}" class="form-control input-lg" value="{{$txt_menuBtn_4}}"/></div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_4}}" id="{{App_Metro::txt_menuBtn_4}}" class="form-control input-lg" value="{{$txt_menuBtn_4}}"/></div>
 
                         {{--COLOR DEL FONDO (4)--}}
-                        <div class="col-lg-4 text-default input-lg">Color de fondo</div> 
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_fondo")}}</div> 
                          <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_4}}"><div style="background-color:{{$colorFondoMenuBt_4}}"></div></div>
                         </div>
                          <input type="hidden" name="{{App_Metro::colorFondoMenuBt_4}}" id="{{App_Metro::colorFondoMenuBt_4}}" value="{{$colorFondoMenuBt_4}}" />
 
                         {{--COLOR DEL TEXTO (4)--}}
-                        <div class="col-lg-4 text-default input-lg">Color del texto</div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_texto")}}</div>
                         <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Metro::txt_menuBtn_4_color}}"><div style="background-color:{{$txt_menuBtn_4_color}}"></div></div>
                         </div>
@@ -367,22 +367,16 @@ else
 
                         {{--ICONO DE LA OPCIÓN (4)--}}
                         <div class="col-lg-12 uploadIconMenu">
-                            <a  href="#" class="tooltip-left" rel="tooltip" title="Extensiones permitidas: png, jpeg. Max 500Kb."> 
+                            <a  href="#" class="tooltip-left" rel="tooltip" title="{{trans('otros.extensiones_permitidas')}}: png, jpeg. Max 500Kb."> 
                                 <input name="{{App_Metro::iconoMenu4}}" id="{{App_Metro::iconoMenu4}}" class="iconoMenu" accept="image/*" type="file" multiple=true>
                             </a>
-
                         </div>
                     </div>
                 </div>
 
             </div>
 
-
-
-
-
-            <div class="col-lg-12 text-center" style="margin-bottom:20px;"> {{ Form::button("<span class='glyphicon glyphicon-star'></span> Establecer apariencia", array('type' => 'button', 'class' => 'btn btn-success btn-large',"style"=>"font-size:20px;","id"=>"btn-guardar")) }}    </div>
-
+            <div class="col-lg-12 text-center" style="margin-bottom:20px;"> {{ Form::button("<span class='glyphicon glyphicon-star'></span> ".trans("app.config.info.btn.establecer_apariencia"), array('type' => 'button', 'class' => 'btn btn-success btn-large',"style"=>"font-size:20px;","id"=>"btn-guardar")) }}    </div>
     </form>
 
     @else
@@ -449,8 +443,7 @@ else
         $('.colorSelect').simplecolorpicker({picker: true, theme: 'glyphicons'});
 
 
-
-        jQuery("#logoApp").fileinput({
+      jQuery("#logoApp").fileinput({
             multiple: false,
             showPreview: true,
             showRemove: true,
@@ -459,24 +452,25 @@ else
             maxFileCount: 1,
             previewFileType: "image",
             allowedFileExtensions: ['jpg', 'png'],
-            browseLabel: "Seleccionar Logo App",
+            browseLabel: "{{trans('otros.info.seleccionar')}} {{trans('app.config.info.logo_app')}}",
             browseIcon: '<i class="glyphicon glyphicon-picture"></i> ',
             removeClass: "btn btn-danger",
-            removeLabel: "Borrar",
+            removeLabel: "{{trans('otros.info.borrar')}}",
             removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
             uploadClass: "btn btn-info",
-            uploadLabel: "Subir",
+            uploadLabel: "trans('otros.info.subir')",
             dropZoneEnabled: false,
-            dropZoneTitle: "Arrastra tu imagen aquí...",
+            dropZoneTitle: "{{trans('otros.info.arrastrar_imagen')}}...",
             uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
-            msgSelected: '{n} imagen',
+            msgSelected: "{n} {{trans('otros.info.imagen')}}",
             maxFileSize: 500,
-            msgInvalidFileExtension: "El archivo que has escogido no es valido. Solo se permiten imagenes en formatos {extensions}.",
-            msgInvalidFileType: "El archivo que has escogido no es valido. Solo se permiten imagenes en formatos {extensions}.",
-            msgSizeTooLarge: "El tamaño de la imagen es demasiado grande. Maximo <b>{maxSize} KB</b>. Esta imagen pesa <b>{size} KB.</b>",
+            msgInvalidFileExtension: "{{trans('app.config.info.imagen.error01')}}",
+            msgInvalidFileType: "{{trans('app.config.info.imagen.error01')}}",
+            msgSizeTooLarge: "{{trans('app.config.info.imagen.error02')}}",
             uploadAsync: true,
             uploadUrl: "{{URL::to('aplicacion/ajax/guardarLogo')}}" // your upload server url
         });
+
 
 //CONTROLADOR DE LOS ICONOS DEL MENU PRINCIPAL
 <?php foreach ($iconosMenuID as $ID): $configIcono = ConfiguracionApp::existeConfig($ID); ?>
@@ -490,21 +484,21 @@ else
                 maxFileCount: 1,
                 previewFileType: "image",
                 allowedFileExtensions: ['jpg', 'png'],
-                browseLabel: "Seleccionar Icono",
+                browseLabel: "{{trans('otros.info.seleccionar')}} {{trans('otros.info.icono')}}",
                 browseIcon: '<i class="glyphicon glyphicon-picture"></i> ',
                 removeClass: "btn btn-danger",
-                removeLabel: "Borrar",
+                removeLabel: "{{trans('otros.info.borrar')}}",
                 removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
                 uploadClass: "btn btn-info",
-                uploadLabel: "Subir",
+                uploadLabel: "trans('otros.info.subir')",
                 dropZoneEnabled: false,
-                dropZoneTitle: "Arrastra tu imagen aquí...",
+                dropZoneTitle: "{{trans('otros.info.arrastrar_imagen')}}...",
                 uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
-                msgSelected: '{n} imagen',
+                msgSelected: "{n} {{trans('otros.info.imagen')}}",
                 maxFileSize: 500,
-                msgInvalidFileExtension: "El archivo que has escogido no es valido. Solo se permiten imagenes en formatos {extensions}.",
-                msgInvalidFileType: "El archivo que has escogido no es valido. Solo se permiten imagenes en formatos {extensions}.",
-                msgSizeTooLarge: "El tamaño de la imagen es demasiado grande. Maximo <b>{maxSize} KB</b>. Esta imagen pesa <b>{size} KB.</b>",
+                msgInvalidFileExtension: "{{trans('app.config.info.imagen.error01')}}",
+                msgInvalidFileType: "{{trans('app.config.info.imagen.error01')}}",
+                msgSizeTooLarge: "{{trans('app.config.info.imagen.error02')}}",
                 uploadAsync: true,
                 uploadUrl: "{{URL::to('aplicacion/ajax/guardarIconoMenu')}}" // your upload server url
             });
@@ -557,7 +551,7 @@ else
 
     jQuery("#btn-guardar").click(function () {
 
-        jQuery(this).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Procesando...");
+        jQuery(this).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('otros.info.procesando')}}...");
         jQuery(this).attr("disabled", "disabled");
 
         setTimeout(function () {

@@ -1,1 +1,1 @@
-- Okonexion
+{{trans("interfaz.subfijo_titulo_pagina")}}

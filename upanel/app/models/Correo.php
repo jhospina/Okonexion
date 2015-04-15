@@ -23,7 +23,7 @@ class Correo extends Eloquent implements UserInterface, RemindableInterface {
         $data["id_usuario"] = $id_usuario;
 
         return Mail::send('emails.confirmacion', $data, function ($message) use ($data) {
-                    $message->subject('Confirmación de correo electrónico');
+                    $message->subject(trans("email.asunto.confirmacion"));
                     $message->to($data["email"]);
                 });
     }
@@ -43,7 +43,7 @@ class Correo extends Eloquent implements UserInterface, RemindableInterface {
         $data["email"] = $user->email;
 
         return Mail::send('emails.activacion', $data, function ($message) use ($data) {
-                    $message->subject('Activación de tu cuenta');
+                    $message->subject(trans("email.asunto.activacion"));
                     $message->to($data["email"]);
                 });
     }
@@ -55,7 +55,7 @@ class Correo extends Eloquent implements UserInterface, RemindableInterface {
         $data = array("email" => $user->email, "nombre" => $user->nombres);
 
         return Mail::send('emails.bienvenida', $data, function ($message) use ($data) {
-                    $message->subject('¡Bienvenido a Okonexion!');
+                    $message->subject(trans("email.asunto.bienvenida"));
                     $message->to($data["email"]);
                 });
     }
@@ -68,7 +68,7 @@ class Correo extends Eloquent implements UserInterface, RemindableInterface {
         $data = array("email" => $user->email, "nombre" => $user->nombres, "codigo" => $codigo, "id_usuario" => $id_usuario);
 
         return Mail::send('emails.recuperacion_contrasena', $data, function ($message) use ($data) {
-                    $message->subject('Recuperación de contraseña');
+                    $message->subject(trans("email.asunto.recuperacion"));
                     $message->to($data["email"]);
                 });
     }

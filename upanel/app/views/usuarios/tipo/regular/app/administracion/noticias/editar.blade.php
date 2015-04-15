@@ -20,7 +20,7 @@ if (!is_null($metaImagen)) {
 
 @extends('interfaz/plantilla')
 
-@section("titulo") {{$app->nombre}} | Administrar {{$nombreContenido}} @stop
+@section("titulo") {{$app->nombre}} | {{trans("otros.info.administrar")}} {{$nombreContenido}} @stop
 
 
 @section("css")
@@ -34,11 +34,11 @@ if (!is_null($metaImagen)) {
 
 {{--NAVEGACION--}}
 <div class="well well-sm">
-    <a href="{{URL::to("aplicacion/administrar/noticias")}}" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Volver</a>
-    <a href="{{URL::to("aplicacion/administrar/noticias/agregar")}}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Agregar nuevo</a>
+    <a href="{{URL::to("aplicacion/administrar/noticias")}}" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> {{trans("otros.info.volver")}}</a>
+    <a href="{{URL::to("aplicacion/administrar/noticias/agregar")}}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {{trans("app.admin.btn.info.agregar_nuevo")}}</a>
 </div>
 <hr/>
-<h2> Editar {{$singNombre}} [{{$noticia->estado}}]</h2> 
+<h2> {{trans("otros.info.editar")}} {{$singNombre}} [{{$noticia->estado}}]</h2> 
 <hr/>
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
 <div class="alert alert-danger" id="error-js"></div>
@@ -48,7 +48,7 @@ if (!is_null($metaImagen)) {
         <input type="hidden" name="id_noticia" value="{{$noticia->id}}">
 
         <div class="col-lg-12" style="margin-bottom: 20px;">
-            <div class="col-lg-12"><input name="{{$tituloID}}" id="{{$tituloID}}" type="text"  placeholder="Introduce el titulo aquí" class="form-control input-lg" value="{{$noticia->titulo}}"></div>
+            <div class="col-lg-12"><input name="{{$tituloID}}" id="{{$tituloID}}" type="text"  placeholder="{{trans('app.admin.noticias.info.titulo.placeholder')}}" class="form-control input-lg" value="{{$noticia->titulo}}"></div>
             <div class="col-lg-12">
                 <div id="editor"></div>
                 <textarea style="display: none;" id="{{$descripcionID}}" name="{{$descripcionID}}"></textarea>    
@@ -57,10 +57,10 @@ if (!is_null($metaImagen)) {
         <div class="col-lg-12">
             <div class="col-lg-5">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Imagen principal</div>
+                    <div class="panel-heading">{{trans("app.admin.noticias.info.imagen_principal")}}</div>
                     <div class="panel-body">
                         <div class="col-lg-12" style="text-align: center;">
-                            <a class="tooltip-left" title="Extensiones permitidas: png, jpg, jpeg. Max: 1,5 Mb. ">
+                            <a class="tooltip-left" title="{{trans('otros.extensiones_permitidas')}}: png, jpg, jpeg. Max: 1,5 Mb. ">
                                 <input name="{{$imagenID}}" id="{{$imagenID}}" accept="image/*" type="file" multiple=false>
                             </a>
                         </div>
@@ -71,29 +71,29 @@ if (!is_null($metaImagen)) {
             <div class="col-lg-4">
                 {{--CATEGORIAS DE LAS NOTICIAS--}}
                 <div class="panel panel-default">
-                    <div class="panel-heading">Categorias <span class="label label-success" id="msj-agregar-cat" style="display: none;"></span></div>
+                    <div class="panel-heading">{{trans("app.admin.noticias.tax.categorias")}} <span class="label label-success" id="msj-agregar-cat" style="display: none;"></span></div>
                     <div class="panel-body" id="content-cats">
                         @include("interfaz/app/listar_terms",array("terms"=>$cats,"seleccionados"=>$categorias))
                     </div>
                     {{--SECCION PARA AGREGAR CATEGORIA--}}
                     <div class="panel-footer" id="content-agregar-categoria">
-                        <input style="display: none;" type="text" id="input-agregar-cat" class="form-control" placeholder="Escribe aquí la nueva categoria...">
-                        <button type="button" class="btn-sm btn-primary" id="btn-agregar-cat"><span class="glyphicon glyphicon-plus-sign"></span> Agregar nueva categoria</button>
+                        <input style="display: none;" type="text" id="input-agregar-cat" class="form-control" placeholder="{{trans("app.admin.noticias.info.categorias.placeholder")}}">
+                        <button type="button" class="btn-sm btn-primary" id="btn-agregar-cat"><span class="glyphicon glyphicon-plus-sign"></span> {{trans("app.admin.noticias.btn.agregar_categoria")}}</button>
                     </div>
                 </div>  
             </div>
             {{--PUBLICAR--}}
             <div class="col-lg-3">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Acciones</div>
+                    <div class="panel-heading">{{trans('otros.info.acciones')}}</div>
                     <div class="panel-body">
                         <div class="col-lg-12" style="text-align: center;">
                             @if($noticia->estado==ContenidoApp::ESTADO_PUBLICO)
-                            <button id="btn-publicar" type="button" onClick="publicar(this);" class="btn btn-info col-lg-12 text-center" style="margin-bottom: 5px;"><span class="glyphicon glyphicon glyphicon-ok-circle"></span> EDITAR </button>
+                            <button id="btn-publicar" type="button" onClick="publicar(this);" class="btn btn-info col-lg-12 text-center" style="margin-bottom: 5px;"><span class="glyphicon glyphicon glyphicon-ok-circle"></span> {{Util::convertirMayusculas(trans("otros.info.editar"))}}</button>
                             @else
-                            <button id="btn-publicar" type="button" onClick="publicar(this);" class="btn btn-success col-lg-12 text-center" style="margin-bottom: 5px;"><span class="glyphicon glyphicon glyphicon-ok-circle"></span> PUBLICAR </button>
+                            <button id="btn-publicar" type="button" onClick="publicar(this);" class="btn btn-success col-lg-12 text-center" style="margin-bottom: 5px;"><span class="glyphicon glyphicon glyphicon-ok-circle"></span> {{Util::convertirMayusculas(trans("otros.info.publicar"))}}</button>
                             @endif
-                            <button id="btn-guardar" type="button" onClick="guardar(this);" class="btn btn-default col-lg-12"><span class="glyphicon glyphicon glyphicon glyphicon-save"></span> Guardar</button>     
+                            <button id="btn-guardar" type="button" onClick="guardar(this);" class="btn btn-default col-lg-12"><span class="glyphicon glyphicon glyphicon glyphicon-save"></span> {{trans("otros.info.guardar")}}</button>     
                         </div>
                     </div>
                 </div>
@@ -130,24 +130,24 @@ if (!is_null($metaImagen)) {
             maxFileCount: 1,
             previewFileType: "image",
             allowedFileExtensions: ['jpg', 'png'],
-            browseLabel: "Seleccionar imagen",
+            browseLabel: "{{trans('otros.info.seleccionar')}} {{trans('otros.info.imagen')}}",
             browseIcon: '<i class="glyphicon glyphicon-picture"></i> ',
             removeClass: "btn btn-danger",
-            removeLabel: "Borrar",
+            removeLabel: "{{trans('otros.info.borrar')}}",
             removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
             uploadClass: "btn btn-info",
-            uploadLabel: "Subir",
+            uploadLabel: "trans('otros.info.subir')",
             dropZoneEnabled: false,
-            dropZoneTitle: "Arrastra imagen...",
+            dropZoneTitle: "{{trans('otros.info.arrastrar_imagen')}}...",
             uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
-            msgSelected: '{n} imagen',
+            msgSelected: "{n} {{trans('otros.info.imagen')}}",
             maxFileSize: 1500,
-            msgInvalidFileExtension: "El archivo que has escogido no es valido. Solo se permiten imagenes en formatos {extensions}.",
-            msgInvalidFileType: "El archivo que has escogido no es valido. Solo se permiten imagenes en formatos {extensions}.",
-            msgSizeTooLarge: "El tamaño de la imagen es demasiado grande. Maximo <b>{maxSize} KB</b>. Esta imagen pesa <b>{size} KB.</b>",
+            msgInvalidFileExtension: "{{trans('app.config.info.imagen.error01')}}",
+            msgInvalidFileType: "{{trans('app.config.info.imagen.error01')}}",
+            msgSizeTooLarge: "{{trans('app.config.info.imagen.error02')}}",
             uploadAsync: true,
             uploadUrl: "{{URL::to('aplicacion/administrar/noticias/ajax/subir/imagen')}}" // your upload server url
-    });
+        });
     });</script>
 
 
@@ -218,7 +218,7 @@ if (!is_null($metaImagen)) {
 
                     jQuery("#content-cats").append('<div class="checkbox" style="margin: 0px;"><label><input type="checkbox" name="cat-' + response + '"  value="' + response + '"/> ' + nuevaCat + '</label></div>');
                             jQuery("#input-agregar-cat").fadeOut();
-                            jQuery("#msj-agregar-cat").html("Categoria agregada");
+                            jQuery("#msj-agregar-cat").html("{{trans('otros.admin.noticias.tax.categorias.info.categoria_agregada')}}");
                             jQuery("#msj-agregar-cat").fadeIn();
                             setTimeout(function () {
                             jQuery("#msj-agregar-cat").fadeOut();
@@ -234,7 +234,7 @@ if (!is_null($metaImagen)) {
             return;
             $("#form").attr("action", "../publicar");
             deshabilitarBotones();
-            jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Publicando...");
+            jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('otros.info.publicando')}}...");
             setTimeout(function () {
 
             $("#form").submit();
@@ -248,7 +248,7 @@ if (!is_null($metaImagen)) {
             return;
             $("#form").attr("action", "../guardar");
             deshabilitarBotones();
-            jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Guardando...");
+            jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('otros.info.guardando')}}...");
             setTimeout(function () {
 
             $("#form").submit();
@@ -256,25 +256,25 @@ if (!is_null($metaImagen)) {
     }
 
 
-    function validar() {
-    var titulo = $("#{{$tituloID}}").val();
-            var descripcion = $("#{{$descripcionID}}").val();
-            var errores = "";
-            if (titulo.length < 1) {
-    errores += "<li>Debes escribir un titulo.</li>";
-    }
+     function validar() {
+        var titulo = $("#{{$tituloID}}").val();
+        var descripcion = $("#{{$descripcionID}}").val();
+        var errores = "";
+        if (titulo.length < 1) {
+            errores += "<li>{{trans('app.admin.noticias.info.titulo.error')}}</li>";
+        }
 
-    if (descripcion.length < 1) {
-    errores += "<li>Debes escribir una descripción.</li>";
-    }
+        if (descripcion.length < 1) {
+            errores += "<li>{{trans('app.admin.noticias.info.descripcion.error')}}</li>";
+        }
 
-    if (errores.length > 0) {
-    $("#error-js").html("Debe corregir los siguientes errores: </br><lu>" + errores + "</lu>");
+        if (errores.length > 0) {
+            $("#error-js").html("{{trans('app.config.info.verificar_errores')}} </br><lu>" + errores + "</lu>");
             $("#error-js").toggle();
             return false;
-    } else {
-    return true;
-    }
+        } else {
+            return true;
+        }
     }
 
 </script>

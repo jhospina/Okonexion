@@ -39,7 +39,15 @@ class Contenido_Noticias {
     const IMAGEN_NOMBRE_MINIATURA_BG = "BG"; //Nombre de miniaturas
     const IMAGEN_NOMBRE_MINIATURA_MD = "MD";
     const IMAGEN_NOMBRE_MINIATURA_SM = "SM";
-
+    
+    /** Obtiene el nombre por defecto de este tipo de contenido
+     * 
+     * @return type
+     */
+    static function nombreDefecto(){
+        return trans("app.tipo.contenido.noticias");
+    }
+    
     /** Prepara los requisitos de administracion de las noticias
      * 
      * @param Aplicacion $app El modelo objeto de la aplicacion del usuario 
@@ -54,13 +62,13 @@ class Contenido_Noticias {
         $tax->id_aplicacion = $app->id;
         $tax->id_usuario = Auth::user()->id;
         $tax->nombre = Contenido_Noticias::taxonomia;
-        $tax->descripcion = "Taxonomia de Categorias de Noticias";
+        $tax->descripcion = trans("app.admin.noticias.tax.categorias.descripcion");
         $tax->save();
 
         //Crea la categoria "Sin Categoria" dentro de la taxonomia anteriormente creada
         $term = new TerminoContenidoApp;
         $term->id_taxonomia = $tax->id;
-        $term->nombre = "Sin categoria";
+        $term->nombre = trans("app.admin.noticias.tax.categorias.defecto");
         $term->save();
     }
 
@@ -98,7 +106,7 @@ class Contenido_Noticias {
 
         //Si no se tiene ninguna categoria elegida se le asinga la primera "Sin categoria"
         if (count($cats) == 0) {
-            $cats[] = 1;
+            $cats[] = Contenido_Noticias::obtenerIDCategoriaDefecto();
         }
         //Establece las categorias de la noticia
         ContenidoApp::establecerTerminos($contenido->id, $cats);
@@ -138,7 +146,7 @@ class Contenido_Noticias {
         }
         //Si no se tiene ninguna categoria elegida se le asinga la primera "Sin categoria"
         if (count($cats) == 0) {
-            $cats[] = 1;
+            $cats[] = Contenido_Noticias::obtenerIDCategoriaDefecto();
         }
         //Establece las categorias de la noticia
         ContenidoApp::establecerTerminos($contenido->id, $cats);
@@ -146,11 +154,11 @@ class Contenido_Noticias {
 
     static function validar($data) {
         if (strlen($data[Contenido_Noticias::configTitulo]) < 1) {
-            return Redirect::back()->withInput()->with(User::mensaje("error", null, "Debes escribir un titulo.", 2));
+            return Redirect::back()->withInput()->with(User::mensaje("error", null, trans("app.admin.noticias.info.titulo.error"), 2));
         }
 
         if (strlen($data[Contenido_Noticias::configDescripcion]) < 5) {
-            return Redirect::back()->withInput()->with(User::mensaje("error", null, "Debes escribir una descripción.", 2));
+            return Redirect::back()->withInput()->with(User::mensaje("error", null, trans("app.admin.noticias.info.descripcion.error"), 2));
         }
 
         return null;
@@ -318,4 +326,14 @@ class Contenido_Noticias {
         return null;
     }
 
+    static function obtenerIDCategoriaDefecto(){
+         $tax = TaxonomiaContenidoApp::obtener(Contenido_Noticias::taxonomia);
+
+        //Obtiene las categorias de las noticias de la taxonomia
+        $cats = $tax->terminos;
+        
+        foreach($cats as $cat)
+            return $cat->id;
+    }
+    
 }

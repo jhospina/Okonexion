@@ -112,14 +112,14 @@ Class Aplicacion extends Eloquent {
      * @return string El nombre nominal
      */
     public static function obtenerNombreEstado($sigla) {
-        $estados = array(Aplicacion::ESTADO_EN_DISENO => "En diseño",
-            Aplicacion::ESTADO_LISTA_PARA_ENVIAR => "Listo para enviar",
-            Aplicacion::ESTADO_EN_COLA_PARA_DESARROLLO => "En cola para desarrollo",
-            Aplicacion::ESTADO_EN_DESARROLLO => "En desarrollo",
-            Aplicacion::ESTADO_EN_PROCESO_DE_ACTUALIZACION => "En proceso de actualización",
-            Aplicacion::ESTADO_TERMINADA => "Aplicación terminada",
-            Aplicacion::ESTADO_APLICACION_ACTIVA => "Activa",
-            Aplicacion::ESTADO_APLICACION_INACTIVA => "Inactiva");
+        $estados = array(Aplicacion::ESTADO_EN_DISENO => trans("atributos.estado.app.en_diseno"),
+            Aplicacion::ESTADO_LISTA_PARA_ENVIAR => trans("atributos.estado.app.listo_para_enviar"),
+            Aplicacion::ESTADO_EN_COLA_PARA_DESARROLLO => trans("atributos.estado.app.en_cola"),
+            Aplicacion::ESTADO_EN_DESARROLLO => trans("atributos.estado.app.en_desarrollo"),
+            Aplicacion::ESTADO_EN_PROCESO_DE_ACTUALIZACION => trans("atributos.estado.app.en_proceso_act"),
+            Aplicacion::ESTADO_TERMINADA => trans("atributos.estado.app.aplicacion_term"),
+            Aplicacion::ESTADO_APLICACION_ACTIVA => trans("atributos.estado.app.activa"),
+            Aplicacion::ESTADO_APLICACION_INACTIVA => trans("atributos.estado.app.inactiva"));
         return $estados[$sigla];
     }
 

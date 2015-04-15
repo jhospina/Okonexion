@@ -16,6 +16,16 @@ class Contenido_Encuestas {
     const configNumeroParametrosRespuesta = 3;
     const NUMERO_REGISTROS_DESCARGAR = 8; // Indica la tanda de registros a descargar por parte de la app
 
+    
+     /** Obtiene el nombre por defecto de este tipo de contenido
+     * 
+     * @return type
+     */
+    static function nombreDefecto(){
+        return trans("app.tipo.contenido.encuestas");
+    }
+    
+    
     static function agregar($data, $estado) {
         $contenido = new ContenidoApp;
         $contenido->id_aplicacion = Aplicacion::ID();

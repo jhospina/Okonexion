@@ -14,25 +14,25 @@ $total_votos = intval(ContenidoApp::obtenerValorMetadato($encuesta_vigente->id, 
 
 @extends('interfaz/plantilla')
 
-@section("titulo") {{$app->nombre}} | Administrar {{$nombreContenido}} @stop
+@section("titulo") {{$app->nombre}} | {{trans("otros.info.administrar")}} {{$nombreContenido}} @stop
 
 @section("contenido") 
 
-<h2><span class="glyphicon {{Contenido_Encuestas::icono}}"></span> ADMINISTRAR {{strtoupper($nombreContenido)}}</h2>
+<h2><span class="glyphicon {{Contenido_Encuestas::icono}}"></span> {{Util::convertirMayusculas(trans("otros.info.administrar"))}} {{strtoupper($nombreContenido)}}</h2>
 <hr/>
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
 
 <div class="well well-sm" style="margin-top:10px;">
-    <a href="{{URL::to("aplicacion/administrar/".$tipoContenido."/agregar")}}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Agregar nuevo</a>
+    <a href="{{URL::to("aplicacion/administrar/".$tipoContenido."/agregar")}}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {{trans("app.admin.btn.info.agregar_nuevo")}}</a>
 </div>
 
 
 <div class="panel panel-default" style="clear: both;margin-bottom:50px;">
     <div class="panel-heading">
         @if($encuesta_vigente!=null)
-        <h3 class="panel-title"><span style="width: 50%;display: inline-block;">ENCUESTA VIGENTE</span><span style="width: 50%;display: inline-block;" class="text-right">{{$encuesta_vigente->created_at}}</span></h3>
+        <h3 class="panel-title"><span style="width: 50%;display: inline-block;">{{Util::convertirMayusculas(trans("app.admin.encuestas.info.encuesta_vigente"))}}</span><span style="width: 50%;display: inline-block;" class="text-right">{{$encuesta_vigente->created_at}}</span></h3>
         @else
-        <h3 class="panel-title">No tienes encuestas. <a class="link" href="{{URL::to("aplicacion/administrar/".$tipoContenido."/agregar")}}">¿Quieres crear una?</a></h3>
+        <h3 class="panel-title">{{trans("app.admin.encuestas.info.sin_encuestas",array("encuestas"=>$nombreContenido))}} <a class="link" href="{{URL::to("aplicacion/administrar/".$tipoContenido."/agregar")}}">{{trans("otros.info.quieres_crear_una")}}</a></h3>
         @endif
     </div>
     <div class="panel-body" style="padding: 5px;">
@@ -60,7 +60,7 @@ $total_votos = intval(ContenidoApp::obtenerValorMetadato($encuesta_vigente->id, 
 
 
                     <?php endfor; ?>
-                    <tr><td colspan="3" style="width: 98%;text-align: right">Total</td><td style="width: 2%;">{{$total_votos}}</td></tr>
+                    <tr><td colspan="3" style="width: 98%;text-align: right">{{trans("otros.info.total")}}</td><td style="width: 2%;">{{$total_votos}}</td></tr>
                 </table>
             </div>
             @endif
@@ -72,15 +72,15 @@ $total_votos = intval(ContenidoApp::obtenerValorMetadato($encuesta_vigente->id, 
 @if(count($guardados)>0)
 
 <div class="col-lg-12" style="margin-bottom: 50px;">
-    <div class="col-lg-12" style="background: gainsboro;"><h3>{{ucfirst(strtolower($nombreContenido))}} guardadas</h3></div>
+    <div class="col-lg-12 header-list"><h3>{{ucfirst(strtolower($nombreContenido))}} {{trans("otros.info.guardadas")}}</h3></div>
     <div class="col-lg-12">
         <table class="table table-striped">
-            <tr><th>{{strtoupper($singNombre)}}</th><th>FECHA CREACIÓN</th><th></th></tr>
+            <tr><th>{{Util::convertirMayusculas($singNombre)}}</th><th>{{Util::convertirMayusculas(trans("otros.info.fecha_creacion"))}}</th><th></th></tr>
             @foreach($guardados as $encuesta)
             <tr id="encuesta-{{$encuesta->id}}"><td>{{$encuesta->titulo}}</td><td>{{$encuesta->created_at}}</td>
                 <td>
-                    <a href="{{URL::to("aplicacion/administrar/encuestas/editar/".$encuesta->id)}}" class="btn-sm btn-warning" style="cursor: pointer;" title="Editar"><span class="glyphicon glyphicon-edit"></span></a>
-                    <span class="btn-sm btn-danger" onClick="eliminarEncuesta({{$encuesta->id}},'{{str_replace("'","\"",$encuesta->titulo);}}');" style="cursor: pointer;" title="Eliminar"><span class="glyphicon glyphicon-remove-circle"></span></span>
+                    <a href="{{URL::to("aplicacion/administrar/encuestas/editar/".$encuesta->id)}}" class="btn-sm btn-warning" style="cursor: pointer;" title="{{trans("otros.info.editar")}}"><span class="glyphicon glyphicon-edit"></span></a>
+                    <span class="btn-sm btn-danger" onClick="eliminarEncuesta({{$encuesta->id}},'{{str_replace("'","\"",$encuesta->titulo);}}');" style="cursor: pointer;" title="{{trans("otros.info.eliminar")}}"><span class="glyphicon glyphicon-remove-circle"></span></span>
                 </td>
             </tr>
             @endforeach
@@ -92,22 +92,22 @@ $total_votos = intval(ContenidoApp::obtenerValorMetadato($encuesta_vigente->id, 
 
 
 <div class="col-lg-12" style="margin-bottom: 20px;">
-    <div class="col-lg-12 header-list"><h3>Historicos</h3></div>
+    <div class="col-lg-12 header-list"><h3>{{trans("otros.info.historicos")}}</h3></div>
     <div class="col-lg-12">
         @if(count($historial)>0)
         {{$historial->links()}}
         <table class="table table-striped">
-            <tr><th>{{strtoupper($singNombre)}}</th><th>VOTOS</th><th></th></tr>
+            <tr><th>{{strtoupper($singNombre)}}</th><th>{{Util::convertirMayusculas(trans("otros.info.votos"))}}</th><th></th></tr>
             @foreach($historial as $encuesta)
             <?php $total_votos = intval(ContenidoApp::obtenerValorMetadato($encuesta->id, "total")); ?>
-            <tr><td>{{$encuesta->titulo}}</td><td>{{$total_votos}}</td><td><a href="{{URL::to("aplicacion/administrar/encuestas/historico/".$encuesta->id)}}" class="btn-sm btn-info" style="cursor: pointer;" title="Ver {{strtolower($singNombre)}}"><span class="glyphicon glyphicon-eye-open"></span></a</td></tr>
+            <tr><td>{{$encuesta->titulo}}</td><td>{{$total_votos}}</td><td><a href="{{URL::to("aplicacion/administrar/encuestas/historico/".$encuesta->id)}}" class="btn-sm btn-info" style="cursor: pointer;" title="{{trans("otros.info.ver")}} {{strtolower($singNombre)}}"><span class="glyphicon glyphicon-eye-open"></span></a></td></tr>
             @endforeach
         </table>
 
         {{$historial->links()}}
 
         @else
-        <p style="padding:5px;">No hay {{strtolower($nombreContenido)}} archivadas</p>
+        <p style="padding:5px;">{{trans("app.admin.encuestas.info.no_hay_archivados",array("encuestas"=>$nombreContenido))}}</p>
         @endif
     </div>
 </div>
@@ -117,15 +117,14 @@ $total_votos = intval(ContenidoApp::obtenerValorMetadato($encuesta_vigente->id, 
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="titulo-modal">PREACUCIÓN</h4>
+                <h4 class="modal-title" id="titulo-modal"></h4>
             </div>
             <div class="modal-body" id="contenido-modal" style='text-align: center;'>
-                ¿Estas seguro de eliminar <span id="nombre-encuesta" style="font-weight: bold;"></span>?
             </div>
             <div class="modal-footer">
                 <div id="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-confirmar-eliminacion">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{trans("otros.info.cancelar")}}</button>
+                    <button type="button" class="btn btn-primary" id="btn-confirmar-eliminacion">{{trans("otros.info.aceptar")}}</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -150,8 +149,8 @@ $total_votos = intval(ContenidoApp::obtenerValorMetadato($encuesta_vigente->id, 
 <script>
 
             function eliminarEncuesta(id_encuesta, titulo) {
-            $("#titulo-modal").html("PRECAUCIÓN");
-                    $("#contenido-modal").html('¿Estas seguro que quieres eliminar "<span id="encuesta-titulo-modal" data-encuesta="' + id_encuesta + '" style="font-weight: bold;">' + titulo + '</span>"?');
+            $("#titulo-modal").html("{{Util::convertirMayusculas(trans('otros.info.precaucion'))}}");
+                    $("#contenido-modal").html("{{trans('app.admin.msj.eliminar',array('nombre'=>"<span id='encuesta-titulo-modal' data-encuesta='\"+id_encuesta+\"' style='font-weight: bold;'>\"+titulo+\"</span>"))}}");
                     $('#modal-eliminacion').modal('show');
                     $("#modal-footer").show();
             }
@@ -159,7 +158,7 @@ $total_votos = intval(ContenidoApp::obtenerValorMetadato($encuesta_vigente->id, 
     //Envia los datos confirmados para eliminar la encuesta
     jQuery("#btn-confirmar-eliminacion").click(function () {
     var id_encuesta = $("#encuesta-titulo-modal").attr("data-encuesta");
-            $("#titulo-modal").html("PROCESANDO...");
+            $("#titulo-modal").html("{{Util::convertirMayusculas(trans('otros.info.procesando'))}}...");
             $("#contenido-modal").html("<div class='block' style='text-align:center;'><img src='{{URL::to('assets/img/loaders/gears.gif')}}'/></div>");
             $("#modal-footer").hide();
             jQuery.ajax({
@@ -171,8 +170,8 @@ $total_votos = intval(ContenidoApp::obtenerValorMetadato($encuesta_vigente->id, 
                     $("#encuesta-" + id_encuesta).remove();
                     });
                             setTimeout(function () {
-                            $("#titulo-modal").html("¡REALIZADO CON EXITO!");
-                                    $("#contenido-modal").html("{{ucwords(strtolower($singNombre))}} eliminada.");
+                            $("#titulo-modal").html("{{Util::convertirMayusculas(trans('otros.info.realizado_exito'))}}");
+                                    $("#contenido-modal").html("<h4>{{trans('otros.info.msj.cont.eliminado',array('tipo'=>ucwords(strtolower($singNombre))))}}</h4>");
                                     setTimeout(function () {
                                     $('#modal-eliminacion').modal('hide');
                                     }, 2000);

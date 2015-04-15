@@ -73,14 +73,14 @@ class UPanelControladorAplicacion extends Controller {
         $errores = "";
 
         if (strlen($data["nombre"]) <= 1) {
-            $errores.="<li>Debes escribir un nombre para tu aplicación.</li>";
+            $errores.="<li>".trans("app.config.info.nombre.error")."</li>";
         }
         if (strlen($data["mockup"]) != 2) {
-            $errores.="<li>Debes escoger una plantilla de diseño para tu aplicación.</li>";
+            $errores.="<li>".trans("app.config.info.diseno.error")."</li>";
         }
 
         if (strlen($errores) > 0) {
-            return Redirect::back()->withInput()->with(User::mensaje("error", null, "<p>Verifica los siguientes errores:</p><ul>" . $errores . "</ul>", 3));
+            return Redirect::back()->withInput()->with(User::mensaje("error", null, "<p>".trans("app.config.info.verificar_errores")."</p><ul>" . $errores . "</ul>", 3));
         } else {
 
 
@@ -95,9 +95,9 @@ class UPanelControladorAplicacion extends Controller {
             $app->diseno = $data["mockup"];
 
             if (@$app->save()) {
-                return Redirect::to("aplicacion/apariencia")->withInput()->with(User::mensaje("exito", null, "Los datos básicos de tu aplicación han sido guardados. Tu aplicación ha pasado a estar en estado \"En diseño\". Esto significa que has iniciado el proceso de diseño de tu aplicación.", 2));
+                return Redirect::to("aplicacion/apariencia")->withInput()->with(User::mensaje("exito", null, trans("app.config.db.post.exito"), 2));
             } else {
-                return Redirect::back()->withInput()->with(User::mensaje("error", null, "Hubo un error al tratar de procesar tu solicitud. Por favor intentalo de nuevo.", 3));
+                return Redirect::back()->withInput()->with(User::mensaje("error", null, trans("otros.error_solicitud"), 3));
             }
         }
     }
@@ -115,7 +115,7 @@ class UPanelControladorAplicacion extends Controller {
             return Redirect::back()->withInput()->with(User::mensaje("error", null, $response[0], 3));
 
         if (is_bool($response) && $response == true)
-            return Redirect::to("aplicacion/desarrollo")->with(User::mensaje("exito", null, "La apariencia de tu aplicación han sido establecida. Ya estas listo para enviar tu aplicación a desarrollo.", 2));
+            return Redirect::to("aplicacion/desarrollo")->with(User::mensaje("exito", null,trans("app.config.post.exito"), 2));
     }
 
     public function enviarDesarrollo() {
@@ -142,12 +142,12 @@ class UPanelControladorAplicacion extends Controller {
                 AppDesing::prepararRequisitosDeAdministracion($app);
                 /*                 * *************************************************** */
 
-                return Redirect::to("aplicacion/desarrollo")->with(User::mensaje("exito", null, "¡Muy bien! Tu aplicación se ha puesto en cola para ser desarrollada. Te enviaremos un correo electrónico para avisarte cuando empiece a desarrollarse y cuando este totalmente terminada.", 3));
+                return Redirect::to("aplicacion/desarrollo")->with(User::mensaje("exito", null, trans("app.config.dep.post.exito"), 3));
             } else {
-                return Redirect::back()->withInput()->with(User::mensaje("error", null, "Hubo un error al tratar de procesar tu solicitud. Por favor intentalo de nuevo.", 3));
+                return Redirect::back()->withInput()->with(User::mensaje("error", null, trans("otros.error_solicitud"), 3));
             }
         } else {
-            return Redirect::back()->withInput()->with(User::mensaje("error", null, "Hubo un error al tratar de procesar tu solicitud. Por favor intentalo de nuevo.", 3));
+            return Redirect::back()->withInput()->with(User::mensaje("error", null, trans("otros.error_solicitud"), 3));
         }
     }
 
@@ -200,7 +200,7 @@ class UPanelControladorAplicacion extends Controller {
                 $config->clave = $index;
                 $config->valor = URL::to($path . $archivo);
                 if (!$config->save()) {
-                    $output = ['error' => "Hubo un error al subir la imagen. intentalo de nuevo."];
+                    $output = ['error' => trans("otros.error_solicitud")];
                 }
 
                 break;
@@ -256,12 +256,12 @@ class UPanelControladorAplicacion extends Controller {
 
         //Verifica si las dimensiones de la imagen son iguales
         if (intval($width) != intval($height)) {
-            $output = ['error' => "Las dimensiones de la imagen son incorrectas (" . $width . "x" . $height . "). Recuerda que deben ser iguales."];
+            $output = ['error' => trans("app.config.imagen.error01",array("w"=>$width,"h"=>$height))];
             return json_encode($output);
         }
 
         if (intval($width) < 256 && intval($height) < 256) {
-            $output = ['error' => "El tamaño de la imagen deben ser mayores o iguales a 256x256. Tu imagen subida es de " . $width . "x" . $height];
+            $output = ['error' => trans("app.config.imagen.error02",array("width_objetivo"=>256,"height_objetivo"=>256,"width"=>$width,"height"=>$height))];
             return json_encode($output);
         }
 
@@ -276,7 +276,7 @@ class UPanelControladorAplicacion extends Controller {
 
         $app->url_logo = URL::to($path . $archivo);
         if (!$app->save()) {
-            $output = ['error' => "Hubo un error al subir la imagen. intentalo de nuevo."];
+            $output = ['error' => trans("otros.error_solicitud")];
             return json_encode($output);
         }
 
@@ -311,10 +311,9 @@ class UPanelControladorAplicacion extends Controller {
 
         $correo = new Correo();
 
-        $mensaje = "<p>Hola " . $usuario->nombres . "</p>" .
-                "<p>Tenemos muy buenas noticias para ti. Tu aplicación <b>" . $app->nombre . "</b> ha empezado su fase de desarrollo y muy pronto estará disponible para que empieces a utilizarla. Te avisaremos cuando la fase de desarrollo haya concluido y tu aplicación esté terminada.</p>" .
-                "<p><b>Hora de inicio: </b>" . $proceso->fecha_inicio . "</p>";
-        $correo->enviar("¡Tu aplicación ha empezado ha desarrollarse!", $mensaje, $usuario->id);
+        $mensaje=trans("email.app.dep.aplicacion_en_desarrollo",array("nombre"=>$usuario->nombres,"app_nombre"=>$app->nombre,"fecha_inicio"=>$proceso->fecha_inicio));
+        
+        $correo->enviar(trans("app.config.dep.email.asunto.aplicacion_en_desarrollo"), $mensaje, $usuario->id);
 
         return json_encode(array("atendido_por" => Auth::user()->nombres, "fecha_inicio" => $proceso->fecha_inicio));
     }

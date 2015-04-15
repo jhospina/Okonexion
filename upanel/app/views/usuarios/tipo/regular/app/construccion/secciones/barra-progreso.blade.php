@@ -1,6 +1,6 @@
 <?php
 $progreso = 5;
-$texto = "Sin iniciar";
+$texto = trans("atributos.estado.app.sin_iniciar");
 $classColor = "progress-bar-danger";
 
 if (Aplicacion::existe()) {

@@ -58,7 +58,6 @@ class Util {
         $posRaiz = strpos($URL, $ultimo);
         return $public . substr($URL, $posRaiz + strlen($ultimo));
     }
-    
 
     /** Recorta un texto hasta la longitud dada.
      * 
@@ -194,42 +193,41 @@ class Util {
      * @param type $color
      * @return type
      */
-    static function esColorRGB($color){
-       return preg_match('/rgb\([0-9]+,[0-9]+,[0-9]+\)$/', Util::eliminarEspacios($color));
+    static function esColorRGB($color) {
+        return preg_match('/rgb\([0-9]+,[0-9]+,[0-9]+\)$/', Util::eliminarEspacios($color));
     }
-    
+
     /** Convierte un color RGB en formato Hexadecimal
      * 
      * @param type $rgb [array|r,g,b|rgb(#,#,#)]
      * @return type Color hexadecimal
      */
     static function rgb2hex($rgb) {
-        $rgb=Util::eliminarEspacios($rgb);
-        if(is_string($rgb)){
-            if(strpos($rgb,"rgb")!==false){
-                $rgb=  str_replace("rgb(","", str_replace(")","", $rgb));
+        $rgb = Util::eliminarEspacios($rgb);
+        if (is_string($rgb)) {
+            if (strpos($rgb, "rgb") !== false) {
+                $rgb = str_replace("rgb(", "", str_replace(")", "", $rgb));
             }
-            $rgb=explode(",", $rgb);
-        }  
-        
-   $hex = "#";
-   $hex .= str_pad(dechex($rgb[0]), 2, "0", STR_PAD_LEFT);
-   $hex .= str_pad(dechex($rgb[1]), 2, "0", STR_PAD_LEFT);
-   $hex .= str_pad(dechex($rgb[2]), 2, "0", STR_PAD_LEFT);
+            $rgb = explode(",", $rgb);
+        }
 
-   return $hex; // returns the hex value including the number sign (#)
-}
-    
+        $hex = "#";
+        $hex .= str_pad(dechex($rgb[0]), 2, "0", STR_PAD_LEFT);
+        $hex .= str_pad(dechex($rgb[1]), 2, "0", STR_PAD_LEFT);
+        $hex .= str_pad(dechex($rgb[2]), 2, "0", STR_PAD_LEFT);
+
+        return $hex; // returns the hex value including the number sign (#)
+    }
+
     /** Elimina todos los espacios en blanco de un texto
      * 
      * @param type $texto
      * @return type
      */
-    static function eliminarEspacios($texto){
-        return (is_string($texto))?str_replace(" ","",$texto):$texto;
+    static function eliminarEspacios($texto) {
+        return (is_string($texto)) ? str_replace(" ", "", $texto) : $texto;
     }
-    
-    
+
     /** Retorna un color màs oscuro que el ingresado
      * 
      * @param type $color
@@ -275,6 +273,29 @@ class Util {
 
 //la función devuelve el valor del color hexadecimal resultante
         return $oscuridad;
+    }
+
+    /** Obtiene un array asociativo con los nombre de los mess del año
+     * 
+     */
+    static function obtenerNombreMeses() {
+        return array("01" => trans("otros.fecha.enero"),
+            "02" => trans("otros.fecha.febrero"),
+            "03" => trans("otros.fecha.marzo"),
+            "04" => trans("otros.fecha.abril"),
+            "05" => trans("otros.fecha.mayo"),
+            "06" => trans("otros.fecha.abril"),
+            "07" => trans("otros.fecha.julio"),
+            "08" => trans("otros.fecha.agosto"),
+            "09" => trans("otros.fecha.septiembre"),
+            "10" => trans("otros.fecha.octubre"),
+            "11" => trans("otros.fecha.noviembre"),
+            "12" => trans("otros.fecha.diciembre"));
+    }
+
+    static function convertirMayusculas($cadena) {
+        $cadena =  mb_strtoupper($cadena,'utf-8');
+        return ($cadena);
     }
 
 }

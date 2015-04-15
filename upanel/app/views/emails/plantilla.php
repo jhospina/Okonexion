@@ -21,7 +21,7 @@
                     </div>
                 </td></tr>
                     <tr><td>
-                      ¡NO RESPONDAS ESTE CORREO!
+                      <?php echo trans("email.no_responder"); ?>
                 </td></tr>
         </table>
     </body>

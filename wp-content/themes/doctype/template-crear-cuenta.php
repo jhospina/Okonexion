@@ -28,9 +28,17 @@ else
             </div>
 
         <?php endif; ?>
+        
+         <?php if ($response == "error"): ?>
+
+            <div style="padding: 20px;margin-bottom: 20px;font-size: 12pt;color:red;">
+                <p>El correo eletrónico ingresado ya existe</p>
+            </div>
+
+        <?php endif; ?>
 
 
-        <?php if ($response == null): ?>
+        <?php if ($response == null || $response=="error"): ?>
 
             <div class="contact-form-wrapper" style="margin-bottom:20px;">
                 <form id="form_cuenta" method="post" action="http://<?php echo $_SERVER["SERVER_NAME"] ?>/upanel/public/usuario">

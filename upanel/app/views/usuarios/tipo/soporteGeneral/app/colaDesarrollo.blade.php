@@ -3,7 +3,7 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
 ?>
 @extends('interfaz/plantilla')
 
-@section("titulo")Cola de desarrollo @stop
+@section("titulo"){{trans("app.coldep.titulo")}} @stop
 
 
 @section("css")
@@ -14,13 +14,18 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
 
 @section("contenido")  
 
-<h1>Cola de desarrollo</h1>
+<h1>{{trans("app.coldep.titulo")}}</h1>
 
 <hr/>
 
 
 <table class="table table-striped">
-    <tr><th>FECHA DE SOLICITUD</th><th>APLICACIÓN</th><th>ATENDIDO POR</th><th>FECHA DE INICIO</th><th>INFORME</th><th>CONTROL</th></tr>
+    <tr><th>{{Util::convertirMayusculas(trans("otros.info.fecha_solicitud"))}}</th>
+        <th>{{Util::convertirMayusculas(trans("otros.info.aplicacion"))}}</th>
+        <th>{{Util::convertirMayusculas(trans("otros.info.atendido_por"))}}</th>
+        <th>{{Util::convertirMayusculas(trans("otros.info.fecha_solicitud"))}}</th>
+        <th>{{Util::convertirMayusculas(trans("otros.info.informe"))}}</th>
+        <th>{{Util::convertirMayusculas(trans("otros.info.control"))}}</th></tr>
     @foreach($colaDesarrollo as $proceso)
     <?php
     $app = Aplicacion::find($proceso->id_aplicacion);
@@ -33,16 +38,16 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
         <td id="inicio-{{$proceso->id}}">@if(is_null($proceso->fecha_inicio))Sin iniciar @else {{$proceso->fecha_inicio}} @endif</td>
         <td>
             @if(is_null($proceso->fecha_inicio))
-            <button id="btn-informe-{{$proceso->id}}" class="btn btn-default disabled">Ver diseño </button>
+            <button id="btn-informe-{{$proceso->id}}" class="btn btn-default disabled">{{trans("app.coldep.info.ver_diseno")}}</button>
             @else
-            <button id="btn-informe-{{$proceso->id}}" class="btn btn-info" onClick="verDiseno({{$proceso->id}});">Ver diseño </button>
+            <button id="btn-informe-{{$proceso->id}}" class="btn btn-info" onClick="verDiseno({{$proceso->id}});">{{trans("app.coldep.info.ver_diseno")}}</button>
             @endif
         </td>
         <td>
             @if(is_null($proceso->fecha_inicio))
-            <button class="btn btn-primary" id="btn-control-{{$proceso->id}}" data-app="{{$app->id}}" data-proceso="{{$proceso->id}}" onClick="iniciarDesarrollo({{$proceso->id}});">Iniciar</button>
+            <button class="btn btn-primary" id="btn-control-{{$proceso->id}}" data-app="{{$app->id}}" data-proceso="{{$proceso->id}}" onClick="iniciarDesarrollo({{$proceso->id}});">{{trans("app.coldep.btn.iniciar")}}</button>
             @else
-            <button class="btn btn-danger" id="btn-control-{{$proceso->id}}" data-app="{{$app->id}}" data-proceso="{{$proceso->id}}" onClick="terminarDesarrollo({{$proceso->id}});">Terminar</button>
+            <button class="btn btn-danger" id="btn-control-{{$proceso->id}}" data-app="{{$app->id}}" data-proceso="{{$proceso->id}}" onClick="terminarDesarrollo({{$proceso->id}});">{{trans("app.coldep.btn.terminar")}}</button>
             @endif
         </td>
     </tr>
@@ -50,7 +55,7 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
 
     @if(count($colaDesarrollo)==0)
 
-    <tr><td colspan="6" class="text-center">No hay ordenes de desarrollo en cola para mostrar</td></tr>
+    <tr><td colspan="6" class="text-center">{{trans("app.coldep.info.no_hay_ordenes")}}</td></tr>
 
     @endif
 
@@ -66,10 +71,6 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
 
 
 
-
-
-
-
 {{--*************MODAL DE INFORME DE DISEÑO**********************--}}
 
 <div id="modal-informe" class="modal fade">
@@ -77,7 +78,7 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Informe de diseño - <span id="app-informe"></span></h4>
+                <h4 class="modal-title">{{trans("app.coldep.info.informe_diseno")}} - <span id="app-informe"></span></h4>
             </div>
             <div class="modal-body" id="content-informe">
                 <div id="loading-ajax" class="text-center">
@@ -85,8 +86,8 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-danger disabled" id="btn-confirmar"><span class="glyphicon glyphicon-save-file"></span> Descargar en PDF</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{trans("otros.info.cerrar")}}</button>
+                <button type="button" class="btn btn-danger disabled" id="btn-confirmar"><span class="glyphicon glyphicon-save-file"></span> {{trans("otros.descargar.pdf")}}</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -100,7 +101,7 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Subir archivos de aplicación</h4>
+                <h4 class="modal-title">{{trans("app.coldep.info.subir.archivos")}}</h4>
             </div>
             <div class="modal-body">
                 <form id="form-upload-app" method="Post" action="">
@@ -116,7 +117,7 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
                         <table class="table" style="margin-bottom:0px;">
                             <tr>
                                 <td style="vertical-align:middle;border:0px;">
-                                    <a class="tooltip-top" rel="tooltip" title="Suba un archivo .apk"> 
+                                    <a class="tooltip-top" rel="tooltip" title="{{trans("otros.info.subir.archivo")}} .apk"> 
                                         <input name="android" id="android" class="iconoMenu" type="file" multiple=true>
                                     </a>
                                 </td>
@@ -133,7 +134,7 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
                         <table class="table" style="margin-bottom:0px;">
                             <tr>
                                 <td style="vertical-align:middle;border:0px;">
-                                    <a  class="tooltip-top" rel="tooltip" title="Suba un archivo .xap"> 
+                                    <a  class="tooltip-top" rel="tooltip" title="{{trans("otros.info.subir.archivo")}} .xap"> 
                                         <input name="windows" id="windows" class="iconoMenu" type="file" multiple=true>
                                     </a>
                                 </td>
@@ -150,7 +151,7 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
                         <table class="table" style="margin-bottom:0px;">
                             <tr>
                                 <td style="vertical-align:middle;border:0px;">
-                                    <a  class="tooltip-top" rel="tooltip" title="Suba un archivo .ipa"> 
+                                    <a  class="tooltip-top" rel="tooltip" title="{{trans("otros.info.subir.archivo")}} .ipa"> 
                                         <input name="ios" id="ios" class="iconoMenu" type="file" multiple=true>
                                     </a>
                                 </td>
@@ -169,8 +170,8 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="btn-confirmar">Enviar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{trans("otros.info.cerrar")}}</button>
+                <button type="button" class="btn btn-primary" id="btn-confirmar">{{trans("otros.info.enviar")}}</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -212,21 +213,19 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
             showRemove: true,
             maxFileCount: 1,
             allowedFileExtensions: ['apk'],
-            browseLabel: "Buscar Apk",
+            browseLabel: "{{trans('otros.info.buscar')}} Apk",
             browseIcon: '<i class="glyphicon glyphicon-phone"></i> ',
             removeClass: "btn btn-danger",
-            removeLabel: "Borrar",
+            removeLabel: "{{trans('otros.info.borrar')}}",
             removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
             uploadClass: "btn btn-info",
             uploadLabel: "Subir",
-            dropZoneEnabled: false,
-            dropZoneTitle: "Arrastra tu imagen aquí...",
             uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
             msgSelected: '{n} imagen',
             maxFileSize: 10000,
-            msgInvalidFileExtension: "El archivo que has escogido no es valido. Solo se permite archivos .apk",
-            msgInvalidFileType: "El archivo que has escogido no es valido. Solo se permite archivos .apk",
-            msgSizeTooLarge: "El tamaño del archivo es demasiado grande. Maximo <b>{maxSize} KB</b>. Este archivo pesa <b>{size} KB.</b>",
+            msgInvalidFileExtension: "{{trans('app.coldep.info.subir.archivos.error01',array('archivos'=>'.apk'))}}",
+            msgInvalidFileType: "{{trans('app.coldep.info.subir.archivos.error01',array('archivos'=>'.apk'))}}",
+            msgSizeTooLarge: "{{trans('app.coldep.info.subir.archivos.error02')}}",
             uploadAsync: true,
             uploadUrl: "{{URL::to('aplicacion/ajax/upload/android')}}" // your upload server url
     });
@@ -238,21 +237,19 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
             showRemove: true,
             maxFileCount: 1,
             allowedFileExtensions: ['xap'],
-            browseLabel: "Buscar Xap",
+            browseLabel: "{{trans('otros.info.buscar')}} Xap",
             browseIcon: '<i class="glyphicon glyphicon-phone"></i> ',
             removeClass: "btn btn-danger",
-            removeLabel: "Borrar",
+            removeLabel: "{{trans('otros.info.borrar')}}",
             removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
             uploadClass: "btn btn-info",
             uploadLabel: "Subir",
-            dropZoneEnabled: false,
-            dropZoneTitle: "Arrastra tu imagen aquí...",
             uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
             msgSelected: '{n} imagen',
             maxFileSize: 10000,
-            msgInvalidFileExtension: "El archivo que has escogido no es valido. Solo se permite archivos .xap",
-            msgInvalidFileType: "El archivo que has escogido no es valido. Solo se permite archivos .xap",
-            msgSizeTooLarge: "El tamaño del archivo es demasiado grande. Maximo <b>{maxSize} KB</b>. Este archivo pesa <b>{size} KB.</b>",
+             msgInvalidFileExtension: "{{trans('app.coldep.info.subir.archivos.error01',array('archivos'=>'.xap'))}}",
+            msgInvalidFileType: "{{trans('app.coldep.info.subir.archivos.error01',array('archivos'=>'.xap'))}}",
+            msgSizeTooLarge: "{{trans('app.coldep.info.subir.archivos.error02')}}",
             uploadAsync: true,
             uploadUrl: "{{URL::to('aplicacion/ajax/upload/windows')}}" // your upload server url
     });
@@ -264,21 +261,19 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
             showRemove: true,
             maxFileCount: 1,
             allowedFileExtensions: ['ipa'],
-            browseLabel: "Buscar Ipa",
+            browseLabel: "{{trans('otros.info.buscar')}} Ipa",
             browseIcon: '<i class="glyphicon glyphicon-phone"></i> ',
             removeClass: "btn btn-danger",
-            removeLabel: "Borrar",
+            removeLabel: "{{trans('otros.info.borrar')}}",
             removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
             uploadClass: "btn btn-info",
             uploadLabel: "Subir",
-            dropZoneEnabled: false,
-            dropZoneTitle: "Arrastra tu imagen aquí...",
             uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
             msgSelected: '{n} imagen',
             maxFileSize: 10000,
-            msgInvalidFileExtension: "El archivo que has escogido no es valido. Solo se permite archivos .ipa",
-            msgInvalidFileType: "El archivo que has escogido no es valido. Solo se permite archivos .ipa",
-            msgSizeTooLarge: "El tamaño del archivo es demasiado grande. Maximo <b>{maxSize} KB</b>. Este archivo pesa <b>{size} KB.</b>",
+             msgInvalidFileExtension: "{{trans('app.coldep.info.subir.archivos.error01',array('archivos'=>'.iap'))}}",
+            msgInvalidFileType: "{{trans('app.coldep.info.subir.archivos.error01',array('archivos'=>'.iap'))}}",
+            msgSizeTooLarge: "{{trans('app.coldep.info.subir.archivos.error02')}}",
             uploadAsync: true,
             uploadUrl: "{{URL::to('aplicacion/ajax/upload/ios')}}" // your upload server url
     });</script>
@@ -311,13 +306,13 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
                                             var html = "";
                                                     jQuery.each(data, function(propiedad, valor){
                                                     if (/logoApp/.test(propiedad))
-                                                            html += "<tr><th>" + propiedad + "</th><td> <a target='_blank' href='{{URL::to('aplicacion/ajax/desarrollo/descargar/logoApp/')}}?id_p=" + id_proceso + "&id_app=" + id_aplicacion + "&imagen=" + valor + "'><span class='glyphicon glyphicon-save-file'></span> Descargar Logo</a></td></tr>";
+                                                            html += "<tr><th>" + propiedad + "</th><td> <a target='_blank' href='{{URL::to('aplicacion/ajax/desarrollo/descargar/logoApp/')}}?id_p=" + id_proceso + "&id_app=" + id_aplicacion + "&imagen=" + valor + "'><span class='glyphicon glyphicon-save-file'></span> {{trans('otros.info.descargar')}} {{trans('otros.info.logo')}}</a></td></tr>";
                                                             else
                                                             html += "<tr><th>" + propiedad + "</th><td>" + valor + "</td></tr>";
                                                     });
-                                                    informe.html("<table class='table table-striped'><tr><th>CARACTERISTICA</th><th>VALOR</th></tr>" + html + "</table>");
+                                                    informe.html("<table class='table table-striped'><tr><th>{{Util::convertirMayusculas(trans('otros.info.caracteristica'))}}</th><th>{{Util::convertirMayusculas(trans('otros.info.valor'))}}</th></tr>" + html + "</table>");
                                                     jQuery("#modal-informe").modal("show");
-                                                    jQuery("#btn-informe-" + id_proceso).html("Ver diseño");
+                                                    jQuery("#btn-informe-" + id_proceso).html("{{trans('app.coldep.info.ver_diseno')}}");
                                             }, 1000);
                                     }
                             }, "json");
@@ -381,10 +376,6 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
 </script>
 
 
-<script>
 
-
-
-</script>
 
 @stop

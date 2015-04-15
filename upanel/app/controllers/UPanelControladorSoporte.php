@@ -59,10 +59,10 @@ class UPanelControladorSoporte extends \BaseController {
             $size = Input::file('adjunto')->getSize();
 
             if (!in_array($extension, $permitidos))
-                return Redirect::route('soporte.create')->withInput()->with(User::mensaje("error", "", "El tipo de archivo subido no es válido.", 2));
+                return Redirect::route('soporte.create')->withInput()->with(User::mensaje("error", "", trans("menu_ayuda.soporte.tickets.crear.post.archivo.error01"), 2));
 
             if ($size > 1000000)
-                return Redirect::route('soporte.create')->withInput()->with(User::mensaje("error", "", "El tamaño del archivo adjunto es demasiado grande. Maximo de 1Mb.", 2));
+                return Redirect::route('soporte.create')->withInput()->with(User::mensaje("error", "", trans("menu_ayuda.soporte.tickets.crear.post.archivo.error02"), 2));
 
 
             $path = 'usuarios/uploads/' . Auth::user()->id . "/";
@@ -83,22 +83,13 @@ class UPanelControladorSoporte extends \BaseController {
 
             $correo = new Correo;
 
-            $mensaje = "<p>Estimado " . Auth::user()->nombres . "</p>" .
-                    "<p>Gracias por contactar con nuestro equipo de soporte. Un ticket de soporte ha sido abierto por tu solicitud. Serás notificado por email cuando se haga una respuesta. Los detalles de tu ticket se muestran acontinuación:</p>" .
-                    "<p>-------------------------------------<br/>" .
-                    "<b>Ticket ID:</b> " . $ticket->id . "<br/>" .
-                    "<b>Tipo de soporte:</b> " . $ticket->tipo . "<br/>" .
-                    "<b>Asunto:</b> " . $ticket->asunto . "<br/>" .
-                    "<b>Estado:</b> Abierto<br/>" .
-                    "<b>Fecha y hora de apertura:</b> " . $ticket->fecha . "<br/>" .
-                    "<b>Responder Ticket en:</b> <a href='" . URL::to("soporte/" . $ticket->id) . "'>" . URL::to("soporte/" . $ticket->id) . "</a><br/>" .
-                    "-------------------------------------</p>";
+            $mensaje=trans("email.soporte.tickets.crear",array("nombre"=>Auth::user()->nombres,"id_ticket"=>$ticket->id,"tipo_ticket"=>$ticket->tipo,"asunto_ticket"=> $ticket->asunto,"fecha_apertura"=>$ticket->fecha,"link"=>"<a href='" . URL::to("soporte/" . $ticket->id) . "'>" . URL::to("soporte/" . $ticket->id) . "</a>"));
 
-            $correo->enviar("Ticket de soporte abierto", $mensaje, Auth::user()->id);
+            $correo->enviar(trans("menu_ayuda.soporte.tickets.email.asunto"), $mensaje, Auth::user()->id);
 
-            return Redirect::route('soporte.index')->withInput()->with(User::mensaje("exito", "", "El ticket ha sido creado con exito. Por favor espera un momento y te contestaremos cuando sea posible. Muchas gracias", 2));
+            return Redirect::route('soporte.index')->withInput()->with(User::mensaje("exito", "", trans("menu_ayuda.soporte.tickets.crear.post.exito"), 2));
         } else
-            return Redirect::route('soporte.create')->withInput()->with(User::mensaje("error", "", "Hubo un error al procesar la solicitud. Intentalo de nuevo.", 2));
+            return Redirect::route('soporte.create')->withInput()->with(User::mensaje("error", "", trans("otros.error_solicitud"), 2));
     }
 
     /**
@@ -137,10 +128,10 @@ class UPanelControladorSoporte extends \BaseController {
 
         if (Input::get("action") == "cerrar") {
 
-            $ticket->estado = "CE";
+            $ticket->estado = Ticket::ESTADO_CERRADO;
 
             if ($ticket->update()) {
-                return Redirect::route('soporte.index')->withInput()->with(User::mensaje("info", "", "Has cerrado el ticket #" . $id, 2));
+                return Redirect::route('soporte.index')->withInput()->with(User::mensaje("info", "", trans("menu_ayuda.soporte.tickets.mostrar.post.info.cerrar") . $id, 2));
             }
         } elseif (Input::get("action") == "mensaje") {
 
@@ -151,7 +142,7 @@ class UPanelControladorSoporte extends \BaseController {
             $mensaje->id_usuario = Auth::user()->id;
             $mensaje->mensaje = str_replace("\n", "<br/>", Input::get("mensaje"));
             $mensaje->fecha = User::obtenerTiempoActual();
-            $ticket->estado = "EN";
+            $ticket->estado = Ticket::ESTADO_ENVIADO;
 
 
             //SI el mensaje es enviado por alguiien que no es un cliente, el ticket se le asigna al usuario de soporte que esta atendiendo el ticket
@@ -160,14 +151,9 @@ class UPanelControladorSoporte extends \BaseController {
                 $ticket->estado = User::USUARIO_REGULAR;
                 $correo = new Correo;
 
-                $mensaje_correo = "<p>Estimado " . $ticket->user->nombres . "</p>" .
-                        "<p>Tu ticket ha sido respondido por nuestro equipo de soporte: <br/>" .
-                        "------------------------------------------------------------<br/>" .
-                        $mensaje->mensaje . "<br/>" .
-                        "------------------------------------------------------------" . "</p>" .
-                        "<p>Para responder este ticket ingresa a <a href='" . URL::to("soporte/" . $ticket->id) . "'>" . URL::to("soporte/" . $ticket->id) . "</a></p>";
-
-                $correo->enviar("Re: " . $ticket->asunto, $mensaje_correo, $ticket->usuario_cliente);
+                $mensaje_correo=trans("email.soporte.ticket.respondido",array("nombre"=>$ticket->user->nombres,"mensaje"=>$mensaje->mensaje,"link"=>"<a href='" . URL::to("soporte/" . $ticket->id) . "'>" . URL::to("soporte/" . $ticket->id) . "</a>"));
+           
+                $correo->enviar(trans("otros.sigla.re").": " . $ticket->asunto, $mensaje_correo, $ticket->usuario_cliente);
             }
 
 
@@ -179,10 +165,10 @@ class UPanelControladorSoporte extends \BaseController {
 
                 if (!in_array($extension, $permitidos))
                     return Redirect::route('soporte.show', $id)->
-                                    withInput()->with(User::mensaje("error", "", "El tipo de archivo subido no es válido.", 2));
+                                    withInput()->with(User::mensaje("error", "", trans("menu_ayuda.soporte.tickets.crear.post.archivo.error01"), 2));
 
                 if ($size > 1000000)
-                    return Redirect:: route('soporte.show', $id)->withInput()->with(User::mensaje("error", "", "El tamaño del archivo adjunto es demasiado grande. Maximo de 1Mb.", 2));
+                    return Redirect:: route('soporte.show', $id)->withInput()->with(User::mensaje("error", "", trans("menu_ayuda.soporte.tickets.crear.post.archivo.error02"), 2));
 
 
                 $path = 'usuarios/soporte/adjuntos/' . Auth::user()->id . "/";
@@ -199,12 +185,12 @@ class UPanelControladorSoporte extends \BaseController {
                 $ticket->update();
                 if (Auth::user()->tipo == User::USUARIO_REGULAR)
                     return Redirect::route('soporte.index')->withInput()->with(
-                                    User::mensaje("exito", "", "El mensaje ha sido enviado con exito. Muchas gracias. Pronto te responderemos", 2));
+                                    User::mensaje("exito", "", trans("menu_ayuda.soporte.tickets.mostrar.post.exito01"), 2));
                 else
                     return Redirect::route('soporte.index')->withInput()->with(
-                                    User::mensaje("exito", "", "El mensaje ha sido enviado con exito.", 2));
+                                    User::mensaje("exito", "", trans("menu_ayuda.soporte.tickets.mostrar.post.exito02"), 2));
             } else
-                return Redirect::route('soporte.index')->withInput()->with(User::mensaje("error", "", "Hubo un error al procesar la solicitud. Intentalo de nuevo.", 2));
+                return Redirect::route('soporte.index')->withInput()->with(User::mensaje("error", "", trans("otros.error_solicitud"), 2));
         }
     }
 

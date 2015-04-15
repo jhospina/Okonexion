@@ -107,11 +107,11 @@ class UPanelControladorContenidoNoticias extends Controller {
         //Agrega una nueva noticia
         if (!isset($data["id_noticia"])) {
             Contenido_Noticias::agregar($data, ContenidoApp::ESTADO_GUARDADO);
-            return Redirect::to("aplicacion/administrar/noticias")->with(User::mensaje("exito", null, "¡" . Util::eliminarPluralidad($nombreTC) . " guardada con exito!", 2));
+            return Redirect::to("aplicacion/administrar/noticias")->with(User::mensaje("exito", null, trans("app.admin.post.exito_01",array("tipo_contenido"=>Util::eliminarPluralidad($nombreTC))), 2));
         } else {
             //Edita una noticia
             Contenido_Noticias::editar($data["id_noticia"], $data, ContenidoApp::ESTADO_GUARDADO);
-            return Redirect::to("aplicacion/administrar/noticias")->with(User::mensaje("info", null, "¡" . Util::eliminarPluralidad($nombreTC) . " editada y guardada!", 2));
+            return Redirect::to("aplicacion/administrar/noticias")->with(User::mensaje("info", null, trans("app.admin.post.exito_02",array("tipo_contenido"=>Util::eliminarPluralidad($nombreTC))), 2));
         }
     }
 
@@ -172,7 +172,7 @@ class UPanelControladorContenidoNoticias extends Controller {
         if (!is_null($imagen_id = ContenidoApp::agregarImagen($imagen, URL::to($path . $imagen))))
             $output[$imagenID . "_id"] = $imagen_id;
         else
-            $output["error"] = "Hubo un error al tratar de procesar su solicitud. Intentelo de nuevo más tarde";
+            $output["error"] = trans("otros.error_solicitud");
 
 
         return json_encode($output);

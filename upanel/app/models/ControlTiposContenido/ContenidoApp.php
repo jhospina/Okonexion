@@ -8,6 +8,20 @@ class ContenidoApp extends Eloquent {
     const ESTADO_GUARDADO = "guardado";
     const ESTADO_ARCHIVADO = "archivado";
     const TIPO_IMAGEN = "imagen";
+    
+    
+    function esPublico(){
+        return ($this->estado==ContenidoApp::ESTADO_PUBLICO);
+    }
+    
+    function esGuardado(){
+        return ($this->estado==ContenidoApp::ESTADO_GUARDADO);
+    }
+    
+    function esArchivado(){
+        return ($this->estado==ContenidoApp::ESTADO_ARCHIVADO);
+    }
+    
 
     /** Añade una imagen como contenido
      * 
@@ -177,20 +191,31 @@ class ContenidoApp extends Eloquent {
         $cont = new ContenidoApp;
         return $cont->obtenerNombreTabla();
     }
-    
-    
-     /** Verifica el estado de un contenido
+
+    /** Verifica el estado de un contenido
      * 
      * @param type $id_post Id del contenido
      * @param String $estado Estado a verificar
-      * @return boolean
+     * @return boolean
      */
-    static function verificarEstado($id_post,$estado){
-        $post=ContenidoApp::find($id_post);
-        if(!is_null($post)){
-            return ($post->estado==$estado);
+    static function verificarEstado($id_post, $estado) {
+        $post = ContenidoApp::find($id_post);
+        if (!is_null($post)) {
+            return ($post->estado == $estado);
         }
         return false;
+    }
+    
+    
+     static function obtenerNombreEstado($estado) {
+        switch ($estado) {
+            case ContenidoApp::ESTADO_ARCHIVADO:
+                return trans("atributos.estado.cont.archivado");
+            case ContenidoApp::ESTADO_GUARDADO:
+                return trans("atributos.estado.cont.guardado");
+            case ContenidoApp::ESTADO_PUBLICO:
+                return trans("atributos.estado.cont.publico");
+        }
     }
 
     //***********************************************

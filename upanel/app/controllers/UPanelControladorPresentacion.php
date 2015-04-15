@@ -31,9 +31,9 @@ class UPanelControladorPresentacion extends Controller {
     function verificarPerfil() {
         $user = Auth::user();
         if ($user->dni == null || $user->pais == null || $user->region == null || $user->ciudad == null || $user->direccion == null)
-            return User::mensaje("advertencia", "text-center", "¡Hola " . $user->nombres . " necesitamos saber más de ti! Por favor completa tu perfil haciendo clic <a href='" . Route("usuario.edit", Auth::user()->id) . "'>Aquí.<a/>");
+            return User::mensaje("advertencia", "text-center",trans("interfaz.msj.ad.completar.perfil",array("nombre"=>$user->nombres,"link"=>Route("usuario.edit", Auth::user()->id))));
         elseif ($user->telefono == null && $user->celular == null)
-            return User::mensaje("advertencia", "text-center", "" . $user->nombres . " necesitamos saber un número de teléfono o celular para comunicarnos contigo. Has clic <a href='" . Route("usuario.edit", Auth::user()->id) . "'>Aquí.<a/>");
+            return User::mensaje("advertencia", "text-center",trans("msj.ad.completar.perfil.telefono.celular",array("nombre"=>$user->nombes,"link"=>Route("usuario.edit", Auth::user()->id))));
         else
             return array();
     }

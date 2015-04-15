@@ -40,7 +40,7 @@
                 </div>
                 <div>
                     <ul class="nav navbar-nav">
-                        <li @if(Request::is('/')) class="active" @endif ><a href="{{URL::to("/")}}"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
+                        <li @if(Request::is('/')) class="active" @endif ><a href="{{URL::to("/")}}"><span class="glyphicon glyphicon-home"></span> {{trans("interfaz.menu.principal.inicio")}}</a></li>
                         {{--Define el contenido del menu dependiendo del tipo de usuario--}} 
 
                         {{--MENU PRINCIPAL--}}
@@ -56,13 +56,13 @@
                                         <span data-lang="{{Idioma::LANG_ES}}" @if(OP_IDIOMA==Idioma::LANG_ES)class="select"@endif><img src="{{URL::to(Idioma::PATH_ICON.Idioma::LANG_ES.".png")}}"/></span>
                                         <span data-lang="{{Idioma::LANG_EN}}" @if(OP_IDIOMA==Idioma::LANG_EN)class="select"@endif><img src="{{URL::to(Idioma::PATH_ICON.Idioma::LANG_EN.".png")}}"/></span></div>
                                 </li>
-                                <li><a href="{{Route("usuario.index")}}"><span class="glyphicon glyphicon-user"></span> Mi perfil</a></li>
-                                <li><a href="{{URL::to("cambiar-contrasena")}}"><span class="glyphicon glyphicon-lock"></span> Cambiar contraseña</a></li>
+                                <li><a href="{{Route("usuario.index")}}"><span class="glyphicon glyphicon-user"></span> {{trans("interfaz.menu.usuario.mi_perfil")}}</a></li>
+                                <li><a href="{{URL::to("cambiar-contrasena")}}"><span class="glyphicon glyphicon-lock"></span> {{trans("interfaz.menu.usuario.cambiar_contrasena")}}</a></li>
                                 {{--MENU DE USUARIO--}}
                                 @include("interfaz/menu/".Auth::user()->tipo."-usuario")
                             </ul>
                         </li>
-                        <li><a href="{{URL::to("logout")}}"><span class="glyphicon glyphicon-log-in"></span> Cerrar Sesión</a></li>
+                        <li><a href="{{URL::to("logout")}}"><span class="glyphicon glyphicon-log-in"></span> {{trans("interfaz.menu.comp.cerrar_sesion")}}</a></li>
                     </ul>
                 </div>
             </div>
@@ -74,7 +74,7 @@
 
             </div>
         </div>
-        <div class="container navbar-inverse" id="footer" > &copy; Okonexion {{date("Y")}} - {{trans('interfaz/plantilla.mensaje_pie_pagina')}}</div>
+        <div class="container navbar-inverse" id="footer" > &copy; {{trans("interfaz.nombre")}} {{date("Y")}} - {{trans('interfaz.pie_pagina')}}</div>
 
         {{-- Include all compiled plugins (below), or include individual files as needed --}}
         {{ HTML::script('assets/plugins/bootstrap/js/bootstrap.js') }}

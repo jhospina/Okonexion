@@ -17,10 +17,10 @@
                 </td></tr>
             <tr><td>
                     <div id=":vx" class="a3s" style="overflow: hidden;">
-                        <p>Hola <?php echo $nombre; ?></p>
-                        <p>Hemos recibido una solicitud para restablecer tu contraseña para ingresar en el panel de usuarios de Okonexion. Si no has solicitado esto por favor ignora este mensaje.</p>
-                            <p>Para reestablecer tu contraseña ingresa en el siguiente enlace o copialo y pegalo en la URL del navegador:</br>
-                        <p>http://<?php echo $_SERVER["SERVER_NAME"] . "/upanel/public/recovery/" . $id_usuario . "/".$codigo; ?></p>
+                        <p><?php echo trans("email.hola",array("nombre"=>$nombre)); ?></p>
+                        <p><?php echo trans("email.recuperacion.msj_01"); ?></p>
+                        <p><?php echo trans("email.recuperacion.msj_02"); ?><br/>
+                            <a href="http://<?php echo $_SERVER["SERVER_NAME"] . "/upanel/public/recovery/" . $id_usuario . "/".$codigo; ?>">http://<?php echo $_SERVER["SERVER_NAME"] . "/upanel/public/recovery/" . $id_usuario . "/".$codigo; ?></a></p>
                         </div>
                     </div>
                 </td></tr>

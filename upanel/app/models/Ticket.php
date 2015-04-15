@@ -26,15 +26,15 @@ Class Ticket extends Eloquent {
     public function validar($data) {
         $errores = "";
 
-        if ($data["tipo"] == "Elegir")
-            $errores.="<li>Debes elegir el tipo de soporte que necesitas</li>";
+        if ($data["tipo"] == trans("otros.elegir"))
+            $errores.="<li>".trans("menu_ayuda.soporte.tickets.crear.info.tipo_soporte.error")."</li>";
 
         //Nombre
         if (strlen($data["asunto"]) <= 1)
-            $errores.="<li>Debes escribir un asunto</li>";
+            $errores.="<li>".trans("menu_ayuda.soporte.tickets.crear.info.asunto.error")."</li>";
 
         if (strlen($data["mensaje"]) <= 1)
-            $errores.="<li>Debes escribir un mensaje para que podamos ayudarte</li>";
+            $errores.="<li>".trans("menu_ayuda.soporte.tickets.crear.info.mensaje.error")."</li>";
 
         if (strlen($errores) > 0)
             return "<ul>" . $errores . "</ul>";
@@ -124,6 +124,14 @@ Class Ticket extends Eloquent {
         return $tickets;
     }
 
+    public static function obtenerEstados() {
+        return array(Ticket::ESTADO_ABIERTO => trans("atributos.estado.ticket.abierto"), Ticket::ESTADO_RESPONDIDO => trans("atributos.estado.ticket.respondido"), Ticket::ESTADO_PROCESANDO => trans("atributos.estado.ticket.procesando"), Ticket::ESTADO_ENVIADO => trans("atributos.estado.ticket.enviado"), Ticket::ESTADO_CERRADO => trans("atributos.estado.ticket.cerrado"));
+    }
+
+    public static function obtenerTipos() {
+        return array(Ticket::TIPO_GENERAL => trans("atributos.tipo.ticket.general"), Ticket::TIPO_COMERCIAL => trans("atributos.tipo.ticket.comercial"), Ticket::TIPO_FACTURACION => trans("atributos.tipo.ticket.facturacion"), Ticket::TIPO_TECNICO => trans("atributos.tipo.ticket.tecnico"));
+    }
+
     //****************************************************
     //RELACIONES CON OTROS MODELOS***************************
     //****************************************************
@@ -141,27 +149,27 @@ Class Ticket extends Eloquent {
     //****************************************************
 
     public function getEstadoAttribute($value) {
-        $estados = array(Ticket::ESTADO_ABIERTO => "Abierto", Ticket::ESTADO_RESPONDIDO => "Respondido", Ticket::ESTADO_PROCESANDO => "Procesando", Ticket::ESTADO_ENVIADO => "Enviado", Ticket::ESTADO_CERRADO => "Cerrado");
+        $estados = Ticket::obtenerEstados();
         return $estados[$value];
     }
 
     public static function obtenerNombreEstado($valor) {
-        $estados = array(Ticket::ESTADO_ABIERTO => "Abierto", Ticket::ESTADO_RESPONDIDO => "Respondido", Ticket::ESTADO_PROCESANDO => "Procesando", Ticket::ESTADO_ENVIADO => "Enviado", Ticket::ESTADO_CERRADO => "Cerrado");
+        $estados = Ticket::obtenerEstados();
         return $estados[$valor];
     }
 
     public function getFechaAttribute($value) {
-        $meses = array("01" => "Enero", "02" => "Febrero", "03" => "Marzo", "04" => "Abril", "05" => "Mayo", "06" => "Junio", "07" => "Julio", "08" => "Agosto", "09" => "Septiembre", "10" => "Octubre", "11" => "Noviembre", "12" => "Diciembre");
+        $meses = Util::obtenerNombreMeses();
 
         $ft = explode(" ", $value);
 
         $fecha = explode("-", $ft[0]);
 
-        return $fecha[2] . " de " . $meses[$fecha[1]] . " del " . $fecha[0] . " (" . $ft[1] . ")";
+       return trans("otros.fecha.formato_01",array("dia"=>$fecha[2],"mes"=>$meses[$fecha[1]],"ano"=>$fecha[0],"hora"=>$ft[1]));
     }
 
     public function getTipoAttribute($value) {
-        $tipos = array(Ticket::TIPO_GENERAL => "General", Ticket::TIPO_COMERCIAL => "Comercial", Ticket::TIPO_FACTURACION => "Facturación", Ticket::TIPO_TECNICO => "Técnico");
+        $tipos = Ticket::obtenerTipos();
         if (!is_null($value))
             return $tipos[$value];
         else
@@ -169,7 +177,7 @@ Class Ticket extends Eloquent {
     }
 
     public static function obtenerNombreTipo($valor) {
-        $tipos = array(Ticket::TIPO_GENERAL => "General", Ticket::TIPO_COMERCIAL => "Comercial", Ticket::TIPO_FACTURACION => "Facturación", Ticket::TIPO_TECNICO => "Técnico");
+        $tipos = Ticket::obtenerTipos();
         if (!is_null($valor))
             return $tipos[$valor];
         else

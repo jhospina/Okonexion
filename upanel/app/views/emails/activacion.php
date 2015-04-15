@@ -17,8 +17,8 @@
                 </td></tr>
             <tr><td>
                     <div id=":vx" class="a3s" style="overflow: hidden;">
-                        <p>Hola <?php echo $nombre; ?></p>
-                        <p>Nos has pedido que enviemos nuevamente el enlace de activación de tu cuenta. Para activar tu cuenta en Okonexion haz clic <a href="http://<?php echo $_SERVER["SERVER_NAME"] . "/upanel/public/activar/" . $id_usuario . "/".$codigo; ?>">aquí</a> o tambien puedes copiar y pegar el siguiente enlace</p>
+                        <p><?php echo trans("email.hola",array("nombre"=>$nombre)); ?></p>
+                        <p><?php echo trans("email.activacion.msj_01",array("id_usuario"=>$id_usuario,"codigo"=>$codigo)); ?></p>
                         <p>http://<?php echo $_SERVER["SERVER_NAME"] . "/upanel/public/activar/" . $id_usuario . "/".$codigo; ?></p>
                         </div>
                 </td></tr>

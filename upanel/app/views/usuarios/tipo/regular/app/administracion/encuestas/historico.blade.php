@@ -10,14 +10,14 @@ $total_votos = intval(ContenidoApp::obtenerValorMetadato($encuesta->id, "total")
 
 @extends('interfaz/plantilla')
 
-@section("titulo") {{$app->nombre}} | Administrar {{$nombreContenido}} @stop
+@section("titulo") {{$app->nombre}} | {{trans("otros.info.administrar")}} {{$nombreContenido}} @stop
 
 @section("contenido") 
 
 {{--NAVEGACION--}}
 <div class="well well-sm">
-    <a href="{{URL::to("aplicacion/administrar/encuestas")}}" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Volver</a>
-    <a href="{{URL::to("aplicacion/administrar/encuestas/agregar")}}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Agregar nuevo</a>
+    <a href="{{URL::to("aplicacion/administrar/encuestas")}}" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> {{trans("otros.info.volver")}}</a>
+    <a href="{{URL::to("aplicacion/administrar/encuestas/agregar")}}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {{trans("app.admin.btn.info.agregar_nuevo")}}</a>
 </div>
 <hr/>
 <h2><span class="glyphicon {{Contenido_Encuestas::icono}}"></span> {{$encuesta->titulo}}</h2>
@@ -26,7 +26,7 @@ $total_votos = intval(ContenidoApp::obtenerValorMetadato($encuesta->id, "total")
 
 <div class="panel panel-default" style="clear: both;margin-bottom:50px;">
     <div class="panel-heading">
-        <h3 class="panel-title">Respuestas</h3>
+        <h3 class="panel-title">{{trans("app.admin.encuestas.info.respuestas")}}</h3>
     </div>
     <div class="panel-body" style="padding: 5px;">
         <div class="col-lg-12">
@@ -50,15 +50,15 @@ $total_votos = intval(ContenidoApp::obtenerValorMetadato($encuesta->id, "total")
 
 
                     <?php endfor; ?>
-                    <tr><td colspan="3" style="width: 98%;text-align: right">Total</td><td style="width: 2%;">{{$total_votos}}</td></tr>
+                    <tr><td colspan="3" style="width: 98%;text-align: right">{{trans("otros.info.total")}}</td><td style="width: 2%;">{{$total_votos}}</td></tr>
                 </table>
             </div>
         </div>
     </div>
 
     <div class="col-lg-12">
-        <div class="col-lg-6 h3"><b>Publicado el:</b> {{$encuesta->created_at}}</div>
-        <div class="col-lg-6 h3"><b>Finalizado el:</b> {{$encuesta->updated_at}}</div>
+        <div class="col-lg-6 h3"><b>{{trans("otros.info.publicado_el")}}:</b> {{$encuesta->created_at}}</div>
+        <div class="col-lg-6 h3"><b>{{trans("otros.info.finalizado_el")}}:</b> {{$encuesta->updated_at}}</div>
     </div>
 </div>
 

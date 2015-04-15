@@ -1,11 +1,10 @@
 <?php
-$tipoContenido = "noticias";
-$nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
+$nombreContenido = TipoContenido::obtenerNombre($app->diseno, Contenido_Noticias::nombre);
 ?>
 
 @extends('interfaz/plantilla')
 
-@section("titulo") {{$app->nombre}} | Administrar {{$nombreContenido}} (Categorias) @stop
+@section("titulo") {{$app->nombre}} | {{trans("otros.info.administrar")}} {{$nombreContenido}} ({{trans("app.admin.noticias.tax.categorias")}}) @stop
 
 @section("css")
 {{ HTML::style('assets/css/upanel/noticias.css', array('media' => 'screen')) }}
@@ -15,23 +14,25 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
 
 {{--NAVEGACION--}}
 <div class="well well-sm">
-    <a href="{{URL::to("aplicacion/administrar/noticias")}}" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> Volver</a>
+    <a href="{{URL::to("aplicacion/administrar/noticias")}}" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> {{trans("otros.info.volver")}}</a>
 </div>
 
-<h1>Categorias de {{$nombreContenido}}</h1>
+<h1>{{trans("app.admin.noticias.tax.categorias")}} - {{$nombreContenido}}</h1>
 <hr/>
 <div class="col-lg-12 text-right" style="margin-bottom: 10px;padding: 0px;"> 
-    <div class="col-lg-10"><input  type="text" id="input-agregar-cat" class="form-control" placeholder="Escribe aquí para agregar una nueva categoría..."/></div>
-    <div class="col-lg-2"><button class="btn btn-default" style="width: 100%;" id="btn-agregar-cat"><span class="glyphicon glyphicon-plus-sign"></span> Agregar categoría</button></div></div>
+    <div class="col-lg-10"><input  type="text" id="input-agregar-cat" class="form-control" placeholder="{{trans("app.admin.noticias.info.categorias.placeholder_alt")}}"/></div>
+    <div class="col-lg-2"><button class="btn btn-default" style="width: 100%;" id="btn-agregar-cat"><span class="glyphicon glyphicon-plus-sign"></span> {{trans("app.admin.noticias.btn.agregar_categoria_alt")}}</button></div></div>
 <table class="table table-striped" id="tb-categorias">
-    <tr><th>NOMBRE DE LA CATEGORIA</th><th>CANTIDAD DE NOTICIAS</th><th>ACCIONES</th></tr>
+    <tr><th>{{Util::convertirMayusculas(trans("app.admin.noticias.tax.categorias.col.nombre_categoria"))}}</th>
+        <th>{{Util::convertirMayusculas(trans("app.admin.noticias.tax.categorias.col.cantidad_de")." ".Contenido_Noticias::nombreDefecto())}}</th>
+        <th>{{Util::convertirMayusculas(trans('otros.info.acciones'))}}</th></tr>
     @foreach($cats as $cat)
     <tr id="cat-{{$cat->id}}"><td id="cat-nombre-{{$cat->id}}">{{$cat->nombre}}</td>
         <td>{{$cat->contador}}</td>
         <td>
-            @if($cat->nombre!="Sin categoria")
-            <button class="btn btn-sm btn-warning" onClick="editarCategoria({{$cat->id}})"><span class="glyphicon glyphicon-edit"></span> Editar</button>
-            <button class="btn btn-sm btn-danger" onClick="eliminarCategoria({{$cat->id}},'{{$cat->nombre}}')"><span class="glyphicon glyphicon-remove-circle"></span> Eliminar</button>
+            @if($cat->id!=Contenido_Noticias::obtenerIDCategoriaDefecto())
+            <button class="btn btn-sm btn-warning" onClick="editarCategoria({{$cat->id}})"><span class="glyphicon glyphicon-edit"></span> {{trans("otros.info.editar")}}</button>
+            <button class="btn btn-sm btn-danger" onClick="eliminarCategoria({{$cat->id}},'{{$cat->nombre}}')"><span class="glyphicon glyphicon-remove-circle"></span> {{trans("otros.info.eliminar")}}</button>
             @endif
         </td>
     </tr>
@@ -45,15 +46,14 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="titulo-modal">PREACUCIÓN</h4>
+                <h4 class="modal-title" id="titulo-modal"></h4>
             </div>
             <div class="modal-body" id="contenido-modal">
-                ¿Estas seguro de eliminar la categoría <span id="cat-nombre" style="font-weight: bold;"></span>?
             </div>
             <div class="modal-footer">
                 <div id="modal-footer">
-                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-confirmar-eliminacion">Aceptar</button>
+                     <button type="button" class="btn btn-default" data-dismiss="modal">{{trans("otros.info.cancelar")}}</button>
+                    <button type="button" class="btn btn-primary" id="btn-confirmar-eliminacion">{{trans("otros.info.aceptar")}}</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -78,7 +78,7 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
             //Envia los datos confirmados para eliminar la categoria
             jQuery("#btn-confirmar-eliminacion").click(function(){
     var id_cat = $("#cat-nombre").attr("data-cat");
-            $("#titulo-modal").html("PROCESANDO...");
+            $("#titulo-modal").html("{{Util::convertirMayusculas(trans('otros.info.procesando'))}}...");
             $("#contenido-modal").html("<div class='block' style='text-align:center;'><img src='{{URL::to('assets/img/loaders/gears.gif')}}'/></div>");
             $("#modal-footer").hide();
             jQuery.ajax({
@@ -91,8 +91,8 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
                         });
                     
                             setTimeout(function(){
-                            $("#titulo-modal").html("¡REALIZADO CON EXITO!");
-                                    $("#contenido-modal").html("La categoria ha sido eliminada");
+                            $("#titulo-modal").html("{{Util::convertirMayusculas(trans('otros.info.realizado_exito'))}}");
+                                    $("#contenido-modal").html("{{trans('app.admin.noticias.tax.categorias.eliminado')}}");
                                     setTimeout(function(){
                                     $('#modal-eliminacion').modal('hide');
                                     }, 2000);
@@ -110,8 +110,8 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
 <script>
 
             function eliminarCategoria(id_cat, nombre){
-            $("#titulo-modal").html("PRECAUCIÓN");
-                    $("#contenido-modal").html('¿Estas seguro de eliminar la categoría <span id="cat-nombre" data-cat="' + id_cat + '" style="font-weight: bold;">' + nombre + '</span>?');
+            $("#titulo-modal").html("{{Util::convertirMayusculas(trans('otros.info.precaucion'))}}");
+                    $("#contenido-modal").html("{{trans('app.admin.msj.eliminar',array('nombre'=>"<span id='cat-nombre' data-cat='\"+id_cat+\"' style='font-weight: bold;'>\"+nombre+\"</span>"))}}");
                     $('#modal-eliminacion').modal('show');
                     $("#modal-footer").show();
             }
@@ -155,7 +155,7 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
     jQuery("#input-agregar-cat").removeClass("input-red");
             jQuery("#btn-agregar-cat").attr("disabled", "disabled");
             jQuery("#input-agregar-cat").attr("disabled", "disabled");
-            jQuery("#btn-agregar-cat").html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Procesando...");
+            jQuery("#btn-agregar-cat").html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{Util::convertirMayusculas(trans('otros.info.procesando'))}}...");
             jQuery.ajax({
             type: "POST",
                     url: "{{URL::to('aplicacion/administrar/noticias/ajax/agregar/categoria')}}",
@@ -165,12 +165,12 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
                     jQuery("#input-agregar-cat").val("");
                             var html_cat = '<tr id="cat-' + response + '"><td id="cat-nombre-' + response + '">' + nuevaCat + '</td>' +
                             '<td>0</td>' +
-                            ' <td>  <button class="btn btn-sm btn-warning" onClick="editarCategoria(' + response + ')"><span class="glyphicon glyphicon-edit"></span> Editar</button> ' +
-                            '<button class="btn btn-sm btn-danger" onClick="eliminarCategoria(' + response + ',\'' + nuevaCat + '\')"><span class="glyphicon glyphicon-remove-circle"></span> Eliminar</button>' +
+                            ' <td>  <button class="btn btn-sm btn-warning" onClick="editarCategoria(' + response + ')"><span class="glyphicon glyphicon-edit"></span> {{trans("otros.info.editar")}}</button> ' +
+                            '<button class="btn btn-sm btn-danger" onClick="eliminarCategoria(' + response + ',\'' + nuevaCat + '\')"><span class="glyphicon glyphicon-remove-circle"></span> {{trans("otros.info.eliminar")}}</button>' +
                             '</td>' +
                             '</tr>';
                             $("#tb-categorias").append(html_cat);
-                            jQuery("#btn-agregar-cat").html("<span class='glyphicon glyphicon-ok'></span> Agregado");
+                            jQuery("#btn-agregar-cat").html("<span class='glyphicon glyphicon-ok'></span> {{trans('otros.info.agregado')}}");
                             jQuery("#btn-agregar-cat").removeClass("btn-default");
                             jQuery("#btn-agregar-cat").addClass("btn-success");
                             setTimeout(function(){
@@ -178,7 +178,7 @@ $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
                                     jQuery("#btn-agregar-cat").addClass("btn-default");
                                     jQuery("#btn-agregar-cat").removeAttr("disabled");
                                     jQuery("#input-agregar-cat").removeAttr("disabled");
-                                    jQuery("#btn-agregar-cat").html("<span class='glyphicon glyphicon-plus-sign'></span> Agregar categoría");
+                                    jQuery("#btn-agregar-cat").html("<span class='glyphicon glyphicon-plus-sign'></span> {{trans('app.admin.noticias.btn.agregar_categoria_alt')}}");
                             }, 2000);
                     }}, "html");
     }

@@ -17,11 +17,11 @@
                 </td></tr>
             <tr><td>
                     <div id=":vx" class="a3s" style="overflow: hidden;">
-                        <p>Hola <?php echo $nombre; ?></p>
-                        <p>Bienvenido a Okonexion, gracias por registrarte. Tu nueva cuenta ha sido creada satisfactoriamente, pero necesita ser activada.</br></br> Para activar tu nueva cuenta en Okonexion haz clic <a href="http://<?php echo $_SERVER["SERVER_NAME"] . "/upanel/public/activar/" . $id_usuario . "/".$codigo; ?>">aquí</a> o tambien puedes copiar y pegar el siguiente enlace</p>
+                        <p>Hola <?php echo trans("email.hola",array("nombre"=>$nombre)) ?></p>
+                        <p><?php echo trans("email.confirmacion.msj_01",array("id_usuario"=>$id_usuario,"codigo"=>$codigo)); ?></p>
                         <p>http://<?php echo $_SERVER["SERVER_NAME"] . "/upanel/public/activar/" . $id_usuario . "/".$codigo; ?></p>
-                        <p>Recuerda que tus datos para iniciar sesión en Okonexion son los siguientes:</p>
-                        <p>Dirección de Email: <a href="mailto:<?php echo $email; ?>" target="_blank"><?php echo $email; ?></a><br>Contraseña: <?php echo $contrasena; ?></p>
+                        <p><?php echo trans("email.confirmacion.msj_02"); ?></p>
+                        <p><?php echo trans("email.confirmacion.msj_03",array("email"=>$email,"contrasena"=>$contrasena)); ?></p>
                         </div>
                 </td></tr>
         </table>

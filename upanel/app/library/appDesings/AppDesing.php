@@ -35,6 +35,24 @@ class AppDesing {
                 break;
         }
     }
+    
+    /** Obtiene la descripción de un diseño de aplicacion
+     * 
+     * @param type $app
+     * @return type
+     */
+    public static function obtenerDescripcion($app){
+        
+        $diseno=null;
+        (is_string($app))?$diseno=$app:$diseno=$app->diseno;
+        
+        switch ($diseno) {
+            case App_Metro::sigla:
+                return App_Metro::descripcion();
+                break;
+        }
+    }
+    
 
     /** Carga los datos JSON de los tipos de contenido de diseño de app
      * 

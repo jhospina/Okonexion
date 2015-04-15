@@ -17,28 +17,26 @@ else
 
 @extends('interfaz/plantilla')
 
-@section("titulo") Soporte @stop
+@section("titulo") {{trans("interfaz.menu.principal.ayuda.soporte")}}: {{trans("menu_ayuda.soporte.tickets.info.atencion_cliente")}} @stop
 
 @section("contenido") 
 
-<h1>Soporte: Atención al cliente</h1>
+<h1>{{trans("interfaz.menu.principal.ayuda.soporte")}}: {{trans("menu_ayuda.soporte.tickets.info.atencion_cliente")}}</h1>
 <hr/>
 {{-- MAPA DE NAVEGACION --}}
 <ol class="breadcrumb">
-    <li><a href="{{URL::to("/")}}">Inicio</a></li>
-    <li class="active">Soporte</li>
+    <li><a href="{{URL::to("/")}}">{{trans("interfaz.menu.principal.inicio")}}</a></li>
+    <li class="active">{{trans("interfaz.menu.principal.ayuda.soporte")}}</li>
 </ol>
 
 <div class="well">
     <p class="text-justify">
-        Aquí encontraras un listado de tickets de soporte de atención al cliente que debes atender. 
-        Todos los que se no encuentren en estado "Cerrado" son tickets que requieren atención. 
-        Trata de no dejar a ningún cliente esperando mucho tiempo, es de vital importancia atender a los clientes en el menor tiempo posible, esto ayudara a la reputación de nuestra organización.
+    {{trans("menu_ayuda.soporte.general.descripcion")}}
     </p>
 </div>
 
 <div class="col-lg-12" style="font-size: 28px;margin-bottom: 20px;">
-    <span class="glyphicon glyphicon-globe"></span> Tickets
+    <span class="glyphicon glyphicon-globe"></span> {{trans("menu_ayuda.soporte.titulo")}}
 </div>
 
 <hr style="clear: both;margin-bottom: 10px;">
@@ -46,8 +44,8 @@ else
     <div class="col-lg-12" style="margin-bottom: 10px;">
         <div class="col-lg-3">
             <select name="estado" class="form-control">
-                <optgroup label="Estados de Ticket">
-                    <option value="TO" @if($estado=="TO"){{"selected"}}@endif>Todos</option>
+                <optgroup label="{{trans("menu_ayuda.soporte.tickets.sel.estados")}}">
+                    <option value="TO" @if($estado=="TO"){{"selected"}}@endif>{{trans("otros.info.todos")}}</option>
                     <option value="{{Ticket::ESTADO_ABIERTO}}"@if($estado==Ticket::ESTADO_ABIERTO){{"selected"}}@endif>{{Ticket::obtenerNombreEstado(Ticket::ESTADO_ABIERTO)}}</option>
                     <option value="{{Ticket::ESTADO_RESPONDIDO}}"@if($estado==Ticket::ESTADO_RESPONDIDO){{"selected"}}@endif>{{Ticket::obtenerNombreEstado(Ticket::ESTADO_RESPONDIDO)}}</option>
                     <option value="{{Ticket::ESTADO_ENVIADO}}"@if($estado==Ticket::ESTADO_ENVIADO){{"selected"}}@endif>{{Ticket::obtenerNombreEstado(Ticket::ESTADO_ENVIADO)}}</option>
@@ -58,8 +56,8 @@ else
         </div>
         <div class="col-lg-4">
             <select name="tipo" class="form-control">
-                <optgroup label="Tipo de soporte">
-                    <option value="TO"@if($tipo=="TO"){{"selected"}}@endif>Todos</option>
+                <optgroup label="{{trans("menu_ayuda.soporte.tickets.sel.tipo")}}">
+                    <option value="TO"@if($tipo=="TO"){{"selected"}}@endif>{{trans("otros.info.todos")}}</option>
                     <option value="{{Ticket::TIPO_GENERAL}}"@if($tipo==Ticket::TIPO_GENERAL){{"selected"}}@endif>{{Ticket::obtenerNombreTipo(Ticket::TIPO_GENERAL)}}</option>
                     <option value="{{Ticket::TIPO_COMERCIAL}}"@if($tipo==Ticket::TIPO_COMERCIAL){{"selected"}}@endif>{{Ticket::obtenerNombreTipo(Ticket::TIPO_COMERCIAL)}}</option>
                     <option value="{{Ticket::TIPO_FACTURACION}}"@if($tipo==Ticket::TIPO_FACTURACION){{"selected"}}@endif>{{Ticket::obtenerNombreTipo(Ticket::TIPO_FACTURACION)}}</option>
@@ -68,10 +66,10 @@ else
             </select>
         </div>
         <div class="col-lg-4">
-            <input type="text" name="buscar" class="form-control" placeholder="Buscar... (Nombre cliente, TicketID)" value="@if(!is_null($buscar)){{$buscar}}@endif"> 
+            <input type="text" name="buscar" class="form-control" placeholder="{{trans("menu_ayuda.soporte.tickets.info.buscar.placeholder")}}" value="@if(!is_null($buscar)){{$buscar}}@endif"> 
         </div>
         <div class="col-lg-1">
-            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Filtrar</button>
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> {{trans("menu_ayuda.soporte.tickets.btn.filtrar")}}</button>
         </div>
     </div>
 </form>
@@ -82,7 +80,16 @@ else
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
 <br/>
 <table id="tabla-tickets" class="table table-bordered table-striped">
-    <tr><th>TicketID</th><th>Cliente</th><th>Atendido</th><th>Asunto</th><th>Tipo</th><th>Fecha</th><th>Estado</th><th></th></tr>
+    <tr>
+        <th>{{trans("menu_ayuda.soporte.tickets.col.ticket_id")}}</th>
+        <th>{{trans("menu_ayuda.soporte.tickets.col.cliente")}}</th>
+        <th>{{trans("menu_ayuda.soporte.tickets.col.atendido")}}</th>
+        <th>{{trans("menu_ayuda.soporte.tickets.col.asunto")}}</th>
+        <th>{{trans("menu_ayuda.soporte.tickets.col.tipo")}}</th>
+        <th>{{trans("menu_ayuda.soporte.tickets.col.fecha")}}</th>
+        <th>{{trans("menu_ayuda.soporte.tickets.col.estado")}}</th>
+        <th></th>
+    </tr>
     @foreach($tickets as $ticket)
     <?php
     $cliente = $ticket->user;
@@ -101,7 +108,7 @@ else
         <td>{{$ticket->tipo}}</td>
         <td>{{$ticket->fecha}}</td>
         <td class="ticket-{{$ticket->estado}}">{{$ticket->estado}}</td>
-        <td class="text-center"><a href="{{Route("soporte.show",$ticket->id)}}"><button class="btn-xs btn-info"><span class="glyphicon glyphicon-exclamation-sign"></span> Ver/Atender</button></a></td>
+        <td class="text-center"><a href="{{Route("soporte.show",$ticket->id)}}"><button class="btn-xs btn-info"><span class="glyphicon glyphicon-exclamation-sign"></span> {{trans("menu_ayuda.soporte.tickets.btn.ver_atender")}}</button></a></td>
     </tr>
     @endforeach
 </table>

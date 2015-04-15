@@ -62,11 +62,14 @@ class UPanelControladorUsuario extends \BaseController {
      */
     public function edit($id) {
 
+        if ($id != Auth::user()->id)
+            App::abort(404);
+        
         $usuario = User::find($id);
         if (is_null($usuario)) {
             App::abort(404);
         }
-
+          
         return View::make("usuarios/perfil/editar")->with('usuario', $usuario);
     }
 
@@ -89,7 +92,7 @@ class UPanelControladorUsuario extends \BaseController {
             if (strlen($errores = $user->validar($data)) > 0)
                 return Redirect::route('usuario.edit', $id)->withInput()->with(User::mensaje("error", "",$errores, 2));
             elseif ($user->registrar($data))
-                return Redirect::route('usuario.index')->with(User::mensaje("exito", null, "Tus datos han sido actualizados. ¡Muchas gracias!", 2));
+                return Redirect::route('usuario.index')->with(User::mensaje("exito", null, trans("menu_usuario.mi_perfil.editar.post.exito"), 2));
         }
 
         return Redirect::route('usuario.index');
@@ -114,15 +117,15 @@ class UPanelControladorUsuario extends \BaseController {
         $data = Input::all();
 
         if (strlen($data["contra-nueva"]) <= 5)
-            return Redirect::to('cambiar-contrasena')->with(User::mensaje("error", null, "La contraseña nueva debe contener como minimo 6 caracteres", 2));
+            return Redirect::to('cambiar-contrasena')->with(User::mensaje("error", null, trans("menu_usuario.cambiar_contrasena.post.error01"), 2));
 
         if ($data["contra-nueva"] != $data["contra-nueva-rep"])
-            return Redirect::to('cambiar-contrasena')->with(User::mensaje("error", null, "La contraseña nueva no coinciden en la repetición", 2));
+            return Redirect::to('cambiar-contrasena')->with(User::mensaje("error", null, trans("menu_usuario.cambiar_contrasena.post.error02"), 2));
 
         if (User::cambiarContrasena($data["contra-actual"], $data["contra-nueva"]))
-            return Redirect::Route('usuario.index')->with(User::mensaje("exito", null, "¡Bien hecho! Tu contraseña ha sido cambiada con exito ", 2));
+            return Redirect::Route('usuario.index')->with(User::mensaje("exito", null, trans("menu_usuario.cambiar_contrasena.post.exito"), 2));
         else
-            return Redirect::to('cambiar-contrasena')->with(User::mensaje("error", null, "La contraseña actual ingresada es erronea", 2));
+            return Redirect::to('cambiar-contrasena')->with(User::mensaje("error", null, trans("menu_usuario.cambiar_contrasena.post.error03"), 2));
     }
     
     

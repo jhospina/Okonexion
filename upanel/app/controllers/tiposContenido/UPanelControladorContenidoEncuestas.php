@@ -88,7 +88,7 @@ class UPanelControladorContenidoEncuestas extends Controller {
         DB::update("UPDATE " . ContenidoApp::nombreTabla() . " SET estado='" . ContenidoApp::ESTADO_ARCHIVADO . "' WHERE id_usuario='" . Auth::user()->id . "' and tipo='" . Contenido_Encuestas::nombre . "' and estado='" . ContenidoApp::ESTADO_PUBLICO . "'");
 
         Contenido_Encuestas::agregar($data, ContenidoApp::ESTADO_PUBLICO);
-        return Redirect::to("aplicacion/administrar/encuestas")->with(User::mensaje("exito", null, "¡" . Util::eliminarPluralidad($nombreTC) . " publicada con exito!", 2));
+        return Redirect::to("aplicacion/administrar/encuestas")->with(User::mensaje("exito", null, trans("app.admin.post.exito_03",array("tipo_contenido"=>Util::eliminarPluralidad($nombreTC))), 2));
     }
 
     function guardar() {
@@ -101,11 +101,11 @@ class UPanelControladorContenidoEncuestas extends Controller {
         //Agrega
         if (!isset($data["id_encuesta"])) {
             Contenido_Encuestas::agregar($data, ContenidoApp::ESTADO_GUARDADO);
-            return Redirect::to("aplicacion/administrar/encuestas")->with(User::mensaje("exito", null, "¡" . Util::eliminarPluralidad($nombreTC) . " guardada con exito!", 2));
+            return Redirect::to("aplicacion/administrar/encuestas")->with(User::mensaje("exito", null, trans("app.admin.post.exito_01",array("tipo_contenido"=>Util::eliminarPluralidad($nombreTC))), 2));
         } else {
             //Edita 
             Contenido_Encuestas::editar($data["id_encuesta"], $data, ContenidoApp::ESTADO_GUARDADO);
-            return Redirect::to("aplicacion/administrar/encuestas")->with(User::mensaje("info", null, "¡" . Util::eliminarPluralidad($nombreTC) . " editada y guardada con exito!", 2));
+            return Redirect::to("aplicacion/administrar/encuestas")->with(User::mensaje("info", null, trans("app.admin.post.exito_02",array("tipo_contenido"=>Util::eliminarPluralidad($nombreTC))), 2));
         }
     }
 

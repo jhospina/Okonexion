@@ -6,10 +6,35 @@ $singNombre=Util::eliminarPluralidad($nombreContenido);
 
 @extends('interfaz/plantilla')
 
-@section("titulo") {{$app->nombre}} | Administrar {{$nombreContenido}} @stop
+@section("titulo") {{$app->nombre}} | {{trans("otros.info.administrar")}} {{$nombreContenido}} @stop
 
 @section("css")
 {{ HTML::style('assets/css/upanel/noticias.css', array('media' => 'screen')) }}
+<style>
+    #listado-noticias .estado-noticia.{{ContenidoApp::ESTADO_GUARDADO}}{
+    background: rgb(238,238,238); /* Old browsers */
+    background: -moz-linear-gradient(left,  rgba(238,238,238,1) 0%, rgba(204,204,204,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(204,204,204,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* IE10+ */
+    background: linear-gradient(to right,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=1 ); /* IE6-9 */
+
+}
+
+#listado-noticias .estado-noticia.{{ContenidoApp::ESTADO_PUBLICO}}{
+    background: rgb(41,154,11); /* Old browsers */
+    background: -moz-linear-gradient(left,  rgba(41,154,11,1) 0%, rgba(41,154,11,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(41,154,11,1)), color-stop(100%,rgba(41,154,11,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  rgba(41,154,11,1) 0%,rgba(41,154,11,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  rgba(41,154,11,1) 0%,rgba(41,154,11,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  rgba(41,154,11,1) 0%,rgba(41,154,11,1) 100%); /* IE10+ */
+    background: linear-gradient(to right,  rgba(41,154,11,1) 0%,rgba(41,154,11,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#299a0b', endColorstr='#299a0b',GradientType=1 ); /* IE6-9 */
+    color:white;
+}
+</style>
 @stop
 
 @section("contenido") 
@@ -19,8 +44,8 @@ $singNombre=Util::eliminarPluralidad($nombreContenido);
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
 
 <div class="well well-sm" style="margin-top:10px;">
-    <a href="{{URL::to("aplicacion/administrar/".$tipoContenido."/agregar")}}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Agregar nuevo</a>
-    <a href="{{URL::to("aplicacion/administrar/".$tipoContenido."/categorias")}}" class="btn btn-info"><span class="glyphicon glyphicon-tags"></span>&nbsp; Categorias</a>
+    <a href="{{URL::to("aplicacion/administrar/".$tipoContenido."/agregar")}}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {{trans("app.admin.btn.info.agregar_nuevo")}}</a>
+    <a href="{{URL::to("aplicacion/administrar/".$tipoContenido."/categorias")}}" class="btn btn-info"><span class="glyphicon glyphicon-tags"></span>&nbsp; {{trans("app.admin.noticias.tax.categorias")}}</a>
 </div>
 
 {{$noticias->links()}}
@@ -34,13 +59,13 @@ $singNombre=Util::eliminarPluralidad($nombreContenido);
         ?>
         <div class="col-lg-10 titulo-noticia"><span class="glyphicon glyphicon-globe"></span>  {{$noticia->titulo}}</div>
         <div class="col-lg-2 estado-noticia {{$noticia->estado}}">
-            @if($noticia->estado==ContenidoApp::ESTADO_PUBLICO)
+            @if($noticia->esPublico())
             <span class="glyphicon glyphicon-flag"></span> 
             @endif
-            @if($noticia->estado==ContenidoApp::ESTADO_GUARDADO)
+            @if($noticia->esGuardado())
             <span class="glyphicon glyphicon-save"></span> 
             @endif
-            {{$noticia->estado}}
+            {{ContenidoApp::obtenerNombreEstado($noticia->estado)}}
         </div>
         {{--SI LA NOTICIA TIENE UNA IMAGEN PRINCIPAL--}}
         @if(!is_null($imagen))
@@ -56,14 +81,14 @@ $singNombre=Util::eliminarPluralidad($nombreContenido);
             {{Util::recortarTexto($noticia->contenido,410)}}
         </div>
         <div class="col-lg-2 acciones-noticia">
-            <a href="{{URL::to("aplicacion/administrar/noticias/editar/".$noticia->id)}}" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> Editar</a>
-            <button class="btn btn-danger" onclick="eliminarNoticia({{$noticia->id}},'{{str_replace("'","\"",$noticia->titulo);}}');"><span class="glyphicon glyphicon-remove-circle"></span> Eliminar</button>
+            <a href="{{URL::to("aplicacion/administrar/noticias/editar/".$noticia->id)}}" class="btn btn-warning"><span class="glyphicon glyphicon-edit"></span> {{trans('otros.info.editar')}}</a>
+            <button class="btn btn-danger" onclick="eliminarNoticia({{$noticia->id}},'{{str_replace("'","\"",$noticia->titulo);}}');"><span class="glyphicon glyphicon-remove-circle"></span> {{trans('otros.info.eliminar')}}</button>
         </div>
-        <div class="col-lg-10 categorias"><span title="Categorias" class="glyphicon glyphicon-tags"></span>&nbsp; 
+        <div class="col-lg-10 categorias"><span title="{{trans("app.admin.noticias.tax.categorias")}}" class="glyphicon glyphicon-tags"></span>&nbsp; 
             {{Util::formatearResultadosObjetos($noticia->terminos,"nombre")}}
         </div>
         <div class="col-lg-2 creacion">
-            <span title="Fecha creación" class="glyphicon glyphicon-calendar"></span> {{$noticia->created_at}}
+            <span title="{{trans("otros.info.fecha_creacion")}}" class="glyphicon glyphicon-calendar"></span> {{$noticia->created_at}}
         </div>
 
     </div> 
@@ -82,15 +107,15 @@ $singNombre=Util::eliminarPluralidad($nombreContenido);
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="titulo-modal">PREACUCIÓN</h4>
+                <h4 class="modal-title" id="titulo-modal"></h4>
             </div>
             <div class="modal-body" id="contenido-modal" style='text-align: center;'>
-                ¿Estas seguro de eliminar <span id="nombre-noticia" style="font-weight: bold;"></span>?
+               
             </div>
             <div class="modal-footer">
                 <div id="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btn-confirmar-eliminacion">Aceptar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{trans("otros.info.cancelar")}}</button>
+                    <button type="button" class="btn btn-primary" id="btn-confirmar-eliminacion">{{trans("otros.info.aceptar")}}</button>
                 </div>
             </div>
         </div><!-- /.modal-content -->
@@ -105,8 +130,8 @@ $singNombre=Util::eliminarPluralidad($nombreContenido);
 <script>
 
             function eliminarNoticia(id_noticia, titulo){
-            $("#titulo-modal").html("PRECAUCIÓN");
-                    $("#contenido-modal").html('¿Estas seguro que quieres eliminar <span id="noticia-titulo-modal" data-noticia="' + id_noticia + '" style="font-weight: bold;">' + titulo + '</span>?');
+            $("#titulo-modal").html("{{Util::convertirMayusculas(trans('otros.info.precaucion'))}}");
+                    $("#contenido-modal").html("{{trans('app.admin.msj.eliminar',array('nombre'=>"<span id='noticia-titulo-modal' data-noticia='\"+id_noticia+\"' style='font-weight: bold;'>\"+titulo+\"</span>"))}}");
                     $('#modal-eliminacion').modal('show');
                     $("#modal-footer").show();
             }
@@ -116,7 +141,7 @@ $singNombre=Util::eliminarPluralidad($nombreContenido);
     //Envia los datos confirmados para eliminar la noticia
     jQuery("#btn-confirmar-eliminacion").click(function(){
     var id_noticia = $("#noticia-titulo-modal").attr("data-noticia");
-            $("#titulo-modal").html("PROCESANDO...");
+            $("#titulo-modal").html("{{Util::convertirMayusculas(trans('otros.info.procesando'))}}...");
             $("#contenido-modal").html("<div class='block' style='text-align:center;'><img src='{{URL::to('assets/img/loaders/gears.gif')}}'/></div>");
             $("#modal-footer").hide();
             if ($("#imagen-"+id_noticia).length)
@@ -132,8 +157,8 @@ $singNombre=Util::eliminarPluralidad($nombreContenido);
                     $("#noticia-" + id_noticia).remove();
                     });
                             setTimeout(function(){
-                            $("#titulo-modal").html("¡REALIZADO CON EXITO!");
-                                    $("#contenido-modal").html("{{ucwords(strtolower($singNombre))}} eliminada");
+                            $("#titulo-modal").html("{{Util::convertirMayusculas(trans('otros.info.realizado_exito'))}}");
+                                    $("#contenido-modal").html("<h4>{{trans('otros.info.msj.cont.eliminado',array('tipo'=>ucwords(strtolower($singNombre))))}}</h4>");
                                     setTimeout(function(){
                                     $('#modal-eliminacion').modal('hide');
                                     }, 2000);

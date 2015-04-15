@@ -34,6 +34,14 @@ class App_Metro {
     const iconoMenu3 = "iconoMenu3"; //Almacena la URL de la imagen a utilizar como icono de la opción #3 del botón del menú principal de la aplicación
     const iconoMenu4 = "iconoMenu4"; //Almacena la URL de la imagen a utilizar como icono de la opción #4 del botón del menú principal de la aplicación
 
+    
+    
+    public static function descripcion(){
+        return trans("app.di.me.descripcion");
+    }
+    
+    
+    
     /**
      * Obtiene el nombre dado por el usuario al tipo de contenido, desde la config del diseño
      * 
@@ -69,7 +77,7 @@ class App_Metro {
         $errores = [];
 
         if (is_null($app->url_logo))
-            return $errores[0] = "Sube una imagen que sea tu logo de aplicación. Es importante el logo porque representa tu aplicación.";
+            return $errores[0] = trans("app.config.info.logo.error");
 
         foreach ($data as $clave => $valor) {
             if (!in_array($clave, App_Metro::$configExcepciones)) {

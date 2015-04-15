@@ -28,7 +28,7 @@ if ($app->estado == Aplicacion::ESTADO_EN_DESARROLLO) {
 
 @extends('interfaz/plantilla')
 
-@section("titulo")Mi aplicación @stop
+@section("titulo"){{trans("app.hd.mi_aplicacion")}} @stop
 
 @section("contenido")  
 
@@ -42,12 +42,12 @@ if ($app->estado == Aplicacion::ESTADO_EN_DESARROLLO) {
 
 <div class="col-lg-9" id="content-config">
 
-    <h2 class="text-right">DESARROLLO</h2>
+    <h2 class="text-right">{{Util::convertirMayusculas(trans("interfaz.menu.principal.mi_aplicacion.desarrollo"))}}</h2>
 
     <hr/>
     @include("interfaz/mensaje/index",array("id_mensaje"=>3))
     <div class="block">
-        <h2 class="text-center">Progreso de tu aplicación</h2>
+        <h2 class="text-center">{{trans("app.config.dep.info.progreso")}}</h2>
         {{--BARRA DE PROGRESO--}}
         @include("usuarios/tipo/regular/app/construccion/secciones/barra-progreso") 
     </div>
@@ -55,13 +55,11 @@ if ($app->estado == Aplicacion::ESTADO_EN_DESARROLLO) {
     {{--LISTA PARA ENVIAR--}}
     @if($app->estado==Aplicacion::ESTADO_LISTA_PARA_ENVIAR)
     <div class="well well-lg" style="clear: both;">
-        <h3 class="text-center">ATENCIÓN</h3>
-        <p class="text-justify">Una vez que envíes tu aplicación a desarrollar, esta pasara a estar en estado de "En cola para desarrollo" y esto significa que estará en lista de espera para que nuestro equipo de desarrollo se encargue de construir tu aplicación. Mientras se encuentre en este estado, no podrás cambiar o modificar ninguno de los datos básicos de tu aplicación, tampoco podrás cambiar ninguno de los parámetros de apariencia. Una vez que se termine de construir la primera versión de tu aplicación, podrás realizar procesos de actualización, en donde nuevamente podrás cambiar el diseño y la apariencia de tu aplicación si así lo requieres.</p> 
-        <p class="text-justify">Si quieres tener más información acerca de este proceso, no dudes en consultar nuestra <a>Base de conocimientos</a> o comunicarte directamente con nuestro equipo de soporte. Estamos para ayudarte.</p>
+        {{trans("app.config.dep.info.enviar.descripcion")}}
     </div>
     <form action="" method="POST" id="form">
         <div class="block text-center">
-            <button type="button" class="btn btn-success btn-large" id="btn-enviar" style="font-size: 30px;"><span class="glyphicon glyphicon-upload"></span> Enviar a desarrollo</button>
+            <button type="button" class="btn btn-success btn-large" id="btn-enviar" style="font-size: 30px;"><span class="glyphicon glyphicon-upload"></span> {{trans("app.config.dep.btn.enviar_desarrollo")}}</button>
         </div>
     </form>
     @endif
@@ -70,13 +68,13 @@ if ($app->estado == Aplicacion::ESTADO_EN_DESARROLLO) {
     @if($app->estado==Aplicacion::ESTADO_EN_COLA_PARA_DESARROLLO || $app->estado==Aplicacion::ESTADO_EN_DESARROLLO)
 
     <div class='well well-lg' style='clear: both;'>
-        <h3>Información de desarrollo</h3>
+        <h3>{{trans("app.config.dep.info.informacion_desarrollo")}}</h3>
         <table class='table table-striped'>
-            <tr><th>Estado de la aplicación</th><td>{{Aplicacion::obtenerNombreEstado($app->estado)}}</td></tr>
+            <tr><th>{{trans("app.config.dep.info.estado")}}</th><td>{{Aplicacion::obtenerNombreEstado($app->estado)}}</td></tr>
             @if($app->estado==Aplicacion::ESTADO_EN_DESARROLLO)
-            <tr><th>Fecha de inicio</th><td>{{$proceso->fecha_inicio}}</td></tr>
+            <tr><th>{{trans("otros.info.fecha_inicio")}}</th><td>{{$proceso->fecha_inicio}}</td></tr>
             @elseif($app->estado==Aplicacion::ESTADO_EN_COLA_PARA_DESARROLLO)
-            <tr><th>Posición en la cola</th><td>{{$posCola}} de {{$totalFila}}</td></tr>
+            <tr><th>{{trans("app.config.dep.info.posicion_cola")}}</th><td>{{$posCola}} de {{$totalFila}}</td></tr>
             @endif
         </table>
     </div>
@@ -89,13 +87,13 @@ if ($app->estado == Aplicacion::ESTADO_EN_DESARROLLO) {
     @if($app->estado==Aplicacion::ESTADO_TERMINADA)
 
 
-    <h2>¡Tu aplicación esta disponible para descarga!</h2>
+    <h2>{{trans("app.config.dep.info.aplicacion_disponible")}}</h2>
     {{--APLICACION EN ANDROID--}}
     <div class="well well-lg" style="padding: 10px;" id="content-upload-android">
         <table class="table" style="margin-bottom:0px;">
             <tr>
                 <td style="vertical-align:middle;border:0px;">
-                    <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> Descargar {{$app->nombre}} para Android</a>
+                    <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {{trans("app.config.dep.descargar.info.android",array("nombre_app"=>$app->nombre))}}</a>
                 </td>
                 <td>
                     <a class="tooltip-right" rel="tooltip" title="Android"> 
@@ -110,7 +108,7 @@ if ($app->estado == Aplicacion::ESTADO_EN_DESARROLLO) {
         <table class="table" style="margin-bottom:0px;">
             <tr>
                 <td style="vertical-align:middle;border:0px;">
-                    <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> Descargar {{$app->nombre}} Windows Phone</a>
+                    <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {{trans("app.config.dep.descargar.info.windows",array("nombre_app"=>$app->nombre))}}</a>
                 </td>
                 <td>
                     <a class="tooltip-right" rel="tooltip" title="Windows Phone"> 
@@ -125,7 +123,7 @@ if ($app->estado == Aplicacion::ESTADO_EN_DESARROLLO) {
         <table class="table" style="margin-bottom:0px;">
             <tr>
                 <td style="vertical-align:middle;border:0px;">
-                    <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> Descargar {{$app->nombre}} para Iphone</a>
+                    <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {{trans("app.config.dep.descargar.info.iphone",array("nombre_app"=>$app->nombre))}}</a>
                 </td>
                 <td>
                     <a class="tooltip-right" rel="tooltip" title="IOS (Iphone)"> 
@@ -147,14 +145,14 @@ if ($app->estado == Aplicacion::ESTADO_EN_DESARROLLO) {
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">¿Estas seguro de enviar tu aplicación a desarrollo?</h4>
+                <h4 class="modal-title">{{trans("app.config.dep.info.pregunta.enviar")}}</h4>
             </div>
             <div class="modal-body">
-                Recuerda que mientras se realice este proceso no podras modificar nada de la aplicación.
+               {{trans("app.config.dep.info.pregunta.enviar.descripcion")}}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" id="btn-confirmar">Enviar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{trans("app.info.cerrar")}}</button>
+                <button type="button" class="btn btn-primary" id="btn-confirmar">{{trans("app.info.enviar")}}</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -171,7 +169,7 @@ if ($app->estado == Aplicacion::ESTADO_EN_DESARROLLO) {
 
         $('#myModal').modal('hide');
 
-        jQuery("#btn-enviar").html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Enviando...");
+        jQuery("#btn-enviar").html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('app.info.enviando')}}...");
         jQuery("#btn-enviar").attr("disabled", "disabled");
         $("#progress-bar").animate({width: "55%"}, 2000, function () {
             $("#text-progress").html("55% (En cola para desarrollo)");

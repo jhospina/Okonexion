@@ -11,8 +11,7 @@ class UPanelControladorContenidoInstitucional extends Controller {
 
         $insts = ContenidoApp::where("tipo", Contenido_Institucional::nombre)->where("id_usuario", Auth::user()->id)->orderBy("id", "DESC")->paginate(10);
 
-        $orden_insts = Contenido_Institucional::obtenerOrden(Auth::user()->id); 
-
+        $orden_insts = Contenido_Institucional::obtenerOrden(Auth::user()->id);  
         return View::make("usuarios/tipo/regular/app/administracion/institucional/index")->with("app", $app)->with("insts", $insts)->with("orden_insts", $orden_insts);
     }
 
@@ -60,11 +59,11 @@ class UPanelControladorContenidoInstitucional extends Controller {
         //Agrega una nueva informacion institucional
         if (!isset($data["id_inst"])) {
             Contenido_Institucional::agregar($data, ContenidoApp::ESTADO_GUARDADO);
-            return Redirect::to("aplicacion/administrar/institucional")->with(User::mensaje("exito", null, "¡" . Util::eliminarPluralidad($nombreTC) . " guardada con exito!", 2));
+            return Redirect::to("aplicacion/administrar/institucional")->with(User::mensaje("exito", null, trans("app.admin.post.exito_01",array("tipo_contenido"=>Util::eliminarPluralidad($nombreTC))), 2));
         } else {
             //Edita una informacion institucional
             Contenido_Institucional::editar($data["id_inst"], $data, ContenidoApp::ESTADO_GUARDADO);
-            return Redirect::to("aplicacion/administrar/institucional")->with(User::mensaje("info", null, "¡" . Util::eliminarPluralidad($nombreTC) . " editada y guardada!", 2));
+            return Redirect::to("aplicacion/administrar/institucional")->with(User::mensaje("info", null,trans("app.admin.post.exito_02",array("tipo_contenido"=>Util::eliminarPluralidad($nombreTC))), 2));
         }
     }
 
@@ -82,17 +81,18 @@ class UPanelControladorContenidoInstitucional extends Controller {
         //Agrega una nueva informacion institucional
         if (!isset($data["id_inst"])) {
             Contenido_Institucional::agregar($data, ContenidoApp::ESTADO_PUBLICO);
-            return Redirect::to("aplicacion/administrar/institucional")->with(User::mensaje("exito", null, "¡" . Util::eliminarPluralidad($nombreTC) . " publicada con exito!", 2));
+            return Redirect::to("aplicacion/administrar/institucional")->with(User::mensaje("exito", null,trans("app.admin.post.exito_03",array("tipo_contenido"=>Util::eliminarPluralidad($nombreTC))), 2));
         } else {
             //Edita una informacion institucional
             Contenido_Institucional::editar($data["id_inst"], $data, ContenidoApp::ESTADO_PUBLICO);
-            return Redirect::to("aplicacion/administrar/institucional")->with(User::mensaje("info", null, "¡" . Util::eliminarPluralidad($nombreTC) . " editada y publicada con exito!", 2));
+            return Redirect::to("aplicacion/administrar/institucional")->with(User::mensaje("info", null,trans("app.admin.post.exito_04",array("tipo_contenido"=>Util::eliminarPluralidad($nombreTC))), 2));
         }
     }
 
     function ajax_institucional_eliminarInstitucional() {
         $data = Input::all();
         $inst = ContenidoApp::find($data["id_inst"]);
+        ContenidoApp::vaciarMetadatos($inst->id);
         $inst->delete();
     }
 

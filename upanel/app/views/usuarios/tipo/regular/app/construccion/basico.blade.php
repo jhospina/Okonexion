@@ -11,7 +11,7 @@ if (Aplicacion::existe()) {
 
 @extends('interfaz/plantilla')
 
-@section("titulo")Mi aplicación @stop
+@section("titulo"){{trans("app.hd.mi_aplicacion")}}@stop
 
 @section("contenido")  
 
@@ -27,7 +27,7 @@ if (Aplicacion::existe()) {
 
 <div class="col-lg-9" id="content-config">
 
-    <h2 class="text-right">DATOS BASICOS</h2>
+    <h2 class="text-right">{{Util::convertirMayusculas(trans("interfaz.menu.principal.mi_aplicacion.configuracion.datos_basicos"))}}</h2>
 
     <hr/>
 
@@ -37,17 +37,17 @@ if (Aplicacion::existe()) {
     @include("interfaz/mensaje/index",array("id_mensaje"=>3))
 
     {{Form::model($app, $form_data, array('role' => 'form')) }}
-    <div class="col-lg-4 text-default input-lg">Nombre de la aplicación</div> <div class="col-lg-8">{{ Form::text('nombre', null, array('placeholder' => '¿Como se llamara la tu aplicación movil?', 'class' => 'form-control input-lg')) }}</div>
+    <div class="col-lg-4 text-default input-lg">{{trans("app.config.info.nombre")}}</div> <div class="col-lg-8">{{ Form::text('nombre', null, array('placeholder' => trans("app.config.info.nombre.placeholder"), 'class' => 'form-control input-lg')) }}</div>
     <div class="col-lg-12" style="margin-top: 10px;">
         <div class="panel panel-primary" style="clear: both;margin-top: 10px;">
             <div class="panel-heading">
-                <h3 class="panel-title">Diseño</h3>
+                <h3 class="panel-title">{{trans("app.config.info.diseno")}}</h3>
             </div>
             <div class="panel-body">
-                <div class="well well-sm">Escoge la plantilla de diseño que se utilizara para tu aplicación movil.</div>
+                <div class="well well-sm">{{trans("app.config.info.diseno.descripcion")}}</div>
                 @foreach($mockups as $nombre => $url)
 
-                <span class="tooltip-mockup" rel="tooltip" title="Diseño en cuadricula de 2x2 para navegar entre cada sección de la aplicación.">
+                <span class="tooltip-mockup" rel="tooltip" title="{{AppDesing::obtenerDescripcion($nombre)}}">
                     <img style="cursor: pointer;" id="mockup-{{$nombre}}" onClick="seleccionarMockup('{{$nombre}}','{{$url}}');" src="@if(!is_null($app))@if($app->diseno==$nombre){{URL::to("assets/img/app/".$nombre."_select.png")}}@endif @else{{$url}}@endif"/>
                 </span>
                 @endforeach
@@ -57,7 +57,7 @@ if (Aplicacion::existe()) {
         </div>
     </div>
 
-    <div class="col-lg-12 text-right" style="margin-bottom:20px;"> {{ Form::button("Guardar", array('type' => 'button', 'class' => 'btn btn-primary','id'=>"btn-guardar")) }}    </div>
+    <div class="col-lg-12 text-right" style="margin-bottom:20px;"> {{ Form::button(trans("otros.btn.guardar"), array('type' => 'button', 'class' => 'btn btn-primary','id'=>"btn-guardar")) }}    </div>
 
     {{Form::close()}}
 
@@ -87,10 +87,10 @@ if (Aplicacion::existe()) {
     jQuery(".tooltip-mockup").tooltip({placement: "left"});
             jQuery("#btn-guardar").click(function () {
 
-    jQuery(this).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> Procesando...");
+    jQuery(this).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('otros.info.procesando')}}...");
             jQuery(this).attr("disabled", "disabled");
             $("#progress-bar").animate({width:"20%"}, 2000, function(){
-    $("#text-progress").html("30% (En diseño)");
+    $("#text-progress").html("30% ({{Aplicacion::obtenerNombreEstado(Aplicacion::ESTADO_EN_DISENO)}})");
             $(this).removeClass("progress-bar-danger");
             $(this).addClass("progress-bar-default");
     });
