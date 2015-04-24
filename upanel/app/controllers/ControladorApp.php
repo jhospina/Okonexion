@@ -56,6 +56,33 @@ class ControladorApp extends \BaseController {
         Contenido_Encuestas::contestar($respuesta, $id_encuesta, $id_dispositivo, $app->id_usuario);
     }
 
+    function enviarPqr() {
+        $data = Input::all();
+        $key_app = $data["key_app"];
+        $dispositivo = $data["dispositivo"];
+        $nombre = $data["nombre"];
+        $email = $data["email"];
+        $asunto = $data["asunto"];
+        $descripcion = $data["descripcion"];
+        $tipo = $data["tipo_pqr"];
+        $app = Aplicacion::buscar($key_app);
+        if (is_null($app))
+            return null;
+
+        return Contenido_PQR::registrar($app->id, $app->id_usuario, $dispositivo, $nombre, $email, $asunto, $descripcion, Contenido_PQR::tipo($tipo));
+    }
+
+    function recibirPqr() {
+        $data = Input::all();
+        $ids_pqr = array();
+
+        foreach ($data as $index => $id)
+            if (strpos($index, "id_pqr") !== false)
+                $ids_pqr[] = $id;
+
+        return Contenido_PQR::obtenerPrqUsuario($ids_pqr);
+    }
+
     //RUTA DE ACCESO: usuarios/uploads/{usuario}/{imagen}/{mime_type}
     //Carga una imagen
     function cargarImagen($usuario, $imagen, $mime_type) {

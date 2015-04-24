@@ -10,6 +10,8 @@ class Correo extends Eloquent implements UserInterface, RemindableInterface {
     use UserTrait,
         RemindableTrait;
 
+    const emailFrom = 'okonexion.upanel@gmail.com';
+
     //Envia un mensaje a un correo electronico con un codigo de confirmación para la activación de una cuenta de usuario
     function enviarConfirmacion($data, $id_usuario) {
 
@@ -99,7 +101,20 @@ class Correo extends Eloquent implements UserInterface, RemindableInterface {
         $data["asunto"] = $asunto;
         $data["email"] = $user->email;
 
-        return Mail::queue('emails.plantilla', array("mensaje"=>$mensaje), function ($message) use ($data) {
+        return Mail::queue('emails.plantilla', array("mensaje" => $mensaje), function ($message) use ($data) {
+                    $message->subject($data["asunto"]);
+                    $message->to($data["email"]);
+                });
+    }
+
+    function enviarUsuarioApp($from, $email,$asunto,$mensaje) {
+        
+        $data["asunto"] = $asunto;
+        $data["email"] = $email;
+        $data["from"]=$from;
+
+        return Mail::queue('emails.plantillaApp', array("mensaje" => $mensaje,"nombreApp"=>$from), function ($message) use ($data) {
+                     $message->from(Correo::emailFrom,$data["from"]);
                     $message->subject($data["asunto"]);
                     $message->to($data["email"]);
                 });

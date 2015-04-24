@@ -110,6 +110,12 @@ Route::group(array('before' => 'auth'), function() {
     /* ENCUESTAS - Publicar */ Route::post("aplicacion/administrar/encuestas/publicar", "UPanelControladorContenidoEncuestas@publicar");
     /* ENCUESTAS - Guardar */ Route::post("aplicacion/administrar/encuestas/guardar", "UPanelControladorContenidoEncuestas@guardar");
 
+    /* PQR************************************** */
+    Route::get("aplicacion/administrar/pqr", "UPanelControladorContenidoPQR@index");
+     /* ENCUESTAS - REVISAR */Route::get("aplicacion/administrar/pqr/{id_pqr}/revisar/", "UPanelControladorContenidoPQR@vista_revisar");
+    /* ENCUESTAS - ENVIAR RESPUESTA */Route::post("aplicacion/administrar/pqr/{id_pqr}/revisar/", "UPanelControladorContenidoPQR@enviar_respuesta");
+    
+    
     //AJAX
     /* NOTICIAS - CATEGORIA - AGREGAR */Route::post("aplicacion/administrar/noticias/ajax/agregar/categoria", "UPanelControladorContenidoNoticias@ajax_noticias_agregarCategoria");
     /* NOTICIAS - CATEGORIA - EDITAR */Route::post("aplicacion/administrar/noticias/ajax/editar/categoria", "UPanelControladorContenidoNoticias@ajax_noticias_editarCategoria");
@@ -137,6 +143,9 @@ Route::post("app/descargar/institucional", "ControladorApp@descargar_institucion
 Route::post("app/descargar/encuestas/vigente", "ControladorApp@descargar_encuestas_vigente");
 Route::post("app/descargar/encuestas/archivadas", "ControladorApp@descargar_encuestas_archivadas");
 Route::post("app/enviar/encuestas/respuesta","ControladorApp@enviar_encuestas_respuesta");
+//PQR
+Route::post("app/enviar/pqr","ControladorApp@enviarPqr");
+Route::post("app/recibir/pqr","ControladorApp@recibirPqr");
 
 //Las apps se conectan para cargar imagenes
 Route::get("usuarios/uploads/{usuario}/{imagen}/{mime_type}", "ControladorApp@cargarImagen");

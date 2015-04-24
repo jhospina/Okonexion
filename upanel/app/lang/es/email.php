@@ -20,17 +20,25 @@ return array(
     "<b>Fecha y hora de apertura:</b> :fecha_apertura<br/>" .
     "<b>Responder Ticket en:</b> :link<br/>" .
     "-------------------------------------</p>",
-    "soporte.ticket.respondido"=>"<p>Estimado :nombre</p>" .
-                        "<p>Tu ticket ha sido respondido por nuestro equipo de soporte: <br/>" .
-                        "------------------------------------------------------------<br/>" .
-                        ":mensaje <br/>" .
-                        "------------------------------------------------------------" . "</p>" .
-                        "<p>Para responder este ticket ingresa a :link</p>",
-   "app.dep.aplicacion_en_desarrollo"=>"<p>Hola :nombre</p>" .
-                "<p>Tenemos muy buenas noticias para ti. Tu aplicación <b>:app_nombre</b> ha empezado su fase de desarrollo y muy pronto estará disponible para que empieces a utilizarla. Te avisaremos cuando la fase de desarrollo haya concluido y tu aplicación esté terminada.</p>" .
-                "<p><b>Hora de inicio: </b>:fecha_inicio</p>",
-    "asunto.confirmacion"=>"Confirmación de correo electrónico",
-    "asunto.activacion"=>"Activación de tu cuenta",
-    "asunto.bienvenida"=>"¡Bienvenido a Okonexion!",
-    "asunto.recuperacion"=>"Recuperación de contraseña"
-        );
+    "soporte.ticket.respondido" => "<p>Estimado :nombre</p>" .
+    "<p>Tu ticket ha sido respondido por nuestro equipo de soporte: <br/>" .
+    "------------------------------------------------------------<br/>" .
+    ":mensaje <br/>" .
+    "------------------------------------------------------------" . "</p>" .
+    "<p>Para responder este ticket ingresa a :link</p>",
+    "app.dep.aplicacion_en_desarrollo" => "<p>Hola :nombre</p>" .
+    "<p>Tenemos muy buenas noticias para ti. Tu aplicación <b>:app_nombre</b> ha empezado su fase de desarrollo y muy pronto estará disponible para que empieces a utilizarla. Te avisaremos cuando la fase de desarrollo haya concluido y tu aplicación esté terminada.</p>" .
+    "<p><b>Hora de inicio: </b>:fecha_inicio</p>",
+    "asunto.confirmacion" => "Confirmación de correo electrónico",
+    "asunto.activacion" => "Activación de tu cuenta",
+    "asunto.bienvenida" => "¡Bienvenido a Okonexion!",
+    "asunto.recuperacion" => "Recuperación de contraseña",
+    "asunto.tu_pqr_respondido" => "¡Tu :tipo_pqr #:num ha sido contestada!",
+    "pqr.respuesta" => "<p>Hola :nombre</p>" .
+    "<p>Tu :tipo_pqr con el número :num ha sido constestado por el equipo administrativo de :app: <br/>" .
+    "------------------------------------------------------------<br/><br/>" .
+    ":mensaje <br/><br/>" .
+    "------------------------------------------------------------" . "<br/></p>" .
+    "<p>Para más detalles, conectate desde la aplicación movil de :app.</p>",
+    "app.dep.aplicacion_en_desarrollo"
+);

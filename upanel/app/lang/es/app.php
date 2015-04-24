@@ -112,6 +112,13 @@ return array(
     "admin.encuestas.info.respuestas.eliminar"=>"Eliminar respuesta",
     "admin.encuestas.info.encuesta_vigente"=>"Encuesta vigente",
     "admin.encuestas.info.sin_encuestas"=>"No tienes :encuestas",
-    "admin.encuestas.info.no_hay_archivados"=>"No hay :encuestas archivadas"
-    
+    "admin.encuestas.info.no_hay_archivados"=>"No hay :encuestas archivadas",
+    "admin.pqr.info.peticiones"=>"Peticiones",
+    "admin.pqr.info.peticion"=>"Petición",
+    "admin.pqr.info.quejas"=>"Quejas",
+    "admin.pqr.info.queja"=>"Queja",
+    "admin.pqr.info.reclamos"=>"Reclamos",
+    "admin.pqr.info.reclamo"=>"Reclamo",
+    "admin.pqr.info.sugerencias"=>"Sugerencias",
+    "admin.pqr.info.sugerencia"=>"Sugerencia",
         );

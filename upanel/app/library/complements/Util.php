@@ -294,8 +294,56 @@ class Util {
     }
 
     static function convertirMayusculas($cadena) {
-        $cadena =  mb_strtoupper($cadena,'utf-8');
+        $cadena = mb_strtoupper($cadena, 'utf-8');
         return ($cadena);
+    }
+
+    public static function obtenerTiempoActual($formato24 = true) {
+        date_default_timezone_set('America/Bogota');
+        return ($formato24) ? date('Y-m-d H:i:s') : date('Y-m-d h:i:sa');
+    }
+
+    /** Calcula diferencia entre dos fechas
+     * 
+     * @param type $fecha1
+     * @param type $fecha2
+     * @return string
+     */
+    public static function calcularDiferenciaFechas($fecha1, $fecha2) {
+        $minuto = 60;
+        $hora = $minuto * 60;
+        $dia = $hora * 24;
+        $mes = $dia * 30;
+        $ano = $mes * 12;
+
+        //formateamos las fechas a segundos tipo 1374998435
+        $diferencia = strtotime($fecha2) - strtotime($fecha1);
+        //comprobamos el tiempo que ha pasado en segundos entre las dos fechas
+        //floor devuelve el número entero anterior, si es 5.7 devuelve 5
+        if ($diferencia <= $minuto) {
+            $tiempo = floor($diferencia) . " ".trans("otros.time.segundos");
+        } else if ($diferencia >= $minuto && $diferencia < $minuto * 2) {
+            $tiempo = "1 ".trans("otros.time.minuto");
+        } else if ($diferencia >= $minuto * 2 && $diferencia < $hora) {
+            $tiempo = floor($diferencia / $minuto) . " ".trans("otros.time.minutos");
+        } else if ($diferencia >= $hora && $diferencia < $hora * 2) {
+            $tiempo = "1 ".trans("otros.time.hora");
+        } else if ($diferencia >= $hora * 2 && $diferencia < $dia) {
+            $tiempo = floor($diferencia / $hora) ." ".trans("otros.time.horas");
+        } else if ($diferencia >= $dia && $diferencia < $dia * 2) {
+            $tiempo = "1 ".trans("otros.time.dia");
+        } else if ($diferencia >= $dia * 2 && $diferencia < $mes) {
+            $tiempo = floor($diferencia / $dia) . " ".trans("otros.time.dias");
+        } else if ($diferencia >= $mes && $diferencia < $mes * 2) {
+            $tiempo = "1 ".trans("otros.time.mes");
+        } else if ($diferencia >= $mes * 2 && $diferencia < $ano) {
+            $tiempo = floor($diferencia / $mes) . " ".trans("otros.time.meses");
+        } else if ($diferencia >= $ano * 2 && $diferencia < $ano*2) {
+            $tiempo = "1 ".trans("otros.time.ano");
+        } else if ($diferencia >= $ano*2) {
+            $tiempo = floor($diferencia / $ano) . " ".trans("otros.time.anos");
+        }
+        return strtolower($tiempo);
     }
 
 }

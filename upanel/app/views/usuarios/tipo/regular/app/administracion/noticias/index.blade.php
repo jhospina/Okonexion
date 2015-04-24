@@ -39,7 +39,7 @@ $singNombre=Util::eliminarPluralidad($nombreContenido);
 
 @section("contenido") 
 
-<h2>ADMINISTRAR {{strtoupper($nombreContenido)}}</h2>
+<h2>{{Util::convertirMayusculas(trans("otros.info.administrar")." ".$nombreContenido)}}</h2>
 <hr/>
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
 
