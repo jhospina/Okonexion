@@ -106,7 +106,7 @@ class Contenido_PQR {
 
     
     
-    static function registrar($id_app, $id_usuario, $usuario, $nombre, $email, $asunto, $descripcion, $tipo) {
+    static function registrar($id_app, $id_usuario, $usuario, $nombre, $email, $asunto, $descripcion, $tipo,$id_padre) {
         $pqr = new ContenidoApp;
         $pqr->id_aplicacion = $id_app;
         $pqr->id_usuario = $id_usuario;
@@ -114,6 +114,8 @@ class Contenido_PQR {
         $pqr->contenido = $descripcion;
         $pqr->tipo = $tipo;
         $pqr->estado = ContenidoApp::ESTADO_PUBLICO;
+        if(intval($id_padre)>0)
+            $pqr->contenido_padre=$id_padre;
         $pqr->save();
 
         ContenidoApp::agregarMetaDato($pqr->id, Contenido_PQR::configNombre, $nombre, $id_usuario);
@@ -135,10 +137,13 @@ class Contenido_PQR {
             $data_discusion=array();
             $discusion = Contenido_PQR::obtenerDiscusion($ids_pqr[$i]);
             if (!is_null($discusion)) {
+                $n=0;
                 foreach($discusion as $hilo){
-                    $data_discusion["id_usuario"]=$hilo->id_usuario;
-                    $data_discusion["fecha"]=$hilo->created_at;
-                    $data_discusion["mensaje"]=$hilo->contenido;
+                    $data_discusion["id".$n]=  $hilo->id;
+                    $data_discusion["usuario".$n]= ContenidoApp::obtenerValorMetadato($hilo->id,  Contenido_PQR::configUsuario);
+                    $data_discusion["fecha".$n]=$hilo->created_at;
+                    $data_discusion["mensaje".$n]=$hilo->contenido;
+                    $n++;
                 }                 
                 $data["id_pqr".$ids_pqr[$i]]=$data_discusion;
                 

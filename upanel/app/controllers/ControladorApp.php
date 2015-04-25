@@ -65,11 +65,12 @@ class ControladorApp extends \BaseController {
         $asunto = $data["asunto"];
         $descripcion = $data["descripcion"];
         $tipo = $data["tipo_pqr"];
+        $id_padre = $data["id_padre"];
         $app = Aplicacion::buscar($key_app);
         if (is_null($app))
             return null;
 
-        return Contenido_PQR::registrar($app->id, $app->id_usuario, $dispositivo, $nombre, $email, $asunto, $descripcion, Contenido_PQR::tipo($tipo));
+        return Contenido_PQR::registrar($app->id, $app->id_usuario, $dispositivo, $nombre, $email, $asunto, $descripcion, Contenido_PQR::tipo($tipo),$id_padre);
     }
 
     function recibirPqr() {
