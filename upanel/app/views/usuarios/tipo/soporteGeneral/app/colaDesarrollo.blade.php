@@ -18,12 +18,15 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
 
 <hr/>
 
-
+<div class="well well-sm">
+    <a href="{{URL::to("aplicacion/desarrollo/historial")}}" class="btn btn-primary"><span class="glyphicon glyphicon-list-alt"></span> {{trans("app.historialDep.titulo")}}</a>
+</div>
+ 
 <table class="table table-striped">
     <tr><th>{{Util::convertirMayusculas(trans("otros.info.fecha_solicitud"))}}</th>
         <th>{{Util::convertirMayusculas(trans("otros.info.aplicacion"))}}</th>
         <th>{{Util::convertirMayusculas(trans("otros.info.atendido_por"))}}</th>
-        <th>{{Util::convertirMayusculas(trans("otros.info.fecha_solicitud"))}}</th>
+        <th>{{Util::convertirMayusculas(trans("otros.info.fecha_inicio"))}}</th>
         <th>{{Util::convertirMayusculas(trans("otros.info.informe"))}}</th>
         <th>{{Util::convertirMayusculas(trans("otros.info.control"))}}</th></tr>
     @foreach($colaDesarrollo as $proceso)
@@ -31,7 +34,9 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
     $app = Aplicacion::find($proceso->id_aplicacion);
     $atendido_por = $proceso->user;
     ?>
-    <tr id="proceso-{{$proceso->id}}}}">
+    @if(is_null($proceso->fecha_finalizacion))
+    
+    <tr id="proceso-{{$proceso->id}}">
         <td>{{$proceso->fecha_creacion}}</td>
         <td id="nombre-app-{{$proceso->id}}">{{$app->nombre}}</td>
         <td id="atendido-{{$proceso->id}}">@if(is_null($atendido_por))Sin atender @else {{$atendido_por->nombres}} @endif</td>
@@ -51,6 +56,7 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
             @endif
         </td>
     </tr>
+    @endif
     @endforeach
 
     @if(count($colaDesarrollo)==0)
@@ -61,6 +67,8 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
 
 </table>
 
+
+{{$colaDesarrollo->links()}}
 
 {{--*************************************************************************--}}
 {{--*************************************************************************--}}
@@ -108,17 +116,17 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
 
 
                     <input type="checkbox" class="js-switch upload-app-check" data-app="android" name="hab-android" checked> Android 
-                    <input type="checkbox" class="js-switch upload-app-check" data-app="windows" name="hab-windows" checked> Windows Phone 
-                    <input type="checkbox" class="js-switch upload-app-check" data-app="ios" name="hab-ios" checked> IOS
+                    <input type="checkbox" class="js-switch upload-app-check" data-app="windows" name="hab-windows" disabled="disabled"> Windows Phone 
+                    <input type="checkbox" class="js-switch upload-app-check" data-app="ios" name="hab-ios" disabled="disabled"> IOS
                     <hr/>
 
                     {{--APLICACION EN ANDROID--}}
                     <div class="well well-lg" style="padding: 10px;" id="content-upload-android">
-                        <table class="table" style="margin-bottom:0px;">
+                        <table class="table upload-table" style="margin-bottom:0px;">
                             <tr>
-                                <td style="vertical-align:middle;border:0px;">
+                                <td style="vertical-align:middle;border:0px;" id="upload-android">
                                     <a class="tooltip-top" rel="tooltip" title="{{trans("otros.info.subir.archivo")}} .apk"> 
-                                        <input name="android" id="android" class="iconoMenu" type="file" multiple=true>
+                                        <input name="android" id="android" class="upload_archivo" type="file" multiple=true>
                                     </a>
                                 </td>
                                 <td>
@@ -128,14 +136,15 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
                                 </td>
                             </tr>
                         </table>
+                        <table class="table uploaded-table" style="margin-bottom:0px;display:none;"><tr><td style="vertical-align:middle;border:0px;"><h3><span class="glyphicon glyphicon-ok"></span> <span class="upload-nombreApp"></span> {{trans("otros.info.subido")}}</h3></td><td><a class="tooltip-right" rel="tooltip" title="Android"><img src="{{URL::to("assets/img/android.png")}}"/></a></td></tr></table>
                     </div>
                     {{--APLICACION EN WINDOWS--}}
-                    <div class="well well-lg" style="padding: 10px;" id="content-upload-windows">
+                    <div class="well well-lg" style="padding: 10px;display:none;" id="content-upload-windows">
                         <table class="table" style="margin-bottom:0px;">
                             <tr>
                                 <td style="vertical-align:middle;border:0px;">
                                     <a  class="tooltip-top" rel="tooltip" title="{{trans("otros.info.subir.archivo")}} .xap"> 
-                                        <input name="windows" id="windows" class="iconoMenu" type="file" multiple=true>
+                                        <input name="windows" id="windows" class="upload_archivo" type="file" multiple=true>
                                     </a>
                                 </td>
                                 <td>
@@ -147,12 +156,12 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
                         </table>
                     </div>
                     {{--APLICACION EN IOS--}}
-                    <div class="well well-lg" style="padding: 10px;" id="content-upload-ios">
+                    <div class="well well-lg" style="padding: 10px;display:none;" id="content-upload-ios">
                         <table class="table" style="margin-bottom:0px;">
                             <tr>
                                 <td style="vertical-align:middle;border:0px;">
                                     <a  class="tooltip-top" rel="tooltip" title="{{trans("otros.info.subir.archivo")}} .ipa"> 
-                                        <input name="ios" id="ios" class="iconoMenu" type="file" multiple=true>
+                                        <input name="iphone" id="iphone" class="upload_archivo" type="file" multiple=true>
                                     </a>
                                 </td>
                                 <td>
@@ -163,15 +172,29 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
                             </tr>
                         </table>
                     </div>
+                    
 
+                    <input name="archivo_android" id="archivo_android" type="hidden" value="">
+                    <input name="archivo_windows" id="archivo_windows" type="hidden" value="">
+                    <input name="archivo_iphone" id="archivo_iphone" type="hidden" value="">
 
-
+                    <div id="msj-sin-plataformas" style="color: red;display:none;">{{trans("app.coldep.info.error.sin_plataformas")}}</div>
+                    
+                    <div class="well well-sm" style="padding: 2px;">
+                        <table class="table" style="margin-bottom:0px;">
+                            <tr>
+                                <td style="vertical-align:middle;border:0px;">
+                                    <textarea id="observaciones" class="form-control" style="height:80px;" placeholder="{{trans("app.coldep.info.observaciones.placeholder")}}"></textarea>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
 
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{trans("otros.info.cerrar")}}</button>
-                <button type="button" class="btn btn-primary" id="btn-confirmar">{{trans("otros.info.enviar")}}</button>
+                <button type="button" class="btn btn-primary" onClick="enviarTerminar(this);" id="btn-enviar-terminar">{{trans("otros.info.enviar")}}</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -193,97 +216,37 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
 
 
 <script>
-
-
-
             var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
             elems.forEach(function(html) {
             var switchery = new Switchery(html);
             });
-//*************TOOLTIP
-
             jQuery(".tooltip-left").tooltip({placement: "left"});
             jQuery(".tooltip-top").tooltip({placement: "top"});
-            jQuery(".tooltip-right").tooltip({placement: "right"});
-            //********************************************************************
-
-            jQuery("#android").fileinput({
-    multiple: false,
-            showPreview: true,
-            showRemove: true,
-            maxFileCount: 1,
-            allowedFileExtensions: ['apk'],
-            browseLabel: "{{trans('otros.info.buscar')}} Apk",
-            browseIcon: '<i class="glyphicon glyphicon-phone"></i> ',
-            removeClass: "btn btn-danger",
-            removeLabel: "{{trans('otros.info.borrar')}}",
-            removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
-            uploadClass: "btn btn-info",
-            uploadLabel: "Subir",
-            uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
-            msgSelected: '{n} imagen',
-            maxFileSize: 10000,
-            msgInvalidFileExtension: "{{trans('app.coldep.info.subir.archivos.error01',array('archivos'=>'.apk'))}}",
-            msgInvalidFileType: "{{trans('app.coldep.info.subir.archivos.error01',array('archivos'=>'.apk'))}}",
-            msgSizeTooLarge: "{{trans('app.coldep.info.subir.archivos.error02')}}",
-            uploadAsync: true,
-            uploadUrl: "{{URL::to('aplicacion/ajax/upload/android')}}" // your upload server url
-    });
-    {{--WINDOWS * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * --}}
-
-    jQuery("#windows").fileinput({
-    multiple: false,
-            showPreview: true,
-            showRemove: true,
-            maxFileCount: 1,
-            allowedFileExtensions: ['xap'],
-            browseLabel: "{{trans('otros.info.buscar')}} Xap",
-            browseIcon: '<i class="glyphicon glyphicon-phone"></i> ',
-            removeClass: "btn btn-danger",
-            removeLabel: "{{trans('otros.info.borrar')}}",
-            removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
-            uploadClass: "btn btn-info",
-            uploadLabel: "Subir",
-            uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
-            msgSelected: '{n} imagen',
-            maxFileSize: 10000,
-             msgInvalidFileExtension: "{{trans('app.coldep.info.subir.archivos.error01',array('archivos'=>'.xap'))}}",
-            msgInvalidFileType: "{{trans('app.coldep.info.subir.archivos.error01',array('archivos'=>'.xap'))}}",
-            msgSizeTooLarge: "{{trans('app.coldep.info.subir.archivos.error02')}}",
-            uploadAsync: true,
-            uploadUrl: "{{URL::to('aplicacion/ajax/upload/windows')}}" // your upload server url
-    });
-    {{--IOS IPHONE * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * --}}
-
-    jQuery("#ios").fileinput({
-    multiple: false,
-            showPreview: true,
-            showRemove: true,
-            maxFileCount: 1,
-            allowedFileExtensions: ['ipa'],
-            browseLabel: "{{trans('otros.info.buscar')}} Ipa",
-            browseIcon: '<i class="glyphicon glyphicon-phone"></i> ',
-            removeClass: "btn btn-danger",
-            removeLabel: "{{trans('otros.info.borrar')}}",
-            removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
-            uploadClass: "btn btn-info",
-            uploadLabel: "Subir",
-            uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
-            msgSelected: '{n} imagen',
-            maxFileSize: 10000,
-             msgInvalidFileExtension: "{{trans('app.coldep.info.subir.archivos.error01',array('archivos'=>'.iap'))}}",
-            msgInvalidFileType: "{{trans('app.coldep.info.subir.archivos.error01',array('archivos'=>'.iap'))}}",
-            msgSizeTooLarge: "{{trans('app.coldep.info.subir.archivos.error02')}}",
-            uploadAsync: true,
-            uploadUrl: "{{URL::to('aplicacion/ajax/upload/ios')}}" // your upload server url
-    });</script>
+            jQuery(".tooltip-right").tooltip({placement: "right"});</script>
 
 <script>
 
+            var num_plats = 1; //Indica el numero de plataformas habilitadas para subir la aplicación.
 
             //CHECKBOX DE UPLOADS DE APLICACIONES
             jQuery(".upload-app-check").change(function(){
-    jQuery("#content-upload-" + jQuery(this).attr("data-app")).fadeToggle();
+
+    jQuery("#content-upload-" + jQuery(this).attr("data-app")).fadeToggle(function(){
+    //Va indicando cuantas plataformas esta disponibles para subir
+    if ($(this).css("display") == "none")
+            num_plats--;
+            else
+            num_plats++;
+            if (num_plats == 0){
+    $("#msj-sin-plataformas").show();
+            $("#btn-enviar-terminar").attr("disabled", "disabled");
+    }
+    else{
+    $("#msj-sin-plataformas").hide();
+            $("#btn-enviar-terminar").removeAttr("disabled");
+    }
+
+    });
     });
             //ACCION DEL BOTON VER DISEÑO
                     function verDiseno(id_proceso){
@@ -305,12 +268,13 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
                                             setTimeout(function(){
                                             var html = "";
                                                     jQuery.each(data, function(propiedad, valor){
-                                                    if (/logoApp/.test(propiedad))
-                                                            html += "<tr><th>" + propiedad + "</th><td> <a target='_blank' href='{{URL::to('aplicacion/ajax/desarrollo/descargar/logoApp/')}}?id_p=" + id_proceso + "&id_app=" + id_aplicacion + "&imagen=" + valor + "'><span class='glyphicon glyphicon-save-file'></span> {{trans('otros.info.descargar')}} {{trans('otros.info.logo')}}</a></td></tr>";
-                                                            else
-                                                            html += "<tr><th>" + propiedad + "</th><td>" + valor + "</td></tr>";
+                                                    html += "<tr><th>" + propiedad + "</th><td>" + valor + "</td></tr>";
                                                     });
-                                                    informe.html("<table class='table table-striped'><tr><th>{{Util::convertirMayusculas(trans('otros.info.caracteristica'))}}</th><th>{{Util::convertirMayusculas(trans('otros.info.valor'))}}</th></tr>" + html + "</table>");
+                                                    var tabla = "<table class='table table-striped'><tr><th>{{Util::convertirMayusculas(trans('otros.info.caracteristica'))}}</th><th>{{Util::convertirMayusculas(trans('otros.info.valor'))}}</th></tr>" + html + "</table>";
+                                                    var btn_descargar_android = "<a style='width:50%;margin-bottom:5px;' class='btn btn-primary' target='_blank' href='{{URL::to('aplicacion/ajax/desarrollo/descargar/disenoApp/android')}}?id_p=" + id_proceso + "&id_app=" + id_aplicacion + "'><span class='glyphicon glyphicon-download-alt'></span> {{trans('app.coldep.info.descargar_diseno_android')}}</a></br>";
+                                                    var btn_descargar_iphone = "<a style='width:50%;margin-bottom:5px;' disabled='disabled' class='btn btn-primary' target='_blank' href='{{URL::to('aplicacion/ajax/desarrollo/descargar/disenoApp/iphone')}}?id_p=" + id_proceso + "&id_app=" + id_aplicacion + "'><span class='glyphicon glyphicon-download-alt'></span> {{trans('app.coldep.info.descargar_diseno_iphone')}}</a></br>";
+                                                    var btn_descargar_windows = "<a style='width:50%;margin-bottom:5px;' disabled='disabled' class='btn btn-primary' target='_blank' href='{{URL::to('aplicacion/ajax/desarrollo/descargar/disenoApp/windows')}}?id_p=" + id_proceso + "&id_app=" + id_aplicacion + "'><span class='glyphicon glyphicon-download-alt'></span> {{trans('app.coldep.info.descargar_diseno_windows')}}</a></br>";
+                                                    informe.html(tabla + "<div class='text-center'>" + btn_descargar_android + btn_descargar_iphone + btn_descargar_windows + "</div>");
                                                     jQuery("#modal-informe").modal("show");
                                                     jQuery("#btn-informe-" + id_proceso).html("{{trans('app.coldep.info.ver_diseno')}}");
                                             }, 1000);
@@ -334,7 +298,7 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
                             data = jQuery.parseJSON(data);
                                     jQuery("#atendido-" + id_proceso).html(data.atendido_por);
                                     jQuery("#inicio-" + id_proceso).html(data.fecha_inicio);
-                                    btn.html("Terminar");
+                                    btn.html("{{trans('app.coldep.btn.terminar')}}");
                                     btn.removeAttr("disabled");
                                     btn.removeClass("btn-primary");
                                     btn.addClass("btn-danger");
@@ -349,32 +313,126 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
             }
 
 
+            var proceso = 0; // Indica el id del proceso
 
-            function terminarDesarrollo(id_proceso) {
 
-            jQuery("#upload-app-modal").modal("show");
-            {{--
-                    var btn = jQuery("#btn-control-" + id_proceso);
-                    var id_aplicacion = btn.attr("data-app");
-                    btn.html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> ...");
-                    btn.attr("disabled", "disabled");
-                    jQuery.ajax({
-                    type: "POST",
-                            url: "{{URL::to('aplicacion/ajax/desarrollo/estado/terminar')}}",
-                            data: {id_aplicacion: id_aplicacion, id_proceso: id_proceso},
-                            success: function (response) {
+                    //FUNCIONES DE ACCION
+                            function terminarDesarrollo(id_proceso) {
 
-                            console.log("TERMINADO");
-                                    jQuery("#proceso-" + id_proceso).fadeOut(function () {
-                            jQuery(this).remove();
+                            proceso=id_proceso;
+                            $("#observaciones").val("");
+
+                            $("#archivo_android").val("");
+                                    $("#archivo_windows").val("");
+                                    $("#archivo_iphone").val("");
+                                    jQuery("#upload-app-modal").modal("show");
+                                    $(".upload-table").show();
+                                    $(".uploaded-table").hide();
+                                    jQuery("#android").fileinput({
+                            multiple: false,
+                                    showPreview: false,
+                                    showRemove: false,
+                                    showUpload:false,
+                                    maxFileCount: 1,
+                                    allowedFileExtensions: ['apk'],
+                                    browseLabel: "{{trans('otros.info.buscar')}} Apk",
+                                    browseIcon: '<i class="glyphicon glyphicon-phone"></i> ',
+                                    removeClass: "btn btn-danger",
+                                    removeLabel: "{{trans('otros.info.borrar')}}",
+                                    removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
+                                    uploadClass: "btn btn-info",
+                                    uploadLabel: "Subir",
+                                    uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
+                                    msgSelected: '{n} imagen',
+                                    dropZoneEnabled: false,
+                                    maxFileSize: 10000,
+                                    msgInvalidFileExtension: "{{trans('app.coldep.info.subir.archivos.error01',array('archivos'=>'.apk'))}}",
+                                    msgInvalidFileType: "{{trans('app.coldep.info.subir.archivos.error01',array('archivos'=>'.apk'))}}",
+                                    msgValidationError:"{{trans('app.coldep.info.subir.archivos.error01',array('archivos'=>'.apk'))}}",
+                                    msgSizeTooLarge: "{{trans('app.coldep.info.subir.archivos.error02')}}",
+                                    uploadAsync: true,
+                                    uploadExtraData:{id_proceso:id_proceso,plataforma:"android"},
+                                    uploadUrl: "{{URL::to('aplicacion/ajax/upload/app')}}" // your upload server url
                             });
-                            }}, "html"); --}}
-            }
+                            }
 
+
+
+                    function enviarTerminar(btn){
+
+                    var android = $("#archivo_android").val();
+                            var windows = $("#archivo_windows").val();
+                            var iphone = $("#archivo_iphone").val();
+                            
+                            if(android.length==0 && windows.length==0 && iphone.length==0)
+                                return;
+                            
+                            
+                            $(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> ...");
+                            $(btn).attr("disabled", "disabled");
+                            
+                            jQuery.ajax({
+                            type: "POST",
+                                    url: "{{URL::to('aplicacion/ajax/desarrollo/estado/terminar')}}",
+                                    data: {id_proceso: proceso,android:android,windows:windows,iphone:iphone,observacion:$("#observaciones").val()},
+                                    success: function (response) {
+                                            
+                                      //Oculta el modal
+                                      jQuery("#upload-app-modal").modal("hide");
+                                      
+                                    $(btn).html("{{trans('otros.info.enviar')}}");
+                                            $(btn).removeAttr("disabled");
+                                            jQuery("#proceso-" + proceso).fadeOut(function () {
+                                    jQuery(this).remove();
+                                    });
+                                    }}, "html");
+                    }
 
 
 </script>
 
+
+
+<script>
+
+                    //ANDROID
+                    $("#android").on('filebatchuploadsuccess', function(event, data) {
+                    var data = data.response;
+                            $("#archivo_android").val(data["path"]);
+                            $("#content-upload-android .upload-table").hide();
+                            $("#content-upload-android .uploaded-table").show();
+                            $(".upload-nombreApp").html(data["nombreApp"]);
+                            $("#btn-enviar-terminar").removeAttr("disabled");
+                    });
+                            //Windows
+                            $("#windows").on('filebatchuploadsuccess', function(event, data) {
+                    var data = data.response;
+                            $("#archivo_windows").val(data["path"]);
+                            $("#content-upload-android .upload-table").hide();
+                            $("#content-upload-android .uploaded-table").show();
+                            $(".upload-nombreApp").html(data["nombreApp"]);
+                            $("#btn-enviar-terminar").removeAttr("disabled");
+                    });
+                            //Iphone
+                            $("#iphone").on('filebatchuploadsuccess', function(event, data) {
+                    var data = data.response;
+                            $("#archivo_iphone").val(data["path"]);
+                            $("#content-upload-android .upload-table").hide();
+                            $("#content-upload-android .uploaded-table").show();
+                            $(".upload-nombreApp").html(data["nombreApp"]);
+                            $("#btn-enviar-terminar").removeAttr("disabled");
+                    });
+                            //Sube el archivo inmediamente cuando es seleccionado
+                            $('.upload_archivo').on('fileloaded', function (event, previewId) {
+                    $(this).fileinput('upload');
+                            $("#btn-enviar-terminar").attr("disabled", "disabled");
+                    });
+
+
+
+
+
+</script>
 
 
 

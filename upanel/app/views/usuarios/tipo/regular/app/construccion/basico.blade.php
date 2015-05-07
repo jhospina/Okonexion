@@ -32,7 +32,7 @@ if (Aplicacion::existe()) {
     <hr/>
 
 
-    @if(is_null($estado) || $app->estado==Aplicacion::ESTADO_LISTA_PARA_ENVIAR || $app->estado==Aplicacion::ESTADO_EN_DISENO || $app->estado==Aplicacion::ESTADO_TERMINADA)
+    @if(is_null($estado) || $app->estado==Aplicacion::ESTADO_LISTA_PARA_ENVIAR || $app->estado==Aplicacion::ESTADO_ESTABLECIENTO_TEXTOS || $app->estado==Aplicacion::ESTADO_EN_DISENO || $app->estado==Aplicacion::ESTADO_TERMINADA)
 
     @include("interfaz/mensaje/index",array("id_mensaje"=>3))
 
@@ -89,8 +89,8 @@ if (Aplicacion::existe()) {
 
     jQuery(this).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('otros.info.procesando')}}...");
             jQuery(this).attr("disabled", "disabled");
-            $("#progress-bar").animate({width:"20%"}, 2000, function(){
-    $("#text-progress").html("30% ({{Aplicacion::obtenerNombreEstado(Aplicacion::ESTADO_EN_DISENO)}})");
+            $("#progress-bar").animate({width:"15%"}, 2000, function(){
+    $("#text-progress").html("15% ({{Aplicacion::obtenerNombreEstado(Aplicacion::ESTADO_EN_DISENO)}})");
             $(this).removeClass("progress-bar-danger");
             $(this).addClass("progress-bar-default");
     });

@@ -3,11 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/library/contentTypes/Contenido_PQR.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/public/assets/css/upanel/plantilla.css</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/soporteGeneral/app/historialDesarrollo.blade.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/routes.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/tiposContenido/UPanelControladorContenidoPQR.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/pqr/index.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/ControladorApp.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/administracion/encuestas/editar.blade.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/lang/es/app.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/construccion/desarrollo.blade.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorAplicacion.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/lang/es/otros.php</file>
         </group>
     </open-files>
 </project-private>

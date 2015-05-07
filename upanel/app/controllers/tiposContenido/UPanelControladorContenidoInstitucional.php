@@ -54,8 +54,7 @@ class UPanelControladorContenidoInstitucional extends Controller {
             return $valid;
 
 
-        Aplicacion::aumentarNumeroBaseInfo();
-
+        
         //Agrega una nueva informacion institucional
         if (!isset($data["id_inst"])) {
             Contenido_Institucional::agregar($data, ContenidoApp::ESTADO_GUARDADO);
@@ -76,8 +75,7 @@ class UPanelControladorContenidoInstitucional extends Controller {
         if (!is_null($valid = Contenido_Institucional::validar($data)))
             return $valid;
 
-        Aplicacion::aumentarNumeroBaseInfo();
-
+        
         //Agrega una nueva informacion institucional
         if (!isset($data["id_inst"])) {
             Contenido_Institucional::agregar($data, ContenidoApp::ESTADO_PUBLICO);

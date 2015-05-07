@@ -53,12 +53,17 @@ Route::group(array('before' => 'auth'), function() {
     Route::get('aplicacion/apariencia', 'UPanelControladorAplicacion@apariencia');
     Route::post("aplicacion/apariencia", "UPanelControladorAplicacion@guardarApariencia");
 
+    Route::get('aplicacion/textos', 'UPanelControladorAplicacion@textos');
+    Route::post("aplicacion/textos", "UPanelControladorAplicacion@guardarTextos");
+    
     Route::get('aplicacion/desarrollo', 'UPanelControladorAplicacion@desarrollo');
     Route::post('aplicacion/desarrollo', 'UPanelControladorAplicacion@enviarDesarrollo');
 
     //SOPORTE GENERAL Y ADMIN
-
-    Route::get('aplicacion/cola-desarrollo', 'UPanelControladorAplicacion@colaDesarrollo');
+    Route::get('aplicacion/desarrollo/cola', 'UPanelControladorAplicacion@colaDesarrollo');
+    Route::get('aplicacion/desarrollo/historial', 'UPanelControladorAplicacion@historialDesarrollo');
+    
+    
 
     //***************************************************************************
     //*AJAX *********************************************************************
@@ -70,9 +75,12 @@ Route::group(array('before' => 'auth'), function() {
     Route::post("aplicacion/ajax/desarrollo/estado/iniciar", "UPanelControladorAplicacion@ajax_desarrolloEstadoIniciar");
     Route::post("aplicacion/ajax/desarrollo/estado/terminar", "UPanelControladorAplicacion@ajax_desarrolloEstadoTerminar");
     Route::post("aplicacion/ajax/desarrollo/informe/diseno", "UPanelControladorAplicacion@ajax_desarrolloInformeDiseno");
+    Route::post('aplicacion/ajax/upload/app', 'UPanelControladorAplicacion@ajax_subirApp');
 
-    //DESCARGAS BLANK
-    Route::get("aplicacion/ajax/desarrollo/descargar/logoApp/", "UPanelControladorAplicacion@blank_desarrolloDescargarLogoApp");
+    //DESCARGAS DE DISEÑOS
+    /*ANDROID*/
+    Route::get("aplicacion/ajax/desarrollo/descargar/disenoApp/android", "UPanelControladorAplicacion@blank_descargarDisenoAndroid");
+    
     
     
     //***************************************

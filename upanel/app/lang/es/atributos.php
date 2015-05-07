@@ -12,6 +12,7 @@ return array(
     "tipo.ticket.tecnico"=>"Técnico",
     "estado.app.sin_iniciar"=>"Sin iniciar",
     "estado.app.en_diseno"=>"En diseño",
+    "estado.app.estableciendo_textos"=>"Estableciendo Textos",
     "estado.app.listo_para_enviar"=>"Listo para enviar",
     "estado.app.en_cola"=>"En cola para desarrollo",
     "estado.app.en_desarrollo"=>"En desarrollo",

@@ -47,18 +47,28 @@ class Imagen {
 
         $copia_redim = imagecreatetruecolor($ancho_redim, $altura_redim);
 
+        $fondo = imagecolorallocate($copia_redim, 50, 255, 0);
+
+        imagefilledrectangle($copia_redim, 0, 0, $ancho_redim, $altura_redim, $fondo);
+        imagecolortransparent($copia_redim, $fondo);
+        
         //Redimensiona la imagen al proporcion adecuada
         imagecopyresized($copia_redim, $this->objectImage, 0, 0, 0, 0, $ancho_redim, $altura_redim, $this->ancho, $this->altura);
 
         //Almacenara la copia de la imagen redimensiona y recortada adecuadamente
         $copia_rec = imagecreatetruecolor($ancho, $altura);
 
+        $fondo = imagecolorallocate($copia_rec, 50, 255, 0);
+
+        imagefilledrectangle($copia_rec, 0, 0, $ancho, $altura, $fondo);
+        imagecolortransparent($copia_rec, $fondo);
+
         list($x_recorte, $y_recorte) = $this->calcularPosicionRecorte($ancho_redim, $altura_redim, $ancho, $altura);
 
         //Genera el recorte adecuado de la imagen
         imagecopy($copia_rec, $copia_redim, 0, 0, $x_recorte, $y_recorte, $ancho_redim, $altura_redim);
 
-        $destino = $ruta . $this->getNombre() . $nombre . "." . $this->extension;
+        $destino = $ruta . $nombre . "." . $this->extension;
 
         $this->almacenarImagen($copia_rec, $destino);
     }

@@ -21,6 +21,9 @@ class TablaProcesosApp extends Migration {
             $table->datetime("fecha_inicio")->nullable();
             $table->datetime("fecha_finalizacion")->nullable();
             $table->text("json_config");
+            $table->text("url_android")->nullable();
+            $table->text("url_windows")->nullable();
+            $table->text("url_iphone")->nullable();
         });
     }
 

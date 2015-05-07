@@ -1103,9 +1103,10 @@
             fnBefore = function (jqXHR) {
                 self.lock();
                 var outData = self.getOutData(jqXHR);
+                /**
                 if (!self.showPreview) {
                     return;
-                }
+                }**/
                 self.$preview.find('.file-preview-frame').each(function () {
                     var $thumb = $(this), $btnUpload = $thumb.find('.kv-file-upload'), $btnDelete = $thumb.find('.kv-file-remove');
                     addCss($thumb, 'file-uploading');

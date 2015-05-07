@@ -134,10 +134,10 @@ Class ConfiguracionApp extends Eloquent {
 
         $json = [];
 
-        $json["nombreApp"] = $app->nombre;
-        $json["logoApp"] = $app->url_logo;
-        $json["keyApp"] = $app->key_app;
-        $json["disenoApp"] = $app->diseno;
+        $json[Aplicacion::configNombreApp] = $app->nombre;
+        $json[Aplicacion::configLogoApp] = $app->url_logo;
+        $json[Aplicacion::configKeyApp] = $app->key_app;
+        $json[Aplicacion::configdisenoApp] = $app->diseno;
 
         foreach ($configs as $config) {
             $json[$config->clave] = $config->valor;

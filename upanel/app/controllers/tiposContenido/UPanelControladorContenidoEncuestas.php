@@ -82,8 +82,7 @@ class UPanelControladorContenidoEncuestas extends Controller {
         $app = Aplicacion::obtener();
         $nombreTC = TipoContenido::obtenerNombre($app->diseno, Contenido_Encuestas::nombre);
 
-        Aplicacion::aumentarNumeroBaseInfo();
-
+        
         //Archiva la encuesta publicada vigente
         DB::update("UPDATE " . ContenidoApp::nombreTabla() . " SET estado='" . ContenidoApp::ESTADO_ARCHIVADO . "' WHERE id_usuario='" . Auth::user()->id . "' and tipo='" . Contenido_Encuestas::nombre . "' and estado='" . ContenidoApp::ESTADO_PUBLICO . "'");
 
@@ -96,8 +95,7 @@ class UPanelControladorContenidoEncuestas extends Controller {
         $app = Aplicacion::obtener();
         $nombreTC = TipoContenido::obtenerNombre($app->diseno, Contenido_Encuestas::nombre);
 
-        Aplicacion::aumentarNumeroBaseInfo();
-
+       
         //Agrega
         if (!isset($data["id_encuesta"])) {
             Contenido_Encuestas::agregar($data, ContenidoApp::ESTADO_GUARDADO);

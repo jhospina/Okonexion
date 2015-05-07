@@ -427,3 +427,6 @@ a.link{
     background: gainsboro;
 }
 
+.btn[disabled]{
+  cursor: not-allowed;
+}

@@ -9,13 +9,13 @@ $iconosMenuID = array(App_Metro::iconoMenu1, App_Metro::iconoMenu2, App_Metro::i
 if (ConfiguracionApp::existeConfig(App_Metro::colorBarraApp))
     $colorBarraApp = ConfiguracionApp::obtenerValorConfig(App_Metro::colorBarraApp);
 else
-    $colorBarraApp = "#808080";
+    $colorBarraApp = "#000000";
 
 //MOSTRAR NOMBRE
 if (ConfiguracionApp::existeConfig(App_Metro::mostrarNombre))
     $mostrarNombre = ConfiguracionApp::obtenerValorConfig(App_Metro::mostrarNombre);
 else
-    $mostrarNombre = "soloTexto";
+    $mostrarNombre = "textoLogo";
 
 //ALINEACION NOMBRE
 if (ConfiguracionApp::existeConfig(App_Metro::alineacionNombre))
@@ -27,7 +27,7 @@ else
 if (ConfiguracionApp::existeConfig(App_Metro::colorNombreApp))
     $colorNombreApp = ConfiguracionApp::obtenerValorConfig(App_Metro::colorNombreApp);
 else
-    $colorNombreApp = "rgb(0,0,0)";
+    $colorNombreApp = "#FFFFFF";
 
 
 //Texto del boton del menu  #1
@@ -154,7 +154,7 @@ else
     @include("interfaz/mensaje/index",array("id_mensaje"=>3))
 
 
-    @if($app->estado==Aplicacion::ESTADO_LISTA_PARA_ENVIAR || $app->estado==Aplicacion::ESTADO_EN_DISENO || $app->estado==Aplicacion::ESTADO_TERMINADA)
+    @if($app->estado==Aplicacion::ESTADO_LISTA_PARA_ENVIAR || $app->estado==Aplicacion::ESTADO_ESTABLECIENTO_TEXTOS || $app->estado==Aplicacion::ESTADO_EN_DISENO || $app->estado==Aplicacion::ESTADO_TERMINADA)
 
     <form action="" method="POST" enctype="multipart/form-data" id="form">
 
@@ -172,7 +172,7 @@ else
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.barra_aplicacion")}}</h3>
+                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.barra_aplicacion")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.di.me.panel.titulo.barra_aplicacion.ayuda"))) </h3>
                     </div>
                     <div class="panel-body">
                         {{--COLOR DEL FONDO DE LA BARRA (1)--}}
@@ -229,9 +229,14 @@ else
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.primera_opcion")}}</h3>
+                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.primera_opcion")}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-1.PNG")}}"/></h3>
                     </div>
                     <div class="panel-body">
+                        
+                         <div class="well well-sm">
+                            {{trans("app.tipo.contenido.institucional.descripcion")}}
+                         </div>
+                        
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_1}}" id="{{App_Metro::txt_menuBtn_1}}" class="form-control input-lg" value="{{$txt_menuBtn_1}}"/></div>
 
                         {{--COLOR DEL FONDO (1)--}}
@@ -267,9 +272,14 @@ else
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.segunda_opcion")}}</h3>
+                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.segunda_opcion")}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-2.PNG")}}"/></h3>
                     </div>
                     <div class="panel-body">
+                        
+                        <div class="well well-sm">
+                            {{trans("app.tipo.contenido.noticias.descripcion")}}
+                         </div>
+                        
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_2}}" id="{{App_Metro::txt_menuBtn_2}}" class="form-control input-lg" value="{{$txt_menuBtn_2}}"/></div>
 
                         {{--COLOR DEL FONDO (2)--}}
@@ -306,9 +316,14 @@ else
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.tercera_opcion")}}</h3>
+                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.tercera_opcion")}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-3.PNG")}}"/></h3>
                     </div>
                     <div class="panel-body">
+                        
+                        <div class="well well-sm">
+                            {{trans("app.tipo.contenido.encuestas.descripcion")}}
+                         </div>
+                        
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_3}}" id="{{App_Metro::txt_menuBtn_3}}" class="form-control input-lg" value="{{$txt_menuBtn_3}}"/></div>
 
                         {{--COLOR DEL FONDO (3)--}}
@@ -345,9 +360,14 @@ else
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.cuarta_opcion")}}</h3>
+                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.cuarta_opcion")}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-4.PNG")}}"/></h3>
                     </div>
                     <div class="panel-body">
+                        
+                        <div class="well well-sm">
+                            {{trans("app.tipo.contenido.pqr.descripcion")}}
+                         </div>
+                        
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_4}}" id="{{App_Metro::txt_menuBtn_4}}" class="form-control input-lg" value="{{$txt_menuBtn_4}}"/></div>
 
                         {{--COLOR DEL FONDO (4)--}}

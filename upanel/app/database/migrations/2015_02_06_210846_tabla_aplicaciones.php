@@ -20,7 +20,9 @@ class TablaAplicaciones extends Migration {
             $table->char("diseno", 2);
             $table->char("estado", 2)->default("DI"); //indica el estado de la aplicacion ["CO"=> En Construcción,"CD"=>"En cola para desarrollo","DE"=>"En desarrollo","PC" => En Proceso de Actualización,"AC"=> Activa, "PE"=>En Proceso de Eliminación]
             $table->text("configuracion")->nullable(); //Aqui se almacena un texto JSON con todos los parametros de la configuracion
-            $table->integer("num_base_info");
+            $table->text("url_android")->nullable();
+            $table->text("url_windows")->nullable();
+            $table->text("url_iphone")->nullable();
             $table->timestamps();
         });
     }

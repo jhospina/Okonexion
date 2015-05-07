@@ -30,6 +30,20 @@ class UPanelControladorAplicacion extends Controller {
             return Redirect::to("aplicacion/basico");
     }
 
+    public function textos() {
+
+        //Valida el acceso solo para el usuario Regular
+        if (!is_null($acceso = User::validarAcceso(User::USUARIO_REGULAR)))
+            return $acceso;
+
+        $app = Aplicacion::obtener();
+
+        if (Aplicacion::existe())
+            return View::make("usuarios/tipo/regular/app/construccion/textos")->with("app", $app);
+        else
+            return Redirect::to("aplicacion/basico");
+    }
+
     public function desarrollo() {
 
         //Valida el acceso solo para el usuario Regular
@@ -53,11 +67,24 @@ class UPanelControladorAplicacion extends Controller {
             return $acceso;
 
 
-        $colaDesarrollo = ProcesoApp::where("actividad", "=", ProcesoApp::ACTIVIDAD_CONSTRUIR)->orderBy("id", "ASC")->paginate(30);
+        $colaDesarrollo = ProcesoApp::where("actividad", "=", ProcesoApp::ACTIVIDAD_CONSTRUIR)->where("fecha_finalizacion",null)->orderBy("id", "ASC")->paginate(30);
 
         return View::make("usuarios/tipo/soporteGeneral/app/colaDesarrollo")->with("colaDesarrollo", $colaDesarrollo);
     }
 
+    
+    public function historialDesarrollo(){
+         //Invalida el acceso para el usuario Regular
+        if (!is_null($acceso = User::invalidarAcceso(User::USUARIO_REGULAR)))
+            return $acceso;
+
+        $historial = ProcesoApp::whereNotNull("fecha_finalizacion")->orderBy("id", "DESC")->paginate(30);
+
+        return View::make("usuarios/tipo/soporteGeneral/app/historialDesarrollo")->with("historial", $historial);
+    }
+    
+    
+    
     /*     * ***************************************************************************
      *  LLAMADOS POST ********************************************************************
      * ************************************************************************ */
@@ -73,14 +100,14 @@ class UPanelControladorAplicacion extends Controller {
         $errores = "";
 
         if (strlen($data["nombre"]) <= 1) {
-            $errores.="<li>".trans("app.config.info.nombre.error")."</li>";
+            $errores.="<li>" . trans("app.config.info.nombre.error") . "</li>";
         }
         if (strlen($data["mockup"]) != 2) {
-            $errores.="<li>".trans("app.config.info.diseno.error")."</li>";
+            $errores.="<li>" . trans("app.config.info.diseno.error") . "</li>";
         }
 
         if (strlen($errores) > 0) {
-            return Redirect::back()->withInput()->with(User::mensaje("error", null, "<p>".trans("app.config.info.verificar_errores")."</p><ul>" . $errores . "</ul>", 3));
+            return Redirect::back()->withInput()->with(User::mensaje("error", null, "<p>" . trans("app.config.info.verificar_errores") . "</p><ul>" . $errores . "</ul>", 3));
         } else {
 
 
@@ -114,8 +141,27 @@ class UPanelControladorAplicacion extends Controller {
         if (is_array($response = AppDesing::guardarConfigDiseno($data, $app)))
             return Redirect::back()->withInput()->with(User::mensaje("error", null, $response[0], 3));
 
+
+        //Redirige a la seccion de textos
         if (is_bool($response) && $response == true)
-            return Redirect::to("aplicacion/desarrollo")->with(User::mensaje("exito", null,trans("app.config.post.exito"), 2));
+            return Redirect::to("aplicacion/textos")->with(User::mensaje("exito", null, trans("app.config.post.exito"), 2));
+    }
+
+    public function guardarTextos() {
+
+        //Valida el acceso solo para el usuario Regular
+        if (!is_null($acceso = User::validarAcceso(User::USUARIO_REGULAR)))
+            return $acceso;
+
+        $data = Input::all();
+        $app = Aplicacion::obtener();
+
+        if (is_string($response = AppDesing::guardarConfigTextos($data, $app)))
+            return Redirect::back()->withInput()->with(User::mensaje("error", null, $response, 3));
+
+        //Redirige a la seccion de textos
+        if (is_bool($response) && $response == true)
+            return Redirect::to("aplicacion/desarrollo")->with(User::mensaje("exito", null, trans("app.config.post.exito"), 2));
     }
 
     public function enviarDesarrollo() {
@@ -256,12 +302,12 @@ class UPanelControladorAplicacion extends Controller {
 
         //Verifica si las dimensiones de la imagen son iguales
         if (intval($width) != intval($height)) {
-            $output = ['error' => trans("app.config.imagen.error01",array("w"=>$width,"h"=>$height))];
+            $output = ['error' => trans("app.config.imagen.error01", array("w" => $width, "h" => $height))];
             return json_encode($output);
         }
 
         if (intval($width) < 256 && intval($height) < 256) {
-            $output = ['error' => trans("app.config.imagen.error02",array("width_objetivo"=>256,"height_objetivo"=>256,"width"=>$width,"height"=>$height))];
+            $output = ['error' => trans("app.config.imagen.error02", array("width_objetivo" => 256, "height_objetivo" => 256, "width" => $width, "height" => $height))];
             return json_encode($output);
         }
 
@@ -311,26 +357,97 @@ class UPanelControladorAplicacion extends Controller {
 
         $correo = new Correo();
 
-        $mensaje=trans("email.app.dep.aplicacion_en_desarrollo",array("nombre"=>$usuario->nombres,"app_nombre"=>$app->nombre,"fecha_inicio"=>$proceso->fecha_inicio));
-        
+        $mensaje = trans("email.app.dep.aplicacion_en_desarrollo", array("nombre" => $usuario->nombres, "app_nombre" => $app->nombre, "fecha_inicio" => $proceso->fecha_inicio));
+
         $correo->enviar(trans("app.config.dep.email.asunto.aplicacion_en_desarrollo"), $mensaje, $usuario->id);
 
         return json_encode(array("atendido_por" => Auth::user()->nombres, "fecha_inicio" => $proceso->fecha_inicio));
     }
 
     public function ajax_desarrolloEstadoTerminar() {
-        $id_aplicacion = Input::get("id_aplicacion");
         $id_proceso = Input::get("id_proceso");
+        $android = Input::get("android");
+        $windows = Input::get("windows");
+        $iphone = Input::get("iphone");
+        $observacion=Input::get("observacion");
 
         $proceso = ProcesoApp::find($id_proceso);
         $proceso->fecha_finalizacion = User::obtenerTiempoActual();
+        $proceso->observaciones=$observacion; 
+        
+
+        $app = Aplicacion::find($proceso->id_aplicacion);
+        $app->estado = Aplicacion::ESTADO_TERMINADA;
+        
+        $plats="";
+        
+        if (strlen($android) > 0){
+            $app->url_android = URL::to($android);
+            $proceso->url_android = URL::to($android);
+            $plats.="<img src='".URL::to("assets/img/android.png")."'/>";
+        }
+        if (strlen($windows) > 0){
+            $app->url_windows = URL::to($windows);
+            $proceso->url_windows = URL::to($windows);
+            $plats.="<img src='".URL::to("assets/img/windows.png")."'/>";
+        }
+        if (strlen($iphone) > 0){
+            $app->url_iphone = URL::to($iphone);
+            $proceso->url_iphone = URL::to($iphone);
+            $plats.="<img src='".URL::to("assets/img/ios.png")."'/>";
+        }
+        
+        $app->save();
         $proceso->save();
 
-        $app = Aplicacion::find($id_aplicacion);
-        $app->estado = Aplicacion::ESTADO_TERMINADA;
-        //$app->save();
+        $usuario=User::find($app->id_usuario);
+        
+        $output = [];
+        
+        /**
+         *  ENVIA UN CORREO AL USUARIO INDICANDO QUE SU APLICACIÓN ESTA LISTA
+         */
+        
+        $params=array("nombre" => $usuario->nombres, 
+            "app_nombre" => $app->nombre, 
+            "fecha_inicio" => $proceso->fecha_inicio,
+            "fecha_finalizacion"=>$proceso->fecha_finalizacion,
+            "plataformas"=>$plats,
+            "link"=>URL::to("aplicacion/desarrollo"));
+        
+        $correo = new Correo();
+        $mensaje = trans("email.app.dep.aplicacion_terminada", $params);
+        $correo->enviar(trans("app.config.dep.email.asunto.aplicacion_terminada",array("nombreApp"=>$app->nombre)), $mensaje, $usuario->id);
 
-        return "true";
+        
+
+        return json_encode($output);
+    }
+
+    public function ajax_subirApp() {
+
+        $id_proceso = Input::get("id_proceso");
+        $ID = Input::get("plataforma");
+
+ 
+        $output = [];
+
+        $proceso = ProcesoApp::find($id_proceso);
+
+        $app = Aplicacion::find($proceso->id_aplicacion);
+
+
+        $extension = strtolower(Input::file($ID)->getClientOriginalExtension());
+        //$size = Input::file($ID)->getSize();
+        $path = 'usuarios/uploads/' . $app->id_usuario . '/app/'.$id_proceso."/";
+        $apk = $app->nombre . "_" . $ID . "." . $extension;
+        Input::file($ID)->move($path, $apk);
+
+        $output["path"] = $path . $apk;
+        $output["nombreApp"] = $app->nombre;
+
+
+        return json_encode($output);
     }
 
     public function ajax_desarrolloInformeDiseno() {
@@ -339,14 +456,26 @@ class UPanelControladorAplicacion extends Controller {
             return;
         }
 
-        $id_proceso = Input::get("id_proceso");   
+        $id_proceso = Input::get("id_proceso");
         $proceso = ProcesoApp::find($id_proceso);
-       
-        return $proceso->json_config;
+
+        $json = json_decode($proceso->json_config, true);
+
+        $datos = array();
+
+        $datos[Aplicacion::configNombreApp] = $json[Aplicacion::configNombreApp];
+        $datos[Aplicacion::configLogoApp] = $json[Aplicacion::configLogoApp];
+        $datos[Aplicacion::configdisenoApp] = $json[Aplicacion::configdisenoApp];
+        $datos[Aplicacion::configKeyApp] = $json[Aplicacion::configKeyApp];
+
+        return json_encode($datos);
     }
 
-    //Descarga el logo de la aplicacion en tamaños de 256,128,114,56 pixeles complimidos en un zip
-    public function blank_desarrolloDescargarLogoApp() {
+    /** Descarga un archivo comprimido zip, con todos los archivos necesarios para el diseño de la aplicación en android
+     * 
+     * @return type
+     */
+    public function blank_descargarDisenoAndroid() {
         //Usuario autenticado
         if (!Auth::check())
             return;
@@ -355,17 +484,26 @@ class UPanelControladorAplicacion extends Controller {
         if (!is_null($acceso = User::invalidarAcceso(User::USUARIO_REGULAR)))
             return $acceso;
 
-        $imagen = $_GET["imagen"];
         $id_aplicacion = $_GET["id_app"];
         $id_proceso = $_GET["id_p"];
+
+
+        $app = Aplicacion::find($id_aplicacion);
+        $proceso = ProcesoApp::find($id_proceso);
+
         $ruta = public_path("usuarios/downloads/" . Auth::user()->id . "");
 
+        $ruta_android = $ruta . "/android" . $id_proceso . "/";
 
         //Crear la carpeta de descargas del usuario si este no existe...
         if (!file_exists($ruta))
             mkdir($ruta);
 
-        $nombreZip = "logoApp" . $id_aplicacion . "_" . $id_proceso . ".zip";
+        //Crea una carpeta para crear los archivos necesarios para android
+        if (!file_exists($ruta_android))
+            mkdir($ruta_android);
+
+        $nombreZip = $app->nombre . $id_aplicacion . "_android.zip";
         //Ruta de la archivo zip
         $archivoZIP = public_path("usuarios/downloads/" . $nombreZip);
 
@@ -373,41 +511,39 @@ class UPanelControladorAplicacion extends Controller {
         $zip = new ZipArchive;
         $zip->open($nombreZip, ZipArchive::CREATE);
 
-        // Obtener los nuevos tamaños
-        list($ancho, $alto) = getimagesize($imagen);
-        $desc = explode(".", $imagen);
-        $ext = end($desc); //Obtiene la extension de la imagen
+        //Obtiene el contenido config java del usuario en android
+        $java = AppDesing::plantillaConfigAndroid($app, $proceso->json_config);
+        //Crear el archivo java de configuracion de android del usuario
+        $ruta_javaConfig = $ruta_android . "AppConfig.java";
+        $fp = fopen($ruta_javaConfig, "c");
+        fwrite($fp, $java);
+        fclose($fp);
 
-        switch ($ext) {
-            case "jpg":
-                $origen = imagecreatefromjpeg($imagen);
-                break;
-            case "jpeg":
-                $origen = imagecreatefromjpeg($imagen);
-                break;
-            case "png":
-                $origen = imagecreatefrompng($imagen);
-                break;
-            case "gif":
-                $origen = imagecreatefromgif($imagen);
-                break;
-        }
+        //Añade el archivo config de Java para Android
+        $zip->addFile($ruta_javaConfig, "app/src/main/java/libreria/sistema/AppConfig.java");
 
+        $config = json_decode($proceso->json_config, true);
 
-        $dims = Aplicacion::$dim_logos;
+        AppDesing::prepararArchivosParaAndroid($zip, $app, $config, $ruta . "/");
 
-        for ($i = 0; $i < count($dims); $i++) {
-            // Crea la imagen dimensionada
-            $nombreImagen = "icon-" . $dims[$i] . ".png";
-            $imagen = imagecreatetruecolor($dims[$i], $dims[$i]);
-            imagecopyresized($imagen, $origen, 0, 0, 0, 0, $dims[$i], $dims[$i], $ancho, $alto);
-            imagepng($imagen, $ruta . "/" . $nombreImagen);
-            //Agrega la imagen de 256 al archivo sip
-            $zip->addFile($ruta . "/" . $nombreImagen, $nombreImagen);
-        }
+        //Carga el logo de la aplicaciòn
+        $logoApp = new Imagen($config[Aplicacion::configLogoApp]);
 
-        //IMAGEN DE LOADING
-        $zip->addFile($ruta . "/" . "icon-" . $dims[0] . ".png", "loading-logo.png");
+        $logoApp->crearCopia(192, 192, "ic_launcherx192", $ruta . "/");
+        $zip->addFile($ruta . "/" . "ic_launcherx192." . $logoApp->getExtension(), "app/src/main/res/mipmap-xxxhdpi/ic_launcher.png");
+        //mipmap-xxhdpi
+        $logoApp->crearCopia(144, 144, "ic_launcherx144", $ruta . "/");
+        $zip->addFile($ruta . "/" . "ic_launcherx144." . $logoApp->getExtension(), "app/src/main/res/mipmap-xxhdpi/ic_launcher.png");
+        //mipmap-xhdpi
+        $logoApp->crearCopia(96, 96, "ic_launcherx96", $ruta . "/");
+        $zip->addFile($ruta . "/" . "ic_launcherx96." . $logoApp->getExtension(), "app/src/main/res/mipmap-xhdpi/ic_launcher.png");
+        //mipmap-mdpi
+        $logoApp->crearCopia(48, 48, "ic_launcherx48", $ruta . "/");
+        $zip->addFile($ruta . "/" . "ic_launcherx48." . $logoApp->getExtension(), "app/src/main/res/mipmap-mdpi/ic_launcher.png");
+        //mipmap-hdpi
+        $logoApp->crearCopia(72, 72, "ic_launcherx72", $ruta . "/");
+        $zip->addFile($ruta . "/" . "ic_launcherx72." . $logoApp->getExtension(), "app/src/main/res/mipmap-hdpi/ic_launcher.png");
+
         $zip->close();
 
         //Mueve la el archivo zip a la ruta final

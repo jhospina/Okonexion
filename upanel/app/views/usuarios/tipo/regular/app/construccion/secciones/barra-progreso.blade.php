@@ -7,22 +7,27 @@ if (Aplicacion::existe()) {
     switch ($app->estado) {
         //En Construcciòn
         case Aplicacion::ESTADO_EN_DISENO:
-            $progreso = 20;
+            $progreso = 15;
+            $texto = Aplicacion::obtenerNombreEstado($app->estado);
+            $classColor = "progress-bar-default";
+            break;
+        case Aplicacion::ESTADO_ESTABLECIENTO_TEXTOS:
+            $progreso = 30;
             $texto = Aplicacion::obtenerNombreEstado($app->estado);
             $classColor = "progress-bar-default";
             break;
         case Aplicacion::ESTADO_LISTA_PARA_ENVIAR:
-            $progreso = 35;
+            $progreso = 45;
             $texto = Aplicacion::obtenerNombreEstado($app->estado);
             $classColor = "progress-bar-info-le";
             break;
         case Aplicacion::ESTADO_EN_COLA_PARA_DESARROLLO:
-            $progreso = 55;
+            $progreso = 60;
             $texto = Aplicacion::obtenerNombreEstado($app->estado);
             $classColor = "progress-bar-info";
             break;
         case Aplicacion::ESTADO_EN_DESARROLLO:
-            $progreso = 85;
+            $progreso = 80;
             $texto = Aplicacion::obtenerNombreEstado($app->estado);
             $classColor = "progress-bar-warning";
             break;

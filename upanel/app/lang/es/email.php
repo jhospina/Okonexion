@@ -27,8 +27,14 @@ return array(
     "------------------------------------------------------------" . "</p>" .
     "<p>Para responder este ticket ingresa a :link</p>",
     "app.dep.aplicacion_en_desarrollo" => "<p>Hola :nombre</p>" .
-    "<p>Tenemos muy buenas noticias para ti. Tu aplicación <b>:app_nombre</b> ha empezado su fase de desarrollo y muy pronto estará disponible para que empieces a utilizarla. Te avisaremos cuando la fase de desarrollo haya concluido y tu aplicación esté terminada.</p>" .
+    "<p>Tenemos noticias para ti. Tu aplicación <b>:app_nombre</b> ha empezado su fase de desarrollo y muy pronto estará disponible para que empieces a utilizarla. Te avisaremos cuando la fase de desarrollo haya concluido y tu aplicación esté terminada.</p>" .
     "<p><b>Hora de inicio: </b>:fecha_inicio</p>",
+    "app.dep.aplicacion_terminada" => "<p>Hola :nombre</p>" .
+    "<p>Tenemos muy buenas noticias para ti. Tu aplicación <b>:app_nombre</b> ha finalizado su fase de desarrollo y ya se encuentra disponible para que lo descargues, lo distribuyas y lo utilices a tu gusto.</p>" .
+    "<p><b>Hora de inicio: </b>:fecha_inicio</p>".
+    "<p><b>Hora de finalización: </b>:fecha_finalizacion</p></br>".
+    "<p>Ingresa a :link para descargarlo.</p>".
+    "<p>:plataformas</p>",
     "asunto.confirmacion" => "Confirmación de correo electrónico",
     "asunto.activacion" => "Activación de tu cuenta",
     "asunto.bienvenida" => "¡Bienvenido a Okonexion!",

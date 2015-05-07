@@ -4,13 +4,13 @@ Class Aplicacion extends Eloquent {
 
     protected $table = 'aplicaciones';
     protected $fillable = array('id_usuario', 'nombre', 'key_app', 'url_logo', 'diseno', "estado", "configuracion");
-    public static $dim_logos = array(256, 128, 114, 32, 16); // Arreglo que contiene los tamaños del logo en pixeles de la aplicaion, cuando se va exportar.
-
+    
     //********************************************************
     //ESTADOS DE LA APLICACION********************************
     //********************************************************
 
     const ESTADO_EN_DISENO = "DI";
+    const ESTADO_ESTABLECIENTO_TEXTOS = "ET";
     const ESTADO_LISTA_PARA_ENVIAR = "LE";
     const ESTADO_EN_COLA_PARA_DESARROLLO = "CD";
     const ESTADO_EN_DESARROLLO = "DE";
@@ -18,6 +18,14 @@ Class Aplicacion extends Eloquent {
     const ESTADO_EN_PROCESO_DE_ACTUALIZACION = "PA";
     const ESTADO_APLICACION_ACTIVA = "AA";
     const ESTADO_APLICACION_INACTIVA = "AI";
+    
+    //********************************************************
+    //DATOS DE CONFIGURACION********************************
+    //********************************************************
+    const configLogoApp="logoApp";
+    const configNombreApp="nombreApp";
+    const configKeyApp="keyApp";
+    const configdisenoApp="disenoApp";
 
     /** Retorna una array con las URL y el nombre de los diseños establecidos para una aplicacion
      * 
@@ -49,13 +57,12 @@ Class Aplicacion extends Eloquent {
      */
     public static function obtener() {
         $apps = Aplicacion::where("id_usuario", "=", Auth::user()->id)->get();
-        $app = new Aplicacion;
         if (count($apps) > 0) {
             foreach ($apps as $app)
                 break;
             return $app;
         } else {
-            return $app;
+            return null;
         }
     }
 
@@ -113,6 +120,7 @@ Class Aplicacion extends Eloquent {
      */
     public static function obtenerNombreEstado($sigla) {
         $estados = array(Aplicacion::ESTADO_EN_DISENO => trans("atributos.estado.app.en_diseno"),
+            Aplicacion::ESTADO_ESTABLECIENTO_TEXTOS => trans("atributos.estado.app.estableciendo_textos"),
             Aplicacion::ESTADO_LISTA_PARA_ENVIAR => trans("atributos.estado.app.listo_para_enviar"),
             Aplicacion::ESTADO_EN_COLA_PARA_DESARROLLO => trans("atributos.estado.app.en_cola"),
             Aplicacion::ESTADO_EN_DESARROLLO => trans("atributos.estado.app.en_desarrollo"),
@@ -159,11 +167,6 @@ Class Aplicacion extends Eloquent {
             return null;
     }
 
-    static function aumentarNumeroBaseInfo() {
-        $app = Aplicacion::obtener();
-        $app->num_base_info = intval($app->num_base_info) + 1;
-        $app->save();
-    }
 
     //****************************************************
     //RELACIONES CON OTROS MODELOS***************************

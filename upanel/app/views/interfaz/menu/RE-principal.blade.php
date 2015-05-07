@@ -5,6 +5,7 @@
             <ul class="dropdown-menu">
                 <li><a href="{{URL::to("aplicacion/basico")}}"><span class="glyphicon glyphicon-pencil"></span> {{trans("interfaz.menu.principal.mi_aplicacion.configuracion.datos_basicos")}}</a></li>
                 <li @if(!Aplicacion::existe()) class="disabled" @endif><a @if(Aplicacion::existe())href="{{URL::to("aplicacion/apariencia")}}"@endif><span class="glyphicon glyphicon-star"></span> {{trans("interfaz.menu.principal.mi_aplicacion.configuracion.apariencia")}}</a></li>
+                <li @if(!Aplicacion::existe()) class="disabled" @endif><a @if(Aplicacion::existe())href="{{URL::to("aplicacion/textos")}}"@endif><span class="glyphicon glyphicon-font"></span> {{trans("interfaz.menu.principal.mi_aplicacion.configuracion.textos")}}</a></li>
             </ul>
         </li>
         @if(Aplicacion::existe())
@@ -15,10 +16,10 @@
              <a @if(Aplicacion::existe())href="{{URL::to("aplicacion/desarrollo")}}"@endif>
             @if(Aplicacion::existe())
             @if(Aplicacion::estaTerminada($app->estado)) <span class="glyphicon glyphicon-download-alt"></span> {{trans("interfaz.menu.principal.mi_aplicacion.descargas")}} @else
-                <span class="glyphicon glyphicon-time"></span> {{trans("interfaz.menu.principal.mi_aplicacion.desarrollo)")}}
+                <span class="glyphicon glyphicon-time"></span> {{trans("interfaz.menu.principal.mi_aplicacion.desarrollo")}}
                 @endif
                 @else
-                <span class="glyphicon glyphicon-time"></span> {{trans("interfaz.menu.principal.mi_aplicacion.desarrollo)")}}
+                <span class="glyphicon glyphicon-time"></span> {{trans("interfaz.menu.principal.mi_aplicacion.desarrollo")}}
                 @endif
             </a>
         </li>

@@ -41,6 +41,8 @@ return array(
     "info.color_fondo" => "Color del fondo",
     "info.icono" => "Icono",
     "info.fecha_inicio" => "Fecha de inicio",
+    "info.fecha_finalizacion" => "Fecha de finalización",
+    "info.plataformas"=>"Plataformas",
     "info.cerrar" => "Cerrar",
     "info.enviar" => "Enviar",
     "info.administrar" => "Administrar",
@@ -110,4 +112,5 @@ return array(
     "info.mensaje"=>"Mensaje",
     "info.responder"=>"Responder",
     "info.mensaje_enviado"=>"Mensaje enviado",
+    "info.subido"=>"subido con exito",
 );

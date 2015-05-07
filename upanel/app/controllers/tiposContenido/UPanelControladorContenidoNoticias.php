@@ -78,8 +78,7 @@ class UPanelControladorContenidoNoticias extends Controller {
         if (!is_null($valid = Contenido_Noticias::validar($data)))
             return $valid;
 
-        Aplicacion::aumentarNumeroBaseInfo();
-
+        
         //Agrega una nueva noticia
         if (!isset($data["id_noticia"])) {
             Contenido_Noticias::agregar($data, ContenidoApp::ESTADO_PUBLICO);
@@ -102,8 +101,7 @@ class UPanelControladorContenidoNoticias extends Controller {
             return $valid;
 
 
-        Aplicacion::aumentarNumeroBaseInfo();
-
+        
         //Agrega una nueva noticia
         if (!isset($data["id_noticia"])) {
             Contenido_Noticias::agregar($data, ContenidoApp::ESTADO_GUARDADO);

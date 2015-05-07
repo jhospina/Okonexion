@@ -92,8 +92,8 @@ if ($app->estado == Aplicacion::ESTADO_EN_DESARROLLO) {
     <div class="well well-lg" style="padding: 10px;" id="content-upload-android">
         <table class="table" style="margin-bottom:0px;">
             <tr>
-                <td style="vertical-align:middle;border:0px;">
-                    <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {{trans("app.config.dep.descargar.info.android",array("nombre_app"=>$app->nombre))}}</a>
+                <td style="vertical-align:middle;border:0px;width:80%;">
+                    <a href="{{$app->url_android}}" @if(strlen($app->url_android)==0)disabled="disabled"@endif style="width:60%" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {{trans("app.config.dep.descargar.info.android",array("nombre_app"=>$app->nombre))}}</a>
                 </td>
                 <td>
                     <a class="tooltip-right" rel="tooltip" title="Android"> 
@@ -107,8 +107,8 @@ if ($app->estado == Aplicacion::ESTADO_EN_DESARROLLO) {
     <div class="well well-lg" style="padding: 10px;" id="content-upload-windows">
         <table class="table" style="margin-bottom:0px;">
             <tr>
-                <td style="vertical-align:middle;border:0px;">
-                    <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {{trans("app.config.dep.descargar.info.windows",array("nombre_app"=>$app->nombre))}}</a>
+                <td style="vertical-align:middle;border:0px;width:80%;">
+                    <a href="{{$app->url_windows}}" @if(strlen($app->url_windows)==0)disabled="disabled"@endif style="width:60%" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {{trans("app.config.dep.descargar.info.windows",array("nombre_app"=>$app->nombre))}}</a>
                 </td>
                 <td>
                     <a class="tooltip-right" rel="tooltip" title="Windows Phone"> 
@@ -122,8 +122,8 @@ if ($app->estado == Aplicacion::ESTADO_EN_DESARROLLO) {
     <div class="well well-lg" style="padding: 10px;" id="content-upload-ios">
         <table class="table" style="margin-bottom:0px;">
             <tr>
-                <td style="vertical-align:middle;border:0px;">
-                    <a href="#" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {{trans("app.config.dep.descargar.info.iphone",array("nombre_app"=>$app->nombre))}}</a>
+                <td style="vertical-align:middle;border:0px;width:80%;">
+                    <a href="{{$app->url_iphone}}" @if(strlen($app->url_iphone)==0)disabled="disabled"@endif style="width:60%" class="btn btn-primary"><span class="glyphicon glyphicon-download"></span> {{trans("app.config.dep.descargar.info.iphone",array("nombre_app"=>$app->nombre))}}</a>
                 </td>
                 <td>
                     <a class="tooltip-right" rel="tooltip" title="IOS (Iphone)"> 
@@ -151,8 +151,8 @@ if ($app->estado == Aplicacion::ESTADO_EN_DESARROLLO) {
                {{trans("app.config.dep.info.pregunta.enviar.descripcion")}}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">{{trans("app.info.cerrar")}}</button>
-                <button type="button" class="btn btn-primary" id="btn-confirmar">{{trans("app.info.enviar")}}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{{trans("otros.info.cerrar")}}</button>
+                <button type="button" class="btn btn-primary" id="btn-confirmar">{{trans("otros.info.enviar")}}</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -169,10 +169,10 @@ if ($app->estado == Aplicacion::ESTADO_EN_DESARROLLO) {
 
         $('#myModal').modal('hide');
 
-        jQuery("#btn-enviar").html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('app.info.enviando')}}...");
+        jQuery("#btn-enviar").html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('otros.info.enviando')}}...");
         jQuery("#btn-enviar").attr("disabled", "disabled");
         $("#progress-bar").animate({width: "55%"}, 2000, function () {
-            $("#text-progress").html("55% (En cola para desarrollo)");
+            $("#text-progress").html("55% ({{Aplicacion::obtenerNombreEstado(Aplicacion::ESTADO_EN_COLA_PARA_DESARROLLO)}})");
             $(this).removeClass("progress-bar-default");
             $(this).addClass("progress-bar-info");
         });
