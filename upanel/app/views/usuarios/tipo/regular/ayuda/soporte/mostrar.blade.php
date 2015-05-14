@@ -62,7 +62,7 @@ if (is_numeric($ticket->usuario_soporte)) {
 <div class="col-lg-4">
     <div class="panel panel-primary">
         <div class="panel-heading">
-            <h3 class="panel-title">{{Util::convertirMayusculas(trans("menu_ayuda.soporte.tickets.col.tipo"))}}</h3>
+            <h3 class="panel-title">{{Util::convertirMayusculas(trans("menu_ayuda.soporte.tickets.col.estado"))}}</h3>
         </div>
         <div class="panel-body ticket-{{$ticket->estado}}">
             {{$ticket->estado}}

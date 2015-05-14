@@ -30,7 +30,7 @@
     <body>
 
         {{--MENSAJES EMERGENTES PARA EL USUARIO--}}
-        @include("interfaz/mensaje/index",array("id_mensaje"=>1))
+        @include("interfaz/mensaje/index",array("id_mensaje"=>1,"param_mensaje"=>"msj-header"))
 
 
         <nav class="navbar navbar-inverse" id="menu">

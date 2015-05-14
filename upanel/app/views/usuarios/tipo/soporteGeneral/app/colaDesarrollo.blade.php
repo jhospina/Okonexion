@@ -21,6 +21,7 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
 <div class="well well-sm">
     <a href="{{URL::to("aplicacion/desarrollo/historial")}}" class="btn btn-primary"><span class="glyphicon glyphicon-list-alt"></span> {{trans("app.historialDep.titulo")}}</a>
 </div>
+
  
 <table class="table table-striped">
     <tr><th>{{Util::convertirMayusculas(trans("otros.info.fecha_solicitud"))}}</th>

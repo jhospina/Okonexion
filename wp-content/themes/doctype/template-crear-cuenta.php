@@ -41,8 +41,8 @@ else
         <?php if ($response == null || $response=="error"): ?>
 
             <div class="contact-form-wrapper" style="margin-bottom:20px;">
-                <form id="form_cuenta" method="post" action="http://<?php echo $_SERVER["SERVER_NAME"] ?>/upanel/public/usuario">
-                    <h2>Para crear una cuenta en Webox debes rellenar el siguiente formulario</h2>
+                <form id="form_cuenta" method="post" action="http://okonexion.com/upanel/public/usuario">
+                    <h2>Para crear una cuenta en Okonexion debes rellenar el siguiente formulario</h2>
                     <div class="grids">
                         <div class="msj-error" id="msj-error">Algunos campos ingresados están incorrectos por favor corrígelos:</br><ul style="margin: 5px;" id="error-description"></ul></div>
                         <p class="grid-6">
@@ -73,9 +73,9 @@ else
                             <input style="color: #fff;font-weight: bold;text-align: center;text-transform: uppercase; line-height: 1;-moz-transition: all 0.35s;-o-transition: all 0.35s;-webkit-transition: all 0.35s;transition: all 0.35s;background-color: #00b7e5;" type="button" id="submitted" class="contact-form-button" name="submitted" value="Crear Cuenta">
                         </p>
                     </div>
+                    <input type="hidden" name="url" value="<?php echo ($_SERVER['HTTPS'])?"https://":"http://"; echo $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];?>"/>
                 </form>
             </div>
-
 
             <script>
 

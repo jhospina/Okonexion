@@ -19,6 +19,10 @@ else
 
 @section("titulo") {{trans("interfaz.menu.principal.ayuda.soporte")}}: {{trans("menu_ayuda.soporte.tickets.info.atencion_cliente")}} @stop
 
+@section("css")
+@include("usuarios/tipo/regular/ayuda/soporte/comp/css-tipos")
+@stop
+
 @section("contenido") 
 
 <h1>{{trans("interfaz.menu.principal.ayuda.soporte")}}: {{trans("menu_ayuda.soporte.tickets.info.atencion_cliente")}}</h1>
@@ -31,12 +35,12 @@ else
 
 <div class="well">
     <p class="text-justify">
-    {{trans("menu_ayuda.soporte.general.descripcion")}}
+        {{trans("menu_ayuda.soporte.general.descripcion")}}
     </p>
 </div>
 
 <div class="col-lg-12" style="font-size: 28px;margin-bottom: 20px;">
-    <span class="glyphicon glyphicon-globe"></span> {{trans("menu_ayuda.soporte.titulo")}}
+    <span class="glyphicon glyphicon-globe"></span> Tickets
 </div>
 
 <hr style="clear: both;margin-bottom: 10px;">
@@ -62,6 +66,9 @@ else
                     <option value="{{Ticket::TIPO_COMERCIAL}}"@if($tipo==Ticket::TIPO_COMERCIAL){{"selected"}}@endif>{{Ticket::obtenerNombreTipo(Ticket::TIPO_COMERCIAL)}}</option>
                     <option value="{{Ticket::TIPO_FACTURACION}}"@if($tipo==Ticket::TIPO_FACTURACION){{"selected"}}@endif>{{Ticket::obtenerNombreTipo(Ticket::TIPO_FACTURACION)}}</option>
                     <option value="{{Ticket::TIPO_TECNICO}}"@if($tipo==Ticket::TIPO_TECNICO){{"selected"}}@endif>{{Ticket::obtenerNombreTipo(Ticket::TIPO_TECNICO)}}</option>
+                    @if (User::esSuperAdmin() || Auth::user()->instancia == User::PARAM_INSTANCIA_SUPER_ADMIN)
+                    <option value="{{Ticket::TIPO_ESPECIAL}}"@if($tipo==Ticket::TIPO_ESPECIAL){{"selected"}}@endif>{{Ticket::obtenerNombreTipo(Ticket::TIPO_ESPECIAL)}}</option>
+                    @endif
                 </optgroup>
             </select>
         </div>
@@ -86,7 +93,10 @@ else
         <th>{{trans("menu_ayuda.soporte.tickets.col.atendido")}}</th>
         <th>{{trans("menu_ayuda.soporte.tickets.col.asunto")}}</th>
         <th>{{trans("menu_ayuda.soporte.tickets.col.tipo")}}</th>
-        <th>{{trans("menu_ayuda.soporte.tickets.col.fecha")}}</th>
+        <th>{{trans("otros.info.ultima_actualizacion")}}</th>
+        @if (User::esSuperAdmin() || Auth::user()->instancia == User::PARAM_INSTANCIA_SUPER_ADMIN)
+        <th>{{trans("otros.info.instancia")}}</th>           
+        @endif
         <th>{{trans("menu_ayuda.soporte.tickets.col.estado")}}</th>
         <th></th>
     </tr>
@@ -106,7 +116,18 @@ else
         <td>{{$soporte}}</td>
         <td>{{$ticket->asunto}}</td>
         <td>{{$ticket->tipo}}</td>
-        <td>{{$ticket->fecha}}</td>
+        <td>{{trans("otros.info.hace")}} {{Util::calcularDiferenciaFechas($ticket->updated_at,Util::obtenerTiempoActual());}}</td>
+
+        @if (User::esSuperAdmin() || Auth::user()->instancia == User::PARAM_INSTANCIA_SUPER_ADMIN)
+        <td> 
+            @if($cliente->instancia==User::PARAM_INSTANCIA_SUPER_ADMIN)
+            {{trans("instancias.default.super")}}
+            @else
+            <?php $instancia = Instancia::find($cliente->instancia); ?>
+            {{$instancia->empresa}}  
+            @endif
+        </td>
+        @endif
         <td class="ticket-{{$ticket->estado}}">{{$ticket->estado}}</td>
         <td class="text-center"><a href="{{Route("soporte.show",$ticket->id)}}"><button class="btn-xs btn-info"><span class="glyphicon glyphicon-exclamation-sign"></span> {{trans("menu_ayuda.soporte.tickets.btn.ver_atender")}}</button></a></td>
     </tr>

@@ -3,6 +3,11 @@
 class UPanelControladorContenidoInstitucional extends Controller {
 
     public function institucional() {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         if (!Aplicacion::existe())
             return Redirect::to("/");
         $app = Aplicacion::obtener();
@@ -16,6 +21,11 @@ class UPanelControladorContenidoInstitucional extends Controller {
     }
 
     public function institucional_vistaAgregar() {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         if (!Aplicacion::existe())
             return Redirect::to("/");
         $app = Aplicacion::obtener();
@@ -26,6 +36,11 @@ class UPanelControladorContenidoInstitucional extends Controller {
     }
 
     public function institucional_vistaEditar($id_inst) {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         if (!Aplicacion::existe())
             return Redirect::to("/");
         $app = Aplicacion::obtener();
@@ -45,6 +60,11 @@ class UPanelControladorContenidoInstitucional extends Controller {
     }
 
     public function institucional_guardar() {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         $data = Input::all();
         $app = Aplicacion::obtener();
         $nombreTC = TipoContenido::obtenerNombre($app->diseno, Contenido_Institucional::nombre);
@@ -53,8 +73,7 @@ class UPanelControladorContenidoInstitucional extends Controller {
         if (!is_null($valid = Contenido_Institucional::validar($data)))
             return $valid;
 
-
-        
+ 
         //Agrega una nueva informacion institucional
         if (!isset($data["id_inst"])) {
             Contenido_Institucional::agregar($data, ContenidoApp::ESTADO_GUARDADO);
@@ -67,6 +86,11 @@ class UPanelControladorContenidoInstitucional extends Controller {
     }
 
     public function institucional_publicar() {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         $data = Input::all();
         $app = Aplicacion::obtener();
         $nombreTC = TipoContenido::obtenerNombre($app->diseno, Contenido_Institucional::nombre);

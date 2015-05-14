@@ -7,6 +7,10 @@ class UPanelControladorAplicacion extends Controller {
 
     public function basico() {
 
+        if (!Auth::check()) {
+            return User::login();
+        }
+
         //Valida el acceso solo para el usuario Regular
         if (!is_null($acceso = User::validarAcceso(User::USUARIO_REGULAR)))
             return $acceso;
@@ -17,6 +21,10 @@ class UPanelControladorAplicacion extends Controller {
     }
 
     public function apariencia() {
+
+        if (!Auth::check()) {
+            return User::login();
+        }
 
         //Valida el acceso solo para el usuario Regular
         if (!is_null($acceso = User::validarAcceso(User::USUARIO_REGULAR)))
@@ -32,6 +40,11 @@ class UPanelControladorAplicacion extends Controller {
 
     public function textos() {
 
+        if (!Auth::check()) {
+            return User::login();
+        }
+
+
         //Valida el acceso solo para el usuario Regular
         if (!is_null($acceso = User::validarAcceso(User::USUARIO_REGULAR)))
             return $acceso;
@@ -45,6 +58,10 @@ class UPanelControladorAplicacion extends Controller {
     }
 
     public function desarrollo() {
+
+        if (!Auth::check()) {
+            return User::login();
+        }
 
         //Valida el acceso solo para el usuario Regular
         if (!is_null($acceso = User::validarAcceso(User::USUARIO_REGULAR)))
@@ -62,29 +79,44 @@ class UPanelControladorAplicacion extends Controller {
     }
 
     public function colaDesarrollo() {
+
+        if (!Auth::check()) {
+            return User::login();
+        }
+
         //Invalida el acceso para el usuario Regular
         if (!is_null($acceso = User::invalidarAcceso(User::USUARIO_REGULAR)))
             return $acceso;
+        
+        if (Auth::user()->instancia!=User::PARAM_INSTANCIA_SUPER_ADMIN) {
+            return User::login();
+        }
 
 
-        $colaDesarrollo = ProcesoApp::where("actividad", "=", ProcesoApp::ACTIVIDAD_CONSTRUIR)->where("fecha_finalizacion",null)->orderBy("id", "ASC")->paginate(30);
+        $colaDesarrollo = ProcesoApp::where("actividad", "=", ProcesoApp::ACTIVIDAD_CONSTRUIR)->where("fecha_finalizacion", null)->orderBy("id", "ASC")->paginate(30);
 
         return View::make("usuarios/tipo/soporteGeneral/app/colaDesarrollo")->with("colaDesarrollo", $colaDesarrollo);
     }
 
-    
-    public function historialDesarrollo(){
-         //Invalida el acceso para el usuario Regular
+    public function historialDesarrollo() {
+
+        if (!Auth::check()) {
+            return User::login();
+        }
+
+        //Invalida el acceso para el usuario Regular
         if (!is_null($acceso = User::invalidarAcceso(User::USUARIO_REGULAR)))
             return $acceso;
 
-        $historial = ProcesoApp::whereNotNull("fecha_finalizacion")->orderBy("id", "DESC")->paginate(30);
+        if (User::esSuperAdmin() || Auth::user()->instancia==User::PARAM_INSTANCIA_SUPER_ADMIN)
+            $historial = ProcesoApp::whereNotNull("fecha_finalizacion")->orderBy("id", "DESC")->paginate(30);
+        else
+            $historial = ProcesoApp::where("instancia", Auth::user()->instancia)->whereNotNull("fecha_finalizacion")->orderBy("id", "DESC")->paginate(30);
+
 
         return View::make("usuarios/tipo/soporteGeneral/app/historialDesarrollo")->with("historial", $historial);
     }
-    
-    
-    
+
     /*     * ***************************************************************************
      *  LLAMADOS POST ********************************************************************
      * ************************************************************************ */
@@ -182,6 +214,7 @@ class UPanelControladorAplicacion extends Controller {
                 $proceso->actividad = ProcesoApp::ACTIVIDAD_CONSTRUIR; // Construccion
                 $proceso->fecha_creacion = User::obtenerTiempoActual();
                 $proceso->json_config = ConfiguracionApp::obtenerJSON($app->id);
+                $proceso->instancia = Auth::user()->instancia;
                 $proceso->save();
 
                 /* FUNCTION COLOCADA TEMPORALMENTE********************* */
@@ -369,57 +402,56 @@ class UPanelControladorAplicacion extends Controller {
         $android = Input::get("android");
         $windows = Input::get("windows");
         $iphone = Input::get("iphone");
-        $observacion=Input::get("observacion");
+        $observacion = Input::get("observacion");
 
         $proceso = ProcesoApp::find($id_proceso);
         $proceso->fecha_finalizacion = User::obtenerTiempoActual();
-        $proceso->observaciones=$observacion; 
-        
+        $proceso->observaciones = $observacion;
+
 
         $app = Aplicacion::find($proceso->id_aplicacion);
         $app->estado = Aplicacion::ESTADO_TERMINADA;
-        
-        $plats="";
-        
-        if (strlen($android) > 0){
+
+        $plats = "";
+
+        if (strlen($android) > 0) {
             $app->url_android = URL::to($android);
             $proceso->url_android = URL::to($android);
-            $plats.="<img src='".URL::to("assets/img/android.png")."'/>";
+            $plats.="<img src='" . URL::to("assets/img/android.png") . "'/>";
         }
-        if (strlen($windows) > 0){
+        if (strlen($windows) > 0) {
             $app->url_windows = URL::to($windows);
             $proceso->url_windows = URL::to($windows);
-            $plats.="<img src='".URL::to("assets/img/windows.png")."'/>";
+            $plats.="<img src='" . URL::to("assets/img/windows.png") . "'/>";
         }
-        if (strlen($iphone) > 0){
+        if (strlen($iphone) > 0) {
             $app->url_iphone = URL::to($iphone);
             $proceso->url_iphone = URL::to($iphone);
-            $plats.="<img src='".URL::to("assets/img/ios.png")."'/>";
+            $plats.="<img src='" . URL::to("assets/img/ios.png") . "'/>";
         }
-        
+
         $app->save();
         $proceso->save();
 
-        $usuario=User::find($app->id_usuario);
-        
+        $usuario = User::find($app->id_usuario);
+
         $output = [];
-        
+
         /**
          *  ENVIA UN CORREO AL USUARIO INDICANDO QUE SU APLICACIÓN ESTA LISTA
          */
-        
-        $params=array("nombre" => $usuario->nombres, 
-            "app_nombre" => $app->nombre, 
+        $params = array("nombre" => $usuario->nombres,
+            "app_nombre" => $app->nombre,
             "fecha_inicio" => $proceso->fecha_inicio,
-            "fecha_finalizacion"=>$proceso->fecha_finalizacion,
-            "plataformas"=>$plats,
-            "link"=>URL::to("aplicacion/desarrollo"));
-        
+            "fecha_finalizacion" => $proceso->fecha_finalizacion,
+            "plataformas" => $plats,
+            "link" => URL::to("aplicacion/desarrollo"));
+
         $correo = new Correo();
         $mensaje = trans("email.app.dep.aplicacion_terminada", $params);
-        $correo->enviar(trans("app.config.dep.email.asunto.aplicacion_terminada",array("nombreApp"=>$app->nombre)), $mensaje, $usuario->id);
+        $correo->enviar(trans("app.config.dep.email.asunto.aplicacion_terminada", array("nombreApp" => $app->nombre)), $mensaje, $usuario->id);
 
-        
+
 
         return json_encode($output);
     }
@@ -429,7 +461,7 @@ class UPanelControladorAplicacion extends Controller {
         $id_proceso = Input::get("id_proceso");
         $ID = Input::get("plataforma");
 
- 
+
         $output = [];
 
         $proceso = ProcesoApp::find($id_proceso);
@@ -439,7 +471,7 @@ class UPanelControladorAplicacion extends Controller {
 
         $extension = strtolower(Input::file($ID)->getClientOriginalExtension());
         //$size = Input::file($ID)->getSize();
-        $path = 'usuarios/uploads/' . $app->id_usuario . '/app/'.$id_proceso."/";
+        $path = 'usuarios/uploads/' . $app->id_usuario . '/app/' . $id_proceso . "/";
         $apk = $app->nombre . "_" . $ID . "." . $extension;
         Input::file($ID)->move($path, $apk);
 

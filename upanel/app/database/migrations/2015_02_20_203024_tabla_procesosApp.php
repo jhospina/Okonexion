@@ -24,6 +24,7 @@ class TablaProcesosApp extends Migration {
             $table->text("url_android")->nullable();
             $table->text("url_windows")->nullable();
             $table->text("url_iphone")->nullable();
+            $table->integer("instancia"); 
         });
     }
 

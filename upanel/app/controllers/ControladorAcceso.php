@@ -17,18 +17,19 @@ class ControladorAcceso extends Controller {
             if (Auth::user()->email_confirmado == 0) {
                 $id_user = Auth::user()->id;
                 Auth::logout();
-                return Redirect::to("http://" . $_SERVER["SERVER_NAME"] . "/ingresar/?response=fail-confirmation&user=" . $id_user . "&email=" . Input::get("email"));
+                return  Redirect::to(Util::filtrarUrl(Input::get('url'))."?response=fail-confirmation&user=" . $id_user . "&email=" . Input::get("email"));
             } else
             // Da acceso al Upanel del usuario
                 return Redirect::to('/');
         } else
         // En caso de que la autenticación haya fallado manda un mensaje al formulario de login y también regresamos los valores enviados con withInput().
-            return Redirect::to("http://" . $_SERVER["SERVER_NAME"] . "/ingresar/?response=fail&email=" . Input::get("email"));
+            return Redirect::to(Util::filtrarUrl(Input::get('url'))."?response=fail&email=" . Input::get("email"));
     }
 
     function cerrarSesion() {
+        $url_origen=User::obtenerValorMetadato(User::META_URL_ORIGEN);
         Auth::logout();
-        return Redirect::to("http://" . $_SERVER["SERVER_NAME"] . "/ingresar/?response=logout");
+        return Redirect::to(Util::obtenerDominioDeUrl($url_origen).User::CONFIG_URL_LOGIN."?response=logout");
     }
 
     //Activa la cuenta del usuario al confirmar su correo electronico
@@ -46,7 +47,8 @@ class ControladorAcceso extends Controller {
                 $user->update();
                 $correo = new Correo();
                 $correo->enviarBienvenida($id);
-                return Redirect::to("http://" . $_SERVER["SERVER_NAME"] . "/ingresar/?response=confirmation&email=" . $user->email);
+                $url_origen=User::obtenerValorMetadato(User::META_URL_ORIGEN,$user->id);
+                return Redirect::to(Util::obtenerDominioDeUrl($url_origen).User::CONFIG_URL_LOGIN."?response=confirmation&email=" . $user->email);
             } else {
                 App::abort(404);
             }
@@ -58,19 +60,23 @@ class ControladorAcceso extends Controller {
     //Recibe una solicitud para reestablecer contraseña
     function recuperarContrasena() {
         $email = Input::get('email');
+        $url_origen=Input::get('url');
         $resultado = DB::select('select id,email,email_confirmado from usuarios where email = ?', array($email));
         if (count($resultado) > 0) {
             foreach ($resultado as $usuario) {
+                
+                User::agregarMetaDato(User::META_URL_RECOVERY,Util::filtrarUrl($url_origen),$usuario->id);
+                
                 if ($usuario->email_confirmado == 0) {
-                    return Redirect::to("http://" . $_SERVER["SERVER_NAME"] . "/recuperar-contrasena/?response=inactive&user=".$usuario->id."&email=" . $email);
+                    return Redirect::to(Util::filtrarUrl($url_origen)."?response=inactive&user=".$usuario->id."&email=" . $email);
                 }
                 //Envia un correo con un enlace para la recuperación del a contraseña del usuario
                 $correo = new Correo();
                 $correo->enviarRecuperacion($usuario->id);
             }
-            return Redirect::to("http://" . $_SERVER["SERVER_NAME"] . "/recuperar-contrasena/?response=send&email=" . $usuario->email);
+            return Redirect::to(Util::filtrarUrl($url_origen)."?response=send&email=" . $usuario->email);
         } else {
-            return Redirect::to("http://" . $_SERVER["SERVER_NAME"] . "/recuperar-contrasena/?response=fail&email=" . $email);
+            return Redirect::to(Util::filtrarUrl($url_origen)."?response=fail&email=" . $email);
         }
     }
 
@@ -82,7 +88,8 @@ class ControladorAcceso extends Controller {
         }
         if ($codigo == $user->cod_ver_email) {
             if ($user->email_confirmado == 1) {
-                return Redirect::to("http://" . $_SERVER["SERVER_NAME"] . "/recuperar-contrasena/?response=recovery&user=" . $id . "&code=" . $codigo);
+                $url_recovery=User::obtenerValorMetadato(User::META_URL_RECOVERY,$user->id);
+                return Redirect::to($url_recovery."?response=recovery&user=" . $id . "&code=" . $codigo);
             } else {
                 App::abort(404);
             }
@@ -98,16 +105,17 @@ class ControladorAcceso extends Controller {
 
         $user = User::find($id_usuario);
 
+          $url_origen=User::obtenerValorMetadato(User::META_URL_ORIGEN,$user->id);
         if (!is_null($user)) {
             if ($codigo == $user->cod_ver_email) {
                 $user->password = $contra;
                 $user->update();
-                return Redirect::to("http://" . $_SERVER["SERVER_NAME"] . "/ingresar/?response=recovery&email=" . $user->email);
+                return Redirect::to(Util::obtenerDominioDeUrl($url_origen).User::CONFIG_URL_LOGIN."?response=recovery&email=" . $user->email);
             } else {
-                return Redirect::to("http://" . $_SERVER["SERVER_NAME"] . "/ingresar/?response=fail-password");
+                return Redirect::to(Util::obtenerDominioDeUrl($url_origen).User::CONFIG_URL_LOGIN."?response=fail-password");
             }
         } else {
-            return Redirect::to("http://" . $_SERVER["SERVER_NAME"] . "/ingresar/?response=fail-password");
+            return Redirect::to(Util::obtenerDominioDeUrl($url_origen).User::CONFIG_URL_LOGIN."?response=fail-password");
         }
     }
 
@@ -118,8 +126,8 @@ class ControladorAcceso extends Controller {
         $correo = new Correo;
         //Envia un mensaje de confirmación con un codigo al correo electronico, para validar la cuenta de usuario
         $correo->enviarActivacion($id_usuario);
-
-        return Redirect::to("http://" . $_SERVER["SERVER_NAME"] . "/ingresar/?response=send-confirmation&email=" . $user->email);
+         $url_origen=User::obtenerValorMetadato(User::META_URL_ORIGEN,$user->id);
+        return Redirect::to(Util::obtenerDominioDeUrl($url_origen).User::CONFIG_URL_LOGIN."?response=send-confirmation&email=" . $user->email);
     }
 
 }

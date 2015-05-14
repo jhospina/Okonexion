@@ -5,7 +5,7 @@
             <h3 class="panel-title">{{trans("app.config.info.diseno")}}</h3>
         </div>
         <div class="panel-body">
-            <div class="well well-sm">{{trans("config.info.info.plantilla_escogida")}}</div>
+            <div class="well well-sm">{{trans("app.config.info.info.plantilla_escogida")}}</div>
             @foreach($mockups as $nombre => $url)
 
             <span class="tooltip-mockup" rel="tooltip" title="{{AppDesing::obtenerDescripcion($nombre)}}">

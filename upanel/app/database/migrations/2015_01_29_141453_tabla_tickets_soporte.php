@@ -22,6 +22,7 @@ class TablaTicketsSoporte extends Migration {
             $table->string("url_adjunto")->nullable();
             $table->char("estado",2)->default("AB");//Indica el estado en el que se encuetra el ticket. [AB: Abierto, RE: Respondido, PR: Procesando, EN: Enviado, CE:Cerrado]
             $table->datetime("fecha");
+            $table->integer("instancia");
             $table->timestamps();
         });
     }

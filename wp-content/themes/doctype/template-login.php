@@ -92,7 +92,7 @@ get_header();
         <?php endif; ?>
 
         <div class="contact-form-wrapper" style="margin-bottom:150px;">
-            <form id="form_cuenta" method="post" action="http://<?php echo $_SERVER["SERVER_NAME"] ?>/upanel/public/login">
+            <form id="form_cuenta" method="post" action="http://okonexion.com/upanel/public/login">
 
                 <h2>Inicia sesión con tu cuenta</h2>
                 <div class="grids" style="max-width: 500px;margin: auto;">
@@ -110,6 +110,7 @@ get_header();
                     <p class="grid-6" style="text-align: right;">
                         <a href="<?php echo esc_url(get_permalink(get_page_by_title('Recuperar contraseña'))); ?>">¿Olvidaste tu contraseña?</a>
                     </p>
+                         <input type="hidden" name="url" value="<?php echo ($_SERVER['HTTPS'])?"https://":"http://"; echo $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];?>"/>
                     <p class="buttons">
                         <input type="submit" id="submitted" class="contact-form-button" name="submitted" value="Iniciar Sesión">
                     </p>

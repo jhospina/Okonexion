@@ -68,6 +68,11 @@ div#footer {
     text-align: center;
 }
 
+#msj-popup.msj-header{
+    margin-bottom: 0px!important;
+    text-align: center;
+}
+
 a{
     cursor:pointer;
 }

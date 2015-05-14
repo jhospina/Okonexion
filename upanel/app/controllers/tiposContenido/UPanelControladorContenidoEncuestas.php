@@ -3,6 +3,11 @@
 class UPanelControladorContenidoEncuestas extends Controller {
 
     function index() {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         if (!Aplicacion::existe())
             return Redirect::to("/");
 
@@ -20,6 +25,11 @@ class UPanelControladorContenidoEncuestas extends Controller {
     }
 
     function vista_historico($id_encuesta) {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         if (!Aplicacion::existe())
             return Redirect::to("/");
 
@@ -41,6 +51,11 @@ class UPanelControladorContenidoEncuestas extends Controller {
     }
 
     function vista_agregar() {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         if (!Aplicacion::existe())
             return Redirect::to("/");
 
@@ -53,6 +68,11 @@ class UPanelControladorContenidoEncuestas extends Controller {
     }
 
     function vista_editar($id_encuesta) {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         if (!Aplicacion::existe())
             return Redirect::to("/");
 
@@ -78,6 +98,11 @@ class UPanelControladorContenidoEncuestas extends Controller {
     }
 
     function publicar() {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         $data = Input::all();
         $app = Aplicacion::obtener();
         $nombreTC = TipoContenido::obtenerNombre($app->diseno, Contenido_Encuestas::nombre);

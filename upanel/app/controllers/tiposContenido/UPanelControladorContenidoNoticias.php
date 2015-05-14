@@ -3,6 +3,11 @@
 class UPanelControladorContenidoNoticias extends Controller {
 
     public function noticias() {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         if (!Aplicacion::existe())
             return Redirect::to("/");
         $app = Aplicacion::obtener();
@@ -15,6 +20,11 @@ class UPanelControladorContenidoNoticias extends Controller {
     }
 
     public function noticias_vistaAgregar() {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         if (!Aplicacion::existe())
             return Redirect::to("/");
         $app = Aplicacion::obtener();
@@ -30,6 +40,11 @@ class UPanelControladorContenidoNoticias extends Controller {
     }
 
     public function noticias_vistaEditar($id_noticia) {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         if (!Aplicacion::existe())
             return Redirect::to("/");
         $app = Aplicacion::obtener();
@@ -53,6 +68,10 @@ class UPanelControladorContenidoNoticias extends Controller {
     }
 
     public function noticias_categorias() {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
 
         if (!Aplicacion::existe())
             return Redirect::to("/");
@@ -69,6 +88,10 @@ class UPanelControladorContenidoNoticias extends Controller {
     }
 
     public function noticias_publicar() {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
 
         $data = Input::all();
         $app = Aplicacion::obtener();
@@ -91,6 +114,10 @@ class UPanelControladorContenidoNoticias extends Controller {
     }
 
     public function noticias_guardar() {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
 
         $data = Input::all();
         $app = Aplicacion::obtener();

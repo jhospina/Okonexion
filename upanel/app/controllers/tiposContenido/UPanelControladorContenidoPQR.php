@@ -3,6 +3,11 @@
 class UPanelControladorContenidoPQR extends Controller {
 
     public function index() {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         if (!Aplicacion::existe())
             return Redirect::to("/");
         $app = Aplicacion::obtener();
@@ -22,6 +27,11 @@ class UPanelControladorContenidoPQR extends Controller {
     }
 
     public function vista_revisar($id_pqr) {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         if (!Aplicacion::existe())
             return Redirect::to("/");
         $app = Aplicacion::obtener();
@@ -34,6 +44,10 @@ class UPanelControladorContenidoPQR extends Controller {
     }
 
     public function enviar_respuesta() {
+        if (!Auth::check()){
+            return User::login();
+        }
+        
         $data = Input::all();
 
         $pqrOr = ContenidoApp::find($data["id_pqr"]);

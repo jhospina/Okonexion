@@ -13,10 +13,11 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
 <h1>{{trans("app.historialDep.titulo")}}</h1>
 
 <hr/>
-
+@if(Auth::user()->instancia==User::PARAM_INSTANCIA_SUPER_ADMIN)
 <div class="well well-sm">
     <a href="{{URL::to("aplicacion/desarrollo/cola")}}" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span> {{trans("otros.info.volver")}}</a>
 </div>
+@endif
 
 <table class="table table-striped">
     <tr>
@@ -62,7 +63,7 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
 
     @if(count($historial)==0)
 
-    <tr><td colspan="6" class="text-center">{{trans("otros.info.no_hay_datos")}}</td></tr>
+    <tr><td colspan="10" class="text-center"><h3>{{trans("otros.info.no_hay_datos")}}</h3></td></tr>
 
     @endif
 

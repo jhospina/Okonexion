@@ -9,7 +9,11 @@ class UPanelControladorUsuario extends \BaseController {
      */
     public function index() {
 
-        return View::make("usuarios/perfil/index");
+        if (!Auth::check()){
+            return User::login();
+        }
+        
+        return View::make("usuarios/perfil/index")->with("usuario", Auth::user());
     }
 
     /**
@@ -19,10 +23,37 @@ class UPanelControladorUsuario extends \BaseController {
      */
     public function create() {
         
+        if (!Auth::check()){
+            return User::login();
+        }
+        
+        if (!is_null($acceso = User::invalidarAcceso(User::USUARIO_REGULAR)))
+            return $acceso;
+
+        return View::make("usuarios/tipo/admin/usuarios/crear");
+    }
+
+    public function create_store() {
+        $data = Input::all();
+        $data["instancia"]=Auth::user()->instancia;
+        
+        $user=new User;
+
+        if (strlen($errores = $user->validar($data)) > 0)
+            return Redirect::route('usuario.create')->withInput()->with(User::mensaje("error", "", $errores, 2));
+        elseif ($user->registrar($data)) {
+
+            if ($data["email_confirmado"] == 0) {
+                $correo = new Correo;
+                //Envia un mensaje de confirmación con un codigo al correo electronico, para validar la cuenta de usuario
+                $correo->enviarConfirmacion(array("nombre" => $data["nombre1"] . " " . $data["nombre2"], "email" => $data["email"], "contrasena" => $data["contrasena"]), $user->id);
+            }
+            return Redirect::to('control/usuarios')->with(User::mensaje("exito", null, trans("menu_usuario.crear.usuario.post.exito"), 2));
+        }
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Recibe las peticiones de registro de usuarios
      *
      * @return Response
      */
@@ -39,9 +70,9 @@ class UPanelControladorUsuario extends \BaseController {
             $correo = new Correo;
             //Envia un mensaje de confirmación con un codigo al correo electronico, para validar la cuenta de usuario
             $correo->enviarConfirmacion(array("nombre" => $data["nombre1"] . " " . $data["nombre2"], "email" => $data["email"], "contrasena" => $data["contrasena"]), $user->id);
-            return Redirect::to("http://" . $_SERVER["SERVER_NAME"] . "/crear-cuenta/?response=success&email=" . $data["email"]);
+            return Redirect::to(Util::filtrarUrl($data["url"]) . "?response=success&email=" . $data["email"]);
         } else
-            return Redirect::to("http://" . $_SERVER["SERVER_NAME"] . "/crear-cuenta/?response=error");
+            return Redirect::to(Util::filtrarUrl($data["url"]) . "?response=error");
     }
 
     /**
@@ -51,7 +82,18 @@ class UPanelControladorUsuario extends \BaseController {
      * @return Response
      */
     public function show($id) {
-        //
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+        
+        //Invalida el acceso para el usuario Regular
+        if (!is_null($acceso = User::invalidarAcceso(User::USUARIO_REGULAR)))
+            return $acceso;
+
+        $usuario = User::find($id);
+
+        return View::make("usuarios/perfil/index")->with("usuario", $usuario);
     }
 
     /**
@@ -61,15 +103,19 @@ class UPanelControladorUsuario extends \BaseController {
      * @return Response
      */
     public function edit($id) {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
 
         if ($id != Auth::user()->id)
             App::abort(404);
-        
+
         $usuario = User::find($id);
         if (is_null($usuario)) {
             App::abort(404);
         }
-          
+
         return View::make("usuarios/perfil/editar")->with('usuario', $usuario);
     }
 
@@ -90,7 +136,7 @@ class UPanelControladorUsuario extends \BaseController {
 
             //Si los datos enviados tienen errores
             if (strlen($errores = $user->validar($data)) > 0)
-                return Redirect::route('usuario.edit', $id)->withInput()->with(User::mensaje("error", "",$errores, 2));
+                return Redirect::route('usuario.edit', $id)->withInput()->with(User::mensaje("error", "", $errores, 2));
             elseif ($user->registrar($data))
                 return Redirect::route('usuario.index')->with(User::mensaje("exito", null, trans("menu_usuario.mi_perfil.editar.post.exito"), 2));
         }
@@ -108,12 +154,42 @@ class UPanelControladorUsuario extends \BaseController {
         
     }
 
+    /**
+     *  MUESTRA EL LISTADO DE USUARIOS EN UNA VISTA
+     */
+    public function index_listado() {
+        
+        if (!Auth::check()){
+            return User::login();
+        }
+
+        //Invalida el acceso para el usuario Regular
+        if (!is_null($acceso = User::invalidarAcceso(User::USUARIO_REGULAR)))
+            return $acceso;
+
+        //Admin
+        if (Auth::user()->tipo == User::USUARIO_ADMIN)
+            $usuarios = User::where("id", "!=", Auth::user()->id)->where("instancia", Auth::user()->instancia)->where("instancia",Auth::user()->instancia)->orderBy("id", "DESC")->paginate(30);
+        //SuperAdmin
+        if (User::esSuperAdmin())
+            $usuarios = User::where("id", "!=", Auth::user()->id)->orderBy("id", "DESC")->paginate(30);
+        //Soporte general
+        if (Auth::user()->tipo == User::USUARIO_SOPORTE_GENERAL)
+            $usuarios = User::where("id", "!=", Auth::user()->id)->where("tipo", User::USUARIO_REGULAR)->where("instancia",Auth::user()->instancia)->orderBy("id", "DESC")->paginate(30);
+
+        return View::make("usuarios/tipo/admin/usuarios/index")->with("usuarios", $usuarios);
+    }
+
     public function cambiarContrasenaForm() {
+        if (!Auth::check()){
+            return User::login();
+        }
         return View::make("usuarios/perfil/cambiar-contrasena");
     }
 
     public function cambiarContrasenaPost() {
-
+        
+        
         $data = Input::all();
 
         if (strlen($data["contra-nueva"]) <= 5)
@@ -127,11 +203,9 @@ class UPanelControladorUsuario extends \BaseController {
         else
             return Redirect::to('cambiar-contrasena')->with(User::mensaje("error", null, trans("menu_usuario.cambiar_contrasena.post.error03"), 2));
     }
-    
-    
-    public function cambiarIdioma(){
-        User::actualizarMetadato(OpcionesUsuario::OP_IDIOMA,Input::get("idioma"));
+
+    public function cambiarIdioma() {
+        User::actualizarMetadato(OpcionesUsuario::OP_IDIOMA, Input::get("idioma"));
     }
-    
 
 }

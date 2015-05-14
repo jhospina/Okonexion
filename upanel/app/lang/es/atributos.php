@@ -6,6 +6,7 @@ return array(
     "estado.ticket.procesando"=>"Procesando",
     "estado.ticket.enviado"=>"Enviado",
     "estado.ticket.cerrado"=>"Cerrado",
+    "estado.ticket.especial"=>"Especial",
     "tipo.ticket.general"=>"General",
     "tipo.ticket.comercial"=>"Comercial",
     "tipo.ticket.facturacion"=>"Facturación",

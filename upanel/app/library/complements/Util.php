@@ -173,8 +173,35 @@ class Util {
      * @return string La url
      */
     static function obtenerUrlActual() {
-        $url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $url = Util::crearUrl($_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
         return $url;
+    }
+
+    static function crearUrl($url) {
+        return($_SERVER['HTTPS']) ? "https://" . $url : "http://" . $url;
+    }
+
+    static function esConexionSegura(){
+       if(isset($_SERVER['HTTPS'])) return $_SERVER['HTTPS'];
+       else return false;
+    }
+    
+    /** Filtra una url obteniendo unicamente la url, sin datos enviados por Get. 
+     * 
+     * @param type $url
+     */
+    static function filtrarUrl($url) {
+        if (strpos($url, "?") !== false) {
+            $parts = explode("?", $url);
+            return $parts[0];
+        } else
+            return $url;
+    }
+
+    static function obtenerDominioDeUrl($url) {
+        $protocolos = array('http://', 'https://', 'ftp://', 'www.');
+        $url = explode('/', str_replace($protocolos, '', $url));
+        return $url[0];
     }
 
     /** Reemplaza todos los caracteres especiales por codigo html
@@ -305,8 +332,8 @@ class Util {
 
     /** Calcula diferencia entre dos fechas
      * 
-     * @param type $fecha1
-     * @param type $fecha2
+     * @param type $fecha1 La fecha menor
+     * @param type $fecha2 La fecha mayor
      * @return string
      */
     public static function calcularDiferenciaFechas($fecha1, $fecha2) {
@@ -321,27 +348,27 @@ class Util {
         //comprobamos el tiempo que ha pasado en segundos entre las dos fechas
         //floor devuelve el número entero anterior, si es 5.7 devuelve 5
         if ($diferencia <= $minuto) {
-            $tiempo = floor($diferencia) . " ".trans("otros.time.segundos");
+            $tiempo = floor($diferencia) . " " . trans("otros.time.segundos");
         } else if ($diferencia >= $minuto && $diferencia < $minuto * 2) {
-            $tiempo = "1 ".trans("otros.time.minuto");
+            $tiempo = "1 " . trans("otros.time.minuto");
         } else if ($diferencia >= $minuto * 2 && $diferencia < $hora) {
-            $tiempo = floor($diferencia / $minuto) . " ".trans("otros.time.minutos");
+            $tiempo = floor($diferencia / $minuto) . " " . trans("otros.time.minutos");
         } else if ($diferencia >= $hora && $diferencia < $hora * 2) {
-            $tiempo = "1 ".trans("otros.time.hora");
+            $tiempo = "1 " . trans("otros.time.hora");
         } else if ($diferencia >= $hora * 2 && $diferencia < $dia) {
-            $tiempo = floor($diferencia / $hora) ." ".trans("otros.time.horas");
+            $tiempo = floor($diferencia / $hora) . " " . trans("otros.time.horas");
         } else if ($diferencia >= $dia && $diferencia < $dia * 2) {
-            $tiempo = "1 ".trans("otros.time.dia");
+            $tiempo = "1 " . trans("otros.time.dia");
         } else if ($diferencia >= $dia * 2 && $diferencia < $mes) {
-            $tiempo = floor($diferencia / $dia) . " ".trans("otros.time.dias");
+            $tiempo = floor($diferencia / $dia) . " " . trans("otros.time.dias");
         } else if ($diferencia >= $mes && $diferencia < $mes * 2) {
-            $tiempo = "1 ".trans("otros.time.mes");
+            $tiempo = "1 " . trans("otros.time.mes");
         } else if ($diferencia >= $mes * 2 && $diferencia < $ano) {
-            $tiempo = floor($diferencia / $mes) . " ".trans("otros.time.meses");
-        } else if ($diferencia >= $ano * 2 && $diferencia < $ano*2) {
-            $tiempo = "1 ".trans("otros.time.ano");
-        } else if ($diferencia >= $ano*2) {
-            $tiempo = floor($diferencia / $ano) . " ".trans("otros.time.anos");
+            $tiempo = floor($diferencia / $mes) . " " . trans("otros.time.meses");
+        } else if ($diferencia >= $ano * 2 && $diferencia < $ano * 2) {
+            $tiempo = "1 " . trans("otros.time.ano");
+        } else if ($diferencia >= $ano * 2) {
+            $tiempo = floor($diferencia / $ano) . " " . trans("otros.time.anos");
         }
         return strtolower($tiempo);
     }

@@ -23,28 +23,58 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      * @var array
      */
     protected $hidden = array('password', 'remember_token');
-    protected $fillable = array('email', 'password', 'nombres', 'apellidos', 'dni', "empresa", "pais", "region", "ciudad", "direccion", "telefono", "celular");
+    protected $fillable = array('email', 'password', 'nombres', 'apellidos', 'dni', "empresa", "pais", "region", "ciudad", "direccion", "telefono", "celular", "instancia");
 
+    //********************************************************
+    //CONFIGURACION DE PLATAFORMA********************************
+    //********************************************************
+
+    const CONFIG_URL_LOGIN = "/login/";
+    const PARAM_INSTANCIA_SUPER_ADMIN = 0;
     //********************************************************
     //TIPOS DE USUARIOS********************************
     //********************************************************
 
     const USUARIO_REGULAR = "RE";
     const USUARIO_SOPORTE_GENERAL = "SG";
+    const USUARIO_ADMIN = "AD";
+    //********************************************************
+    //ESTADOS DE USUARIOS********************************
+    //********************************************************
+    const ESTADO_SIN_PAGAR = "SP";
+    const ESTADO_SUSCRIPCION_VIGENTE = "SG";
+    const ESTADO_SUSCRIPCION_CADUCADA = "SC";
+    //********************************************************
+    //METADATOS DE USUARIOS********************************
+    //********************************************************
+
+    const META_URL_ORIGEN = "url_origen";
+    const META_URL_RECOVERY = "url_recovery";
 
     public function registrar($data) {
         if (isset($data["nombre1"]))
             $data["nombres"] = $data["nombre1"] . " " . $data["nombre2"];
 
         //Verifica que no halla un email existente en la base de datos
-        $consultar_email=User::where("email",$data["email"])->get();
-        if(count($consultar_email)>0)
+        $consultar_email = User::where("email", $data["email"])->get();
+        if (count($consultar_email) > 0)
             return false;
-        
-        
+
+
         $this->fill($data);
+
+        if (isset($data["tipo"]))
+            $this->tipo = $data["tipo"];
+        if (isset($data["email_confirmado"]))
+            $this->email_confirmado = $data["email_confirmado"];
+
         // Guardamos el usuario
-        return $this->save();
+        $save = $this->save();
+
+        if (isset($data["url"]))
+            $this->agregarMetaDato(User::META_URL_ORIGEN, $data["url"], $this->id);
+
+        return $save;
     }
 
     //Valida la información ingresada del usuario
@@ -53,26 +83,39 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
         //Correo electronico
         if (!filter_var($data["email"], FILTER_VALIDATE_EMAIL))
-            $errores.="<li>".trans("menu_usuario.mi_perfil.info.email.error")."</li>";
+            $errores.="<li>" . trans("menu_usuario.mi_perfil.info.email.error") . "</li>";
 
         //Nombre
         if (strlen($data["nombres"]) < 3)
-            $errores.="<li>".trans("menu_usuario.mi_perfil.info.nombre.error")."</li>";
+            $errores.="<li>" . trans("menu_usuario.mi_perfil.info.nombre.error") . "</li>";
 
         if (strlen($data["apellidos"]) < 3)
-            $errores.="<li>".trans("menu_usuario.mi_perfil.info.apellidos.error")."</li>";
+            $errores.="<li>" . trans("menu_usuario.mi_perfil.info.apellidos.error") . "</li>";
 
-        if (strlen($data["dni"]) > 0)
-            if (!is_numeric($data["dni"]))
-                $errores.="<li>".trans("menu_usuario.mi_perfil.info.dni.error")."</li>";
+        if (isset($data["dni"])) {
+            if (strlen($data["dni"]) > 0)
+                if (!is_numeric($data["dni"]))
+                    $errores.="<li>" . trans("menu_usuario.mi_perfil.info.dni.error") . "</li>";
+        }
 
-        if (strlen($data["telefono"]) > 0)
-            if (!is_numeric($data["telefono"]))
-                $errores.="<li>".trans("menu_usuario.mi_perfil.info.telefono.error")."</li>";
+        if (isset($data["telefono"])) {
+            if (strlen($data["telefono"]) > 0)
+                if (!is_numeric($data["telefono"]))
+                    $errores.="<li>" . trans("menu_usuario.mi_perfil.info.telefono.error") . "</li>";
+        }
+        if (isset($data["celular"])) {
+            if (strlen($data["celular"]) > 0)
+                if (!is_numeric($data["celular"]))
+                    $errores.="<li>" . trans("menu_usuario.mi_perfil.info.celular.error") . "</li>";
+        }
 
-        if (strlen($data["celular"]) > 0)
-            if (!is_numeric($data["celular"]))
-                $errores.="<li>".trans("menu_usuario.mi_perfil.info.celular.error")."</li>";
+        if (isset($data["password"])) {
+            if (strlen($data["password"]) <= 5)
+                $errores.="<li>" . trans("menu_usuario.cambiar_contrasena.post.error01") . "</li>";
+
+            if ($data["password"] != $data["password2"])
+                $errores.="<li>" . trans("menu_usuario.cambiar_contrasena.post.error02") . "</li>";
+        }
 
         if (strlen($errores) > 0)
             return "<ul>" . $errores . "</ul>";
@@ -102,6 +145,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         }
     }
 
+    static function login() {
+        return Redirect::to(User::CONFIG_URL_LOGIN);
+    }
+
     //****************************************************
     //RELACIONES CON OTROS MODELOS***************************
     //****************************************************
@@ -110,8 +157,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     public function tickets() {
         if (Auth::user()->tipo == User::USUARIO_REGULAR)
             return $this->hasMany("Ticket", "usuario_cliente", "id");
-        else
-            return $this->hasMany("Ticket", "usuario_soporte", "id");
+        else {
+            if (isset($_GET["ref"])) {
+                if (!(User::esSuperAdmin() || Auth::user()->instancia == User::PARAM_INSTANCIA_SUPER_ADMIN) && $_GET["ref"] == "assist") {
+                    return $this->hasMany("Ticket", "usuario_cliente", "id");
+                }
+            } else {
+                return $this->hasMany("Ticket", "usuario_soporte", "id");
+            }
+        }
     }
 
     public function procesoapps() {
@@ -141,6 +195,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return date('Y-m-d H:i:s');
     }
 
+    /** Valida el acceso a un usuario, retorna un redireccion si se invalida, de lo contrario Null
+     * 
+     * @param type $tipo_usuario El tipo de usuario a validar
+     * @param type $URL LA url a donde redireccional
+     * @return type
+     */
     public static function validarAcceso($tipo_usuario, $URL = "") {
         if (Auth::user()->tipo != $tipo_usuario)
             return Redirect::to($URL);
@@ -148,6 +208,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
             return null;
     }
 
+    /** Invalida el acceso a un usuario, retorna un redireccion si se invalida, de lo contrario Null
+     * 
+     * @param type $tipo_usuario El tipo de usuario a invalidar
+     * @param type $URL LA url a donde redireccional
+     * @return type
+     */
     public static function invalidarAcceso($tipo_usuario, $URL = "") {
         if (Auth::user()->tipo == $tipo_usuario)
             return Redirect::to($URL);
@@ -155,7 +221,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
             return null;
     }
 
-    /** Agrega un metadato a un usuario
+    /** Agrega un metadato a un usuario, si el metadato ya existe, lo actualiza
      * 
      * @param String $clave La clave del metadato
      * @param String $valor El valor del metadato
@@ -163,10 +229,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      */
     static function agregarMetaDato($clave, $valor, $id_usuario = null) {
         $meta = new UsuarioMetadato;
+
         if (is_null($id_usuario))
-            $meta->id_usuario = Auth::user()->id;
-        else
-            $meta->id_usuario = $id_usuario;
+            $id_usuario = Auth::user()->id;
+
+        if (User::existeMetadato($clave, $id_usuario))
+            return User::actualizarMetadato($clave, $valor, $id_usuario);
+
+        $meta->id_usuario = $id_usuario;
         $meta->clave = $clave;
         $meta->valor = $valor;
         $meta->save();
@@ -179,7 +249,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      * @return type Retorna el valor del metadato en caso de exito, de lo contrario Null. 
      */
     static function obtenerMetadato($clave, $id_usuario = null) {
-        
+
         if (is_null($id_usuario)) {
             if (isset(Auth::user()->id))
                 $id_usuario = Auth::user()->id;
@@ -187,7 +257,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
                 return null;
         }
 
-        
+
         $metas = UsuarioMetadato::where("id_usuario", $id_usuario)->where("clave", $clave)->get();
         foreach ($metas as $meta)
             return $meta;
@@ -203,7 +273,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      */
     static function actualizarMetadato($clave, $valor, $id_usuario = null) {
 
-         if (is_null($id_usuario)) {
+        if (is_null($id_usuario)) {
             if (isset(Auth::user()->id))
                 $id_usuario = Auth::user()->id;
             else
@@ -214,9 +284,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         //Si no existe lo agrega
         if (is_null($meta))
             return User::agregarMetaDato($clave, $valor, $id_usuario);
-        
+
         $meta->valor = $valor;
-        
+
         return $meta->save();
     }
 
@@ -228,7 +298,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      */
     static function obtenerValorMetadato($clave, $id_usuario = null) {
 
-         if (is_null($id_usuario)) {
+        if (is_null($id_usuario)) {
             if (isset(Auth::user()->id))
                 $id_usuario = Auth::user()->id;
             else
@@ -249,7 +319,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      */
     static function existeMetadato($clave, $id_usuario = null) {
 
-         if (is_null($id_usuario)) {
+        if (is_null($id_usuario)) {
             if (isset(Auth::user()->id))
                 $id_usuario = Auth::user()->id;
             else
@@ -263,6 +333,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
             return true;
         else
             return false;
+    }
+
+    static function esSuperAdmin() {
+        return (Auth::user()->instancia == User::PARAM_INSTANCIA_SUPER_ADMIN && Auth::user()->tipo == User::USUARIO_ADMIN);
     }
 
 }

@@ -49,7 +49,7 @@ else
             ?>
 
             <div class="contact-form-wrapper" style="margin-bottom:150px;">
-                <form id="form" method="post" action="http://<?php echo $_SERVER["SERVER_NAME"] ?>/upanel/public/recovery">
+                <form id="form" method="post" action="http://okonexion.com/upanel/public/recovery">
 
                     <h2>¡YA PUEDES REESTABLECER TU CONTRASEÑA!</h2>
                     <div class="msj-error" id="msj-error" style="display:none;"></div>
@@ -111,7 +111,7 @@ else
 <?php if ($response != "send" && $response != "recovery"): ?>
 
             <div class="contact-form-wrapper" style="margin-bottom:150px;">
-                <form id="form" method="post" action="http://<?php echo $_SERVER["SERVER_NAME"] ?>/upanel/public/recuperar-contrasena">
+                <form id="form" method="post" action="http://okonexion.com/upanel/public/recuperar-contrasena">
 
                     <h2>¿Olvidastes tu contraseña?</h2>
                     <div class="msj-error" id="msj-error" style="display:none;"></div>
@@ -119,6 +119,8 @@ else
                         <p class="grid-12">
                             <label for="email">Ingresa tu correo electrónico:</label>
                             <input type="text" name="email" id="email" value="">
+                                 <input type="hidden" name="url" value="<?php echo ($_SERVER['HTTPS'])?"https://":"http://"; echo $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];?>"/>
+               
                         </p>
                         <p class="buttons">
                             <input style="color: #fff;font-weight: bold;text-align: center;text-transform: uppercase; line-height: 1;-moz-transition: all 0.35s;-o-transition: all 0.35s;-webkit-transition: all 0.35s;transition: all 0.35s;background-color: #00b7e5;" type="button" id="submitted" class="contact-form-button" name="submitted" value="Enviar Solicitud">
