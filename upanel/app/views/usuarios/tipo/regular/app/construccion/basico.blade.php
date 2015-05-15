@@ -4,6 +4,10 @@ $form_data = array('action' => 'UPanelControladorAplicacion@guardarBasico', 'met
 
 if (Aplicacion::existe()) {
     $estado = $app->estado;
+    if (!isset($app))
+        $app = Aplicacion::obtener();
+    if (!isset($version))
+        $version = ProcesoApp::obtenerNumeroVersion($app->id);
 } else {
     $estado = null;
 }
@@ -32,7 +36,7 @@ if (Aplicacion::existe()) {
     <hr/>
 
 
-    @if(is_null($estado) || $app->estado==Aplicacion::ESTADO_LISTA_PARA_ENVIAR || $app->estado==Aplicacion::ESTADO_ESTABLECIENTO_TEXTOS || $app->estado==Aplicacion::ESTADO_EN_DISENO || $app->estado==Aplicacion::ESTADO_TERMINADA)
+    @if(is_null($estado) || $app->estado==Aplicacion::ESTADO_LISTA_PARA_ENVIAR || $app->estado==Aplicacion::ESTADO_ESTABLECIENTO_TEXTOS || $app->estado==Aplicacion::ESTADO_EN_DISENO || $app->estado==Aplicacion::ESTADO_EN_PROCESO_DE_ACTUALIZACION)
 
     @include("interfaz/mensaje/index",array("id_mensaje"=>3))
 
@@ -89,11 +93,13 @@ if (Aplicacion::existe()) {
 
     jQuery(this).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('otros.info.procesando')}}...");
             jQuery(this).attr("disabled", "disabled");
+            @if ($version == 0)
             $("#progress-bar").animate({width:"15%"}, 2000, function(){
     $("#text-progress").html("15% ({{Aplicacion::obtenerNombreEstado(Aplicacion::ESTADO_EN_DISENO)}})");
             $(this).removeClass("progress-bar-danger");
             $(this).addClass("progress-bar-default");
     });
+            @endif
             setTimeout(function(){
             $("#form").submit();
             }, 2500);

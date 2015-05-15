@@ -44,6 +44,7 @@ Route::group(array('before' => 'auth'), function() {
     aplicacion_desarrollo();
     aplicacion_construir();
     aplicacion_ajax();
+    aplicacion_comp();
     ayuda_soporte();
     usuario();
     usuario_opciones();
@@ -52,7 +53,7 @@ Route::group(array('before' => 'auth'), function() {
     tipoContenido_Institucional();
     tipoContenido_Noticias();
     tipoContenido_PQR();
-    
+
     control_usuarios();
     control_instancias();
 });
@@ -110,6 +111,17 @@ function aplicacion_desarrollo() {
     //USUARIO REGULAR
     Route::get('aplicacion/desarrollo', 'UPanelControladorAplicacion@desarrollo');
     Route::post('aplicacion/desarrollo', 'UPanelControladorAplicacion@enviarDesarrollo');
+    Route::post('aplicacion/desarrollo/iniciar/actualizacion', 'UPanelControladorAplicacion@iniciarActualizacion');
+}
+
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+function aplicacion_comp() {
+    Route::get('aplicacion/versiones', 'UPanelControladorAplicacion@vista_versiones');
 }
 
 //***************************************************************************
@@ -155,12 +167,11 @@ function usuario() {
 //***************************************************************************
 //***************************************************************************
 
-function control_usuarios(){ 
+function control_usuarios() {
     Route::get("control/usuarios/", "UPanelControladorUsuario@index_listado");
-    Route::post("usuario/create","UPanelControladorUsuario@create_store");
+    Route::post("usuario/create", "UPanelControladorUsuario@create_store");
 }
 
-
 //***************************************************************************
 //***************************************************************************
 //***************************************************************************
@@ -168,13 +179,13 @@ function control_usuarios(){
 //***************************************************************************
 //***************************************************************************
 
-function control_instancias(){ 
+function control_instancias() {
     Route::get("instancias/", "UPanelControladorInstancias@index");
-    Route::get("instancias/crear","UPanelControladorInstancias@vista_crear");
-    Route::get("instancias/{id}","UPanelControladorInstancias@vista_ver");
-    Route::get("instancias/{id}/editar","UPanelControladorInstancias@vista_editar");
-    Route::post("instancias/crear","UPanelControladorInstancias@post_crear");
-    Route::post("instancias/{id}/editar","UPanelControladorInstancias@post_editar");
+    Route::get("instancias/crear", "UPanelControladorInstancias@vista_crear");
+    Route::get("instancias/{id}", "UPanelControladorInstancias@vista_ver");
+    Route::get("instancias/{id}/editar", "UPanelControladorInstancias@vista_editar");
+    Route::post("instancias/crear", "UPanelControladorInstancias@post_crear");
+    Route::post("instancias/{id}/editar", "UPanelControladorInstancias@post_editar");
 }
 
 //***************************************************************************

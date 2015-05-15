@@ -123,5 +123,10 @@ return array(
     "info.tiempo_suscripcion"=>"Tiempo de suscripción",
     "info.instancia"=>"Instancia",
     "info.usuario"=>"Usuario",
-    
+    "info.ninguna"=>"Ninguna",
+    "info.detalles"=>"Detalles",
+    "info.observaciones"=>"Observaciones",
+    "info.cancelar"=>"Cancelar",
+    "info.continuar"=>"Continuar",
+    "info.version"=>"Versión"
 );

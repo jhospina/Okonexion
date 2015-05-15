@@ -79,8 +79,7 @@ class AppDesing {
             $config->save();
         }
 
-        $app->estado = Aplicacion::ESTADO_LISTA_PARA_ENVIAR; //Listo para enviar
-        @$app->save();
+       
 
         return true;
     }

@@ -259,9 +259,7 @@ class App_Metro {
             }
         }
 
-        $app->estado = Aplicacion::ESTADO_ESTABLECIENTO_TEXTOS; //Listo para enviar
-        @$app->save();
-
+       
         return true;
     }
 

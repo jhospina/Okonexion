@@ -15,6 +15,7 @@ return array(
     "menu.principal.mi_aplicacion.descargas"=>"Descargas",
     "menu.principal.mi_aplicacion.desarrollo"=>"Desarrollo",
     "menu.principal.mi_aplicacion.administrar"=>"Administrar",
+    "menu.principal.mi_aplicacion.versiones"=>"Versiones",
     "menu.principal.facturas"=>"Facturas",
     "menu.principal.ayuda"=>"Ayuda",
     "menu.principal.ayuda.asistencia"=>"Asistencia",

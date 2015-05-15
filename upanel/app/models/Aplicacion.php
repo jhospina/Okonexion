@@ -4,7 +4,7 @@ Class Aplicacion extends Eloquent {
 
     protected $table = 'aplicaciones';
     protected $fillable = array('id_usuario', 'nombre', 'key_app', 'url_logo', 'diseno', "estado", "configuracion");
-    
+
     //********************************************************
     //ESTADOS DE LA APLICACION********************************
     //********************************************************
@@ -18,14 +18,13 @@ Class Aplicacion extends Eloquent {
     const ESTADO_EN_PROCESO_DE_ACTUALIZACION = "PA";
     const ESTADO_APLICACION_ACTIVA = "AA";
     const ESTADO_APLICACION_INACTIVA = "AI";
-    
     //********************************************************
     //DATOS DE CONFIGURACION********************************
     //********************************************************
-    const configLogoApp="logoApp";
-    const configNombreApp="nombreApp";
-    const configKeyApp="keyApp";
-    const configdisenoApp="disenoApp";
+    const configLogoApp = "logoApp";
+    const configNombreApp = "nombreApp";
+    const configKeyApp = "keyApp";
+    const configdisenoApp = "disenoApp";
 
     /** Retorna una array con las URL y el nombre de los diseños establecidos para una aplicacion
      * 
@@ -78,6 +77,17 @@ Class Aplicacion extends Eloquent {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public static function buscarPorUsuario($id_usuario) {
+        $apps = Aplicacion::where("id_usuario", $id_usuario)->get();
+        if (count($apps) > 0) {
+            foreach ($apps as $app)
+                break;
+            return $app;
+        } else {
+            return null;
         }
     }
 
@@ -167,13 +177,12 @@ Class Aplicacion extends Eloquent {
             return null;
     }
 
-
     //****************************************************
     //RELACIONES CON OTROS MODELOS***************************
     //****************************************************
     //Relacion de Uno a Uno con el modelo [User]
     function user() {
-        return $this->belongsTo('User', 'id');
+        return $this->hasOne('User', 'id',"id_usuario");
     }
 
 }

@@ -1,4 +1,13 @@
-<?php if (Aplicacion::existe()) $app = Aplicacion::obtener(); ?>
+<?php
+if (Aplicacion::existe()) {
+    $app = Aplicacion::obtener();
+    $version = ProcesoApp::obtenerNumeroVersion($app->id);
+} else {
+    $version = 0;
+}
+?>
+
+
 <li class="dropdown @if(Request::is('aplicacion/*')) active @endif"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-phone"></span> {{trans("interfaz.menu.principal.mi_aplicacion")}}<span class="caret"></span></a>
     <ul class="dropdown-menu">
         <li class="dropdown-submenu"><a tabindex="0" data-toggle="dropdown" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span> {{trans("interfaz.menu.principal.mi_aplicacion.configuracion")}}</a>
@@ -12,6 +21,8 @@
         @include("interfaz/menu/app/administrar/index")
         @endif
         <li role="presentation" class="divider"></li>
+        <li @if(intval($version)==0) class="disabled" @endif><a href="{{URL::to("aplicacion/versiones")}}"><span class="glyphicon glyphicon-th"></span> {{trans("interfaz.menu.principal.mi_aplicacion.versiones")}}</a></li>
+        <li role="presentation" class="divider"></li>
         <li @if(!Aplicacion::existe()) class="disabled" @endif>
              <a @if(Aplicacion::existe())href="{{URL::to("aplicacion/desarrollo")}}"@endif>
             @if(Aplicacion::existe())
@@ -23,6 +34,7 @@
                 @endif
             </a>
         </li>
+
     </ul>
 </li>
 <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span> {{trans("interfaz.menu.principal.facturas")}}</a></li>

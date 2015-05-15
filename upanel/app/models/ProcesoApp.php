@@ -21,4 +21,27 @@ Class ProcesoApp extends Eloquent {
         return $this->belongsTo('User', "atendido_por");
     }
 
+    /** Obtiene el numero de la version actual de una aplicacion
+     * 
+     * @param type $id_app Id de la aplicacion a consultar
+     * @return type
+     */
+    public static function obtenerNumeroVersion($id_app) {
+        $procesos = ProcesoApp::where("id_aplicacion", $id_app)->orderBy("id", "DESC")->get();
+        if (count($procesos) > 0)
+            return count($procesos);
+        return null;
+    }
+
+    public static function obtenerUltimoProceso($id_app) {
+        $procesos = ProcesoApp::where("id_aplicacion", $id_app)->take(1)->orderBy("id", "DESC")->get();
+        if (count($procesos) > 0) {
+            foreach ($procesos as $proceso) {
+                return $proceso;
+            }
+        }
+
+        return null;
+    }
+
 }

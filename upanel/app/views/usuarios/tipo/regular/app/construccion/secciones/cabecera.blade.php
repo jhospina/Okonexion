@@ -3,8 +3,14 @@
 
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
 
+
+@if(Aplicacion::existe())
+
+
+@else
+
 <div class="well-lg well" style="margin-top: 10px;">
-     {{trans("app.hd.mi_aplicacion.descripcion")}}
+    {{trans("app.hd.mi_aplicacion.descripcion")}}
 </div>
 
-<hr/>
+@endif

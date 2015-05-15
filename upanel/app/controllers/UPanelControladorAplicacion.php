@@ -69,13 +69,31 @@ class UPanelControladorAplicacion extends Controller {
 
         $app = Aplicacion::obtener();
 
-        if (Aplicacion::existe())
+        if (!is_null($app))
             if (Aplicacion::validarEstadoParaEntrarSeccionDesarrollo($app->estado))
                 return View::make("usuarios/tipo/regular/app/construccion/desarrollo")->with("app", $app);
             else
                 return Redirect::to("aplicacion/apariencia");
         else
             return Redirect::to("aplicacion/apariencia");
+    }
+
+    public function vista_versiones() {
+        if (!Auth::check()) {
+            return User::login();
+        }
+
+        //Valida el acceso solo para el usuario Regular
+        if (!is_null($acceso = User::validarAcceso(User::USUARIO_REGULAR)))
+            return $acceso;
+
+        $app = Aplicacion::obtener();
+
+        if (!is_null($app)) {
+            $versiones = ProcesoApp::where("id_aplicacion", $app->id)->whereNotNull("fecha_finalizacion")->orderBy("id", "DESC")->paginate(30);
+            return View::make("usuarios/tipo/regular/app/versiones")->with("app", $app)->with("versiones",$versiones);
+        }
+        return Redirect::to("");
     }
 
     public function colaDesarrollo() {
@@ -87,13 +105,13 @@ class UPanelControladorAplicacion extends Controller {
         //Invalida el acceso para el usuario Regular
         if (!is_null($acceso = User::invalidarAcceso(User::USUARIO_REGULAR)))
             return $acceso;
-        
-        if (Auth::user()->instancia!=User::PARAM_INSTANCIA_SUPER_ADMIN) {
+
+        if (Auth::user()->instancia != User::PARAM_INSTANCIA_SUPER_ADMIN) {
             return User::login();
         }
 
 
-        $colaDesarrollo = ProcesoApp::where("actividad", "=", ProcesoApp::ACTIVIDAD_CONSTRUIR)->where("fecha_finalizacion", null)->orderBy("id", "ASC")->paginate(30);
+        $colaDesarrollo = ProcesoApp::where("fecha_finalizacion", null)->orderBy("id", "ASC")->paginate(30);
 
         return View::make("usuarios/tipo/soporteGeneral/app/colaDesarrollo")->with("colaDesarrollo", $colaDesarrollo);
     }
@@ -108,7 +126,7 @@ class UPanelControladorAplicacion extends Controller {
         if (!is_null($acceso = User::invalidarAcceso(User::USUARIO_REGULAR)))
             return $acceso;
 
-        if (User::esSuperAdmin() || Auth::user()->instancia==User::PARAM_INSTANCIA_SUPER_ADMIN)
+        if (User::esSuperAdmin() || Auth::user()->instancia == User::PARAM_INSTANCIA_SUPER_ADMIN)
             $historial = ProcesoApp::whereNotNull("fecha_finalizacion")->orderBy("id", "DESC")->paginate(30);
         else
             $historial = ProcesoApp::where("instancia", Auth::user()->instancia)->whereNotNull("fecha_finalizacion")->orderBy("id", "DESC")->paginate(30);
@@ -173,10 +191,15 @@ class UPanelControladorAplicacion extends Controller {
         if (is_array($response = AppDesing::guardarConfigDiseno($data, $app)))
             return Redirect::back()->withInput()->with(User::mensaje("error", null, $response[0], 3));
 
-
         //Redirige a la seccion de textos
-        if (is_bool($response) && $response == true)
+        if (is_bool($response) && $response == true) {
+
+            $app->estado = Aplicacion::ESTADO_ESTABLECIENTO_TEXTOS; //Estableciendo textos
+
+            @$app->save();
+
             return Redirect::to("aplicacion/textos")->with(User::mensaje("exito", null, trans("app.config.post.exito"), 2));
+        }
     }
 
     public function guardarTextos() {
@@ -192,8 +215,13 @@ class UPanelControladorAplicacion extends Controller {
             return Redirect::back()->withInput()->with(User::mensaje("error", null, $response, 3));
 
         //Redirige a la seccion de textos
-        if (is_bool($response) && $response == true)
+        if (is_bool($response) && $response == true) {
+
+            $app->estado = Aplicacion::ESTADO_LISTA_PARA_ENVIAR;
+
+            @$app->save();
             return Redirect::to("aplicacion/desarrollo")->with(User::mensaje("exito", null, trans("app.config.post.exito"), 2));
+        }
     }
 
     public function enviarDesarrollo() {
@@ -203,15 +231,21 @@ class UPanelControladorAplicacion extends Controller {
             return $acceso;
 
         $app = Aplicacion::obtener();
-        if ($app->estado == Aplicacion::ESTADO_LISTA_PARA_ENVIAR) { //Lista para desarrollo
+        if ($app->estado == Aplicacion::ESTADO_LISTA_PARA_ENVIAR || Aplicacion::ESTADO_EN_PROCESO_DE_ACTUALIZACION) { //Lista para desarrollo
             $app->estado = Aplicacion::ESTADO_EN_COLA_PARA_DESARROLLO; // En Cola para desarrollo
             if (@$app->save()) {
 
                 ConfiguracionApp::predeterminarValoresVacios($app->id);
 
+                $version = ProcesoApp::obtenerNumeroVersion($app->id);
+
                 $proceso = new ProcesoApp();
                 $proceso->id_aplicacion = $app->id;
-                $proceso->actividad = ProcesoApp::ACTIVIDAD_CONSTRUIR; // Construccion
+                if ($version == 0)
+                    $proceso->actividad = ProcesoApp::ACTIVIDAD_CONSTRUIR; // Construccion
+                else
+                    $proceso->actividad = ProcesoApp::ACTIVIDAD_ACTUALIZAR; // Construccion
+
                 $proceso->fecha_creacion = User::obtenerTiempoActual();
                 $proceso->json_config = ConfiguracionApp::obtenerJSON($app->id);
                 $proceso->instancia = Auth::user()->instancia;
@@ -228,6 +262,27 @@ class UPanelControladorAplicacion extends Controller {
         } else {
             return Redirect::back()->withInput()->with(User::mensaje("error", null, trans("otros.error_solicitud"), 3));
         }
+    }
+
+    public function iniciarActualizacion() {
+
+        if (!Auth::check()) {
+            return User::login();
+        }
+
+        //Valida el acceso solo para el usuario Regular
+        if (!is_null($acceso = User::validarAcceso(User::USUARIO_REGULAR)))
+            return $acceso;
+
+
+        if (Aplicacion::existe()) {
+            $app = Aplicacion::obtener();
+            $app->estado = Aplicacion::ESTADO_EN_PROCESO_DE_ACTUALIZACION;
+            $app->save();
+            return Redirect::to("aplicacion/basico");
+        }
+
+        return Redirect::to("");
     }
 
     /*     * ***************************************************************************

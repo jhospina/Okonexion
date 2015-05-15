@@ -1,4 +1,9 @@
 <?php
+if (!isset($app))
+    $app = Aplicacion::obtener();
+if (!isset($version))
+    $version = ProcesoApp::obtenerNumeroVersion($app->id);
+
 $textos = AppDesing::obtenerNombresTextoInfo();
 
 //Obtiene los textos configurados por el usuario, o si no, los establece por defectos
@@ -33,34 +38,34 @@ foreach ($textos as $indice => $valor) {
     <hr/>
 
 
-    @if($app->estado==Aplicacion::ESTADO_LISTA_PARA_ENVIAR || $app->estado==Aplicacion::ESTADO_ESTABLECIENTO_TEXTOS || $app->estado==Aplicacion::ESTADO_EN_DISENO || $app->estado==Aplicacion::ESTADO_TERMINADA)
+    @if($app->estado==Aplicacion::ESTADO_LISTA_PARA_ENVIAR || $app->estado==Aplicacion::ESTADO_ESTABLECIENTO_TEXTOS || $app->estado==Aplicacion::ESTADO_EN_DISENO || $app->estado==Aplicacion::ESTADO_EN_PROCESO_DE_ACTUALIZACION)
 
     @include("interfaz/mensaje/index",array("id_mensaje"=>3))
 
 
     <div class="col-lg-12 text-right" style="margin-bottom:20px;padding: 0px;"> {{ Form::button("<span class='glyphicon glyphicon-save'></span> ".trans("app.config.info.btn.establecer_textos"), array('type' => 'button', 'class' => 'btn btn-success btn-large btn-guardar',"style"=>"font-size:20px;")) }}    </div>
-   
- 
+
+
     <div class="panel panel-primary" style="clear: both;">
         <div class="panel-heading">
             <h3 class="panel-title">{{trans("app.config.txt.info.textos_aplicacion")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.txt.info.textos_aplicacion.ayuda"))) </h3>
         </div>
         <div class="panel-body">
-            
+
             <form id="form" action="" method="POST"> 
-            <?php $n=0; ?>
-            @foreach($textos as $clave => $valor)
-            <?php $n++; ?>
+                <?php $n = 0; ?>
+                @foreach($textos as $clave => $valor)
+                <?php $n++; ?>
                 <div class="col-lg-4 text-default input-lg">{{Util::eliminarPluralidad(trans("interfaz.menu.principal.mi_aplicacion.configuracion.textos"))}} {{$n}}</div> <div class="col-lg-8"><input type="text" name="{{$clave}}" id="{{$clave}}" class="form-control input-lg" value="{{$valor}}"/></div>
-            @endforeach
+                @endforeach
             </form>
-                
+
         </div>
     </div>
-    
-      <div class="col-lg-12 text-center" style="margin-bottom:20px;"> {{ Form::button("<span class='glyphicon glyphicon-save'></span> ".trans("app.config.info.btn.establecer_textos"), array('type' => 'button', 'class' => 'btn btn-success btn-large btn-guardar',"style"=>"font-size:20px;")) }}    </div>
-   
-    
+
+    <div class="col-lg-12 text-center" style="margin-bottom:20px;"> {{ Form::button("<span class='glyphicon glyphicon-save'></span> ".trans("app.config.info.btn.establecer_textos"), array('type' => 'button', 'class' => 'btn btn-success btn-large btn-guardar',"style"=>"font-size:20px;")) }}    </div>
+
+
 
     @else
     {{--CUANDO LOS DATOS NO ESTAN DISPONIBLES PARA MODIFICARSE--}}
@@ -86,22 +91,24 @@ foreach ($textos as $indice => $valor) {
 
         jQuery(".tooltip-left").tooltip({placement: "left"});
         jQuery(".tooltip-top").tooltip({placement: "top"});
-        
+
         jQuery(".btn-guardar").click(function () {
 
             jQuery(this).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('otros.info.procesando')}}...");
             jQuery(this).attr("disabled", "disabled");
-            $("#progress-bar").animate({width: "45%"}, 2000, function () {
+                    @if ($version == 0)
+                    $("#progress-bar").animate({width: "45%"}, 2000, function () {
                 $("#text-progress").html("45% ({{Aplicacion::obtenerNombreEstado(Aplicacion::ESTADO_LISTA_PARA_ENVIAR)}})");
                 $(this).removeClass("progress-bar-default");
                 $(this).addClass("progress-bar-info-le");
             });
-            setTimeout(function () {
-                $("#form").submit();
-            }, 2500);
+                    @endif
+                    setTimeout(function () {
+                        $("#form").submit();
+                    }, 2500);
         });
     });
-  
+
 
 
 </script>

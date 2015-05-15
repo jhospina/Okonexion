@@ -136,4 +136,12 @@ return array(
     "admin.pqr.info.reclamo"=>"Reclamo",
     "admin.pqr.info.sugerencias"=>"Sugerencias",
     "admin.pqr.info.sugerencia"=>"Sugerencia",
-        );
+    "info.aplicacion.vigente"=>"Aplicación vigente",
+    "info.numero_version"=>"Versión Número",
+    "info.fecha.finalizacion.version"=>"Fecha de desarrollo de la ultima versión",
+    "btn.crear.version"=>"Crear una nueva versión",
+    "info.post.creando.version"=>"Creando nueva versión",
+    "dep.crear.version.descripcion.titulo"=>"Crear nueva versión",
+    "dep.crear.version.descripcion"=>"Al iniciar el proceso de actualización o crear una nueva versión de tu aplicación, es como si empezaras a crear una nueva aplicación y podrás modificar todos los aspectos de tu aplicación como el nombre y el diseño, la información creada de tu aplicación no se borrara, pero no podras administrarla durante este proceso. <br/><br/> <b>¿Quieres continuar creando una nueva versión?</b>",
+    "config.actualizando.version"=>"Actualizando aplicación a versión :version",
+    );

@@ -1,4 +1,9 @@
 <?php
+if (!isset($app))
+    $app = Aplicacion::obtener();
+if (!isset($version))
+    $version = ProcesoApp::obtenerNumeroVersion($app->id);
+
 
 $logo = $app->url_logo;
 
@@ -154,7 +159,7 @@ else
     @include("interfaz/mensaje/index",array("id_mensaje"=>3))
 
 
-    @if($app->estado==Aplicacion::ESTADO_LISTA_PARA_ENVIAR || $app->estado==Aplicacion::ESTADO_ESTABLECIENTO_TEXTOS || $app->estado==Aplicacion::ESTADO_EN_DISENO || $app->estado==Aplicacion::ESTADO_TERMINADA)
+    @if($app->estado==Aplicacion::ESTADO_LISTA_PARA_ENVIAR || $app->estado==Aplicacion::ESTADO_ESTABLECIENTO_TEXTOS || $app->estado==Aplicacion::ESTADO_EN_DISENO || $app->estado==Aplicacion::ESTADO_EN_PROCESO_DE_ACTUALIZACION)
 
     <form action="" method="POST" enctype="multipart/form-data" id="form">
 
@@ -177,11 +182,11 @@ else
                     <div class="panel-body">
                         {{--COLOR DEL FONDO DE LA BARRA (1)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("app.config.di.me.info.colorbarraapp")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans('app.config.di.me.info.colorbarraapp.ayuda')))</div>
-                       <div class="col-lg-8 input-lg">
+                        <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Metro::colorBarraApp}}"><div style="background-color:{{$colorBarraApp}}"></div></div>
                         </div>
-                         <input type="hidden" name="{{App_Metro::colorBarraApp}}" id="{{App_Metro::colorBarraApp}}" value="{{$colorBarraApp}}" />
-                        
+                        <input type="hidden" name="{{App_Metro::colorBarraApp}}" id="{{App_Metro::colorBarraApp}}" value="{{$colorBarraApp}}" />
+
 
                         {{--PROPIEDADES DEL NOMBRE--}}
                         <div class="col-lg-4 input-lg">
@@ -232,11 +237,11 @@ else
                         <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.primera_opcion")}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-1.PNG")}}"/></h3>
                     </div>
                     <div class="panel-body">
-                        
-                         <div class="well well-sm">
+
+                        <div class="well well-sm">
                             {{trans("app.tipo.contenido.institucional.descripcion")}}
-                         </div>
-                        
+                        </div>
+
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_1}}" id="{{App_Metro::txt_menuBtn_1}}" class="form-control input-lg" value="{{$txt_menuBtn_1}}"/></div>
 
                         {{--COLOR DEL FONDO (1)--}}
@@ -244,7 +249,7 @@ else
                         <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_1}}"><div style="background-color:{{$colorFondoMenuBt_1}}"></div></div>
                         </div>
-                         <input type="hidden" name="{{App_Metro::colorFondoMenuBt_1}}" id="{{App_Metro::colorFondoMenuBt_1}}" value="{{$colorFondoMenuBt_1}}" />
+                        <input type="hidden" name="{{App_Metro::colorFondoMenuBt_1}}" id="{{App_Metro::colorFondoMenuBt_1}}" value="{{$colorFondoMenuBt_1}}" />
 
                         {{--COLOR DEL TEXTO (1)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_texto")}}</div>
@@ -275,11 +280,11 @@ else
                         <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.segunda_opcion")}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-2.PNG")}}"/></h3>
                     </div>
                     <div class="panel-body">
-                        
+
                         <div class="well well-sm">
                             {{trans("app.tipo.contenido.noticias.descripcion")}}
-                         </div>
-                        
+                        </div>
+
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_2}}" id="{{App_Metro::txt_menuBtn_2}}" class="form-control input-lg" value="{{$txt_menuBtn_2}}"/></div>
 
                         {{--COLOR DEL FONDO (2)--}}
@@ -287,7 +292,7 @@ else
                         <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_2}}"><div style="background-color:{{$colorFondoMenuBt_2}}"></div></div>
                         </div>
-                         <input type="hidden" name="{{App_Metro::colorFondoMenuBt_2}}" id="{{App_Metro::colorFondoMenuBt_2}}" value="{{$colorFondoMenuBt_2}}" />
+                        <input type="hidden" name="{{App_Metro::colorFondoMenuBt_2}}" id="{{App_Metro::colorFondoMenuBt_2}}" value="{{$colorFondoMenuBt_2}}" />
 
                         {{--COLOR DEL TEXTO (2)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_texto")}}</div>
@@ -319,19 +324,19 @@ else
                         <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.tercera_opcion")}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-3.PNG")}}"/></h3>
                     </div>
                     <div class="panel-body">
-                        
+
                         <div class="well well-sm">
                             {{trans("app.tipo.contenido.encuestas.descripcion")}}
-                         </div>
-                        
+                        </div>
+
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_3}}" id="{{App_Metro::txt_menuBtn_3}}" class="form-control input-lg" value="{{$txt_menuBtn_3}}"/></div>
 
                         {{--COLOR DEL FONDO (3)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_fondo")}}</div> 
-                         <div class="col-lg-8 input-lg">
+                        <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_3}}"><div style="background-color:{{$colorFondoMenuBt_3}}"></div></div>
                         </div>
-                         <input type="hidden" name="{{App_Metro::colorFondoMenuBt_3}}" id="{{App_Metro::colorFondoMenuBt_3}}" value="{{$colorFondoMenuBt_3}}" />
+                        <input type="hidden" name="{{App_Metro::colorFondoMenuBt_3}}" id="{{App_Metro::colorFondoMenuBt_3}}" value="{{$colorFondoMenuBt_3}}" />
 
                         {{--COLOR DEL TEXTO (3)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_texto")}}</div>
@@ -363,19 +368,19 @@ else
                         <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.cuarta_opcion")}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-4.PNG")}}"/></h3>
                     </div>
                     <div class="panel-body">
-                        
+
                         <div class="well well-sm">
                             {{trans("app.tipo.contenido.pqr.descripcion")}}
-                         </div>
-                        
+                        </div>
+
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_4}}" id="{{App_Metro::txt_menuBtn_4}}" class="form-control input-lg" value="{{$txt_menuBtn_4}}"/></div>
 
                         {{--COLOR DEL FONDO (4)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_fondo")}}</div> 
-                         <div class="col-lg-8 input-lg">
+                        <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_4}}"><div style="background-color:{{$colorFondoMenuBt_4}}"></div></div>
                         </div>
-                         <input type="hidden" name="{{App_Metro::colorFondoMenuBt_4}}" id="{{App_Metro::colorFondoMenuBt_4}}" value="{{$colorFondoMenuBt_4}}" />
+                        <input type="hidden" name="{{App_Metro::colorFondoMenuBt_4}}" id="{{App_Metro::colorFondoMenuBt_4}}" value="{{$colorFondoMenuBt_4}}" />
 
                         {{--COLOR DEL TEXTO (4)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_texto")}}</div>
@@ -447,12 +452,12 @@ else
                 onChange: function (hsb, hex, rgb) {
                     $('#' + idSelector + ' div').css('backgroundColor', '#' + hex);
                     var id = idSelector.replace("colorSelector_", "");
-                        jQuery("#" + id + "").val("rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")");
+                    jQuery("#" + id + "").val("rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")");
                 },
                 onSubmit: function (hsb, hex, rgb, el) {
-                   $('#' + idSelector + ' div').css('backgroundColor', '#' + hex);
+                    $('#' + idSelector + ' div').css('backgroundColor', '#' + hex);
                     var id = idSelector.replace("colorSelector_", "");
-                        jQuery("#" + id + "").val("rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")");
+                    jQuery("#" + id + "").val("rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")");
                 }
             });
 
@@ -463,7 +468,7 @@ else
         $('.colorSelect').simplecolorpicker({picker: true, theme: 'glyphicons'});
 
 
-      jQuery("#logoApp").fileinput({
+        jQuery("#logoApp").fileinput({
             multiple: false,
             showPreview: true,
             showRemove: true,
