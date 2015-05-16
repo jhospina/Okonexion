@@ -128,5 +128,6 @@ return array(
     "info.observaciones"=>"Observaciones",
     "info.cancelar"=>"Cancelar",
     "info.continuar"=>"Continuar",
-    "info.version"=>"Versión"
+    "info.version"=>"Versión",
+    "info.entendido"=>"Entendido",
 );

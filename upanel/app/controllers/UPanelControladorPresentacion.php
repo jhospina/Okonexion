@@ -7,7 +7,7 @@ class UPanelControladorPresentacion extends Controller {
         if (!Auth::check()) {
             return User::login();
         }
-
+        
         if (Auth::user()->tipo == User::USUARIO_REGULAR)
         //USUARIO REGULAR
             return $this->indexRegular();

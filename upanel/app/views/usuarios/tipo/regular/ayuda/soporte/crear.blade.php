@@ -41,7 +41,6 @@ foreach (Ticket::obtenerTipos() as $index => $valor)
 
 @section("script")
 {{ HTML::script('assets/js/bootstrap-filestyle.min.js') }}
-{{ HTML::script('assets/js/bootstrap-tooltip.js') }}
 <script>
     jQuery(document).ready(function () {
         jQuery("#tooltip").tooltip({placement: "left"});

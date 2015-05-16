@@ -2,21 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/construccion/textos.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/lang/es/app.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/construccion/basico.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/construccion/secciones/detalles_app.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/construccion/disenos/ME/apariencia.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/ProcesoApp.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorAplicacion.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/construccion/secciones/nav.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/User.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/library/appDesings/AppDesing.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/construccion/secciones/barra-progreso.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/construccion/desarrollo.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/library/appDesings/App_Metro.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/Aplicacion.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

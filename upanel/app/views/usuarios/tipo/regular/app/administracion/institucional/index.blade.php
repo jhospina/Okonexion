@@ -113,11 +113,9 @@ $singNombre = Util::eliminarPluralidad(strtolower($nombreContenido));
 @section("script")
 
 {{HTML::script("assets/plugins/html5sortable/jquery.sortable.js")}}
-{{ HTML::script('assets/js/bootstrap-tooltip.js') }}
 
 <script>
             jQuery(document).ready(function(){
-                  jQuery(".tooltip-top").tooltip({placement: "top"});
     $('#posicionar-inst').sortable();
     });</script>
 

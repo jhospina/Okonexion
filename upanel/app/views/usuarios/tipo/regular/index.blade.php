@@ -5,4 +5,6 @@
 @section("contenido") 
 
 
+@include(Util::RUTA_MENSAJE_MODAL,array("titulo"=>"titulo","mensaje"=>"Mensaje"))
+
 @stop

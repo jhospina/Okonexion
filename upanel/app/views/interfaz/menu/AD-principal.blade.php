@@ -24,7 +24,7 @@
 </li>
 {{--INSTANCIAS--}}
 @if(User::esSuperAdmin())
-<li class="dropdown @if(Request::is('instancias/*')) active @endif"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-inbox"></span> {{trans("interfaz.menu.principal.instancias")}}<span class="caret"></span></a>
+<li class="dropdown @if(Request::is('instancias/*')) active @endif"><a class="dropdown-toggle tooltip-right" title="{{trans("interfaz.menu.principal.instancias")}}" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-inbox"></span> <span class="caret"></span></a>
     <ul class="dropdown-menu">
         <li><a href="{{URL::to("instancias/")}}"><span class="glyphicon glyphicon-th-list"></span> {{trans("interfaz.menu.principal.instancias.indice")}}</a></li>
         <li role="presentation" class="divider"></li>
@@ -34,9 +34,15 @@
 @endif
 {{--INSTANCIAS--}}
 @if(!User::esSuperAdmin())
-<li class="dropdown @if(Request::is('soporte/*')) active @endif"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-phone-alt"></span> {{trans("interfaz.menu.principal.ayuda")}}<span class="caret"></span></a>
+<li class="dropdown @if(Request::is('soporte/*')) active @endif"><a class="dropdown-toggle"  data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-phone-alt"></span> {{trans("interfaz.menu.principal.ayuda")}}<span class="caret"></span></a>
     <ul class="dropdown-menu">
         <li><a href="{{URL::to("soporte?ref=assist")}}"><span class="glyphicon glyphicon-blackboard"></span> {{trans("interfaz.menu.principal.ayuda.asistencia")}}</a></li>
     </ul>
 </li>
 @endif
+
+<li class="dropdown @if(Request::is('instancia/*')) active @endif"><a class="dropdown-toggle tooltip-right" title="{{trans("interfaz.menu.principal.config")}}" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-wrench"></span><span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        <li><a href=""><span class="glyphicon glyphicon-cog"></span> {{trans("interfaz.menu.principal.config.general")}}</a></li>
+    </ul>
+</li>

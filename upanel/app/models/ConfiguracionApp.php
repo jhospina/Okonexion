@@ -33,10 +33,7 @@ Class ConfiguracionApp extends Eloquent {
      */
     static function existeConfig($clave) {
         $configs = ConfiguracionApp::where("id_aplicacion", "=", Aplicacion::ID())->where("clave", "=", $clave)->get();
-        if (count($configs) > 0)
-            return true;
-        else
-            return false;
+        return (count($configs) > 0);
     }
 
     static function esPredeterminado($clave) {
@@ -95,7 +92,7 @@ Class ConfiguracionApp extends Eloquent {
             case App_Metro::sigla:
                 return App_Metro::$configDefecto;
                 break;
-        }
+        } 
     }
 
     /**

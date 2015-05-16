@@ -42,6 +42,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     //ESTADOS DE USUARIOS********************************
     //********************************************************
     const ESTADO_SIN_PAGAR = "SP";
+    const ESTADO_PERIODO_PRUEBA = "PP";
     const ESTADO_SUSCRIPCION_VIGENTE = "SG";
     const ESTADO_SUSCRIPCION_CADUCADA = "SC";
     //********************************************************
@@ -67,6 +68,21 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
             $this->tipo = $data["tipo"];
         if (isset($data["email_confirmado"]))
             $this->email_confirmado = $data["email_confirmado"];
+
+        if (isset($data["instancia"]))
+            $instancia = intval($data["instancia"]);
+        else
+            $instancia = 0;
+
+        //Verifica si en la instancia esta activado el periodo de prueba para asignarselo al usuario nuevo
+        if (Util::convertirIntToBoolean(Instancia::obtenerValorMetadato(ConfigInstancia::periodoPrueba_activado, $instancia))) {
+            $fecha = new Fecha(Util::obtenerTiempoActual());
+            
+            //Agrega el estado de periodo de prueba al usuario y le asigna el numero de dias indicados por el administrador
+            $this->estado = User::ESTADO_PERIODO_PRUEBA;
+            $this->fin_suscripcion = $fecha->agregarDias(Instancia::obtenerValorMetadato(ConfigInstancia::periodoPrueba_numero_dias,$instancia));
+        }
+
 
         // Guardamos el usuario
         $save = $this->save();
@@ -173,7 +189,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     }
 
     public function aplicacion() {
-        return $this->hasOne('Aplicacion', 'id_usuario',"id");
+        return $this->hasOne('Aplicacion', 'id_usuario', "id");
     }
 
     //****************************************************
@@ -242,7 +258,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         $meta->save();
     }
 
-    /** Obtiene el valor de un metadado dado por su valor clave
+    /** Obtiene el objeto de un metadado dado por su valor clave
      * 
      * @param type $clave El valor clave que identifica el metadato
      * @param Int $id_usuario (Opcional) Si no se especifica se toma el de la sesion actual

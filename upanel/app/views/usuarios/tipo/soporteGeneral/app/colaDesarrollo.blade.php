@@ -211,7 +211,6 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
 
 
 {{ HTML::script('assets/js/bootstrap-filestyle.min.js') }}
-{{ HTML::script('assets/js/bootstrap-tooltip.js') }}
 {{ HTML::script('assets/plugins/fileinput/js/fileinput.js') }}
 {{ HTML::script('assets/plugins/switchery/switchery.js') }}
 
@@ -221,9 +220,7 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
             elems.forEach(function(html) {
             var switchery = new Switchery(html);
             });
-            jQuery(".tooltip-left").tooltip({placement: "left"});
-            jQuery(".tooltip-top").tooltip({placement: "top"});
-            jQuery(".tooltip-right").tooltip({placement: "right"});</script>
+</script>
 
 <script>
 

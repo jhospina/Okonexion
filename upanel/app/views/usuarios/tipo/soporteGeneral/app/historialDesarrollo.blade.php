@@ -81,18 +81,3 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
 
 @stop
 
-
-@section("script")
-
-
-{{ HTML::script('assets/js/bootstrap-tooltip.js') }}
-
-
-<script>
-            jQuery(".tooltip-left").tooltip({placement: "left"});
-            jQuery(".tooltip-top").tooltip({placement: "top"});
-            jQuery(".tooltip-right").tooltip({placement: "right"});</script>
-
-
-    
- @stop

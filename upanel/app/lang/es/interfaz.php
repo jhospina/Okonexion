@@ -16,7 +16,7 @@ return array(
     "menu.principal.mi_aplicacion.desarrollo"=>"Desarrollo",
     "menu.principal.mi_aplicacion.administrar"=>"Administrar",
     "menu.principal.mi_aplicacion.versiones"=>"Versiones",
-    "menu.principal.facturas"=>"Facturas",
+    "menu.principal.facturas"=>"Facturación",
     "menu.principal.ayuda"=>"Ayuda",
     "menu.principal.ayuda.asistencia"=>"Asistencia",
     "menu.principal.ayuda.soporte"=>"Soporte",
@@ -31,8 +31,11 @@ return array(
     "menu.principal.instancias.agregar"=>"Crear instancia",
     "menu.principal.usuarios.indice"=>"Listado de usuarios",
     "menu.principal.usuarios.agregar_usuario"=>"Agregar usuario",
+    "menu.principal.config"=>"Configuración",
+    "menu.principal.config.general"=>"General",
     "menu.usuario.mi_perfil"=>"Mi perfil",
     "menu.usuario.cambiar_contrasena"=>"Cambiar contraseña",
+    
     "menu.comp.cerrar_sesion"=>"Cerrar Sesión",
     "msj.ad.completar.perfil"=>"¡Hola :nombre necesitamos saber más de ti! Por favor completa tu perfil haciendo clic <a href=':link'>Aquí<a/>.",
     "msj.ad.completar.perfil.telefono.celular"=>":nombre necesitamos saber un número de teléfono o celular para comunicarnos contigo. Has clic <a href=':link'>Aquí.<a/>"

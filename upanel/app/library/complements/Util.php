@@ -2,6 +2,8 @@
 
 class Util {
 
+    const RUTA_MENSAJE_MODAL = "interfaz/mensaje/modal";
+
     /** Elimina la plularidad de una palabra
      * 
      * @param String $palabra
@@ -181,11 +183,13 @@ class Util {
         return($_SERVER['HTTPS']) ? "https://" . $url : "http://" . $url;
     }
 
-    static function esConexionSegura(){
-       if(isset($_SERVER['HTTPS'])) return $_SERVER['HTTPS'];
-       else return false;
+    static function esConexionSegura() {
+        if (isset($_SERVER['HTTPS']))
+            return $_SERVER['HTTPS'];
+        else
+            return false;
     }
-    
+
     /** Filtra una url obteniendo unicamente la url, sin datos enviados por Get. 
      * 
      * @param type $url
@@ -371,6 +375,27 @@ class Util {
             $tiempo = floor($diferencia / $ano) . " " . trans("otros.time.anos");
         }
         return strtolower($tiempo);
+    }
+
+    /** Convierte un valor entero en un valor booleano
+     * 
+     * @param type $int El valor entero a convertir
+     * @return type Retorna un valor booleano
+     */
+    static function convertirIntToBoolean($int) {
+        return (intval($int) > 0);
+    }
+
+    /** Convierte un valor booleano en un entero binario
+     * 
+     * @param type $bool El valor booleano a convertir
+     * @return type
+     */
+    static function convertirBooleanToInt($bool) {
+        if (is_bool($bool))
+            return ($bool) ? 1 : 0;
+        else
+            return null;
     }
 
 }

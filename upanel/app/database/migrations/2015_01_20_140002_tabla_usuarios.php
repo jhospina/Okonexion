@@ -32,7 +32,7 @@ class TablaUsuarios extends Migration {
             $table->char('estado',2)->default('SP');//Indca la situación actual del usuario. SP=> Sin Pagar, SV =>Suscripción vigente, SC => Suscripcion Caducada
             $table->char('tipo',2)->default('RE');// Indica el tipo de usuario. RE=> Regular, SG=> Soporte General, AD=> Administrador 
             $table->integer("instancia")->default(0);//Indica la el ID de la instancia de la plataforma
-            $table->datetime('suscripcion_fin')->nullable();//Indica la fecha hasta donde el usuario estara suscrito
+            $table->datetime('fin_suscripcion')->nullable();//Indica la fecha hasta donde el usuario estara suscrito
             $table->string('remember_token');
             $table->timestamps();
         });

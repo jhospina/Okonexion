@@ -136,16 +136,6 @@ $total_votos = intval(ContenidoApp::obtenerValorMetadato($encuesta_vigente->id, 
 
 @section("script")
 
-{{ HTML::script('assets/js/bootstrap-tooltip.js') }}
-
-<script>
-            jQuery(document).ready(function () {
-
-    jQuery(".tooltip-left").tooltip({placement: "left"});
-            jQuery(".tooltip-top").tooltip({placement: "top"});
-    });</script>
-
-
 <script>
 
             function eliminarEncuesta(id_encuesta, titulo) {

@@ -418,7 +418,6 @@ else
 
 @section("script")
 {{ HTML::script('assets/js/bootstrap-filestyle.min.js') }}
-{{ HTML::script('assets/js/bootstrap-tooltip.js') }}
 {{ HTML::script('assets/plugins/colorpicket/js/colorpicker.js') }}
 {{ HTML::script('assets/plugins/plunk/jquery.simplecolorpicker.js') }}
 {{ HTML::script('assets/plugins/fileinput/js/fileinput.js') }}
@@ -426,12 +425,9 @@ else
 
 <script>
 
-
     jQuery(document).ready(function () {
 
-        jQuery(".tooltip-left").tooltip({placement: "left"});
-        jQuery(".tooltip-top").tooltip({placement: "top"});
-
+   
 
 
         //ACTIVA EL SELECTOR DE COLOR PARA EL COLOR DEL TEXTO

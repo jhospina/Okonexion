@@ -57,13 +57,9 @@ $descripcionID = Contenido_Institucional::configDescripcion;
 
 
 @section("script")
-{{ HTML::script('assets/js/bootstrap-tooltip.js') }}
 {{ HTML::script('assets/plugins/wysiwyg/editor.js') }}
 <script>
     jQuery(document).ready(function () {
-
-        jQuery(".tooltip-left").tooltip({placement: "left"});
-        jQuery(".tooltip-top").tooltip({placement: "top"});
         @include("interfaz/app/opciones_editor", array("id"=> "editor"))
     });</script>
 

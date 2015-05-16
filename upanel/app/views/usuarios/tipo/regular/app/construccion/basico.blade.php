@@ -81,7 +81,6 @@ if (Aplicacion::existe()) {
 @section("script")
 
 {{ HTML::script('assets/js/bootstrap-filestyle.min.js') }}
-{{ HTML::script('assets/js/bootstrap-tooltip.js') }}
 
 
 <script>
