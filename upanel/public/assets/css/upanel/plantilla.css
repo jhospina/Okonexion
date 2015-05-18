@@ -443,11 +443,16 @@ a.link{
     border: 1px dimgrey solid!important;
 }
 
-
-.detalles_col{
-   
+/*CONFIGURACION DE INSTANCIA*/
+#form-config .panel-heading{
+    font-weight: bold;
 }
 
-.detalles_num{
-   
+#form-config .col-lg-6{
+    margin-bottom: 5px;
+    min-height: 35px;
+}
+
+#form-config label{
+    font-weight: 100;
 }

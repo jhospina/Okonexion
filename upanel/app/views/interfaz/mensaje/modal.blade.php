@@ -10,7 +10,7 @@
                 {{$mensaje}}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">{{trans("otros.info.entendido")}}</button>
+                <button type="button" class="btn btn-primary" id="btn-entendido" data-dismiss="modal">{{trans("otros.info.entendido")}}</button>
             </div>
         </div>
     </div>

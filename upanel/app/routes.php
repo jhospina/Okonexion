@@ -46,6 +46,7 @@ Route::group(array('before' => 'auth'), function() {
     aplicacion_ajax();
     aplicacion_comp();
     ayuda_soporte();
+    configuracion();
     usuario();
     usuario_opciones();
     usuario_opciones_ajax();
@@ -53,6 +54,7 @@ Route::group(array('before' => 'auth'), function() {
     tipoContenido_Institucional();
     tipoContenido_Noticias();
     tipoContenido_PQR();
+    cookies();
 
     control_usuarios();
     control_instancias();
@@ -219,6 +221,31 @@ function usuario_opciones_ajax() {
 
 function ayuda_soporte() {
     Route::resource('soporte', 'UPanelControladorSoporte');
+}
+
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+
+function configuracion() {
+    Route::get("config/general", "UPanelControladorConfiguracion@vista_general");
+    Route::post("config/post/guardar", "UPanelControladorConfiguracion@post_guardar");
+}
+
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+
+function cookies() {
+    Route::post("cookies/set", function() {
+        Cookie::make(Input::get("IDCookie"), Input::get("valor"), IDCookies::duracion(Input::get("IDCookie")));
+    });
 }
 
 //***************************************************************************

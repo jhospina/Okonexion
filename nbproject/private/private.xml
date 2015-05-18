@@ -2,6 +2,15 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/ControladorAcceso.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/library/complements/IDCookies.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorPresentacion.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/routes.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/admin/config/general.blade.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/lang/es/msj.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/index.blade.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/interfaz/mensaje/modal.blade.php</file>
+        </group>
     </open-files>
 </project-private>

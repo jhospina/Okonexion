@@ -19,7 +19,6 @@ class ControladorAcceso extends Controller {
                 Auth::logout();
                 return Redirect::to(Util::filtrarUrl(Input::get('url')) . "?response=fail-confirmation&user=" . $id_user . "&email=" . Input::get("email"));
             } else {
-
                 //Inserta una cookie al usuario para mostrar un mensaje inicial de periodo de prueba
                 if (Auth::user()->tipo == User::USUARIO_REGULAR && Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
                     $cookie = Cookie::make(IDCookies::MSJ_INICIAL_PERIODO_PRUEBA, true, IDCookies::duracion(IDCookies::MSJ_INICIAL_PERIODO_PRUEBA));
