@@ -12,7 +12,7 @@ class IDCookies {
      */
     static function duracion($id) {
         $duracion = array(
-            IDCookies::MSJ_INICIAL_PERIODO_PRUEBA => (60 * 24 * 30)// 30 dias
+            IDCookies::MSJ_INICIAL_PERIODO_PRUEBA => (60 * 24)// 1 dia
         );
         return $duracion[$id];
     }
@@ -24,6 +24,15 @@ class IDCookies {
      */
     static function existe($id) {
         return (Cookie::get($id) !== false);
+    }
+
+    /** Elimina una cookie dada por su ID
+     * 
+     * @param type $id
+     * @return type
+     */
+    static function eliminar($id) {
+        return Cookie::forget($id);
     }
 
 }

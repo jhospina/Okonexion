@@ -6,6 +6,7 @@ return array(
     "nombre" => "Okonexion",
     "subfijo_titulo_pagina" => "- Okonexion",
     "pie_pagina" => "Todos los derechos reservados",
+    "pie_pagina.tiempo.prueba"=>"Tiempo de prueba restante: ",
     "menu.principal.inicio" => "Inicio",
     "menu.principal.mi_aplicacion" => "Mi aplicación",
     "menu.principal.mi_aplicacion.configuracion" => "Configuración",

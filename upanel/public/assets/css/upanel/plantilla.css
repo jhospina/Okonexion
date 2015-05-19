@@ -16,6 +16,11 @@ textarea.form-control{
     resize:none;
 }
 
+#img-powered {
+    position: absolute;
+    top: 39px;
+}
+
 
 nav.navbar.navbar-inverse {
     -webkit-border-radius: 0px;
@@ -444,7 +449,7 @@ a.link{
 }
 
 /*CONFIGURACION DE INSTANCIA*/
-#form-config .panel-heading{
+#content-config .panel-heading{
     font-weight: bold;
 }
 

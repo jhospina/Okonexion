@@ -3,14 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/ControladorAcceso.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/library/complements/IDCookies.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorPresentacion.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/public/assets/css/upanel/plantilla.css</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/ConfigInstancia.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/routes.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/lang/es/config.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/admin/config/general.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/lang/es/msj.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/index.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/interfaz/mensaje/modal.blade.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorConfiguracion.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/User.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/translation.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorInstancias.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/app/construccion/disenos/ME/apariencia.blade.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/Instancia.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/interfaz/plantilla.blade.php</file>
         </group>
     </open-files>
 </project-private>

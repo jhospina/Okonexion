@@ -129,16 +129,20 @@ class UPanelControladorUsuario extends \BaseController {
 
         //Permite que solo el usuario logueado se ha editado por el mismo
         if ($id == Auth::user()->id) {
+            
             $user = User::find($id);
 
             // Obtenemos la data enviada por el usuario
             $data = Input::all();
 
             //Si los datos enviados tienen errores
-            if (strlen($errores = $user->validar($data)) > 0)
+            if (strlen($errores = $user->validar($data)) > 0){
                 return Redirect::route('usuario.edit', $id)->withInput()->with(User::mensaje("error", "", $errores, 2));
-            elseif ($user->registrar($data))
+            }
+            elseif ($user->registrar($data,true))
                 return Redirect::route('usuario.index')->with(User::mensaje("exito", null, trans("menu_usuario.mi_perfil.editar.post.exito"), 2));
+            else
+                return Redirect::route('usuario.edit', $id)->withInput()->with(User::mensaje("error", "",trans("otros.error_solicitud"), 2));
         }
 
         return Redirect::route('usuario.index');

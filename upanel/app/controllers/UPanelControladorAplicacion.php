@@ -375,8 +375,6 @@ class UPanelControladorAplicacion extends Controller {
 
         $output = [];
 
-        $config = new ConfiguracionApp;
-
         $app = Aplicacion::obtener();
 
         $extension = strtolower(Input::file($logo)->getClientOriginalExtension());

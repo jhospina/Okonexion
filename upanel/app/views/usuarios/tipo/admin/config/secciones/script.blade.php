@@ -1,5 +1,6 @@
 @section("script")
 {{ HTML::script('assets/plugins/switchery/switchery.js') }}
+{{ HTML::script('assets/plugins/fileinput/js/fileinput.js') }}
 
 <script>
     var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
@@ -13,7 +14,7 @@
 
     jQuery(".js-switch").change(function () {
 
-        var config = "#"+$(this).attr("data-for");
+        var config = "#" + $(this).attr("data-for");
 
         if ($(this).is(':checked'))
             $(config).val("{{Util::convertirBooleanToInt(true)}}");

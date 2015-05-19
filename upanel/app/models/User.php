@@ -52,15 +52,23 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     const META_URL_ORIGEN = "url_origen";
     const META_URL_RECOVERY = "url_recovery";
 
-    public function registrar($data) {
+    /** Registra los datos de un usuario
+     *  
+     * @param string $data
+     * @param type $act Indica sie s una actualizacion de datos
+     * @return boolean
+     */
+    public function registrar($data, $act = false) {
         if (isset($data["nombre1"]))
             $data["nombres"] = $data["nombre1"] . " " . $data["nombre2"];
 
-        //Verifica que no halla un email existente en la base de datos
-        $consultar_email = User::where("email", $data["email"])->get();
-        if (count($consultar_email) > 0)
-            return false;
-
+        //Si es el registro de un usuario nuevo
+        if (!$act) {
+            //Verifica que no halla un email existente en la base de datos
+            $consultar_email = User::where("email", $data["email"])->get();
+            if (count($consultar_email) > 0)
+                return false;
+        }
 
         $this->fill($data);
 
@@ -75,12 +83,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
             $instancia = 0;
 
         //Verifica si en la instancia esta activado el periodo de prueba para asignarselo al usuario nuevo
-        if (Util::convertirIntToBoolean(Instancia::obtenerValorMetadato(ConfigInstancia::periodoPrueba_activado, $instancia))) {
+        if (Util::convertirIntToBoolean(Instancia::obtenerValorMetadato(ConfigInstancia::periodoPrueba_activado, $instancia)) && !$act) {
             $fecha = new Fecha(Util::obtenerTiempoActual());
-            
+
             //Agrega el estado de periodo de prueba al usuario y le asigna el numero de dias indicados por el administrador
             $this->estado = User::ESTADO_PERIODO_PRUEBA;
-            $this->fin_suscripcion = $fecha->agregarDias(Instancia::obtenerValorMetadato(ConfigInstancia::periodoPrueba_numero_dias,$instancia));
+            $this->fin_suscripcion = $fecha->agregarDias(Instancia::obtenerValorMetadato(ConfigInstancia::periodoPrueba_numero_dias, $instancia));
         }
 
 
@@ -353,6 +361,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
     static function esSuperAdmin() {
         return (Auth::user()->instancia == User::PARAM_INSTANCIA_SUPER_ADMIN && Auth::user()->tipo == User::USUARIO_ADMIN);
+    }
+
+    static function enPrueba() {
+        return (Auth::user()->tipo == User::USUARIO_REGULAR && Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA && Util::convertirIntToBoolean(Instancia::obtenerValorMetadato(ConfigInstancia::periodoPrueba_activado)));
     }
 
 }

@@ -1,3 +1,11 @@
+<?php
+if (is_null($logoPlat = Instancia::obtenerValorMetadato(ConfigInstancia::visual_logo))) {
+    $logoPlat = URL::to("/assets/img/logo.png");
+    $esLogoPlat = true;
+} else {
+    $esLogoPlat = false;
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,6 +20,7 @@
         {{ HTML::style('assets/css/upanel/plantilla.css', array('media' => 'screen')) }}
 
         @yield('css')
+        @yield('css2')
 
         {{-- jQuery (necessary for Bootstraps JavaScript plugins) --}}
         {{ HTML::script('assets/js/jquery.js') }}
@@ -36,7 +45,12 @@
         <nav class="navbar navbar-inverse" id="menu">
             <div class="container-fluid container">
                 <div class="navbar-header" style="width: 170px;">
-                    <a class="navbar-brand" href="{{URL::to("/")}}"><img class="img-rounded" id="logo-okonexion" src="{{URL::to("/assets/img/logo.png")}}"/></a>
+                    <a class="navbar-brand" href="{{URL::to("/")}}">
+                        <img class="img-rounded" style='width: 150px;height:25px;' id="logo-okonexion" src="{{$logoPlat}}"/>
+                    </a>
+                    @if(!$esLogoPlat)
+                    <img id='img-powered' src='{{URL::to("/assets/img/powered.png")}}'/>
+                    @endif
                 </div>
                 <div>
                     <ul class="nav navbar-nav">
@@ -74,7 +88,15 @@
 
             </div>
         </div>
-        <div class="container navbar-inverse" id="footer" > &copy; {{trans("interfaz.nombre")}} {{date("Y")}} - {{trans('interfaz.pie_pagina')}}</div>
+        <div class="container navbar-inverse" id="footer" > 
+            <div class="col-lg-6">&copy; {{trans("interfaz.nombre")}} {{date("Y")}} - {{trans('interfaz.pie_pagina')}}</div>
+            <div class="col-lg-6 text-right"> 
+                @if(User::enPrueba()) 
+                <span style="color:white;"> <span class="glyphicon glyphicon-time"></span> {{trans("interfaz.pie_pagina.tiempo.prueba")}} {{Util::calcularDiferenciaFechas(Util::obtenerTiempoActual(), Auth::user()->fin_suscripcion);}} </span>
+                @endif 
+            </div>
+
+        </div>
 
         {{-- Include all compiled plugins (below), or include individual files as needed --}}
         {{ HTML::script('assets/plugins/bootstrap/js/bootstrap.js') }}
@@ -84,6 +106,7 @@
 
         {{--OTROS SCRIPTS--}}
         @yield("script")
+        @yield("script2")
 
         <script>
             jQuery(".tooltip-left").tooltip({placement: "left"});
@@ -100,7 +123,7 @@
 
                 $('.dropdown-submenu > a').submenupicker();
 
-                {{--FUNCIONALIDAD QUE ESTABLECE EL IDIOMA DEL USUARIO--}}
+
                 $("#seleccion-idioma span").click(function () {
                     $("#seleccion-idioma span").removeClass("select");
                     $(this).addClass("select");

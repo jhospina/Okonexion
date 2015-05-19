@@ -233,6 +233,9 @@ function ayuda_soporte() {
 function configuracion() {
     Route::get("config/general", "UPanelControladorConfiguracion@vista_general");
     Route::post("config/post/guardar", "UPanelControladorConfiguracion@post_guardar");
+
+    Route::post("config/ajax/subir/logo", "UPanelControladorConfiguracion@ajax_subirLogo");
+    Route::post("config/ajax/eliminar/logo", "UPanelControladorConfiguracion@ajax_eliminarLogo");
 }
 
 //***************************************************************************
@@ -244,7 +247,13 @@ function configuracion() {
 
 function cookies() {
     Route::post("cookies/set", function() {
-        Cookie::make(Input::get("IDCookie"), Input::get("valor"), IDCookies::duracion(Input::get("IDCookie")));
+        if (Request::ajax()) {
+            $cookie = Cookie::make(Input::get("IDCookie"), Input::get("valor"), IDCookies::duracion(Input::get("IDCookie")));
+            $response = Response::json(array());
+            $response->headers->setCookie($cookie);
+
+            return $response;
+        }
     });
 }
 

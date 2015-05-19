@@ -7,6 +7,7 @@ class ConfigInstancia extends Eloquent {
 
     const periodoPrueba_activado = "periodoPrueba_activado";
     const periodoPrueba_numero_dias = "periodoPrueba_numero_dias";
+    const visual_logo="visual_logo";
 
     static function obtenerListadoConfig() {
         $class = new ReflectionClass("ConfigInstancia");

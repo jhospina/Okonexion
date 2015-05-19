@@ -1,3 +1,7 @@
+<?php 
+$logo=  Instancia::obtenerValorMetadato(ConfigInstancia::visual_logo);       
+?>
+
 @extends('interfaz/plantilla')
 
 @section("titulo") {{trans("interfaz.menu.principal.config")}}/{{trans("interfaz.menu.principal.config.general")}} @stop
@@ -5,6 +9,15 @@
 
 @include("usuarios/tipo/admin/config/secciones/css")
 
+@section("css2")
+
+<style>
+#{{ConfigInstancia::visual_logo}}-content .file-preview-frame{
+height: 50px;
+}
+</style>
+
+@stop
 
 @section("contenido") 
 
@@ -17,6 +30,19 @@
 <div class="col-lg-9" id="content-config">
 
     <h2 class="text-right"><span class="glyphicon glyphicon-cog"></span> {{trans("interfaz.menu.principal.config.general")}}</h2>
+
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">{{trans("config.general.seccion.logotipo")}}</div>
+        <div class="panel-body">
+            <div class="well">
+                {{trans("config.general.seccion.logotipo.ayuda")}}
+            </div>
+            <span  href="#" class="tooltip-left" rel="tooltip" id='{{ConfigInstancia::visual_logo}}-content' title="{{trans('otros.extensiones_permitidas')}}: png, jpeg. Max 500Kb"> 
+                <input name="{{ConfigInstancia::visual_logo}}" id="{{ConfigInstancia::visual_logo}}" accept="image/*" type="file" multiple=true>
+            </a> 
+        </div>
+    </div>
 
     <form id="form-config" action="{{URL::to("config/post/guardar")}}" method="POST">
         <div class="panel panel-primary">
@@ -50,7 +76,61 @@
     </form>
 </div>
 
+
+
+
 @stop
 
-
 @include("usuarios/tipo/admin/config/secciones/script")
+
+@section("script2")
+
+<script>
+    jQuery("#{{ConfigInstancia::visual_logo}}").fileinput({
+        multiple: false,
+        showPreview: true,
+        showRemove: true,
+        showUpload: false,
+        initialPreview: <?php echo(!is_null($logo)) ? "\"<img style='width:300px;height:50px;' src='" . $logo . "' class='file-preview-image'/>\"" : "false"; ?>,
+        maxFileCount: 1,
+        previewFileType: "image",
+        allowedFileExtensions: ['jpg', 'png'],
+        browseLabel: "{{trans('config.general.seccion.logotipo.op.seleccionar')}}",
+        browseIcon: '<i class="glyphicon glyphicon-picture"></i> ',
+        removeClass: "btn btn-danger",
+        removeLabel: "{{trans('otros.info.borrar')}}",
+        removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
+        uploadClass: "btn btn-info",
+        uploadLabel: "trans('otros.info.subir')",
+        dropZoneEnabled: false,
+        dropZoneTitle: "{{trans('otros.info.arrastrar_imagen')}}...",
+        uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
+        msgSelected: "{n} {{trans('otros.info.imagen')}}",
+        maxFileSize: 500,
+        msgInvalidFileExtension: "{{trans('app.config.info.imagen.error01')}}",
+        msgInvalidFileType: "{{trans('app.config.info.imagen.error01')}}",
+        msgSizeTooLarge: "{{trans('app.config.info.imagen.error02')}}",
+        uploadAsync: true,
+        uploadUrl: "{{URL::to('config/ajax/subir/logo')}}" // your upload server url
+    });
+    
+    
+    //Cuando se borra la imagen
+    $('#{{ConfigInstancia::visual_logo}}').on('fileclear', function (event) {
+        $.ajax({
+            type: "POST",
+            url: "{{URL::to('config/ajax/eliminar/logo')}}",
+            data: {},
+            success: function (response) {}
+        }, "json");
+
+    });
+
+    //Sube la imagen una vez seleccionada
+    $('#{{ConfigInstancia::visual_logo}}').on('fileimageloaded', function (event, previewId) {
+        $('#{{ConfigInstancia::visual_logo}}').fileinput('upload');
+    });
+    
+</script>
+
+@stop

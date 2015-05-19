@@ -92,7 +92,7 @@ Class Instancia extends Eloquent {
      * @param Int $instancia (Opcional) Si no se especifica se toma el de la sesion actual
      */
     static function agregarMetadato($clave, $valor, $instancia = null) {
-        $meta = new UsuarioMetadato;
+        $meta = new ConfigInstancia;
 
         if (is_null($instancia))
             $instancia = Auth::user()->instancia;
@@ -103,7 +103,7 @@ Class Instancia extends Eloquent {
         $meta->instancia = $instancia;
         $meta->clave = $clave;
         $meta->valor = $valor;
-        $meta->save();
+        return $meta->save();
     }
 
     /** Actualiza el valor de un metadato de una instancia, y si no existe lo crea
@@ -132,8 +132,7 @@ Class Instancia extends Eloquent {
         return $meta->save();
     }
 
-    
-     /** Obtiene el objeto de un metadado dado por su valor clave
+    /** Obtiene el objeto de un metadado dado por su valor clave
      * 
      * @param type $clave El valor clave que identifica el metadato
      * @param Int $instancia (Opcional) Si no se especifica se toma el de la sesion actual
@@ -152,6 +151,20 @@ Class Instancia extends Eloquent {
         foreach ($metas as $meta)
             return $meta;
         return null;
+    }
+
+    static function eliminarMetadato($clave, $instancia = null) {
+
+        if (is_null($instancia)) {
+            if (isset(Auth::user()->instancia))
+                $instancia = Auth::user()->instancia;
+            else
+                return null;
+        }
+
+        $config = Instancia::obtenerMetadato($clave, $instancia);
+
+        return $config->delete();
     }
 
 }
