@@ -1,6 +1,7 @@
 @section("script")
 {{ HTML::script('assets/plugins/switchery/switchery.js') }}
 {{ HTML::script('assets/plugins/fileinput/js/fileinput.js') }}
+{{ HTML::script('assets/jscode/util.js') }}
 
 <script>
     var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));

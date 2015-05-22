@@ -3,7 +3,7 @@
 return array(
     "general.seccion.logotipo" => "Logotipo de la plataforma",
     "general.seccion.logotipo.op.seleccionar" => "Subir Logo",
-    "general.seccion.logotipo.ayuda"=>"Para cambiar el logo de la plataforma de debes subir una imagen con un tamaño exacto de 300x50 pixeles.",
+    "general.seccion.logotipo.ayuda" => "Para cambiar el logo de la plataforma de debes subir una imagen con un tamaño exacto de 300x50 pixeles.",
     "general.seccion.logotipo.op.error.1" => "La imagen subida no es de 300x50 pixeles.",
     "general.seccion.periodo_prueba" => "Periodo de prueba",
     "general.seccion.periodo_prueba.op.activar" => "Activar periodo de prueba para los usuarios nuevos",
@@ -13,4 +13,23 @@ return array(
     "general.seccion.periodo_prueba.op.cantidad.addon.dias" => "Días",
     "general.seccion.error.validacion" => "Opps! Parece que hay algún campo que no esta llenado correctamente. ¡Verificalo!",
     "general.post.exito" => "La configuración ha sido guardada con exito",
+    "general.seccion.moneda_principal" => "Moneda principal",
+    "general.seccion.moneda_principal.op.moneda" => "Moneda de cambio por defecto",
+    "general.seccion.moneda_principal.op.moneda.ayuda" => "Indica el tipo de moneda que se mostrara en manejo del dinero dentro de la plataforma",
+    "general.seccion.moneda_principal.op.descuento" => "Descuento",
+    "suscripcion.seccion.costos.titulo" => "Costos",
+    "suscripcion.seccion.costos.op.valor.mensual" => "Valor mensual",
+    "suscripcion.seccion.costos.op.valor.3mensual" => "Valor por 3 meses",
+    "suscripcion.seccion.costos.op.valor.6mensual" => "Valor por 6 meses",
+    "suscripcion.seccion.costos.op.valor.anual" => "Valor anual",
+    "suscripcion.seccion.servicios.titulo" => "Facturación de servicios",
+    "suscripcion.seccion.detalles.titulo" => "Facturación de servicios",
+    "suscripcion.seccion.servicios.col.nombre" => "Nombre",
+    "suscripcion.seccion.servicios.info.suscripcion" => "Suscripción",
+    "servicios.seccion.agregar.servicio" => "Agregar nuevo servicio",
+    "servicios.seccion.agregar.servicio.op.nombre" => "Nombre del servicio",
+    "servicios.seccion.agregar.servicio.op.descripcion" => "Descripción",
+    "servicios.seccion.agregar.servicio.op.costo" => "Costo",
+    "servicio.seccion.agregar.servicio.info.exito" => "El servicio ha sido creado con éxito."
+    
 );

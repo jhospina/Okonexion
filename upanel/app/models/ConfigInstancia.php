@@ -3,11 +3,35 @@
 class ConfigInstancia extends Eloquent {
 
     protected $table = 'instanciasMetadatos';
-     public $timestamps = false;
+    public $timestamps = false;
 
     const periodoPrueba_activado = "periodoPrueba_activado";
     const periodoPrueba_numero_dias = "periodoPrueba_numero_dias";
-    const visual_logo="visual_logo";
+    //************************************************************
+    //CONFIGURACION DE SUSCRIPCION********************************
+    //************************************************************
+
+    const suscripcion_valor_1mes = "suscripcion_valor_1mes";
+    const suscripcion_valor_3mes = "suscripcion_valor_3mes";
+    const suscripcion_valor_6mes = "suscripcion_valor_6mes";
+    const suscripcion_valor_12mes = "suscripcion_valor_12mes";
+    const suscripcion_valor_3mes_descuento = "suscripcion_valor_3mes_descuento";
+    const suscripcion_valor_6mes_descuento = "suscripcion_valor_6mes_descuento";
+    const suscripcion_valor_12mes_descuento = "suscripcion_valor_12mes_descuento";
+    //************************************************************
+    //CONFIGURACION DE DATOS****************************************
+    //************************************************************
+
+    const info_moneda = "info_moneda";
+    //************************************************************
+    //CONFIGURACION VISUAL****************************************
+    //************************************************************
+    const visual_logo = "visual_logo";
+
+    //************************************************************
+    //CONFIGURACION DE FACTURACIÓN********************************
+    //************************************************************
+
 
     static function obtenerListadoConfig() {
         $class = new ReflectionClass("ConfigInstancia");
@@ -39,7 +63,14 @@ class ConfigInstancia extends Eloquent {
      */
     static function reglasDeValidacion($config) {
         $valid = array(
-            ConfigInstancia::periodoPrueba_numero_dias => "required|numeric"
+            ConfigInstancia::periodoPrueba_numero_dias => "required|numeric",
+            ConfigInstancia::suscripcion_valor_1mes => "required",
+            ConfigInstancia::suscripcion_valor_3mes => "required",
+            ConfigInstancia::suscripcion_valor_6mes => "required",
+            ConfigInstancia::suscripcion_valor_12mes => "required",
+            ConfigInstancia::suscripcion_valor_3mes_descuento => "required",
+            ConfigInstancia::suscripcion_valor_6mes_descuento => "required",
+            ConfigInstancia::suscripcion_valor_12mes_descuento => "required",
         );
         return (isset($valid[$config])) ? $valid[$config] : false;
     }

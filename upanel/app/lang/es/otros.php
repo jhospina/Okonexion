@@ -130,4 +130,9 @@ return array(
     "info.continuar"=>"Continuar",
     "info.version"=>"Versión",
     "info.entendido"=>"Entendido",
+    "info.elegir"=>"Elegir",
+    "info.costo"=>"Costo",
+    "info.precio"=>"Precio",
+    "info.activar"=>"Activar",
+    "info.desactivar"=>"Desactivar",
 );

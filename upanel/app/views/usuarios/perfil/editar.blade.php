@@ -1,5 +1,7 @@
 <?php
 $form_data = array('route' => array('usuario.update', $usuario->id), 'method' => 'PATCH', 'rol' => 'form');
+$paises = Paises::listado();
+array_unshift($paises, trans("otros.info.elegir"));
 ?>
 
 @extends('interfaz/plantilla')
@@ -20,7 +22,7 @@ $form_data = array('route' => array('usuario.update', $usuario->id), 'method' =>
     <tr><th>{{trans("menu_usuario.mi_perfil.info.email")}}</th><td>{{ Form::text('email', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.email.placeholder"), 'class' => 'form-control')) }}</td></tr>
     <tr><th>{{trans("menu_usuario.mi_perfil.info.dni")}}</th><td>{{ Form::text('dni', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.dni.placeholder"), 'class' => 'form-control')) }}</td></tr>
     <tr><th>{{trans("menu_usuario.mi_perfil.info.empresa")}} </th><td>{{ Form::text('empresa', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.empresa.placeholder"), 'class' => 'form-control')) }}</td></tr>
-    <tr><th>{{trans("menu_usuario.mi_perfil.info.pais")}}</th><td>{{ Form::text('pais', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.pais.placeholder"), 'class' => 'form-control')) }}</td></tr>
+    <tr><th>{{trans("menu_usuario.mi_perfil.info.pais")}}</th><td>{{ Form::select('pais',$paises, null, array('placeholder' => trans("menu_usuario.mi_perfil.info.pais.placeholder"), 'class' => 'form-control')) }}</td></tr>
     <tr><th>{{trans("menu_usuario.mi_perfil.info.region")}}</th><td>{{ Form::text('region', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.region.placeholder"), 'class' => 'form-control')) }}</td></tr>
     <tr><th>{{trans("menu_usuario.mi_perfil.info.ciudad")}}</th><td>{{ Form::text('ciudad', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.ciudad.placeholder"), 'class' => 'form-control')) }}</td></tr>
     <tr><th>{{trans("menu_usuario.mi_perfil.info.direccion")}}</th><td>{{ Form::text('direccion', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.direccion.placeholder"), 'class' => 'form-control')) }}</td></tr>

@@ -6,11 +6,42 @@ class UPanelControladorConfiguracion extends \BaseController {
         if (!Auth::check()) {
             return User::login();
         }
-
         if (!is_null($acceso = User::validarAcceso(User::USUARIO_ADMIN)))
             return $acceso;
 
         return View::make("usuarios/tipo/admin/config/general");
+    }
+
+    function vista_servicios() {
+        if (!Auth::check()) {
+            return User::login();
+        }
+        if (!is_null($acceso = User::validarAcceso(User::USUARIO_ADMIN)))
+            return $acceso;
+
+        $servicios = Servicio::orderBy("id", "DESC")->paginate(10);
+
+        return View::make("usuarios/tipo/admin/config/servicios")->with("servicios", $servicios);
+    }
+
+    function vista_suscripcion() {
+        if (!Auth::check()) {
+            return User::login();
+        }
+        if (!is_null($acceso = User::validarAcceso(User::USUARIO_ADMIN)))
+            return $acceso;
+
+        return View::make("usuarios/tipo/admin/config/suscripcion");
+    }
+
+    function vista_facturacion() {
+        if (!Auth::check()) {
+            return User::login();
+        }
+        if (!is_null($acceso = User::validarAcceso(User::USUARIO_ADMIN)))
+            return $acceso;
+
+        return View::make("usuarios/tipo/admin/config/facturacion");
     }
 
     function post_guardar() {

@@ -44,5 +44,8 @@
 <li class="dropdown @if(Request::is('config/*')) active @endif"><a class="dropdown-toggle" title="{{trans("interfaz.menu.principal.config")}}" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-wrench"></span><span class="caret"></span></a>
     <ul class="dropdown-menu">
         <li><a href="{{URL::to("config/general")}}"><span class="glyphicon glyphicon-cog"></span> {{trans("interfaz.menu.principal.config.general")}}</a></li>
+        <li><a href="{{URL::to("config/suscripcion")}}"><span class="glyphicon glyphicon-gift"></span> {{trans("interfaz.menu.principal.config.suscripcion")}}</a></li>
+        <li><a href="{{URL::to("config/servicios")}}"><span class="glyphicon glyphicon glyphicon-flash"></span> {{trans("interfaz.menu.principal.config.servicios")}}</a></li>
+        <li><a href="{{URL::to("config/facturacion")}}"><span class="glyphicon glyphicon-piggy-bank"></span> {{trans("interfaz.menu.principal.config.facturacion")}}</a></li>
     </ul>
 </li>

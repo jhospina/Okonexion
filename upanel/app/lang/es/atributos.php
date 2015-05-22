@@ -23,5 +23,7 @@ return array(
     "estado.app.inactiva"=>"Inactiva",
     "estado.cont.publico"=>"Publico",
     "estado.cont.archivado"=>"Archivado",
-    "estado.cont.guardado"=>"Guardado" 
+    "estado.cont.guardado"=>"Guardado",
+    "estado.servicio.activo"=>"Activo",
+    "estado.servicio.inactivo"=>"Inactivo",
 );

@@ -232,10 +232,16 @@ function ayuda_soporte() {
 
 function configuracion() {
     Route::get("config/general", "UPanelControladorConfiguracion@vista_general");
+    Route::get("config/suscripcion", "UPanelControladorConfiguracion@vista_suscripcion");
+    Route::get("config/facturacion", "UPanelControladorConfiguracion@vista_facturacion");
+    Route::get("config/servicios", "UPanelControladorConfiguracion@vista_servicios");
+    
     Route::post("config/post/guardar", "UPanelControladorConfiguracion@post_guardar");
 
     Route::post("config/ajax/subir/logo", "UPanelControladorConfiguracion@ajax_subirLogo");
     Route::post("config/ajax/eliminar/logo", "UPanelControladorConfiguracion@ajax_eliminarLogo");
+    Route::post("config/ajax/agregar/servicio", "UPanelControladorServicios@ajax_agregar");
+    Route::post("config/ajax/estado/servicio", "UPanelControladorServicios@ajax_cambiarEstado");
 }
 
 //***************************************************************************

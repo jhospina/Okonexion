@@ -461,3 +461,8 @@ a.link{
 #form-config label{
     font-weight: 100;
 }
+
+
+.panel-body .col-lg-6{
+    margin-bottom: 10px;
+}

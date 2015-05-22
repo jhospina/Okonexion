@@ -3,8 +3,8 @@
 //IDIOMA: ESPAÑOL
 
 return array(
-    "nombre" => "Okonexion",
-    "subfijo_titulo_pagina" => "- Okonexion",
+    "nombre" => "Appstergo",
+    "subfijo_titulo_pagina" => "- Appstergo",
     "pie_pagina" => "Todos los derechos reservados",
     "pie_pagina.tiempo.prueba"=>"Tiempo de prueba restante: ",
     "menu.principal.inicio" => "Inicio",
@@ -34,6 +34,9 @@ return array(
     "menu.principal.usuarios.agregar_usuario" => "Agregar usuario",
     "menu.principal.config" => "Configuración",
     "menu.principal.config.general" => "General",
+    "menu.principal.config.facturacion" => "Facturación",
+    "menu.principal.config.servicios" => "Servicios",
+    "menu.principal.config.suscripcion" => "Suscripcion",
     "menu.usuario.mi_perfil" => "Mi perfil",
     "menu.usuario.cambiar_contrasena" => "Cambiar contraseña",
     "menu.comp.cerrar_sesion" => "Cerrar Sesión"

@@ -33,7 +33,7 @@
     <tr><th>{{trans("menu_usuario.mi_perfil.info.dni")}}</th><td>{{$usuario->dni}}</td></tr>
     <tr><th>{{trans("menu_usuario.mi_perfil.info.email")}}</th><td>{{$usuario->email}}</td></tr>
     <tr><th>{{trans("menu_usuario.mi_perfil.info.empresa")}}</th><td>{{$usuario->empresa}}</td></tr>
-    <tr><th>{{trans("menu_usuario.mi_perfil.info.pais")}}</th><td>{{$usuario->pais}}</td></tr>
+    <tr><th>{{trans("menu_usuario.mi_perfil.info.pais")}}</th><td>{{Paises::obtenerNombre($usuario->pais)}}</td></tr>
     <tr><th>{{trans("menu_usuario.mi_perfil.info.region")}}</th><td>{{$usuario->region}}</td></tr>
     <tr><th>{{trans("menu_usuario.mi_perfil.info.ciudad")}}</th><td>{{$usuario->ciudad}}</td></tr>
     <tr><th>{{trans("menu_usuario.mi_perfil.info.direccion")}}</th><td>{{$usuario->direccion}}</td></tr>
