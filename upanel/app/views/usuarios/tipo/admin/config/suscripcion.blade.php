@@ -36,7 +36,7 @@ list($decimales, $sep_millar, $sep_decimal) = Monedas::formato($moneda);
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon">{{Monedas::simbolo($moneda)}}</div>
-                        <input type="text" class="form-control" onblur="calcularValores()" onkeyup="formatoMoneda(this)" onkeypress="return soloNumeros(this,'{{$sep_decimal}}');" id="{{ConfigInstancia::suscripcion_valor_1mes}}" name="{{ConfigInstancia::suscripcion_valor_1mes}}" value="{{Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes)}}"/>
+                        <input type="text" class="form-control" onblur="calcularValores()" onkeyup="formatoMoneda(this)" onkeypress="return soloNumeros(this,'{{$sep_decimal}}');" id="{{ConfigInstancia::suscripcion_valor_1mes}}" name="{{ConfigInstancia::suscripcion_valor_1mes}}" value="{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes))}}"/>
                         <div class="input-group-addon">{{$moneda}}</div></div>
                 </div>
             </div>
@@ -48,7 +48,7 @@ list($decimales, $sep_millar, $sep_decimal) = Monedas::formato($moneda);
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon">{{Monedas::simbolo($moneda)}}</div>
-                        <input type="text" class="form-control" id="{{ConfigInstancia::suscripcion_valor_3mes}}"  name="{{ConfigInstancia::suscripcion_valor_3mes}}" value="{{Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_3mes)}}"/>
+                        <input type="text" class="form-control" id="{{ConfigInstancia::suscripcion_valor_3mes}}"  name="{{ConfigInstancia::suscripcion_valor_3mes}}" value="{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_3mes))}}"/>
                         <div class="input-group-addon">{{$moneda}}</div></div>
                 </div>
             </div>
@@ -68,7 +68,7 @@ list($decimales, $sep_millar, $sep_decimal) = Monedas::formato($moneda);
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon">{{Monedas::simbolo($moneda)}}</div>
-                        <input type="text" class="form-control" id="{{ConfigInstancia::suscripcion_valor_6mes}}"  name="{{ConfigInstancia::suscripcion_valor_6mes}}" value="{{Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_6mes)}}"/>
+                        <input type="text" class="form-control" id="{{ConfigInstancia::suscripcion_valor_6mes}}"  name="{{ConfigInstancia::suscripcion_valor_6mes}}" value="{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_6mes))}}"/>
                         <div class="input-group-addon">{{$moneda}}</div></div>
                 </div>
             </div>
@@ -88,7 +88,7 @@ list($decimales, $sep_millar, $sep_decimal) = Monedas::formato($moneda);
                 <div class="form-group">
                     <div class="input-group">
                         <div class="input-group-addon">{{Monedas::simbolo($moneda)}}</div>
-                        <input type="text" class="form-control" id="{{ConfigInstancia::suscripcion_valor_12mes}}"  name="{{ConfigInstancia::suscripcion_valor_12mes}}" value="{{Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_12mes)}}"/>
+                        <input type="text" class="form-control" id="{{ConfigInstancia::suscripcion_valor_12mes}}"  name="{{ConfigInstancia::suscripcion_valor_12mes}}" value="{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_12mes))}}"/>
                         <div class="input-group-addon">{{$moneda}}</div></div>
                 </div>
             </div>

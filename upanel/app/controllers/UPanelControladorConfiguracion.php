@@ -19,7 +19,7 @@ class UPanelControladorConfiguracion extends \BaseController {
         if (!is_null($acceso = User::validarAcceso(User::USUARIO_ADMIN)))
             return $acceso;
 
-        $servicios = Servicio::orderBy("id", "DESC")->paginate(10);
+        $servicios = Servicio::orderBy("id", "ASC")->paginate(10);
 
         return View::make("usuarios/tipo/admin/config/servicios")->with("servicios", $servicios);
     }

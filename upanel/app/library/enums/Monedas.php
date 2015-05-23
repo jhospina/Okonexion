@@ -12,6 +12,11 @@ class Monedas {
     const COP_SIMBOL = "&#36;";
     const COP_FORMAT = "0|.|,";
 
+    
+    static function actual(){
+        return Instancia::obtenerValorMetadato(ConfigInstancia::info_moneda);
+    }
+    
     /** Retorna una array con el codigo de las moneas disponibles
      * 
      * @return type
@@ -58,6 +63,10 @@ class Monedas {
 
         return array(intval($params[0]), $params[1], $params[2]);
     }
+    
+    static function nomenclatura($id,$numero){ 
+        return Monedas::simbolo($id)."".$numero." ".$id;
+    }
 
     /** Retorna un numero formateado indicado por la moneda 
      * 
@@ -66,8 +75,18 @@ class Monedas {
      * @return String
      */
     static function formatearNumero($id, $numero) {
+        if(is_null($numero))
+            return null;
+        
         list($cantDecimales, $sepadorMillar, $sepadorDecimal) = Monedas::formato($id);
         return (is_numeric($numero)) ? number_format($numero, $cantDecimales, $sepadorDecimal, $sepadorMillar) : null;
+    }
+
+    static function desformatearNumero($id, $numero) {
+        list($cantDecimales, $sepadorMillar, $sepadorDecimal) = Monedas::formato($id);
+        $numero = str_replace($sepadorMillar, "", $numero);
+        $numero = str_replace($sepadorDecimal, ".", $numero);
+        return doubleval($numero);
     }
 
 }

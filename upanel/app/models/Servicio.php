@@ -29,7 +29,7 @@ class Servicio extends Eloquent {
 
     function registrar($data) {
         $this->nombre = $data[Servicio::COL_NOMBRE];
-        $this->costo = doubleval($data[Servicio::COL_COSTO]);
+        $this->costo = Monedas::desformatearNumero(Instancia::obtenerValorMetadato(ConfigInstancia::info_moneda), $data[Servicio::COL_COSTO]);
         if (strlen($data[Servicio::COL_DESCRIPCION]) > 0)
             $this->descripcion = $data[Servicio::COL_DESCRIPCION];
         $this->estado = Servicio::ESTADO_INACTIVO;

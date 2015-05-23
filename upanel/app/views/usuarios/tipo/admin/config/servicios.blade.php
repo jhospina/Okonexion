@@ -17,16 +17,16 @@ list($decimales, $sep_millar, $sep_decimal) = Monedas::formato($moneda);
         color:green;
         text-align: center;
     }
-    
+
     .estado-{{Servicio::ESTADO_INACTIVO}}{
         color:red;
         text-align: center;
     }
-    
+
     #tabla-servicios{
         font-size:12pt;
     }
-    
+
 </style>
 
 @stop
@@ -53,9 +53,10 @@ list($decimales, $sep_millar, $sep_decimal) = Monedas::formato($moneda);
 
             <table id="tabla-servicios" class="table table-striped">
                 <tr><th>{{trans("otros.info.nombre")}}</th><th>{{trans("config.servicios.seccion.agregar.servicio.op.costo")}}</th><th style="text-align: center;">{{trans("otros.info.estado")}}</th><th></th></tr>
+               @if(count($servicios)>0)
                 @foreach($servicios as $servicio)
                 <tr><td>{{$servicio->nombre}}</td>
-                    <td>{{$servicio->costo}}</td>
+                    <td>{{Monedas::nomenclatura($moneda,Monedas::formatearNumero($moneda,$servicio->costo))}}</td>
                     <td id="estado-{{$servicio->id}}" class="estado-{{$servicio->estado}}">
                         @if($servicio->estado==Servicio::ESTADO_ACTIVO)
                         <span title="{{trans("atributos.estado.servicio.activo")}}" class="tooltip-top glyphicon glyphicon-ok-circle"></span>
@@ -74,6 +75,9 @@ list($decimales, $sep_millar, $sep_decimal) = Monedas::formato($moneda);
                     </td>
                 </tr>
                 @endforeach
+                @else
+                <tr><td id="msj-no-datos" cols="6">{{trans("otros.info.no_hay_datos")}}</td></tr>
+                @endif
             </table>
 
         </div>
@@ -150,13 +154,13 @@ list($decimales, $sep_millar, $sep_decimal) = Monedas::formato($moneda);
                                     if (data.error){
                             $("#msj-error-modal").html("{{trans('config.general.seccion.error.validacion')}}");
                             } else{
+                                if($("#msj-no-datos"))
+                                    $("#msj-no-datos").remove();
                             $("#modal-crear").modal("hide");
                                     $("#{{Servicio::COL_NOMBRE}}").val("");
                                     $("#{{Servicio::COL_COSTO}}").val("");
                                     $("#{{Servicio::COL_DESCRIPCION}}").val("");
-                                    
-                                    agregarHtmlServicio(data.{{Servicio::COL_ID}},data.{{Servicio::COL_NOMBRE}},data.{{Servicio::COL_COSTO}},data.{{Servicio::COL_ESTADO}});
-                                    
+                                    agregarHtmlServicio(data.{{Servicio::COL_ID}}, data.{{Servicio::COL_NOMBRE}}, data.{{Servicio::COL_COSTO}}, data.{{Servicio::COL_ESTADO}});
                             }
 
                             $("#{{Servicio::COL_NOMBRE}}").removeAttr("disabled");
@@ -166,63 +170,59 @@ list($decimales, $sep_millar, $sep_decimal) = Monedas::formato($moneda);
                                     jQuery(btn).html("{{trans('otros.info.guardar')}}");
                             }}, "html");
             });
-            
-            
-            function agregarHtmlServicio(id,nombre,costo,estado){
-                var html="<tr><td>"+nombre+"</td>";
-                html+="<td>"+costo+"</td>";
-                  html+="<td id='estado-"+id+"' class='estado-"+estado+"'>";
-                      html+=" <span title='{{trans('atributos.estado.servicio.inactivo')}}' class='tooltip-top glyphicon glyphicon-remove-sign'></span></td>";
-                html+="<td><button type='button' onclick='cambiarEstado(this,"+id+",\"{{$servicio::ESTADO_ACTIVO}}\")' class='btn-sm btn-success tooltip-top' title='{{trans('otros.info.activar')}}'> <span  class='glyphicon glyphicon glyphicon-ok-circle'></span></button></td></tr>";
-                $("#tabla-servicios").prepend(html);
-            }
-            
-            </script>
+                    function agregarHtmlServicio(id, nombre, costo, estado){
+                    var html = "<tr><td>" + nombre + "</td>";
+                            html += "<td>" + costo + "</td>";
+                            html += "<td id='estado-" + id + "' class='estado-" + estado + "'>";
+                            html += " <span title='{{trans('atributos.estado.servicio.inactivo')}}' class='tooltip-top glyphicon glyphicon-remove-sign'></span></td>";
+                            html += "<td><button type='button' onclick='cambiarEstado(this," + id + ",\"{{Servicio::ESTADO_ACTIVO}}\")' class='btn-sm btn-success tooltip-top' title='{{trans('otros.info.activar')}}'> <span  class='glyphicon glyphicon glyphicon-ok-circle'></span></button></td></tr>";
+                            $("#tabla-servicios").append(html);
+                    }
+
+</script>
 
 
-            <script>
-            function cambiarEstado(btn,id_servicio,estado){
-    
-                 jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span>");
+<script>
+            function cambiarEstado(btn, id_servicio, estado){
+
+            jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span>");
                     jQuery(btn).attr("disabled", "disabled");
-                   
-      
-                jQuery.ajax({
+                    jQuery.ajax({
                     type: "POST",
                             url: "{{URL::to('config/ajax/estado/servicio')}}",
                             data: {"{{Servicio::COL_ID}}":id_servicio, "{{Servicio::COL_ESTADO}}":estado},
                             success: function (data) {
 
                             data = jQuery.parseJSON(data);
-                            if(data.error){
+                                    if (data.error){
                             }
-                              else{
-                                    if(estado!="{{Servicio::ESTADO_ACTIVO}}"){
-                                        $(btn).removeClass("btn-danger");
-                                        $(btn).addClass("btn-success");
-                                        $(btn).html("<span  class='glyphicon glyphicon glyphicon-ok-circle'></span>");
-                                        $(btn).attr("title","{{trans('otros.info.activar')}}");
-                                        $(btn).attr("onClick","cambiarEstado(this,"+id_servicio+",'{{$servicio::ESTADO_INACTIVO}}')");
-                                              $("#estado-"+id_servicio).html('<span title="{{trans("atributos.estado.servicio.inactivo")}}" class="tooltip-top glyphicon glyphicon-remove-sign"></span>');
-                                        $("#estado-"+id_servicio).attr("class","estado-"+estado);
-                                    }else{
-                                        $(btn).removeClass("btn-sucess");
-                                        $(btn).addClass("btn-danger");
-                                        $(btn).html("<span  class='glyphicon glyphicon glyphicon-remove-circle'></span>");
-                                        $(btn).attr("title","{{trans('otros.info.desactivar')}}");
-                                        $(btn).attr("onClick","cambiarEstado(this,"+id_servicio+",'{{$servicio::ESTADO_ACTIVO}}')");
-                                        $("#estado-"+id_servicio).html('<span title="{{trans("atributos.estado.servicio.activo")}}" class="tooltip-top glyphicon glyphicon-ok-circle"></span>');
-                                                 $("#estado-"+id_servicio).attr("class","estado-"+estado);
-                                    }
-                                }
-                                    
+                            else{
+                            if (estado != "{{Servicio::ESTADO_ACTIVO}}"){
+                            $(btn).removeClass("btn-danger");
+                                    $(btn).addClass("btn-success");
+                                    $(btn).html("<span  class='glyphicon glyphicon glyphicon-ok-circle'></span>");
+                                    $(btn).attr("title", "{{trans('otros.info.activar')}}");
+                                    $(btn).attr("onClick", "cambiarEstado(this," + id_servicio + ",'{{Servicio::ESTADO_INACTIVO}}')");
+                                    $("#estado-" + id_servicio).html('<span title="{{trans("atributos.estado.servicio.inactivo")}}" class="tooltip-top glyphicon glyphicon-remove-sign"></span>');
+                                    $("#estado-" + id_servicio).attr("class", "estado-" + estado);
+                            } else{
+                            $(btn).removeClass("btn-sucess");
+                                    $(btn).addClass("btn-danger");
+                                    $(btn).html("<span  class='glyphicon glyphicon glyphicon-remove-circle'></span>");
+                                    $(btn).attr("title", "{{trans('otros.info.desactivar')}}");
+                                    $(btn).attr("onClick", "cambiarEstado(this," + id_servicio + ",'{{Servicio::ESTADO_ACTIVO}}')");
+                                    $("#estado-" + id_servicio).html('<span title="{{trans("atributos.estado.servicio.activo")}}" class="tooltip-top glyphicon glyphicon-ok-circle"></span>');
+                                    $("#estado-" + id_servicio).attr("class", "estado-" + estado);
+                            }
+                            }
+
                             }}, "html");
             }
-            </script>
-            
+</script>
+
 
 <script>
-                    $("#btn-agregar-servicio").click(function(){
+            $("#btn-agregar-servicio").click(function(){
             $("#modal-crear").modal("show");
             })
 </script>

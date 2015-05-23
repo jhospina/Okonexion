@@ -78,6 +78,10 @@ class ConfigInstancia extends Eloquent {
     static function registrar($data) {
         $configs = ConfigInstancia::obtenerListadoConfig();
         foreach ($data as $config => $valor) {
+
+            if (strpos($config, "valor") !== false)
+                $valor = Monedas::desformatearNumero(Monedas::actual(), $valor);
+ 
             if (in_array($config, $configs))
                 Instancia::actualizarMetadato($config, $valor);
         }

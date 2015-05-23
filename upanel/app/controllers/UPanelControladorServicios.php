@@ -15,7 +15,7 @@ class UPanelControladorServicios extends Controller {
 
         if ($servicio->registrar($data)) {
             $output[Servicio::COL_NOMBRE] = $servicio->nombre;
-            $output[Servicio::COL_COSTO] = $servicio->costo;
+            $output[Servicio::COL_COSTO] = Monedas::nomenclatura(Monedas::actual(), $data[Servicio::COL_COSTO]);
             $output[Servicio::COL_ID] = $servicio->id;
             $output[Servicio::COL_ESTADO] = $servicio->estado;
         }
