@@ -3,18 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/admin/config/secciones/script.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/admin/config/servicios.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/ConfigInstancia.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/Servicio.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/library/enums/Monedas.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/lang/es/atributos.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/public/assets/css/upanel/plantilla.css</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/routes.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/lang/es/config.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorConfiguracion.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/admin/config/suscripcion.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorServicios.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/lang/es/otros.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/User.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/lang/es/nots.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/library/complements/Util.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/Notificacion.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/interfaz/menu/secciones/notificaciones.blade.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorNotificaciones.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/interfaz/plantilla.blade.php</file>
         </group>
     </open-files>
 </project-private>

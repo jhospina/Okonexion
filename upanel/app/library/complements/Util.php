@@ -334,7 +334,7 @@ class Util {
         return ($formato24) ? date('Y-m-d H:i:s') : date('Y-m-d h:i:sa');
     }
 
-    /** Calcula diferencia entre dos fechas
+    /** Calcula diferencia entre dos fechas, la fecha1 es mayor que la fecha2 retorna false.
      * 
      * @param type $fecha1 La fecha menor
      * @param type $fecha2 La fecha mayor
@@ -350,7 +350,7 @@ class Util {
         //formateamos las fechas a segundos tipo 1374998435
         $diferencia = strtotime($fecha2) - strtotime($fecha1);
         //comprobamos el tiempo que ha pasado en segundos entre las dos fechas
-        //floor devuelve el número entero anterior, si es 5.7 devuelve 5
+        //floor devuelve el número entero anterior
         if ($diferencia <= $minuto) {
             $tiempo = floor($diferencia) . " " . trans("otros.time.segundos");
         } else if ($diferencia >= $minuto && $diferencia < $minuto * 2) {
@@ -374,7 +374,9 @@ class Util {
         } else if ($diferencia >= $ano * 2) {
             $tiempo = floor($diferencia / $ano) . " " . trans("otros.time.anos");
         }
-        return strtolower($tiempo);
+
+
+        return (intval($tiempo) <= 0) ? false : strtolower($tiempo);
     }
 
     /** Convierte un valor entero en un valor booleano

@@ -55,6 +55,7 @@ Route::group(array('before' => 'auth'), function() {
     tipoContenido_Noticias();
     tipoContenido_PQR();
     cookies();
+    notificaciones();
 
     control_usuarios();
     control_instancias();
@@ -261,6 +262,12 @@ function cookies() {
             return $response;
         }
     });
+}
+
+
+function notificaciones(){
+    Route::post("nots/ajax/set/visto", "UPanelControladorNotificaciones@ajax_establecerVisto");
+    
 }
 
 //***************************************************************************

@@ -8,6 +8,8 @@ if (Aplicacion::existe()) {
 ?>
 
 
+@if(Auth::user()->estado==User::ESTADO_PERIODO_PRUEBA || Auth::user()->estado==User::ESTADO_SUSCRIPCION_VIGENTE)
+
 <li class="dropdown @if(Request::is('aplicacion/*')) active @endif"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-phone"></span> {{trans("interfaz.menu.principal.mi_aplicacion")}}<span class="caret"></span></a>
     <ul class="dropdown-menu">
         <li class="dropdown-submenu"><a tabindex="0" data-toggle="dropdown" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span> {{trans("interfaz.menu.principal.mi_aplicacion.configuracion")}}</a>
@@ -37,6 +39,17 @@ if (Aplicacion::existe()) {
 
     </ul>
 </li>
+
+@else
+
+
+<li class="disabled @if(Request::is('aplicacion/*')) active @endif"><a  href="#"><span class="glyphicon glyphicon-phone"></span> {{trans("interfaz.menu.principal.mi_aplicacion")}}<span class="caret"></span></a>
+
+</li>
+
+@endif
+
+
 <li><a href="#"><span class="glyphicon glyphicon-list-alt"></span> {{trans("interfaz.menu.principal.facturas")}}</a></li>
 <li class="dropdown @if(Request::is('soporte/*')) active @endif "><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-question-sign"></span> {{trans("interfaz.menu.principal.ayuda")}}<span class="caret"></span></a>
     <ul class="dropdown-menu">

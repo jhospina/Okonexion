@@ -63,6 +63,7 @@ if (is_null($logoPlat = Instancia::obtenerValorMetadato(ConfigInstancia::visual_
 
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
+                        @include("interfaz/menu/secciones/notificaciones")
                         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> {{Auth::user()->nombres}}<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 {{--SELECCION DE IDIOMA--}}
@@ -139,6 +140,21 @@ if (is_null($logoPlat = Instancia::obtenerValorMetadato(ConfigInstancia::visual_
                         }}, "html");
                 });
 
+            });
+        </script>
+        
+        <script>
+            $(".nots-active").click(function(){
+                
+                $("#nots-num").remove();
+                $(".nots-active").removeClass("nots-active");
+                
+               jQuery.ajax({
+                        type: "POST",
+                        url: "{{URL::to('nots/ajax/set/visto')}}",
+                        data: {},
+                        success: function (response) {
+                        }}, "html"); 
             });
         </script>
 

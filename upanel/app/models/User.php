@@ -43,6 +43,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     //********************************************************
     const ESTADO_SIN_PAGAR = "SP";
     const ESTADO_PERIODO_PRUEBA = "PP";
+    const ESTADO_PRUEBA_FINALIZADA="PF";
     const ESTADO_SUSCRIPCION_VIGENTE = "SG";
     const ESTADO_SUSCRIPCION_CADUCADA = "SC";
     //********************************************************

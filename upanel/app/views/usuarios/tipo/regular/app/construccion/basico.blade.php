@@ -10,6 +10,7 @@ if (Aplicacion::existe()) {
         $version = ProcesoApp::obtenerNumeroVersion($app->id);
 } else {
     $estado = null;
+    $version=0;
 }
 ?>
 

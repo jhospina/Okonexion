@@ -79,4 +79,5 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
-require app_path().'/translation.php';
+require app_path().'/global/translation.php';
+require app_path().'/global/userControl.php';
