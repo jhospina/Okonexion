@@ -453,19 +453,12 @@ a.link{
     font-weight: bold;
 }
 
-#form-config .col-lg-6{
-    margin-bottom: 5px;
-    min-height: 35px;
-}
 
 #form-config label{
     font-weight: 100;
 }
 
 
-.panel-body .col-lg-6{
-    margin-bottom: 10px;
-}
 
 #nots-num{
     position: absolute;

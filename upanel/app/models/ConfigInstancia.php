@@ -10,11 +10,21 @@ class ConfigInstancia extends Eloquent {
     //************************************************************
     //CONFIGURACION DE SUSCRIPCION********************************
     //************************************************************
-
-    const suscripcion_valor_1mes = "suscripcion_valor_1mes";
-    const suscripcion_valor_3mes = "suscripcion_valor_3mes";
-    const suscripcion_valor_6mes = "suscripcion_valor_6mes";
-    const suscripcion_valor_12mes = "suscripcion_valor_12mes";
+    const suscripcion_tipo_bronce = "bronce";
+    const suscripcion_tipo_plata = "plata";
+    const suscripcion_tipo_oro = "oro";
+    const suscripcion_valor_1mes_bronce = "suscripcion_valor_1mes_bronce";
+    const suscripcion_valor_3mes_bronce = "suscripcion_valor_3mes_bronce";
+    const suscripcion_valor_6mes_bronce = "suscripcion_valor_6mes_bronce";
+    const suscripcion_valor_12mes_bronce = "suscripcion_valor_12mes_bronce";
+    const suscripcion_valor_1mes_plata = "suscripcion_valor_1mes_plata";
+    const suscripcion_valor_3mes_plata = "suscripcion_valor_3mes_plata";
+    const suscripcion_valor_6mes_plata = "suscripcion_valor_6mes_plata";
+    const suscripcion_valor_12mes_plata = "suscripcion_valor_12mes_plata";
+    const suscripcion_valor_1mes_oro = "suscripcion_valor_1mes_oro";
+    const suscripcion_valor_3mes_oro = "suscripcion_valor_3mes_oro";
+    const suscripcion_valor_6mes_oro = "suscripcion_valor_6mes_oro";
+    const suscripcion_valor_12mes_oro = "suscripcion_valor_12mes_oro";
     const suscripcion_valor_3mes_descuento = "suscripcion_valor_3mes_descuento";
     const suscripcion_valor_6mes_descuento = "suscripcion_valor_6mes_descuento";
     const suscripcion_valor_12mes_descuento = "suscripcion_valor_12mes_descuento";
@@ -64,10 +74,18 @@ class ConfigInstancia extends Eloquent {
     static function reglasDeValidacion($config) {
         $valid = array(
             ConfigInstancia::periodoPrueba_numero_dias => "required|numeric",
-            ConfigInstancia::suscripcion_valor_1mes => "required",
-            ConfigInstancia::suscripcion_valor_3mes => "required",
-            ConfigInstancia::suscripcion_valor_6mes => "required",
-            ConfigInstancia::suscripcion_valor_12mes => "required",
+            ConfigInstancia::suscripcion_valor_1mes_bronce => "required",
+            ConfigInstancia::suscripcion_valor_3mes_bronce => "required",
+            ConfigInstancia::suscripcion_valor_6mes_bronce => "required",
+            ConfigInstancia::suscripcion_valor_12mes_bronce => "required",
+            ConfigInstancia::suscripcion_valor_1mes_plata => "required",
+            ConfigInstancia::suscripcion_valor_3mes_plata => "required",
+            ConfigInstancia::suscripcion_valor_6mes_plata => "required",
+            ConfigInstancia::suscripcion_valor_12mes_plata => "required",
+            ConfigInstancia::suscripcion_valor_1mes_oro => "required",
+            ConfigInstancia::suscripcion_valor_3mes_oro => "required",
+            ConfigInstancia::suscripcion_valor_6mes_oro => "required",
+            ConfigInstancia::suscripcion_valor_12mes_oro => "required",
             ConfigInstancia::suscripcion_valor_3mes_descuento => "required",
             ConfigInstancia::suscripcion_valor_6mes_descuento => "required",
             ConfigInstancia::suscripcion_valor_12mes_descuento => "required",
@@ -81,7 +99,7 @@ class ConfigInstancia extends Eloquent {
 
             if (strpos($config, "valor") !== false)
                 $valor = Monedas::desformatearNumero(Monedas::actual(), $valor);
- 
+
             if (in_array($config, $configs))
                 Instancia::actualizarMetadato($config, $valor);
         }

@@ -7,7 +7,7 @@ class UPanelControladorPresentacion extends Controller {
         if (!Auth::check()) {
             return User::login();
         }
-        
+
         if (Auth::user()->tipo == User::USUARIO_REGULAR)
         //USUARIO REGULAR
             return $this->indexRegular();
@@ -21,9 +21,7 @@ class UPanelControladorPresentacion extends Controller {
 
     //Panel principal para el usuario regular
     function indexRegular() {
-        //Verifica los datos del perfil
-        $data = $this->verificarPerfil();
-        return View::make("usuarios/tipo/regular/index", $data);
+        return View::make("usuarios/tipo/regular/index");
     }
 
     function indexSoporteGeneral() {
@@ -32,16 +30,6 @@ class UPanelControladorPresentacion extends Controller {
 
     function indexAdministrador() {
         return View::make("usuarios/tipo/admin/index");
-    }
-
-    function verificarPerfil() {
-        $user = Auth::user();
-        if ($user->dni == null || $user->pais == null || $user->region == null || $user->ciudad == null || $user->direccion == null)
-            return User::mensaje("advertencia", "text-center", trans("msj.ad.completar.perfil", array("nombre" => $user->nombres, "link" => Route("usuario.edit", Auth::user()->id))));
-        elseif ($user->telefono == null && $user->celular == null)
-            return User::mensaje("advertencia", "text-center", trans("msj.ad.completar.perfil.telefono.celular", array("nombre" => $user->nombres, "link" => Route("usuario.edit", Auth::user()->id))));
-        else
-            return array();
     }
 
 }

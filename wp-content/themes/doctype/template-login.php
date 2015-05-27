@@ -9,7 +9,7 @@ else
 
 //Inicio de sesion automatico si el usuario ha recordado sus credenciales de acceso
 if ($response == null)
-    header("Location: http://" . $_SERVER["SERVER_NAME"] . "/upanel/public/");
+    header("Location: https://appsthergo.com/upanel/public");
 
 
 get_header();
@@ -92,7 +92,7 @@ get_header();
         <?php endif; ?>
 
         <div class="contact-form-wrapper" style="margin-bottom:150px;">
-            <form id="form_cuenta" method="post" action="http://okonexion.com/upanel/public/login">
+            <form id="form_cuenta" method="post" action="https://appsthergo.com/upanel/public/login">
 
                 <h2>Inicia sesión con tu cuenta</h2>
                 <div class="grids" style="max-width: 500px;margin: auto;">
@@ -110,7 +110,8 @@ get_header();
                     <p class="grid-6" style="text-align: right;">
                         <a href="<?php echo esc_url(get_permalink(get_page_by_title('Recuperar contraseña'))); ?>">¿Olvidaste tu contraseña?</a>
                     </p>
-                         <input type="hidden" name="url" value="<?php echo ($_SERVER['HTTPS'])?"https://":"http://"; echo $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];?>"/>
+                    <input type="hidden" name="url" value="<?php echo ($_SERVER['HTTPS']) ? "https://" : "http://";
+        echo $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"]; ?>"/>
                     <p class="buttons">
                         <input type="submit" id="submitted" class="contact-form-button" name="submitted" value="Iniciar Sesión">
                     </p>

@@ -41,7 +41,7 @@ else
         <?php if ($response == null || $response=="error"): ?>
 
             <div class="contact-form-wrapper" style="margin-bottom:20px;">
-                <form id="form_cuenta" method="post" action="http://okonexion.com/upanel/public/usuario">
+                <form id="form_cuenta" method="post" action="https://appsthergo.com/upanel/public/usuario">
                     <h2>Para crear una cuenta en Okonexion debes rellenar el siguiente formulario</h2>
                     <div class="grids">
                         <div class="msj-error" id="msj-error">Algunos campos ingresados están incorrectos por favor corrígelos:</br><ul style="margin: 5px;" id="error-description"></ul></div>

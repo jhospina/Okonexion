@@ -3,7 +3,7 @@
 class OpcionesUsuario{  
     //LISTADO DE OPCIONES DE USUARIO
     const OP_IDIOMA = "op_idioma";
- 
+    const SUSCRIPCION_TIPO="suscripcion_tipo";
     
     /** Obtiene un array de con el nombre de las opciones del usuario
      * 

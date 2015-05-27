@@ -3,8 +3,8 @@
 //IDIOMA: ESPAÑOL
 
 return array(
-    "nombre" => "Appstergo",
-    "subfijo_titulo_pagina" => "- Appstergo",
+    "nombre" => "Appsthergo",
+    "subfijo_titulo_pagina" => "- Appsthergo",
     "pie_pagina" => "Todos los derechos reservados",
     "pie_pagina.tiempo.prueba"=>"Tiempo de prueba restante: ",
     "menu.principal.inicio" => "Inicio",

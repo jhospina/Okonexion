@@ -49,7 +49,7 @@ else
             ?>
 
             <div class="contact-form-wrapper" style="margin-bottom:150px;">
-                <form id="form" method="post" action="http://okonexion.com/upanel/public/recovery">
+                <form id="form" method="post" action="https://appsthergo.com/upanel/public/recovery">
 
                     <h2>¡YA PUEDES REESTABLECER TU CONTRASEÑA!</h2>
                     <div class="msj-error" id="msj-error" style="display:none;"></div>
@@ -111,7 +111,7 @@ else
 <?php if ($response != "send" && $response != "recovery"): ?>
 
             <div class="contact-form-wrapper" style="margin-bottom:150px;">
-                <form id="form" method="post" action="http://okonexion.com/upanel/public/recuperar-contrasena">
+                <form id="form" method="post" action="https://appsthergo.com/upanel/public/recuperar-contrasena">
 
                     <h2>¿Olvidastes tu contraseña?</h2>
                     <div class="msj-error" id="msj-error" style="display:none;"></div>

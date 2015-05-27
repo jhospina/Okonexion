@@ -16,14 +16,18 @@
 Route::post('login', 'ControladorAcceso@iniciarSesion');
 
 Route::get("login", function() {
-    if (isset($_SERVER["HTTP_REFERER"])) {
+     return Redirect::to("https://appsthergo.com" . User::CONFIG_URL_LOGIN . "?response=refused");
+    /*
+   if (isset($_SERVER["HTTP_REFERER"])) {
         if (strpos($_SERVER["HTTP_REFERER"], "upanel") === false)
             return(Util::esConexionSegura()) ? Redirect::to("https://" . Util::obtenerDominioDeUrl($_SERVER["HTTP_REFERER"]) . User::CONFIG_URL_LOGIN . "?response=refused") : Redirect::to("http://" . Util::obtenerDominioDeUrl($_SERVER["HTTP_REFERER"]) . User::CONFIG_URL_LOGIN . "?response=refused");
         else
             return (Util::esConexionSegura()) ? Redirect::to("https://" . $_SERVER["SERVER_NAME"] . User::CONFIG_URL_LOGIN) : Redirect::to("http://" . $_SERVER["SERVER_NAME"] . User::CONFIG_URL_LOGIN . "?response=refused");
     } else
         return (Util::esConexionSegura()) ? Redirect::to("https://" . $_SERVER["SERVER_NAME"] . User::CONFIG_URL_LOGIN) : Redirect::to("http://" . $_SERVER["SERVER_NAME"] . User::CONFIG_URL_LOGIN . "?response=refused");
-});
+        */
+    });
+     
 
 //Para activar una cuenta de usuario al confirmar su correo electronico
 Route::get('activar/{id}/{codigo}', 'ControladorAcceso@activarCuenta');
@@ -56,6 +60,7 @@ Route::group(array('before' => 'auth'), function() {
     tipoContenido_PQR();
     cookies();
     notificaciones();
+    facturacion();
 
     control_usuarios();
     control_instancias();
@@ -264,10 +269,14 @@ function cookies() {
     });
 }
 
+function facturacion(){
+    //PROCESO DE SUSCRIPCION
+    Route::get("fact/suscripcion/plan", "UPanelControladorFacturacion@vista_suscripcion_planes");
+    Route::get("fact/suscripcion/ciclo/{plan}", "UPanelControladorFacturacion@vista_suscripcion_ciclos");
+}
 
 function notificaciones(){
     Route::post("nots/ajax/set/visto", "UPanelControladorNotificaciones@ajax_establecerVisto");
-    
 }
 
 //***************************************************************************

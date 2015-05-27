@@ -39,7 +39,7 @@ if (is_null($logoPlat = Instancia::obtenerValorMetadato(ConfigInstancia::visual_
     <body>
 
         {{--MENSAJES EMERGENTES PARA EL USUARIO--}}
-        @include("interfaz/mensaje/index",array("id_mensaje"=>1,"param_mensaje"=>"msj-header"))
+        @include("interfaz/mensaje/global")
 
 
         <nav class="navbar navbar-inverse" id="menu">

@@ -5,11 +5,7 @@
 @section("contenido") 
 
 
-
-
-
-
-
+@include("interfaz/mensaje/index",array("id_mensaje"=>2))
 
 
 

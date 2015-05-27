@@ -43,7 +43,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     //********************************************************
     const ESTADO_SIN_PAGAR = "SP";
     const ESTADO_PERIODO_PRUEBA = "PP";
-    const ESTADO_PRUEBA_FINALIZADA="PF";
+    const ESTADO_PRUEBA_FINALIZADA = "PF";
     const ESTADO_SUSCRIPCION_VIGENTE = "SG";
     const ESTADO_SUSCRIPCION_CADUCADA = "SC";
     //********************************************************
@@ -366,6 +366,16 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
     static function enPrueba() {
         return (Auth::user()->tipo == User::USUARIO_REGULAR && Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA && Util::convertirIntToBoolean(Instancia::obtenerValorMetadato(ConfigInstancia::periodoPrueba_activado)));
+    }
+
+    static function verificarPerfil() {
+        $user = Auth::user();
+        if ($user->dni == null || $user->pais == null || $user->region == null || $user->ciudad == null || $user->direccion == null)
+            return User::mensaje("advertencia", "text-center", trans("msj.ad.completar.perfil", array("nombre" => $user->nombres, "link" => Route("usuario.edit", Auth::user()->id))));
+        elseif ($user->telefono == null && $user->celular == null)
+            return User::mensaje("advertencia", "text-center", trans("msj.ad.completar.perfil.telefono.celular", array("nombre" => $user->nombres, "link" => Route("usuario.edit", Auth::user()->id))));
+        else
+            return array();
     }
 
 }
