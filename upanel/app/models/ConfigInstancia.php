@@ -29,6 +29,21 @@ class ConfigInstancia extends Eloquent {
     const suscripcion_valor_6mes_descuento = "suscripcion_valor_6mes_descuento";
     const suscripcion_valor_12mes_descuento = "suscripcion_valor_12mes_descuento";
     //************************************************************
+    //ID DE PRODUCTOS DE SUSCRIPCION****************************************
+    //************************************************************
+    const producto_suscripcion_bronce1 = "producto_suscripcion_bronce1";
+    const producto_suscripcion_bronce3 = "producto_suscripcion_bronce3";
+    const producto_suscripcion_bronce6 = "producto_suscripcion_bronce6";
+    const producto_suscripcion_bronce12 = "producto_suscripcion_bronce12";
+    const producto_suscripcion_plata1 = "producto_suscripcion_plata1";
+    const producto_suscripcion_plata3 = "producto_suscripcion_plata3";
+    const producto_suscripcion_plata6 = "producto_suscripcion_plata6";
+    const producto_suscripcion_plata12 = "producto_suscripcion_plata12";
+    const producto_suscripcion_oro1 = "producto_suscripcion_oro1";
+    const producto_suscripcion_oro3 = "producto_suscripcion_oro3";
+    const producto_suscripcion_oro6 = "producto_suscripcion_oro6";
+    const producto_suscripcion_oro12 = "producto_suscripcion_oro12";
+    //************************************************************
     //CONFIGURACION DE DATOS****************************************
     //************************************************************
 

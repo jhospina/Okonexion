@@ -209,7 +209,7 @@ class UPanelControladorUsuario extends \BaseController {
     }
 
     public function cambiarIdioma() {
-        User::actualizarMetadato(OpcionesUsuario::OP_IDIOMA, Input::get("idioma"));
+        User::actualizarMetadato(UsuarioMetadato::OP_IDIOMA, Input::get("idioma"));
     }
 
 }

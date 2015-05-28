@@ -135,4 +135,5 @@ return array(
     "info.precio"=>"Precio",
     "info.activar"=>"Activar",
     "info.desactivar"=>"Desactivar",
+    "info.descuento"=>"Descuento",
 );

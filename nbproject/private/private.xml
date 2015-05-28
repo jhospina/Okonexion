@@ -3,16 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/facturacion/ordenPago.blade.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/ConfigInstancia.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/MetaFacturacion.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/routes.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/lang/es/config.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/facturacion/suscripcion/ciclos.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/User.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/library/enums/OpcionesUsuario.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/lang/es/fact.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorFacturacion.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/facturacion/suscripcion/planes.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/admin/config/suscripcion.blade.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/UsuarioMetadato.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/Facturacion.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorAplicacion.php</file>
         </group>
     </open-files>

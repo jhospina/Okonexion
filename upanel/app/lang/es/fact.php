@@ -15,4 +15,6 @@ return array(
     "suscripcion.plan.info.escoger" => "Escoge el plan de suscripción que necesitas",
     "suscripcion.ciclo.titulo" => "Ciclo de facturación",
     "suscripcion.ciclo.info.escoger" => "Escoge el ciclo de facturación para la suscripción",
+    "ordenPago.titulo" => "Orden de Pago",
+    "ordenPago.error.sin_factura"=>"Opps! Hubo un error. Parece que no tienes ninguna orden de pago"
 );

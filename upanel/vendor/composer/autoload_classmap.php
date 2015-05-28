@@ -65,6 +65,7 @@ return array(
     'Idioma' => $baseDir . '/app/library/enums/Idioma.php',
     'Suscripcion' => $baseDir . '/app/library/config/Suscripcion.php',
     'Servicios' => $baseDir . '/app/library/config/Servicios.php',
+    'HasherPro' => $baseDir . '/app/library/security/HasherPro.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
     'Illuminate\\Auth\\AuthManager' => $vendorDir . '/laravel/framework/src/Illuminate/Auth/AuthManager.php',
     'Illuminate\\Auth\\AuthServiceProvider' => $vendorDir . '/laravel/framework/src/Illuminate/Auth/AuthServiceProvider.php',

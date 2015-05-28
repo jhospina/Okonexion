@@ -12,7 +12,8 @@ if (Auth::user()) {
     }
 }
 
+/*
 if (!Util::esConexionSegura()) {    
-    exit("It's Conection is not secure");
-}
+    exit("It's Connection is not secure");
+}*/
         

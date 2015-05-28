@@ -19,7 +19,8 @@
             "app/library/complements",
             "app/library/contentTypes",
             "app/library/enums",
-            "app/library/config" 
+            "app/library/config",
+            "app/library/security"
         ]
     },
     "scripts": {

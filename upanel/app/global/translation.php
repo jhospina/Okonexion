@@ -12,7 +12,7 @@ if (!Session::has('locale'))
     Session::put('locale', DEFAULT_LANG);   
 
 //Optiene el idioma configurado para el usuario
-$idioma= User::obtenerValorMetadato(OpcionesUsuario::OP_IDIOMA);
+$idioma= User::obtenerValorMetadato(UsuarioMetadato::OP_IDIOMA);
 
 if (!is_null($idioma))
         Session::put('locale', $idioma);

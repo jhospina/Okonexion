@@ -61,7 +61,7 @@ $moneda = Instancia::obtenerValorMetadato(ConfigInstancia::info_moneda);
     }
 
 
-    #ciclos .col-lg-4{
+    #ciclos .col-lg-3{
         padding: 10px;
         font-size: 12pt;
         border-bottom: 1px gainsboro solid;
@@ -87,10 +87,26 @@ $moneda = Instancia::obtenerValorMetadato(ConfigInstancia::info_moneda);
 
     @for($i=0;$i< count($ciclos);$i++)
 
+    <?php
+    $valor = Instancia::obtenerValorMetadato($prefijo . $ciclos[$i] . "mes_" . $plan);
+    if (is_null($descuento = Instancia::obtenerValorMetadato($prefijo . $ciclos[$i] . "mes_descuento")))
+        $descuento = 0;
+    ?>
+
     <div class="col-lg-12">
-        <div class="col-lg-4"><span class="glyphicon glyphicon-calendar"></span> {{trans("config.suscripcion.seccion.planes.op.valor.".$ciclos[$i]."mensual")}}</div>
-        <div class="col-lg-4">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato($prefijo.$ciclos[$i]."mes_".$plan))}} {{$moneda}}</div>
-        <div class="col-lg-4 text-right"><button class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> {{trans("fact.btn.proceder.pago")}}</button></div>
+        <div class="col-lg-3"><span class="glyphicon glyphicon-calendar"></span> {{trans("config.suscripcion.seccion.planes.op.valor.".$ciclos[$i]."mensual")}}</div>
+        <div class="col-lg-3">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,$valor)}} {{$moneda}}</div>
+        <div class="col-lg-3">{{$descuento}}% {{trans("otros.info.descuento")}}</div>
+        <div class="col-lg-3 text-right">
+            <form action="{{URL::to("fact/orden/pago")}}" method="POST">
+                <input type="hidden" name="{{UsuarioMetadato::HASH_CREAR_FACTURA}}" value="{{$hash}}"/>
+                <input type="hidden" name="{{MetaFacturacion::PRODUCTO_ID}}" value="{{"producto_suscripcion_".$plan.$ciclos[$i]}}"/>
+                <input type="hidden" name="{{MetaFacturacion::PRODUCTO_VALOR}}" value="{{$valor}}"/>
+                <input type="hidden" name="{{MetaFacturacion::PRODUCTO_DESCUENTO}}" value="{{$descuento}}"/>
+                <input type="hidden" name="{{MetaFacturacion::MONEDA_ID}}" value="{{$moneda}}"/>
+                <button class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> {{trans("fact.btn.ordenar.ahora")}}</button>
+            </form>
+        </div>
     </div>
 
     @endfor
