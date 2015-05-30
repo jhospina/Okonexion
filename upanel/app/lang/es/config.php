@@ -36,6 +36,14 @@ return array(
     "servicios.seccion.agregar.servicio.op.nombre" => "Nombre del servicio",
     "servicios.seccion.agregar.servicio.op.descripcion" => "Descripción",
     "servicios.seccion.agregar.servicio.op.costo" => "Costo",
-    "servicio.seccion.agregar.servicio.info.exito" => "El servicio ha sido creado con éxito."
-    
+    "servicio.seccion.agregar.servicio.info.exito" => "El servicio ha sido creado con éxito.",
+    "facturacion.seccion.impuestos.titulo" => "Impuestos",
+    "facturacion.seccion.impuestos.op.iva" => "% Impuesto al valor agregado (IVA)",
+    "facturacion.seccion.impuestos.op.iva.placeholder" => "Valor en porcentaje (%)",
+    "facturacion.seccion.2co.titulo" => "Pasarela de pagos - 2Checkout",
+    "facturacion.seccion.2co.idSeller" => "Usuario ID",
+    "facturacion.seccion.2co.publicKey" => "Clave pública",
+    "facturacion.seccion.2co.privateKey" => "Clave privada",
+    "facturacion.seccion.2co.sandbox" => "Activar Sandbox",
+    "facturacion.seccion.2co.sandbox.ayuda" => "Al activar el modo de pruebas, todas las transacciones realizadas seras ficticias, pero seran procesadas como si fueran reales. Verificalo en tu cuenta de 2Checkout/Sandbox."
 );

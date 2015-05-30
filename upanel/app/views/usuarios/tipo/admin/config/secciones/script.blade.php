@@ -6,7 +6,7 @@
 <script>
     var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
     elems.forEach(function (html) {
-        var switchery = new Switchery(html, {className: "switchery switchery-small"});
+        var switchery = new Switchery(html, {secondaryColor: '#FF5656', className: "switchery switchery-small"});
 
     });
 </script>

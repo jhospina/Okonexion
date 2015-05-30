@@ -5,13 +5,12 @@
         <group>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/facturacion/ordenPago.blade.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/ConfigInstancia.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/admin/config/facturacion.blade.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/MetaFacturacion.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/routes.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/lang/es/fact.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorFacturacion.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/UsuarioMetadato.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/Facturacion.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorAplicacion.php</file>
         </group>
     </open-files>
 </project-private>

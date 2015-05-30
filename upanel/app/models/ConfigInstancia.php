@@ -52,11 +52,18 @@ class ConfigInstancia extends Eloquent {
     //CONFIGURACION VISUAL****************************************
     //************************************************************
     const visual_logo = "visual_logo";
-
     //************************************************************
     //CONFIGURACION DE FACTURACIÓN********************************
     //************************************************************
 
+    const fact_impuestos_iva = "fact_impuestos_iva";
+    //************************************************************
+    //CONFIGURACION DE FACTURACIÓN - 2CHECKOUT*********************
+    //************************************************************
+    const fact_2checkout_idSeller = "fact_2checkout_idSeller";
+    const fact_2checkout_publicKey = "fact_2checkout_publicKey";
+    const fact_2checkout_privateKey = "fact_2checkout_privateKey";
+    const fact_2checkout_sandbox = "fact_2checkout_sandbox";
 
     static function obtenerListadoConfig() {
         $class = new ReflectionClass("ConfigInstancia");
@@ -104,6 +111,7 @@ class ConfigInstancia extends Eloquent {
             ConfigInstancia::suscripcion_valor_3mes_descuento => "required",
             ConfigInstancia::suscripcion_valor_6mes_descuento => "required",
             ConfigInstancia::suscripcion_valor_12mes_descuento => "required",
+            ConfigInstancia::fact_impuestos_iva => "required",
         );
         return (isset($valid[$config])) ? $valid[$config] : false;
     }

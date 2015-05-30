@@ -27,15 +27,20 @@ class HasherPro {
         return (User::agregarMetaDato($llave, $hash)) ? $hash : null;
     }
 
-    /** Compara e indica si un hash es igual al que se ha almacenado indicado por su llave
+    /** Verifica si un hash es igual al que se ha almacenado indicado por su llave, si es verdadero efectua y desactiva el uso del hash
      * 
      * @param type $hash El codigo Hash a comparar
      * @param type $llave La llave con la que fue almacenada el hash
      * @return type
      */
-    static function comparar($hash, $llave) {
+    static function verificar($hash, $llave) {
         $hash_almacenado = User::obtenerValorMetadato($llave);
-        return ($hash == $hash_almacenado);
+
+        if ($hash == $hash_almacenado) {
+            User::eliminarMetadato($llave);
+            return true;
+        } else
+            return false;
     }
 
 }

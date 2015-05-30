@@ -276,6 +276,7 @@ function facturacion() {
     //Facturacion y Pagos
     Route::post("fact/orden/pago", "UPanelControladorFacturacion@vistaPost_ordenPago");
     Route::get("fact/orden/pago", "UPanelControladorFacturacion@vistaPost_ordenPago");
+    Route::post("fact/orden/pago/procesar/", "UPanelControladorFacturacion@post_ordenPagoProcesar");
 }
 
 function notificaciones() {

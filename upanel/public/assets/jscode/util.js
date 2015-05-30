@@ -1,7 +1,7 @@
 function formatearNumero(numero, separadorMillar, separadorDecimal) {
-    
-    numero+="";
-    
+
+    numero += "";
+
     // Variable que contendra el resultado final
     var resultado = "";
 
@@ -46,11 +46,15 @@ function formatearNumero(numero, separadorMillar, separadorDecimal) {
 }
 
 
-    function soloNumeros(e,decimal) {
-        var keynum = window.event ? window.event.keyCode : e.which;
-        tecla = String.fromCharCode(keynum).toLowerCase();
-                letras = "0123456789" + decimal;
-                if (letras.indexOf(tecla) == -1) {
-            return false;
-        }
+function soloNumeros(e, decimal) {
+    var keynum = window.event ? window.event.keyCode : e.which;
+    tecla = String.fromCharCode(keynum).toLowerCase();
+    letras = "0123456789" + decimal;
+
+    if (window.event.keyCode == 8)
+        return true;
+
+    if (letras.indexOf(tecla) == -1) {
+        return false;
     }
+}

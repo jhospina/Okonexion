@@ -20,7 +20,11 @@
             "app/library/contentTypes",
             "app/library/enums",
             "app/library/config",
-            "app/library/security"
+            "app/library/security",
+            "app/library/plugins/",
+            "app/library/plugins/Twocheckout",
+            "app/library/plugins/Twocheckout/Api"
+            
         ]
     },
     "scripts": {

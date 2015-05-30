@@ -11,7 +11,7 @@ Class Facturacion extends Eloquent {
      * 
      * @param double $iva [0] $iva El valor del iva, si aplica. 
      * @param int $vencimiento [1] El tiempo de vencimiento para la factura dado en numero de dias
-     * @param int $id_usuario [null] El id del usuario al que se le creara la factura
+     * @param int $id_factura [null] El id del usuario al que se le creara la factura
      * @return int Retorna el id de la factura creada, de lo contrario retorna Null
      */
     static function nueva($iva = 0, $vencimiento = 1, $id_usuario = null) {
@@ -65,13 +65,42 @@ Class Facturacion extends Eloquent {
         Facturacion::agregarMetadato(MetaFacturacion::PRODUCTO_VALOR . $n, $total_producto, $id_factura);
         Facturacion::agregarMetadato(MetaFacturacion::PRODUCTO_DESCUENTO . $n, $descuento_producto, $id_factura);
 
+
         //ATENCIÓN: Bajo la premisa de que el del valor producto ya contiene el descuento, se hace el siquiere calculo.
         //Se recalcula el valor total de la factura
-        if (is_null($iva = $fact->iva))
-            $total_producto = $total_producto + ($total_producto * (doubleval($iva) / 100));
+        $fact->subtotal = $fact->subtotal + $total_producto;
 
-        $fact->total = $fact->total + $total_producto;
+        //Suma el valor del impuesto al total de la factura
+        $iva = $fact->iva;
+        $valor_iva = ($iva / 100) * $fact->subtotal;
+        $fact->total = $valor_iva + $fact->subtotal;
+
+
+
         return $fact->save();
+    }
+
+    static function obtenerProductos($id_factura) {
+        $buscar = MetaFacturacion::where("id_factura", $id_factura)->where("clave", "LIKE", MetaFacturacion::PRODUCTO_ID . "%")->get();
+
+        if (is_null($buscar))
+            return null;
+
+        //Cantidad de productos agregados a la factura
+        $cant = count($buscar);
+
+        $productos = array();
+
+        while ($cant > 0) {
+            $producto = array();
+            $producto[MetaFacturacion::PRODUCTO_ID] = Facturacion::obtenerValorMetadato(MetaFacturacion::PRODUCTO_ID . $cant, $id_factura);
+            $producto[MetaFacturacion::PRODUCTO_VALOR] = Facturacion::obtenerValorMetadato(MetaFacturacion::PRODUCTO_VALOR . $cant, $id_factura);
+            $producto[MetaFacturacion::PRODUCTO_DESCUENTO] = Facturacion::obtenerValorMetadato(MetaFacturacion::PRODUCTO_DESCUENTO . $cant, $id_factura);
+            $productos[] = $producto;
+            $cant--;
+        }
+
+        return $productos;
     }
 
     /**
@@ -137,6 +166,19 @@ Class Facturacion extends Eloquent {
     static function eliminarMetadato($clave, $id_factura) {
         $config = MetaFacturacion::obtenerMetadato($clave, $id_factura);
         return $config->delete();
+    }
+
+    /** Obtiene el valor de un metadato dado por su nombre clave
+     * 
+     * @param type $clave
+     * @param Int $id_factura (Opcional) Si no se especifica se toma el de la sesion actual
+     * @return String Retorna el valro del metatado o null si no existe
+     */
+    static function obtenerValorMetadato($clave, $id_factura) {
+        $metas = MetaFacturacion::where("id_factura", $id_factura)->where("clave", $clave)->get();
+        foreach ($metas as $meta)
+            return $meta->valor;
+        return null;
     }
 
 }

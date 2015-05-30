@@ -360,6 +360,20 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
             return false;
     }
 
+    static function eliminarMetadato($clave, $id_usuario = null) {
+
+        if (is_null($id_usuario)) {
+            if (isset(Auth::user()->id))
+                $id_usuario = Auth::user()->id;
+            else
+                return null;
+        }
+
+        $meta = User::obtenerMetadato($clave, $id_usuario);
+
+        return $meta->delete();
+    }
+
     static function esSuperAdmin() {
         return (Auth::user()->instancia == User::PARAM_INSTANCIA_SUPER_ADMIN && Auth::user()->tipo == User::USUARIO_ADMIN);
     }
