@@ -21,7 +21,7 @@ return array(
     //**************************************************
     //**************************************************
     "btn.ordenar.ahora" => "Ordenar ahora",
-    "btn.proceder.pago" => "Proceder con el pago",
+    "btn.realizar.pago" => "Realizar Pago",
     "suscripcion.plan.titulo" => "Planes de suscripción",
     "suscripcion.plan." . ConfigInstancia::suscripcion_tipo_bronce . ".titulo" => "Bronce",
     "suscripcion.plan." . ConfigInstancia::suscripcion_tipo_plata . ".titulo" => "Plata",
@@ -41,10 +41,18 @@ return array(
     "orden.tu.comprar.precio" => "Precio",
     "orden.tu.comprar.subtotal" => "Subtotal",
     "orden.tu.compra.iva" => "IVA",
-    "info.total"=>"Total",
-    "orden.pago.informacion"=>"Información de pago",
-    "orden.pago.tc.titulo"=>"Número de la tarjeta",
-    "orden.pago.tc.fecha.vencimiento"=>"Fecha de vencimiento (MM/AAAA)",
-    "orden.pago.tc.cvv"=>"CVV",
-    
+    "info.total" => "Total",
+    "orden.pago.informacion.facturacion.titulo" => "Información de facturación",
+    "orden.pago.informacion.facturacion.error" => "Para realizar el pago, debes llenar todos los campos correctamente, es importante esta información.",
+    "orden.pago.informacion.pago.titulo" => "Información de pago",
+    "orden.pago.tc.titulo" => "Número de la tarjeta",
+    "orden.pago.tc.fecha.vencimiento" => "Fecha de vencimiento (MM/AAAA)",
+    "orden.pago.tc.cvv" => "CVV",
+    "orden.pago.informacion.tc.error" => "Debes ingresar correctamente los datos de pago de una tarjeta valida. Falta información.",
+    "orden.pago.informacion.tc.error.invalido" => "Los datos de pago ingresados, han sido rechazados. Verifica la información ingresada o inténtalo de nuevo, ingresando los datos de una tarjeta diferente.",
+    "orden.pago.informacion.tc.error.desconocido" => "Se produjo un error desconocido al tratar de verificar la información pago. Inténtalo de nuevo. Si el error persiste inténtalo de nuevo más tarde o comunícate con nosotros para brindarte <a href=':link'>asistencia</a>.",
+    "orden.pago.informacion.tc.error.proceso" => "Opps! Parece que ocurrio un error al procesar el pago. Intentanlo de nuevo por favor.",
+    "orden.pago.modal.titulo" => "El pago se esta procesando...",
+    "orden.pago.modal.pie" => "Por favor espere mientras se realiza la transacción, no haga nada durante este momento. El sistema lo redirigirá cuando el pago se complete satisfactoriamente.",
+    "orden.pago.msj.exito" => "El pago de la factura #:num ha sido realizada con éxito. Muchas gracias por usar nuestra plataforma.",
 );

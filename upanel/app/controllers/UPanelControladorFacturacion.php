@@ -62,39 +62,42 @@ class UPanelControladorFacturacion extends \BaseController {
     function post_ordenPagoProcesar() {
         $data = Input::all();
 
+        if (!isset($data["token"]))
+            return;
+
         //Twocheckout::username('appsthergo');
         //Twocheckout::password('Jhospina92');
         Twocheckout::privateKey(Instancia::obtenerValorMetadato(ConfigInstancia::fact_2checkout_privateKey));
         Twocheckout::sellerId(Instancia::obtenerValorMetadato(ConfigInstancia::fact_2checkout_idSeller));
-        Twocheckout::sandbox(true);
+        Twocheckout::sandbox(Util::convertirIntToBoolean(Instancia::obtenerValorMetadato(ConfigInstancia::fact_2checkout_sandbox)));
+
+        $factura = Facturacion::find(User::obtenerValorMetadato(UsuarioMetadato::FACTURACION_ID_PROCESO));
 
         try {
             $charge = Twocheckout_Charge::auth(array(
-                        "merchantOrderId" => "123",
+                        "merchantOrderId" => $factura->id,
                         "token" => $data['token'],
-                        "currency" => 'USD',
-                        "total" => '10.00',
+                        "currency" => Facturacion::obtenerValorMetadato(MetaFacturacion::MONEDA_ID, $factura->id),
+                        "total" => $factura->total,
                         "billingAddr" => array(
-                            "name" => 'Testing Tester',
-                            "addrLine1" => '123 Test St',
-                            "city" => 'Columbus',
-                            "state" => 'OH',
-                            "zipCode" => '43123',
-                            "country" => 'USA',
-                            "email" => 'example@2co.com',
-                            "phoneNumber" => '555-555-5555'
+                            "name" => Auth::user()->nombres . " " . Auth::user()->apellidos,
+                            "addrLine1" => Auth::user()->direccion,
+                            "city" => Auth::user()->ciudad,
+                            "state" => Auth::user()->region,
+                            "zipCode" => '000000',
+                            "country" => Auth::user()->pais,
+                            "email" => Auth::user()->email,
+                            "phoneNumber" => Auth::user()->telefono,
                         )
             ));
-
+            //Si la transaccion ha sido aprobada
             if ($charge['response']['responseCode'] == 'APPROVED') {
-                echo "Thanks for your Order!";
-                echo "<h3>Return Parameters:</h3>";
-                echo "<pre>";
-                print_r($charge);
-                echo "</pre>";
+                Facturacion::validarPago($factura, $charge['response']['orderNumber'], Facturacion::TIPOPAGO_TARJETA_CREDITO_ATRAVES_2CHECKOUTS);
+                return Redirect::to("")->with(User::mensaje("exito", null, "<span class='glyphicon glyphicon-ok'></span> " . trans("fact.orden.pago.msj.exito", array("num" => $factura->id)), 2));
             }
         } catch (Twocheckout_Error $e) {
-            print_r($e->getMessage());
+            return Redirect::back()->with(User::mensaje("error", null, "<span class='glyphicon glyphicon-remove-circle'></span> " . trans("fact.orden.pago.informacion.tc.error.proceso"), 2));
+            //Si ha producido un error 
         }
     }
 

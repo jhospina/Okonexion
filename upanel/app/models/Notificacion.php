@@ -8,6 +8,7 @@ Class Notificacion extends Eloquent {
      * TIPOS DE NOTIFICACIONES
      */
     const TIPO_SUSCRIPCION_PRUEBA_FINALIZADA = "SUPF";
+    const TIPO_SUSCRIPCION_REALIZADA = "SURE";
 
     /** crear una notificacion de usuario
      * 
@@ -45,7 +46,7 @@ Class Notificacion extends Eloquent {
     static function visto($id_not = null) {
 
         if (is_null($id_not))
-            return Notificacion::where("id_usuario", Auth::user()->id)->update(array("visto"=>true));
+            return Notificacion::where("id_usuario", Auth::user()->id)->update(array("visto" => true));
 
         $not = Notificacion::find($id_not);
         if (is_null($not))
@@ -61,12 +62,18 @@ Class Notificacion extends Eloquent {
      * @return String El mensaje
      */
     static function descripcion($tipo, $params = null) {
-        $msj = array(Notificacion::TIPO_SUSCRIPCION_PRUEBA_FINALIZADA => trans("nots.suscripcion.prueba.finalizada"));
+        $msj = array(
+            Notificacion::TIPO_SUSCRIPCION_PRUEBA_FINALIZADA => trans("nots.suscripcion.prueba.finalizada"),
+            Notificacion::TIPO_SUSCRIPCION_REALIZADA => trans("nots.suscripcion.pago.realizado", array("link" => "#"))
+        );
         return $msj[$tipo];
     }
 
     static function icono($tipo) {
-        $msj = array(Notificacion::TIPO_SUSCRIPCION_PRUEBA_FINALIZADA => '<span class="glyphicon glyphicon-exclamation-sign"></span>');
+        $msj = array(
+            Notificacion::TIPO_SUSCRIPCION_PRUEBA_FINALIZADA => '<span class="glyphicon glyphicon-exclamation-sign"></span>',
+            Notificacion::TIPO_SUSCRIPCION_REALIZADA => '<span class="glyphicon glyphicon-thumbs-up"></span>'
+        );
         return $msj[$tipo];
     }
 

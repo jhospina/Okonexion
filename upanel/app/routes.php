@@ -52,6 +52,7 @@ Route::group(array('before' => 'auth'), function() {
     ayuda_soporte();
     configuracion();
     usuario();
+    usuario_ajax();
     usuario_opciones();
     usuario_opciones_ajax();
     tipoContenido_Encuestas();
@@ -167,6 +168,17 @@ function usuario() {
     Route::get("cambiar-contrasena", "UPanelControladorUsuario@cambiarContrasenaForm");
     Route::post("cambiar-contrasena", "UPanelControladorUsuario@cambiarContrasenaPost");
 }
+
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+
+function usuario_ajax() {
+    Route::post("usuario/ajax/actualizar/", "UPanelControladorUsuario@ajax_actualizar");
+} 
 
 //***************************************************************************
 //***************************************************************************

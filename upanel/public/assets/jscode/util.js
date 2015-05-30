@@ -51,9 +51,8 @@ function soloNumeros(e, decimal) {
     tecla = String.fromCharCode(keynum).toLowerCase();
     letras = "0123456789" + decimal;
 
-    if (window.event.keyCode == 8)
+    if (window.event.keyCode == 8 || (window.event.keyCode >= 96 && window.event.keyCode <= 105))
         return true;
-
     if (letras.indexOf(tecla) == -1) {
         return false;
     }

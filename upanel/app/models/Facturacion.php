@@ -6,6 +6,8 @@ Class Facturacion extends Eloquent {
     public $timestamps = false;
 
     const ESTADO_SIN_PAGAR = "SP";
+    const ESTADO_PAGADO = "PA";
+    const TIPOPAGO_TARJETA_CREDITO_ATRAVES_2CHECKOUTS = "T2";
 
     /** Crear una nueva factura, con estado SIN PAGAR
      * 
@@ -179,6 +181,66 @@ Class Facturacion extends Eloquent {
         foreach ($metas as $meta)
             return $meta->valor;
         return null;
+    }
+
+    /** Valida los productos adquiridos por el usuarios y los hace cumplir
+     * 
+     * @param type $id_factura El id de la factura 
+     */
+    static function validarProductos($id_factura) {
+        $productos = Facturacion::obtenerProductos($id_factura);
+        foreach ($productos as $producto) {
+
+            //Valida la suscripcion y las aplica
+            if (strpos($producto[MetaFacturacion::PRODUCTO_ID], "suscripcion") !== false) {
+
+                //Crea una notificacion
+                Notificacion::crear(Notificacion::TIPO_SUSCRIPCION_REALIZADA);
+
+                //SI el usuario tiene una suscripcion vigente, se le añade el tiempo si afectar el tiempo de la suscripcion actual
+                if (Auth::user()->estado == User::ESTADO_SUSCRIPCION_VIGENTE)
+                    $fecha = new Fecha(Auth::user()->fin_suscripcion);
+                else
+                    $fecha = new Fecha(Util::obtenerTiempoActual());
+
+                Auth::user()->fin_suscripcion = $fecha->agregarMeses(ConfigInstancia::obtenerCantidadMesesProductosSuscripcion($producto[MetaFacturacion::PRODUCTO_ID]));
+                Auth::user()->estado = User::ESTADO_SUSCRIPCION_VIGENTE;
+                Auth::user()->save();
+            }
+        }
+    }
+
+    /** Valida el pago de una factura
+     * 
+     * @param Facturacion $factura El objeto de la factura
+     * @param int $id_transaccion //El id de la trasaccion
+     * @param string $tipo_pago El tipo de pago realizado
+     */
+    static function validarPago($factura, $id_transaccion, $tipo_pago) {
+        $json = array();
+        $json["nombre"] = Auth::user()->nombres . " " . Auth::user()->apellidos;
+        $json["email"] = Auth::user()->email;
+        $json["dni"] = Auth::user()->dni;
+        $json["empresa"] = Auth::user()->empresa;
+        $json["direccion"] = Auth::user()->direccion;
+        $json["pais"] = Auth::user()->pais;
+        $json["ciudad"] = Auth::user()->ciudad;
+        $json["region"] = Auth::user()->region;
+        //Almacena una copia de los datos del cliente con la que se hizo la factura
+        Facturacion::agregarMetadato(MetaFacturacion::CLIENTE_INFO, json_encode($json), $factura->id);
+        //Se almacena el numero de la transaccion arrojada por el servidor de pagos
+        Facturacion::agregarMetadato(MetaFacturacion::TRANSACCION_ID, $id_transaccion, $factura->id);
+        //Se registra la fecha de pago
+        Facturacion::agregarMetadato(MetaFacturacion::FECHA_PAGO, Util::obtenerTiempoActual(), $factura->id);
+        //Se establece el estado de la factura como pagado
+        $factura->estado = Facturacion::ESTADO_PAGADO;
+        //Se establece tipo de pago de la factura
+        $factura->tipo_pago = $tipo_pago;
+        //Se elimina la factura en proceso del cliente
+        User::eliminarMetadato(UsuarioMetadato::FACTURACION_ID_PROCESO);
+        $factura->save();
+        //Se validan y se efectuan los productos pagados por el usuario
+        Facturacion::validarProductos($factura->id);
     }
 
 }

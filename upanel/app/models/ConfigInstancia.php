@@ -128,4 +128,28 @@ class ConfigInstancia extends Eloquent {
         }
     }
 
+    /** Obtiene la cantidad de meses de suscripcion de un tipo de suscripcion dado por su id
+     * 
+     * @param type $producto_id
+     * @return type
+     */
+    static function obtenerCantidadMesesProductosSuscripcion($producto_id) {
+        $tiempos = array(
+            ConfigInstancia::producto_suscripcion_bronce1 => 1,
+            ConfigInstancia::producto_suscripcion_bronce3 => 3,
+            ConfigInstancia::producto_suscripcion_bronce6 => 6,
+            ConfigInstancia::producto_suscripcion_bronce12 => 12,
+            ConfigInstancia::producto_suscripcion_plata1 => 1,
+            ConfigInstancia::producto_suscripcion_plata3 => 3,
+            ConfigInstancia::producto_suscripcion_plata6 => 6,
+            ConfigInstancia::producto_suscripcion_plata12 => 12,
+            ConfigInstancia::producto_suscripcion_oro1 => 1,
+            ConfigInstancia::producto_suscripcion_oro3 => 3,
+            ConfigInstancia::producto_suscripcion_oro6 => 6,
+            ConfigInstancia::producto_suscripcion_oro12 => 12
+        );
+
+        return (isset($tiempos[$producto_id])) ? $tiempos[$producto_id] : null;
+    }
+
 }

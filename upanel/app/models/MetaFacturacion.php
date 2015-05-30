@@ -9,5 +9,8 @@ Class MetaFacturacion extends Eloquent {
     const PRODUCTO_VALOR = "producto_valor";
     const PRODUCTO_DESCUENTO = "producto_descuento";
     const MONEDA_ID = "moneda_id";
+    const CLIENTE_INFO = "cliente_info";
+    const TRANSACCION_ID = "transaccion_id";
+    const FECHA_PAGO = "fecha_pago";
 
 }

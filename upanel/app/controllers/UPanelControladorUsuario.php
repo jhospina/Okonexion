@@ -9,10 +9,10 @@ class UPanelControladorUsuario extends \BaseController {
      */
     public function index() {
 
-        if (!Auth::check()){
+        if (!Auth::check()) {
             return User::login();
         }
-        
+
         return View::make("usuarios/perfil/index")->with("usuario", Auth::user());
     }
 
@@ -22,11 +22,11 @@ class UPanelControladorUsuario extends \BaseController {
      * @return Response
      */
     public function create() {
-        
-        if (!Auth::check()){
+
+        if (!Auth::check()) {
             return User::login();
         }
-        
+
         if (!is_null($acceso = User::invalidarAcceso(User::USUARIO_REGULAR)))
             return $acceso;
 
@@ -35,9 +35,9 @@ class UPanelControladorUsuario extends \BaseController {
 
     public function create_store() {
         $data = Input::all();
-        $data["instancia"]=Auth::user()->instancia;
-        
-        $user=new User;
+        $data["instancia"] = Auth::user()->instancia;
+
+        $user = new User;
 
         if (strlen($errores = $user->validar($data)) > 0)
             return Redirect::route('usuario.create')->withInput()->with(User::mensaje("error", "", $errores, 2));
@@ -82,11 +82,11 @@ class UPanelControladorUsuario extends \BaseController {
      * @return Response
      */
     public function show($id) {
-        
-        if (!Auth::check()){
+
+        if (!Auth::check()) {
             return User::login();
         }
-        
+
         //Invalida el acceso para el usuario Regular
         if (!is_null($acceso = User::invalidarAcceso(User::USUARIO_REGULAR)))
             return $acceso;
@@ -103,8 +103,8 @@ class UPanelControladorUsuario extends \BaseController {
      * @return Response
      */
     public function edit($id) {
-        
-        if (!Auth::check()){
+
+        if (!Auth::check()) {
             return User::login();
         }
 
@@ -129,20 +129,19 @@ class UPanelControladorUsuario extends \BaseController {
 
         //Permite que solo el usuario logueado se ha editado por el mismo
         if ($id == Auth::user()->id) {
-            
+
             $user = User::find($id);
 
             // Obtenemos la data enviada por el usuario
             $data = Input::all();
 
             //Si los datos enviados tienen errores
-            if (strlen($errores = $user->validar($data)) > 0){
+            if (strlen($errores = $user->validar($data)) > 0) {
                 return Redirect::route('usuario.edit', $id)->withInput()->with(User::mensaje("error", "", $errores, 2));
-            }
-            elseif ($user->registrar($data,true))
+            } elseif ($user->registrar($data, true))
                 return Redirect::route('usuario.index')->with(User::mensaje("exito", null, trans("menu_usuario.mi_perfil.editar.post.exito"), 2));
             else
-                return Redirect::route('usuario.edit', $id)->withInput()->with(User::mensaje("error", "",trans("otros.error_solicitud"), 2));
+                return Redirect::route('usuario.edit', $id)->withInput()->with(User::mensaje("error", "", trans("otros.error_solicitud"), 2));
         }
 
         return Redirect::route('usuario.index');
@@ -162,8 +161,8 @@ class UPanelControladorUsuario extends \BaseController {
      *  MUESTRA EL LISTADO DE USUARIOS EN UNA VISTA
      */
     public function index_listado() {
-        
-        if (!Auth::check()){
+
+        if (!Auth::check()) {
             return User::login();
         }
 
@@ -173,27 +172,27 @@ class UPanelControladorUsuario extends \BaseController {
 
         //Admin
         if (Auth::user()->tipo == User::USUARIO_ADMIN)
-            $usuarios = User::where("id", "!=", Auth::user()->id)->where("instancia", Auth::user()->instancia)->where("instancia",Auth::user()->instancia)->orderBy("id", "DESC")->paginate(30);
+            $usuarios = User::where("id", "!=", Auth::user()->id)->where("instancia", Auth::user()->instancia)->where("instancia", Auth::user()->instancia)->orderBy("id", "DESC")->paginate(30);
         //SuperAdmin
         if (User::esSuperAdmin())
             $usuarios = User::where("id", "!=", Auth::user()->id)->orderBy("id", "DESC")->paginate(30);
         //Soporte general
         if (Auth::user()->tipo == User::USUARIO_SOPORTE_GENERAL)
-            $usuarios = User::where("id", "!=", Auth::user()->id)->where("tipo", User::USUARIO_REGULAR)->where("instancia",Auth::user()->instancia)->orderBy("id", "DESC")->paginate(30);
+            $usuarios = User::where("id", "!=", Auth::user()->id)->where("tipo", User::USUARIO_REGULAR)->where("instancia", Auth::user()->instancia)->orderBy("id", "DESC")->paginate(30);
 
         return View::make("usuarios/tipo/admin/usuarios/index")->with("usuarios", $usuarios);
     }
 
     public function cambiarContrasenaForm() {
-        if (!Auth::check()){
+        if (!Auth::check()) {
             return User::login();
         }
         return View::make("usuarios/perfil/cambiar-contrasena");
     }
 
     public function cambiarContrasenaPost() {
-        
-        
+
+
         $data = Input::all();
 
         if (strlen($data["contra-nueva"]) <= 5)
@@ -210,6 +209,25 @@ class UPanelControladorUsuario extends \BaseController {
 
     public function cambiarIdioma() {
         User::actualizarMetadato(UsuarioMetadato::OP_IDIOMA, Input::get("idioma"));
+    }
+
+    //*******************************************************
+    //AJAX***************************************************
+    //*******************************************************+
+
+    public function ajax_actualizar() {
+
+        if (!Request::ajax())
+            return;
+
+        if (!Auth::check())
+            return;
+
+        $data = Input::all();
+
+        $user = User::find(Auth::user()->id);
+        $user->registrar($data, true);
+        return json_encode(array());
     }
 
 }
