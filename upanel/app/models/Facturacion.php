@@ -9,6 +9,19 @@ Class Facturacion extends Eloquent {
     const ESTADO_PAGADO = "PA";
     const TIPOPAGO_TARJETA_CREDITO_ATRAVES_2CHECKOUTS = "T2";
 
+    /** Retorna la descripcion del estado de la factura
+     * 
+     * @param type $id
+     * @return type
+     */
+    static function estado($id) {
+        $estados = array(Facturacion::ESTADO_SIN_PAGAR => trans("atributos.estado.factura.sin.pagar"),
+            Facturacion::ESTADO_PAGADO => trans("atributos.estado.factura.pagado")
+        );
+
+        return (isset($estados[$id])) ? $estados[$id] : null;
+    }
+
     /** Crear una nueva factura, con estado SIN PAGAR
      * 
      * @param double $iva [0] $iva El valor del iva, si aplica. 

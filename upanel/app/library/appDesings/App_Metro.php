@@ -117,76 +117,71 @@ class App_Metro {
         }
         return "package libreria.sistema;\npublic class AppConfig {\n" . $java_config . "}";
     }
-    
 
     /** Prepara los archivos para el diseño en Android
      * 
      * @param type $zip
      * @param type $config
      */
-    public static function prepararArchivosParaAndroid($zip, $config,$ruta) {
-        
+    public static function prepararArchivosParaAndroid($zip, $config, $ruta) {
+
         //Dimensiones de imagen para android
-        $dim_web=512;
-        $dim_xxxhdpi=192;
-        $dim_xxhdpi=144;
-        $dim_xhdpi=96;
-        $dim_hdpi=72;
-        $dim_mdpi=48;
-        
+        $dim_web = 512;
+        $dim_xxxhdpi = 192;
+        $dim_xxhdpi = 144;
+        $dim_xhdpi = 96;
+        $dim_hdpi = 72;
+        $dim_mdpi = 48;
+
         //Crea los iconos necesarios de la aplicacion
         $iconos = array(App_Metro::iconoMenu1, App_Metro::iconoMenu2, App_Metro::iconoMenu3, App_Metro::iconoMenu4);
 
         for ($i = 1; $i <= count($iconos); $i++) {
             //Valida si el icono existe
-            if (filter_var($config[$iconos[$i-1]], FILTER_VALIDATE_URL)) {
-                
-                $URL=$config[$iconos[$i-1]];
-                $imagen=new Imagen($URL);
-                          
-                $imagen->crearCopia($dim_web, $dim_web,"img_menu_btn_".$i."-webx$dim_web",$ruta);
-                $zip->addFile($ruta."/"."img_menu_btn_".$i."-webx$dim_web.".$imagen->getExtension(), "app/src/main/img_menu_btn_".$i."-web.png"); 
+            if (filter_var($config[$iconos[$i - 1]], FILTER_VALIDATE_URL)) {
+
+                $URL = $config[$iconos[$i - 1]];
+                $imagen = new Imagen($URL);
+
+                $imagen->crearCopia($dim_web, $dim_web, "img_menu_btn_" . $i . "-webx$dim_web", $ruta);
+                $zip->addFile($ruta . "/" . "img_menu_btn_" . $i . "-webx$dim_web." . $imagen->getExtension(), "app/src/main/img_menu_btn_" . $i . "-web.png");
                 //mipmap-xxxhdpi
-                $imagen->crearCopia($dim_xxxhdpi, $dim_xxxhdpi,"img_menu_btn_".$i."x$dim_xxxhdpi",$ruta);
-                $zip->addFile($ruta."/"."img_menu_btn_".$i."x$dim_xxxhdpi.".$imagen->getExtension(), "app/src/main/res/mipmap-xxxhdpi/img_menu_btn_".$i.".png");
+                $imagen->crearCopia($dim_xxxhdpi, $dim_xxxhdpi, "img_menu_btn_" . $i . "x$dim_xxxhdpi", $ruta);
+                $zip->addFile($ruta . "/" . "img_menu_btn_" . $i . "x$dim_xxxhdpi." . $imagen->getExtension(), "app/src/main/res/mipmap-xxxhdpi/img_menu_btn_" . $i . ".png");
                 //mipmap-xxhdpi
-                $imagen->crearCopia($dim_xxhdpi, $dim_xxhdpi,"img_menu_btn_".$i."x$dim_xxhdpi",$ruta);
-                $zip->addFile($ruta."/"."img_menu_btn_".$i."x$dim_xxhdpi.".$imagen->getExtension(), "app/src/main/res/mipmap-xxhdpi/img_menu_btn_".$i.".png");
+                $imagen->crearCopia($dim_xxhdpi, $dim_xxhdpi, "img_menu_btn_" . $i . "x$dim_xxhdpi", $ruta);
+                $zip->addFile($ruta . "/" . "img_menu_btn_" . $i . "x$dim_xxhdpi." . $imagen->getExtension(), "app/src/main/res/mipmap-xxhdpi/img_menu_btn_" . $i . ".png");
                 //mipmap-xhdpi
-                $imagen->crearCopia($dim_xhdpi, $dim_xhdpi,"img_menu_btn_".$i."x$dim_xhdpi",$ruta);
-                $zip->addFile($ruta."/"."img_menu_btn_".$i."x$dim_xhdpi.".$imagen->getExtension(), "app/src/main/res/mipmap-xhdpi/img_menu_btn_".$i.".png");
-                 //mipmap-hdpi
-                $imagen->crearCopia($dim_hdpi, $dim_hdpi,"img_menu_btn_".$i."x$dim_hdpi",$ruta);
-                $zip->addFile($ruta."/"."img_menu_btn_".$i."x$dim_hdpi.".$imagen->getExtension(), "app/src/main/res/mipmap-hdpi/img_menu_btn_".$i.".png");
-                 //mipmap-mdpi
-                $imagen->crearCopia($dim_mdpi, $dim_mdpi,"img_menu_btn_".$i."x$dim_mdpi",$ruta);
-                $zip->addFile($ruta."/"."img_menu_btn_".$i."x$dim_mdpi.".$imagen->getExtension(), "app/src/main/res/mipmap-mdpi/img_menu_btn_".$i.".png");
-                
-                
-            }else{
-                $zip->addFile(public_path("assets/img/desing/".App_Metro::sigla."/img_menu_btn_".$i."-web.png"), "app/src/main/img_menu_btn_".$i."-web.png"); 
+                $imagen->crearCopia($dim_xhdpi, $dim_xhdpi, "img_menu_btn_" . $i . "x$dim_xhdpi", $ruta);
+                $zip->addFile($ruta . "/" . "img_menu_btn_" . $i . "x$dim_xhdpi." . $imagen->getExtension(), "app/src/main/res/mipmap-xhdpi/img_menu_btn_" . $i . ".png");
+                //mipmap-hdpi
+                $imagen->crearCopia($dim_hdpi, $dim_hdpi, "img_menu_btn_" . $i . "x$dim_hdpi", $ruta);
+                $zip->addFile($ruta . "/" . "img_menu_btn_" . $i . "x$dim_hdpi." . $imagen->getExtension(), "app/src/main/res/mipmap-hdpi/img_menu_btn_" . $i . ".png");
+                //mipmap-mdpi
+                $imagen->crearCopia($dim_mdpi, $dim_mdpi, "img_menu_btn_" . $i . "x$dim_mdpi", $ruta);
+                $zip->addFile($ruta . "/" . "img_menu_btn_" . $i . "x$dim_mdpi." . $imagen->getExtension(), "app/src/main/res/mipmap-mdpi/img_menu_btn_" . $i . ".png");
+            } else {
+                $zip->addFile(public_path("assets/img/desing/" . App_Metro::sigla . "/img_menu_btn_" . $i . "-web.png"), "app/src/main/img_menu_btn_" . $i . "-web.png");
                 //mipmap-xxxhdpi
-                $zip->addFile(public_path("assets/img/desing/".App_Metro::sigla."/mipmap-xxxhdpi/img_menu_btn_".$i.".png"), "app/src/main/res/mipmap-xxxhdpi/img_menu_btn_".$i.".png");
+                $zip->addFile(public_path("assets/img/desing/" . App_Metro::sigla . "/mipmap-xxxhdpi/img_menu_btn_" . $i . ".png"), "app/src/main/res/mipmap-xxxhdpi/img_menu_btn_" . $i . ".png");
                 //mipmap-xxhdpi
-                $zip->addFile(public_path("assets/img/desing/".App_Metro::sigla."/mipmap-xxhdpi/img_menu_btn_".$i.".png"), "app/src/main/res/mipmap-xxhdpi/img_menu_btn_".$i.".png");
+                $zip->addFile(public_path("assets/img/desing/" . App_Metro::sigla . "/mipmap-xxhdpi/img_menu_btn_" . $i . ".png"), "app/src/main/res/mipmap-xxhdpi/img_menu_btn_" . $i . ".png");
                 //mipmap-xhdpi
-                $zip->addFile(public_path("assets/img/desing/".App_Metro::sigla."/mipmap-xhdpi/img_menu_btn_".$i.".png"), "app/src/main/res/mipmap-xhdpi/img_menu_btn_".$i.".png");
-                 //mipmap-hdpi
-                $zip->addFile(public_path("assets/img/desing/".App_Metro::sigla."/mipmap-hdpi/img_menu_btn_".$i.".png"), "app/src/main/res/mipmap-hdpi/img_menu_btn_".$i.".png");
-               //mipmap-mdpi
-                $zip->addFile(public_path("assets/img/desing/".App_Metro::sigla."/mipmap-mdpi/img_menu_btn_".$i.".png"), "app/src/main/res/mipmap-mdpi/img_menu_btn_".$i.".png");
-                
+                $zip->addFile(public_path("assets/img/desing/" . App_Metro::sigla . "/mipmap-xhdpi/img_menu_btn_" . $i . ".png"), "app/src/main/res/mipmap-xhdpi/img_menu_btn_" . $i . ".png");
+                //mipmap-hdpi
+                $zip->addFile(public_path("assets/img/desing/" . App_Metro::sigla . "/mipmap-hdpi/img_menu_btn_" . $i . ".png"), "app/src/main/res/mipmap-hdpi/img_menu_btn_" . $i . ".png");
+                //mipmap-mdpi
+                $zip->addFile(public_path("assets/img/desing/" . App_Metro::sigla . "/mipmap-mdpi/img_menu_btn_" . $i . ".png"), "app/src/main/res/mipmap-mdpi/img_menu_btn_" . $i . ".png");
             }
         }
-        
+
         //Crear un archivo XML que le dara el nombre a la aplicacion en android
-        $fp = fopen($ruta."/app.xml", "c");
-        fwrite($fp,"<resources><string name=\"nombreApp\">".$config[Aplicacion::configNombreApp]."</string></resources>");
+        $fp = fopen($ruta . "/app.xml", "c");
+        fwrite($fp, "<resources><string name=\"nombreApp\">" . $config[Aplicacion::configNombreApp] . "</string></resources>");
         fclose($fp);
-    
+
         //Agrega el archiv al archivo comprimido
-        $zip->addFile($ruta."/app.xml","app/src/main/res/values/app.xml");
-    
+        $zip->addFile($ruta . "/app.xml", "app/src/main/res/values/app.xml");
     }
 
     /** Obtiene un array con los nombres claves de los textos info del diseno App
@@ -237,10 +232,16 @@ class App_Metro {
      */
     public static function guardarConfigDiseno($data, $app) {
 
-        $errores = [];
+        $errores = array();
 
-        if (is_null($app->url_logo))
-            return $errores[0] = trans("app.config.info.logo.error");
+        if (is_null($app->url_logo)) {
+            $errores[0] = trans("app.config.info.logo.error");
+        }
+
+        if (count($errores) > 0)
+            return $errores;
+
+
 
         foreach ($data as $clave => $valor) {
             if (!in_array($clave, App_Metro::$configExcepciones)) {
@@ -259,7 +260,7 @@ class App_Metro {
             }
         }
 
-       
+
         return true;
     }
 

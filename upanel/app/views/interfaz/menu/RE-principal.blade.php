@@ -50,7 +50,11 @@ if (Aplicacion::existe()) {
 @endif
 
 
-<li><a href="#"><span class="glyphicon glyphicon-list-alt"></span> {{trans("interfaz.menu.principal.facturas")}}</a></li>
+<li class="dropdown @if(Request::is('soporte/*')) active @endif "><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list-alt"></span> {{trans("interfaz.menu.principal.facturacion")}}<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+        <li><a href="{{URL::to("fact/mis-facturas")}}"><span class="glyphicon glyphicon-copy"></span> {{trans("interfaz.menu.principal.facturacion.mis.facturas")}}</a></li>
+    </ul>
+</li>
 <li class="dropdown @if(Request::is('soporte/*')) active @endif "><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-question-sign"></span> {{trans("interfaz.menu.principal.ayuda")}}<span class="caret"></span></a>
     <ul class="dropdown-menu">
         <li><a href="{{Route("soporte.index")}}"><span class="glyphicon glyphicon-question-sign"></span> {{trans("interfaz.menu.principal.ayuda.soporte")}}</a></li>

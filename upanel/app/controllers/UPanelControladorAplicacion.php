@@ -91,7 +91,7 @@ class UPanelControladorAplicacion extends Controller {
 
         if (!is_null($app)) {
             $versiones = ProcesoApp::where("id_aplicacion", $app->id)->whereNotNull("fecha_finalizacion")->orderBy("id", "DESC")->paginate(30);
-            return View::make("usuarios/tipo/regular/app/versiones")->with("app", $app)->with("versiones",$versiones);
+            return View::make("usuarios/tipo/regular/app/versiones")->with("app", $app)->with("versiones", $versiones);
         }
         return Redirect::to("");
     }
@@ -188,8 +188,12 @@ class UPanelControladorAplicacion extends Controller {
         $data = Input::all();
         $app = Aplicacion::obtener();
 
-        if (is_array($response = AppDesing::guardarConfigDiseno($data, $app)))
+        $response = AppDesing::guardarConfigDiseno($data, $app);
+
+
+        if (is_array($response))
             return Redirect::back()->withInput()->with(User::mensaje("error", null, $response[0], 3));
+
 
         //Redirige a la seccion de textos
         if (is_bool($response) && $response == true) {
@@ -199,6 +203,8 @@ class UPanelControladorAplicacion extends Controller {
             @$app->save();
 
             return Redirect::to("aplicacion/textos")->with(User::mensaje("exito", null, trans("app.config.post.exito"), 2));
+        } else {
+            return Redirect::back()->withInput()->with(User::mensaje("error", null, trans("otros.error_solicitud"), 3));
         }
     }
 

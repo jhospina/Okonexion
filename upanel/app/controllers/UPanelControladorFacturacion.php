@@ -101,4 +101,9 @@ class UPanelControladorFacturacion extends \BaseController {
         }
     }
 
+    function vista_misFacturas() {
+        $facturas = Facturacion::where("id_usuario", Auth::user()->id)->orderBy("id", "DESC")->paginate(30);
+        return View::make("usuarios/tipo/regular/facturacion/facturas/index")->with("facturas", $facturas);
+    }
+
 }

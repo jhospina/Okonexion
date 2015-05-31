@@ -26,4 +26,6 @@ return array(
     "estado.cont.guardado"=>"Guardado",
     "estado.servicio.activo"=>"Activo",
     "estado.servicio.inactivo"=>"Inactivo",
+    "estado.factura.sin.pagar"=>"Sin pagar",
+    "estado.factura.pagado"=>"Pagado",
 );

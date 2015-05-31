@@ -5,6 +5,7 @@
 @section("contenido") 
 
 
+<br/>
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
 
 

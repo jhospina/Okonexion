@@ -46,7 +46,7 @@ return array(
     "config.info.btn.establecer_textos"=>"Establecer Textos",
     "config.info.icono_predeterminado"=>"Icono predeterminado",
     "config.info.sin_logo"=>"Sin logo",
-    "config.info.logo.error"=>"Sube una imagen que sea tu logo de aplicación. Es importante el logo porque representa tu aplicación.",
+    "config.info.logo.error"=>"Debes subir el logo de tu aplicación.",
     "config.info.info.plantilla_escogida"=>"Plantilla de diseño escogida",
     "config.imagen.error01"=>"Las dimensiones de la imagen son incorrectas (:w x :h). Recuerda que deben ser iguales.",
     "config.imagen.error02"=>"El tamaño de la imagen deben ser mayores o iguales a :width_objetivo X :height_objetivo. Tu imagen subida es de :width X :height",
