@@ -31,7 +31,12 @@ class UPanelControladorConfiguracion extends \BaseController {
         if (!is_null($acceso = User::validarAcceso(User::USUARIO_ADMIN)))
             return $acceso;
 
-        return View::make("usuarios/tipo/admin/config/suscripcion");
+        $monedas = Monedas::listado();
+
+        if (!isset($_GET["coin"]))
+            return Redirect::to("config/suscripcion?coin=" .  key($monedas));
+
+        return View::make("usuarios/tipo/admin/config/suscripcion")->with("monedas", $monedas);
     }
 
     function vista_facturacion() {
@@ -50,7 +55,6 @@ class UPanelControladorConfiguracion extends \BaseController {
         if (!ConfigInstancia::validar($data)) {
             return Redirect::back()->withInput()->with(User::mensaje("error", null, trans("config.general.seccion.error.validacion"), 2));
         }
-
         ConfigInstancia::registrar($data);
 
         return Redirect::back()->withInput()->with(User::mensaje("exito", null, trans("config.general.post.exito"), 2));
@@ -63,7 +67,7 @@ class UPanelControladorConfiguracion extends \BaseController {
         if (!Request::ajax())
             return json_encode($output);
 
-        $logo = ConfigInstancia::visual_logo;
+        $logo = Input::get("idConfigLogo");
 
 
         $extension = strtolower(Input::file($logo)->getClientOriginalExtension());
@@ -83,7 +87,7 @@ class UPanelControladorConfiguracion extends \BaseController {
 
 
         Input::file($logo)->move($path, $archivo);
-        $configLogo = Instancia::obtenerMetadato(ConfigInstancia::visual_logo);
+        $configLogo = Instancia::obtenerMetadato($logo);
 
         if (!is_null($configLogo)) {
             //Elimina la imagen anterior si existe
@@ -92,7 +96,7 @@ class UPanelControladorConfiguracion extends \BaseController {
             }
         }
 
-        if (!Instancia::actualizarMetadato(ConfigInstancia::visual_logo, URL::to($path . $archivo))) {
+        if (!Instancia::actualizarMetadato($logo, URL::to($path . $archivo))) {
             $output = ['error' => trans("otros.error_solicitud")];
             return json_encode($output);
         }
@@ -106,7 +110,12 @@ class UPanelControladorConfiguracion extends \BaseController {
         if (!Request::ajax())
             return json_encode($output);
 
-        if (!Instancia::eliminarMetadato(ConfigInstancia::visual_logo)) {
+        $logo = Input::get("idConfigLogo");
+
+        if (!Instancia::existeMetadato($logo))
+            return json_encode($output);
+
+        if (!Instancia::eliminarMetadato($logo)) {
             $output = ['error' => trans("otros.error_solicitud")];
             return json_encode($output);
         }

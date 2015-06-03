@@ -55,7 +55,13 @@ return array(
     "orden.pago.modal.titulo" => "El pago se esta procesando...",
     "orden.pago.modal.pie" => "Por favor espere mientras se realiza la transacción, no haga nada durante este momento. El sistema lo redirigirá cuando el pago se complete satisfactoriamente.",
     "orden.pago.msj.exito" => "El pago de la factura #:num ha sido realizada con éxito. Muchas gracias por usar nuestra plataforma.",
-    "col.numero.factura"=>"Factura N°",
-    "col.fecha.creacion"=>"Fecha de creación",
-    "col.fecha.vencimiento"=>"Fecha de vencimiento"
-        );
+    "col.numero.factura" => "Factura #",
+    "col.fecha.creacion" => "Fecha de creación",
+    "col.fecha.vencimiento" => "Fecha de vencimiento",
+    "factura.info.a.cliente" => "Facturado a",
+    "factura.info.pagar.a" => "Pagar a",
+    "factura.transaccion.titulo" => "Transacciones",
+    "factura.transaccion.fecha" => "Fecha de Transacción",
+    "factura.transaccion.metodo" => "Metodo/Gateway",
+    "factura.transaccion.id" => "ID Transacción"
+);

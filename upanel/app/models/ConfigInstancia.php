@@ -52,6 +52,7 @@ class ConfigInstancia extends Eloquent {
     //CONFIGURACION VISUAL****************************************
     //************************************************************
     const visual_logo = "visual_logo";
+    const visual_logo_facturacion = "visual_logo_facturacion";
     //************************************************************
     //CONFIGURACION DE FACTURACIÓN********************************
     //************************************************************
@@ -120,11 +121,20 @@ class ConfigInstancia extends Eloquent {
         $configs = ConfigInstancia::obtenerListadoConfig();
         foreach ($data as $config => $valor) {
 
-            if (strpos($config, "valor") !== false)
-                $valor = Monedas::desformatearNumero(Monedas::actual(), $valor);
+            if (strpos($config, "-") !== false) {
 
-            if (in_array($config, $configs))
-                Instancia::actualizarMetadato($config, $valor);
+                $preconfig = substr($config, 0, strpos($config, "-"));
+                $subconfig = substr($config, strpos($config, "-") + 1, strlen($config));
+
+                if (strpos($config, "valor") !== false)
+                    $valor = Monedas::desformatearNumero($subconfig, $valor);
+
+                if (in_array($preconfig, $configs))
+                    Instancia::actualizarMetadato($config, $valor);
+            }else {
+                if (in_array($config, $configs))
+                    Instancia::actualizarMetadato($config, $valor);
+            }
         }
     }
 

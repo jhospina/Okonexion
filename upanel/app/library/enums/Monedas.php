@@ -12,11 +12,10 @@ class Monedas {
     const COP_SIMBOL = "&#36;";
     const COP_FORMAT = "0|.|,";
 
-    
-    static function actual(){
+    static function actual() {
         return Instancia::obtenerValorMetadato(ConfigInstancia::info_moneda);
     }
-    
+
     /** Retorna una array con el codigo de las moneas disponibles
      * 
      * @return type
@@ -63,9 +62,9 @@ class Monedas {
 
         return array(intval($params[0]), $params[1], $params[2]);
     }
-    
-    static function nomenclatura($id,$numero){ 
-        return Monedas::simbolo($id)."".$numero." ".$id;
+
+    static function nomenclatura($id, $numero) {
+        return Monedas::simbolo($id) . "" . $numero . " " . $id;
     }
 
     /** Retorna un numero formateado indicado por la moneda 
@@ -75,9 +74,9 @@ class Monedas {
      * @return String
      */
     static function formatearNumero($id, $numero) {
-        if(is_null($numero))
+        if (is_null($numero))
             return null;
-        
+
         list($cantDecimales, $sepadorMillar, $sepadorDecimal) = Monedas::formato($id);
         return (is_numeric($numero)) ? number_format($numero, $cantDecimales, $sepadorDecimal, $sepadorMillar) : null;
     }
@@ -87,6 +86,20 @@ class Monedas {
         $numero = str_replace($sepadorMillar, "", $numero);
         $numero = str_replace($sepadorDecimal, ".", $numero);
         return doubleval($numero);
+    }
+
+    /** Realiza la conversion de una cantidad de dinero a otro tipo de moneda
+     * 
+     * @param type $moneda_origen
+     * @param type $moneda_destino
+     * @param type $cantidad
+     * @return type
+     */
+    static function convertir($moneda_origen, $moneda_destino, $cantidad) {
+        $get = file_get_contents("https://www.google.com/finance/converter?a=$cantidad&from=$moneda_origen&to=$moneda_destino");
+        $get = explode("<span class=bld>", $get);
+        $get = explode("</span>", $get[1]);
+        return preg_replace("/[^0-9\.]/", null, $get[0]);
     }
 
 }

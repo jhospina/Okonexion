@@ -56,7 +56,7 @@ $moneda_select = Instancia::obtenerValorMetadato(ConfigInstancia::info_moneda);
                             </div>
                             <div class="col-lg-6">
                                 <input type="checkbox" class="js-switch" data-for="{{ConfigInstancia::periodoPrueba_activado}}" {{ HtmlControl::setCheck(Util::convertirIntToBoolean(Instancia::obtenerValorMetadato(ConfigInstancia::periodoPrueba_activado))); }}>
-                                <input type="hidden" id="{{ConfigInstancia::periodoPrueba_activado}}" name="{{ConfigInstancia::periodoPrueba_activado}}" value="{{ Instancia::obtenerValorMetadato(ConfigInstancia::periodoPrueba_activado); }}"/>
+                                       <input type="hidden" id="{{ConfigInstancia::periodoPrueba_activado}}" name="{{ConfigInstancia::periodoPrueba_activado}}" value="{{ Instancia::obtenerValorMetadato(ConfigInstancia::periodoPrueba_activado); }}"/>
                             </div>
                             {{--NUMERO DE DIAS DEL PERIODO DE PRUEBA--}}
                             <div class="col-lg-6">
@@ -108,7 +108,7 @@ $moneda_select = Instancia::obtenerValorMetadato(ConfigInstancia::info_moneda);
                 showPreview: true,
                 showRemove: true,
                 showUpload: false,
-                initialPreview: <?php echo(!is_null($logo))? "\"<img style='width:300px;height:50px;' src='" . $logo . "' class='file-preview-image'/>\"" : "false"; ?>,
+                initialPreview: <?php echo(!is_null($logo)) ? "\"<img style='width:300px;height:50px;' src='" . $logo . "' class='file-preview-image'/>\"" : "false"; ?>,
                 maxFileCount: 1,
                 previewFileType: "image",
                 allowedFileExtensions: ['jpg', 'png'],
@@ -124,6 +124,7 @@ $moneda_select = Instancia::obtenerValorMetadato(ConfigInstancia::info_moneda);
                 uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
                 msgSelected: "{n} {{trans('otros.info.imagen')}}",
                 maxFileSize: 500,
+                uploadExtraData: {idConfigLogo: "{{ConfigInstancia::visual_logo}}"},
                 msgInvalidFileExtension: "{{trans('app.config.info.imagen.error01')}}",
                 msgInvalidFileType: "{{trans('app.config.info.imagen.error01')}}",
                 msgSizeTooLarge: "{{trans('app.config.info.imagen.error02')}}",
@@ -137,7 +138,7 @@ $moneda_select = Instancia::obtenerValorMetadato(ConfigInstancia::info_moneda);
                 $.ajax({
                     type: "POST",
                     url: "{{URL::to('config/ajax/eliminar/logo')}}",
-                    data: {},
+                    data: {idConfigLogo: "{{ConfigInstancia::visual_logo}}"},
                     success: function (response) {
                     }
                 }, "json");

@@ -71,7 +71,7 @@ array_unshift($paises, trans("otros.info.elegir"));
         @endforeach
 
         <tr>
-            <td class="text-right"><u>{{trans("fact.orden.tu.comprar.subtotal")}}</u></td><td class="text-right">{{Monedas::simbolo($moneda)}}{{$subtotal}} {{$moneda}}</td>
+            <td class="text-right">{{trans("fact.orden.tu.comprar.subtotal")}}</td><td class="text-right">{{Monedas::simbolo($moneda)}}{{$subtotal}} {{$moneda}}</td>
         </tr>
         <tr>
             <?php

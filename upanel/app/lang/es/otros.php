@@ -81,6 +81,9 @@ return array(
     "info.control" => "Control",
     "info.informe" => "Informe",
     "descargar.pdf" => "Descargar en PDF",
+    "info.pdf" => "PDF",
+    "generar.pdf" => "Generar PDF",
+    "info.imprimir" => "Imprimir",
     "info.subir.archivo" => "Subir archivo",
     "info.buscar" => "Buscar",
     "info.valor" => "Valor",
@@ -138,4 +141,6 @@ return array(
     "info.descuento" => "Descuento",
     "info.verificando" => "Verificando",
     "info.espere.por_favor" => "Espere, por favor...",
+    "info.monedas"=>"Modenas",
+    "info.suscripcion"=>"Suscripción",
 );

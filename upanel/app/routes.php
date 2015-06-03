@@ -62,6 +62,7 @@ Route::group(array('before' => 'auth'), function() {
     cookies();
     notificaciones();
     facturacion();
+    pdf();
 
     control_usuarios();
     control_instancias();
@@ -178,7 +179,7 @@ function usuario() {
 
 function usuario_ajax() {
     Route::post("usuario/ajax/actualizar/", "UPanelControladorUsuario@ajax_actualizar");
-} 
+}
 
 //***************************************************************************
 //***************************************************************************
@@ -290,11 +291,28 @@ function facturacion() {
     Route::get("fact/orden/pago", "UPanelControladorFacturacion@vistaPost_ordenPago");
     Route::post("fact/orden/pago/procesar/", "UPanelControladorFacturacion@post_ordenPagoProcesar");
     //USUARIO
-    Route::get("fact/mis-facturas","UPanelControladorFacturacion@vista_misFacturas");
+    Route::get("fact/mis-facturas", "UPanelControladorFacturacion@vista_misFacturas");
+    Route::get("fact/facturas", "UPanelControladorFacturacion@vista_facturas");
+    //Ver factura
+    Route::get("fact/factura/{id}", "UPanelControladorFacturacion@vista_verFactura");
 }
 
 function notificaciones() {
     Route::post("nots/ajax/set/visto", "UPanelControladorNotificaciones@ajax_establecerVisto");
+}
+
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+
+function pdf() {
+    //Ver
+    Route::get("pdf/ver/factura/{id}", "UPanelControladorFacturacion@pdf_factura");
+    //Descargar
+    Route::get("pdf/descargar/factura/{id}", "UPanelControladorFacturacion@pdf_descargarFactura");
 }
 
 //***************************************************************************

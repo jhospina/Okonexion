@@ -37,6 +37,8 @@ return array(
     "servicios.seccion.agregar.servicio.op.descripcion" => "Descripción",
     "servicios.seccion.agregar.servicio.op.costo" => "Costo",
     "servicio.seccion.agregar.servicio.info.exito" => "El servicio ha sido creado con éxito.",
+    "facturacion.seccion.logo.titulo"=>"Logo de facturación",
+    "facturacion.seccion.logo.ayuda"=>"Este logo se mostrara en todas las facturas generadas para los cliente, debe tener un tamaño exacto de 300x50 pixeles. Se recomienda un fondo blanco o transparente.",
     "facturacion.seccion.impuestos.titulo" => "Impuestos",
     "facturacion.seccion.impuestos.op.iva" => "% Impuesto al valor agregado (IVA)",
     "facturacion.seccion.impuestos.op.iva.placeholder" => "Valor en porcentaje (%)",

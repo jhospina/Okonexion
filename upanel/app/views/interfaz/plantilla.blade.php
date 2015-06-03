@@ -9,7 +9,7 @@ if (is_null($logoPlat = Instancia::obtenerValorMetadato(ConfigInstancia::visual_
 <!DOCTYPE html>
 <html>
     <head>
-        <title>@yield('titulo', 'UPanel - Okonexion') @include("interfaz/titulo-pagina")</title>
+        <title>@yield('titulo', 'UPanel - Appthergo') @include("interfaz/titulo-pagina")</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         {{-- Bootstrap --}}
         {{ HTML::style('assets/plugins/bootstrap/css/bootstrap.css', array('media' => 'screen')) }}
@@ -54,7 +54,7 @@ if (is_null($logoPlat = Instancia::obtenerValorMetadato(ConfigInstancia::visual_
                 </div>
                 <div>
                     <ul class="nav navbar-nav">
-                        <li @if(Request::is('/')) class="active" @endif ><a href="{{URL::to("/")}}"><span class="glyphicon glyphicon-home"></span> {{trans("interfaz.menu.principal.inicio")}}</a></li>
+                        <li @if(Request::is('/')) class="active" @endif ><a href="{{URL::to("/")}}"><span class="glyphicon glyphicon-home"></span></a></li>
                         {{--Define el contenido del menu dependiendo del tipo de usuario--}} 
 
                         {{--MENU PRINCIPAL--}}

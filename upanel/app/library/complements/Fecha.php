@@ -79,5 +79,16 @@ class Fecha {
         $this->seg = $seg;
         $this->object = new DateTime($fecha);
     }
+    
+    
+    static function formatear($fecha){
+        $meses = Util::obtenerNombreMeses();
+
+        $ft = explode(" ", $fecha);
+
+        $fecha = explode("-", $ft[0]);
+
+        return trans("otros.fecha.formato_01", array("dia" => $fecha[2], "mes" => $meses[$fecha[1]], "ano" => $fecha[0], "hora" => $ft[1]));
+    }
 
 }

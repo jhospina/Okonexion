@@ -3,7 +3,7 @@
 //IDIOMA: ESPAÑOL
 
 return array(
-    "nombre" => "Appsthergo",
+    "nombre" => "Appsthergo Technologies",
     "subfijo_titulo_pagina" => "- Appsthergo",
     "pie_pagina" => "Todos los derechos reservados",
     "pie_pagina.tiempo.prueba"=>"Tiempo de prueba restante: ",
@@ -19,6 +19,7 @@ return array(
     "menu.principal.mi_aplicacion.versiones" => "Versiones",
     "menu.principal.facturacion" => "Facturación",
     "menu.principal.facturacion.mis.facturas" => "Mis facturas",
+    "menu.principal.facturacion.facturas" => "Facturas",
     "menu.principal.ayuda" => "Ayuda",
     "menu.principal.ayuda.asistencia" => "Asistencia",
     "menu.principal.ayuda.soporte" => "Soporte",

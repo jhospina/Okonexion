@@ -7,6 +7,7 @@ Class Facturacion extends Eloquent {
 
     const ESTADO_SIN_PAGAR = "SP";
     const ESTADO_PAGADO = "PA";
+    const ESTADO_VENCIDA = "VE";
     const TIPOPAGO_TARJETA_CREDITO_ATRAVES_2CHECKOUTS = "T2";
 
     /** Retorna la descripcion del estado de la factura
@@ -16,10 +17,15 @@ Class Facturacion extends Eloquent {
      */
     static function estado($id) {
         $estados = array(Facturacion::ESTADO_SIN_PAGAR => trans("atributos.estado.factura.sin.pagar"),
-            Facturacion::ESTADO_PAGADO => trans("atributos.estado.factura.pagado")
+            Facturacion::ESTADO_PAGADO => trans("atributos.estado.factura.pagado"),
+            Facturacion::ESTADO_VENCIDA => trans("atributos.estado.factura.vencida")
         );
 
         return (isset($estados[$id])) ? $estados[$id] : null;
+    }
+
+    static function tipo($id_tipo) {
+        return trans("atributos.tipo.pago.factura." . Facturacion::TIPOPAGO_TARJETA_CREDITO_ATRAVES_2CHECKOUTS);
     }
 
     /** Crear una nueva factura, con estado SIN PAGAR
@@ -139,7 +145,7 @@ Class Facturacion extends Eloquent {
         $meta = new MetaFacturacion;
 
         if (Facturacion::existeMetadato($clave, $id_factura))
-            return MetaFacturacion::actualizarMetadato($clave, $valor, $id_factura);
+            return Facturacion::actualizarMetadato($clave, $valor, $id_factura);
 
         $meta->id_factura = $id_factura;
         $meta->clave = $clave;
@@ -155,10 +161,10 @@ Class Facturacion extends Eloquent {
      * @return boolean El resultado de la operacion
      */
     static function actualizarMetadato($clave, $valor, $id_factura) {
-        $meta = MetaFacturacion::obtenerMetadato($clave, $id_factura);
+        $meta = Facturacion::obtenerMetadato($clave, $id_factura);
         //Si no existe lo agrega
         if (is_null($meta))
-            return MetaFacturacion::agregarMetadato($clave, $valor, $id_factura);
+            return Facturacion::agregarMetadato($clave, $valor, $id_factura);
 
         $meta->valor = $valor;
 
@@ -179,7 +185,7 @@ Class Facturacion extends Eloquent {
     }
 
     static function eliminarMetadato($clave, $id_factura) {
-        $config = MetaFacturacion::obtenerMetadato($clave, $id_factura);
+        $config = Facturacion::obtenerMetadato($clave, $id_factura);
         return $config->delete();
     }
 
@@ -231,14 +237,13 @@ Class Facturacion extends Eloquent {
      */
     static function validarPago($factura, $id_transaccion, $tipo_pago) {
         $json = array();
+        $json["empresa"] = Auth::user()->empresa;
+        $json["dni"] = Auth::user()->dni;
         $json["nombre"] = Auth::user()->nombres . " " . Auth::user()->apellidos;
         $json["email"] = Auth::user()->email;
-        $json["dni"] = Auth::user()->dni;
-        $json["empresa"] = Auth::user()->empresa;
         $json["direccion"] = Auth::user()->direccion;
-        $json["pais"] = Auth::user()->pais;
-        $json["ciudad"] = Auth::user()->ciudad;
-        $json["region"] = Auth::user()->region;
+        $json["lugar"] = Auth::user()->ciudad . ", " . Auth::user()->region;
+        $json["pais"] = Paises::obtenerNombre(Auth::user()->pais);
         //Almacena una copia de los datos del cliente con la que se hizo la factura
         Facturacion::agregarMetadato(MetaFacturacion::CLIENTE_INFO, json_encode($json), $factura->id);
         //Se almacena el numero de la transaccion arrojada por el servidor de pagos

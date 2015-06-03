@@ -6,7 +6,7 @@
 
 define('DEFAULT_LANG', Idioma::LANG_ES);
 
-// Set default language if lang session do not exits.
+// Set default language if lang session do not exits. 
 
 if (!Session::has('locale'))
     Session::put('locale', DEFAULT_LANG);   
