@@ -260,6 +260,7 @@ function configuracion() {
     Route::post("config/ajax/subir/logo", "UPanelControladorConfiguracion@ajax_subirLogo");
     Route::post("config/ajax/eliminar/logo", "UPanelControladorConfiguracion@ajax_eliminarLogo");
     Route::post("config/ajax/agregar/servicio", "UPanelControladorServicios@ajax_agregar");
+    Route::post("config/ajax/obtener/servicio", "UPanelControladorServicios@ajax_obtener");
     Route::post("config/ajax/estado/servicio", "UPanelControladorServicios@ajax_cambiarEstado");
 }
 

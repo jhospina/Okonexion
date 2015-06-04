@@ -14,9 +14,6 @@ class TablaServicios extends Migration {
         Schema::create('servicios', function($table) {
             $table->increments('id');
             $table->integer("instancia");
-            $table->string("nombre");
-            $table->double('costo', 15, 2);
-            $table->text("descripcion")->nullable();
             $table->string("estado", 2);
         });
     }
