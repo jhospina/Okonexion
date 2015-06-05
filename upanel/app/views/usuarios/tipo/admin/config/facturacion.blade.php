@@ -50,7 +50,7 @@ list($decimales, $sep_millar, $sep_decimal) = Monedas::formato($moneda);
             </div>
             <span  href="#" class="tooltip-left" rel="tooltip" id='{{ConfigInstancia::visual_logo_facturacion}}-content' title="{{trans('otros.extensiones_permitidas')}}: png, jpeg. Max 500Kb"> 
                 <input name="{{ConfigInstancia::visual_logo_facturacion}}" id="{{ConfigInstancia::visual_logo_facturacion}}" accept="image/*" type="file" multiple=true>
-                </a> 
+            </span>
                 </div>
                 </div>
 

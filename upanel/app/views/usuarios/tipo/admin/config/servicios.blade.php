@@ -61,8 +61,8 @@ $idiomas = array_reverse(Idioma::listado());
                 @if(count($servicios)>0)
                 @foreach($servicios as $servicio)
                 <tr>
-                    <td>{{$servicio->getNombre()}}</td>
-                    <td>{{Monedas::nomenclatura($moneda,Monedas::formatearNumero($moneda,$servicio->getCosto()))}}</td>
+                    <td id="ser-nombre-{{$servicio->id}}">{{$servicio->getNombre()}}</td>
+                    <td id="ser-costo-{{$servicio->id}}">{{Monedas::nomenclatura($moneda,Monedas::formatearNumero($moneda,$servicio->getCosto()))}}</td>
                     <td> 
                         <button type="button" onClick="cargarEdicion({{$servicio->id}})" class="btn-sm btn-warning"><span class="glyphicon glyphicon-edit"></span></button>
                     </td>
@@ -104,7 +104,7 @@ $idiomas = array_reverse(Idioma::listado());
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><span class="glyphicon glyphicon-flash"></span> {{trans("config.servicios.seccion.agregar.servicio")}}</h4>
+                <h4 class="modal-title"><span class="glyphicon glyphicon-flash"></span> <span id="titulo-modal-text"></span></h4>
             </div>
             <div class="modal-body" style="clear:both;">
 
@@ -145,11 +145,20 @@ $idiomas = array_reverse(Idioma::listado());
                     </div>
                 </div>
                 @endforeach
+
+                <div class="col-lg-12">
+                    <span  href="#" class="tooltip-left" rel="tooltip" id='{{Servicio::CONFIG_IMAGEN}}-upload-content' title="{{trans('otros.extensiones_permitidas')}}: png, jpeg. Max 500Kb"> 
+                        <input id="{{Servicio::CONFIG_IMAGEN}}-upload" name="{{Servicio::CONFIG_IMAGEN}}-upload" accept="image/*" type="file" multiple=true>
+                        <input id="{{Servicio::CONFIG_IMAGEN}}" type="hidden"/>
+                    </span>
+                </div>
+
                 <div id="msj-error-modal" style="clear:both;color:red;"></div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{{trans("otros.info.cancelar")}}</button>
                 <button type="button" class="btn btn-primary" id="btn-guardar">{{trans("otros.info.guardar")}}</button>
+                <button type="button" style="display:none;" class="btn btn-warning" data-id="" id="btn-editar">{{trans("otros.info.editar")}}</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -162,14 +171,55 @@ $idiomas = array_reverse(Idioma::listado());
 @include("usuarios/tipo/admin/config/secciones/script")
 
 @section("script2")
+
+
+<script>
+
+                                    jQuery("#{{Servicio::CONFIG_IMAGEN}}-upload").fileinput({
+                            multiple: false,
+                                    showPreview: true,
+                                    showRemove: true,
+                                    showUpload: false,
+                                    maxFileCount: 1,
+                                    previewFileType: "image",
+                                    allowedFileExtensions: ['jpg', 'png'],
+                                    browseLabel: "{{trans('config.servicio.seccion.agregar.imagen')}}",
+                                    browseIcon: '<i class="glyphicon glyphicon-picture"></i> ',
+                                    removeClass: "btn btn-danger",
+                                    removeLabel: "{{trans('otros.info.borrar')}}",
+                                    removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
+                                    uploadClass: "btn btn-info",
+                                    uploadLabel: "trans('otros.info.subir')",
+                                    dropZoneEnabled: false,
+                                    dropZoneTitle: "{{trans('otros.info.arrastrar_imagen')}}...",
+                                    uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
+                                    msgSelected: "{n} {{trans('otros.info.imagen')}}",
+                                    maxFileSize: 500,
+                                    msgInvalidFileExtension: "{{trans('app.config.info.imagen.error01')}}",
+                                    msgInvalidFileType: "{{trans('app.config.info.imagen.error01')}}",
+                                    msgSizeTooLarge: "{{trans('app.config.info.imagen.error02')}}",
+                                    uploadAsync: true,
+                                    uploadUrl: "{{URL::to('config/ajax/subir/imagen/servicio')}}" // your upload server url
+                            });
+                                    //Sube la imagen una vez seleccionada
+                                    $("#{{Servicio::CONFIG_IMAGEN}}-upload").on('fileimageloaded', function (event, previewId) {
+                            $('#{{Servicio::CONFIG_IMAGEN}}-upload').fileinput('upload');
+                            });
+                                    //La respuesta a la subida de la imagen
+                                    $("#{{Servicio::CONFIG_IMAGEN}}-upload").on('fileuploaded', function (event, data, previewId, index) {
+                            var response = data.response;
+                                    $("#{{Servicio::CONFIG_IMAGEN}}").val(response["{{Servicio::CONFIG_IMAGEN}}"]);
+                            });</script>
+
+
 <script>
                                     $("#btn-guardar").click(function(){
                             var btn = this;
                                     var nombre = {};
                                     var costo = {};
                                     var descripcion = {};
-                                    $(".{{Servicio::CONFIG_NOMBRE}}").attr("disabled", "disabled");
-                                    $(".{{Servicio::CONFIG_DESCRIPCION}}").attr("disabled", "disabled");
+                                    var imagen = $("#{{Servicio::CONFIG_IMAGEN}}").val();
+                                    $(".{{Servicio::CONFIG_NOMBRE}}").attr("disabled", "disabled"); $(".{{Servicio::CONFIG_DESCRIPCION}}").attr("disabled", "disabled");
                                     $(".{{Servicio::CONFIG_COSTO}}").attr("disabled", "disabled");
                                     jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('otros.info.guardando')}}...");
                                     jQuery(btn).attr("disabled", "disabled");
@@ -187,7 +237,7 @@ $idiomas = array_reverse(Idioma::listado());
                                     jQuery.ajax({
                                     type: "POST",
                                             url: "{{URL::to('config/ajax/agregar/servicio')}}",
-                                            data: {"{{Servicio::CONFIG_NOMBRE}}":JSON.stringify(nombre), "{{Servicio::CONFIG_DESCRIPCION}}":JSON.stringify(descripcion), "{{Servicio::CONFIG_COSTO}}":JSON.stringify(costo)},
+                                            data: {"{{Servicio::CONFIG_NOMBRE}}":JSON.stringify(nombre), "{{Servicio::CONFIG_DESCRIPCION}}":JSON.stringify(descripcion), "{{Servicio::CONFIG_COSTO}}":JSON.stringify(costo), "{{Servicio::CONFIG_IMAGEN}}":imagen},
                                             success: function (data) {
 
                                             data = jQuery.parseJSON(data);
@@ -195,6 +245,7 @@ $idiomas = array_reverse(Idioma::listado());
                                             $("#msj-error-modal").html("{{trans('config.general.seccion.error.validacion')}}");
                                             } else{
                                             resetearForm();
+                                                    $("#modal-crear").modal("hide");
                                                     agregarHtmlServicio(data["{{Servicio::COL_ID}}"], data["{{Servicio::CONFIG_NOMBRE}}"], data["{{Servicio::CONFIG_COSTO}}"], data["{{Servicio::COL_ESTADO}}"]);
                                             }
 
@@ -206,9 +257,9 @@ $idiomas = array_reverse(Idioma::listado());
                                             }}, "html");
                             });
                                     function agregarHtmlServicio(id, nombre, costo, estado){
-                                    var html = "<tr><td>" + nombre + "</td>";
-                                            html += "<td>" + costo + "</td>";
-                                            html += "<td id='estado-" + id + "' class='estado-" + estado + "'>";
+                                    var html = "<tr><td id='ser-nombre-" + id + "'>" + nombre + "</td>";
+                                            html += "<td id='ser-costo-" + id + "'>" + costo + "</td>";
+                                            html += "<td><button type='button' onClick='cargarEdicion(" + id + ")' class='btn-sm btn-warning'><span class='glyphicon glyphicon-edit'></span></button></td>"; html += "<td id='estado-" + id + "' class='estado-" + estado + "'>";
                                             html += " <span title='{{trans('atributos.estado.servicio.inactivo')}}' class='tooltip-top glyphicon glyphicon-remove-sign'></span></td>";
                                             html += "<td><button type='button' onclick='cambiarEstado(this," + id + ",\"{{Servicio::ESTADO_ACTIVO}}\")' class='btn-sm btn-success tooltip-top' title='{{trans('otros.info.activar')}}'> <span  class='glyphicon glyphicon glyphicon-ok-circle'></span></button></td></tr>";
                                             $("#tabla-servicios").append(html);
@@ -217,43 +268,92 @@ $idiomas = array_reverse(Idioma::listado());
 </script>
 
 
-<script>
-                            function cambiarEstado(btn, id_servicio, estado){
 
-                            jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span>");
+<script>
+                            $("#btn-editar").click(function(){
+
+                            var id_servicio = $("#btn-editar").attr("data-id");
+                                    var btn = this;
+                                    var nombre = {};
+                                    var costo = {};
+                                    var descripcion = {};
+                                     var imagen = $("#{{Servicio::CONFIG_IMAGEN}}").val();
+                                   
+                                    $(".{{Servicio::CONFIG_NOMBRE}}").attr("disabled", "disabled");
+                                    $(".{{Servicio::CONFIG_DESCRIPCION}}").attr("disabled", "disabled");
+                                    $(".{{Servicio::CONFIG_COSTO}}").attr("disabled", "disabled");
+                                    jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('otros.info.procesando')}}...");
                                     jQuery(btn).attr("disabled", "disabled");
+                                    //Obtiene el nombre del servicio en los distintos idiomas
+                                    $(".{{Servicio::CONFIG_NOMBRE}}").each(function(){
+                            nombre[$(this).attr("id")] = $(this).val();
+                            });
+                                    //Obtiene la descripcion en los difentes idiomas
+                                    $(".{{Servicio::CONFIG_DESCRIPCION}}").each(function(){
+                            descripcion[$(this).attr("id")] = $(this).val();
+                            });
+                                    $(".{{Servicio::CONFIG_COSTO}}").each(function(){
+                            costo[$(this).attr("id")] = $(this).val();
+                            });
                                     jQuery.ajax({
                                     type: "POST",
-                                            url: "{{URL::to('config/ajax/estado/servicio')}}",
-                                            data: {"{{Servicio::COL_ID}}":id_servicio, "{{Servicio::COL_ESTADO}}":estado},
+                                            url: "{{URL::to('config/ajax/editar/servicio')}}",
+                                            data: {"{{Servicio::COL_ID}}":id_servicio, "{{Servicio::CONFIG_NOMBRE}}":JSON.stringify(nombre), "{{Servicio::CONFIG_DESCRIPCION}}":JSON.stringify(descripcion), "{{Servicio::CONFIG_COSTO}}":JSON.stringify(costo),"{{Servicio::CONFIG_IMAGEN}}":imagen},
                                             success: function (data) {
-
                                             data = jQuery.parseJSON(data);
                                                     if (data.error){
-                                            }
-                                            else{
-                                            if (estado != "{{Servicio::ESTADO_ACTIVO}}"){
-                                            $(btn).removeClass("btn-danger");
-                                                    $(btn).addClass("btn-success");
-                                                    $(btn).html("<span  class='glyphicon glyphicon glyphicon-ok-circle'></span>");
-                                                    $(btn).attr("title", "{{trans('otros.info.activar')}}");
-                                                    $(btn).attr("onClick", "cambiarEstado(this," + id_servicio + ",'{{Servicio::ESTADO_INACTIVO}}')");
-                                                    $("#estado-" + id_servicio).html('<span title="{{trans("atributos.estado.servicio.inactivo")}}" class="tooltip-top glyphicon glyphicon-remove-sign"></span>');
-                                                    $("#estado-" + id_servicio).attr("class", "estado-" + estado);
+                                            $("#msj-error-modal").html("{{trans('config.general.seccion.error.validacion')}}");
                                             } else{
-                                            $(btn).removeClass("btn-sucess");
-                                                    $(btn).addClass("btn-danger");
-                                                    $(btn).html("<span  class='glyphicon glyphicon glyphicon-remove-circle'></span>");
-                                                    $(btn).attr("title", "{{trans('otros.info.desactivar')}}");
-                                                    $(btn).attr("onClick", "cambiarEstado(this," + id_servicio + ",'{{Servicio::ESTADO_ACTIVO}}')");
-                                                    $("#estado-" + id_servicio).html('<span title="{{trans("atributos.estado.servicio.activo")}}" class="tooltip-top glyphicon glyphicon-ok-circle"></span>');
-                                                    $("#estado-" + id_servicio).attr("class", "estado-" + estado);
-                                            }
+                                            resetearForm();
+                                                    $("#modal-crear").modal("hide");
+                                                    $("#ser-nombre-" + id_servicio).html(data["{{Servicio::CONFIG_NOMBRE}}"]);
+                                                    $("#ser-costo-" + id_servicio).html(data["{{Servicio::CONFIG_COSTO}}"]);
                                             }
 
+                                            $(".{{Servicio::CONFIG_NOMBRE}}").removeAttr("disabled");
+                                                    $(".{{Servicio::CONFIG_DESCRIPCION}}").removeAttr("disabled");
+                                                    $(".{{Servicio::CONFIG_COSTO}}").removeAttr("disabled");
+                                                    jQuery(btn).removeAttr("disabled");
+                                                    jQuery(btn).html("{{trans('otros.info.editar')}}");
                                             }}, "html");
-                            }
-</script>
+                            });</script>
+
+<script>
+                                    function cambiarEstado(btn, id_servicio, estado){
+
+                                    jQuery(btn).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span>");
+                                            jQuery(btn).attr("disabled", "disabled");
+                                            jQuery.ajax({
+                                            type: "POST",
+                                                    url: "{{URL::to('config/ajax/estado/servicio')}}",
+                                                    data: {"{{Servicio::COL_ID}}":id_servicio, "{{Servicio::COL_ESTADO}}":estado},
+                                                    success: function (data) {
+
+                                                    data = jQuery.parseJSON(data);
+                                                            if (data.error){
+                                                    }
+                                                    else{
+                                                    if (estado != "{{Servicio::ESTADO_ACTIVO}}"){
+                                                    $(btn).removeClass("btn-danger");
+                                                            $(btn).addClass("btn-success");
+                                                            $(btn).html("<span  class='glyphicon glyphicon glyphicon-ok-circle'></span>");
+                                                            $(btn).attr("title", "{{trans('otros.info.activar')}}");
+                                                            $(btn).attr("onClick", "cambiarEstado(this," + id_servicio + ",'{{Servicio::ESTADO_INACTIVO}}')");
+                                                            $("#estado-" + id_servicio).html('<span title="{{trans("atributos.estado.servicio.inactivo")}}" class="tooltip-top glyphicon glyphicon-remove-sign"></span>');
+                                                            $("#estado-" + id_servicio).attr("class", "estado-" + estado);
+                                                    } else{
+                                                    $(btn).removeClass("btn-sucess");
+                                                            $(btn).addClass("btn-danger");
+                                                            $(btn).html("<span  class='glyphicon glyphicon glyphicon-remove-circle'></span>");
+                                                            $(btn).attr("title", "{{trans('otros.info.desactivar')}}");
+                                                            $(btn).attr("onClick", "cambiarEstado(this," + id_servicio + ",'{{Servicio::ESTADO_ACTIVO}}')");
+                                                            $("#estado-" + id_servicio).html('<span title="{{trans("atributos.estado.servicio.activo")}}" class="tooltip-top glyphicon glyphicon-ok-circle"></span>');
+                                                            $("#estado-" + id_servicio).attr("class", "estado-" + estado);
+                                                    }
+                                                    }
+
+                                                    }}, "html");
+                                    }</script>
 
 
 <script>
@@ -267,16 +367,24 @@ $idiomas = array_reverse(Idioma::listado());
                             }
 
                             $("#btn-agregar-servicio").click(function(){
-                            resetearForm();
+                            $("#btn-guardar").show();
+                                    $("#btn-editar").hide();
+                                    resetearForm();
                                     $("#modal-crear").modal("show");
+                                    $("#titulo-modal-text").html("{{trans('config.servicios.seccion.agregar.servicio')}}");
                             });
                                     function resetearForm(){
                                     if ($("#msj-no-datos"))
                                             $("#msj-no-datos").remove();
-                                            $("#modal-crear").modal("hide");
                                             $(".{{Servicio::CONFIG_NOMBRE}}").val("");
                                             $(".{{Servicio::CONFIG_COSTO}}").val("");
                                             $(".{{Servicio::CONFIG_DESCRIPCION}}").val("");
+                                            $("#msj-error-modal").html("");
+                                            $("#{{Servicio::CONFIG_IMAGEN}}").val("");
+                                            $('#{{Servicio::CONFIG_IMAGEN}}-upload').fileinput('reset');
+                                            $('#{{Servicio::CONFIG_IMAGEN}}-upload').fileinput('clear');
+                                            
+
                                     }
 
 </script>
@@ -285,7 +393,12 @@ $idiomas = array_reverse(Idioma::listado());
 <script>
 
                             function cargarEdicion(id_servicio){
-                           // $("#modal-crear").modal("show");
+                            $("#modal-crear").modal("show");
+                                    $("#titulo-modal-text").html("{{trans('config.servicios.seccion.editar.servicio')}}");
+                                    $("#btn-guardar").hide();
+                                    $("#btn-editar").show();
+                                    $("#btn-editar").attr("data-id", id_servicio);
+                                    resetearForm();
                                     jQuery.ajax({
                                     type: "POST",
                                             url: "{{URL::to('config/ajax/obtener/servicio')}}",
@@ -293,7 +406,16 @@ $idiomas = array_reverse(Idioma::listado());
                                             success: function (data) {
 
                                             data = jQuery.parseJSON(data);
-                                                    console.log(data);
+                                                    $.each(data, function(clave, valor){
+                                                    $("#" + clave).val(valor);
+                                                    });
+                                                    if (data['{{Servicio::CONFIG_IMAGEN}}']){
+                                            $("#{{Servicio::CONFIG_IMAGEN}}-upload").fileinput('refresh', {
+                                            initialPreview: "<img src='" + data['{{Servicio::CONFIG_IMAGEN}}'] + "' class='file-preview-image'/>"
+                                            });
+                                                    $("#{{Servicio::CONFIG_IMAGEN}}").val(data['{{Servicio::CONFIG_IMAGEN}}']);
+                                                    borrarImagenEvento();
+                                            }
                                             }}, "html");
                             }
 
@@ -307,6 +429,29 @@ $idiomas = array_reverse(Idioma::listado());
                             var numero = $(obj).val();
                                     $(obj).val(formatearNumero(numero, millar, decimal));
                             }
+</script>
+
+
+
+<script>
+
+                            function borrarImagenEvento(){
+                            //Cuando se borra la imagen
+                            $(".fileinput-remove").click(function (event) {
+
+                            var imagen = $("#{{Servicio::CONFIG_IMAGEN}}").val();
+                                    $.ajax({
+                                    type: "POST",
+                                            url: "{{URL::to('config/ajax/eliminar/imagen/servicio')}}",
+                                            data: {"{{Servicio::CONFIG_IMAGEN}}": imagen},
+                                            success: function (response) {
+                                            console.log("LISTO");
+                                                    console.log(response);
+                                            }
+                                    }, "json");
+                            });
+                            }
+
 </script>
 
 @stop

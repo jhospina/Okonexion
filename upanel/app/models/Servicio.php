@@ -12,6 +12,7 @@ class Servicio extends Eloquent {
     const CONFIG_NOMBRE = "servicio_nombre-";
     const CONFIG_DESCRIPCION = "servicio_descripcion-";
     const CONFIG_COSTO = "servicio_costo-";
+    const CONFIG_IMAGEN = "servicio_imagen";
 
     static function validar($data) {
 
@@ -69,10 +70,14 @@ class Servicio extends Eloquent {
         return Instancia::agregarMetadato($clave . $this->id, $costo);
     }
 
+    function setImagen($url, $clave) {
+        return Instancia::agregarMetadato($clave . $this->id, $url);
+    }
+
     function getNombre($idioma = null) {
         if (is_null($idioma))
             $idioma = Idioma::actual();
-       
+
         return Instancia::obtenerValorMetadato(Servicio::CONFIG_NOMBRE . $idioma . $this->id);
     }
 

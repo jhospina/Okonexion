@@ -260,8 +260,11 @@ function configuracion() {
     Route::post("config/ajax/subir/logo", "UPanelControladorConfiguracion@ajax_subirLogo");
     Route::post("config/ajax/eliminar/logo", "UPanelControladorConfiguracion@ajax_eliminarLogo");
     Route::post("config/ajax/agregar/servicio", "UPanelControladorServicios@ajax_agregar");
+    Route::post("config/ajax/editar/servicio", "UPanelControladorServicios@ajax_editar");
     Route::post("config/ajax/obtener/servicio", "UPanelControladorServicios@ajax_obtener");
     Route::post("config/ajax/estado/servicio", "UPanelControladorServicios@ajax_cambiarEstado");
+      Route::post("config/ajax/subir/imagen/servicio", "UPanelControladorServicios@ajax_subirImagen");
+      Route::post("config/ajax/eliminar/imagen/servicio", "UPanelControladorServicios@ajax_eliminarImagen");
 }
 
 //***************************************************************************
