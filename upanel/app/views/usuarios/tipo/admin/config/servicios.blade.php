@@ -122,11 +122,11 @@ $idiomas = array_reverse(Idioma::listado());
                 @foreach($idiomas as $index => $codigo_idioma)
                 <div id="content-details-{{$codigo_idioma}}" class="content-details" style="display:{{(key($idiomas)==$index)?"block":"none"}};">
 
-                    <div class="col-lg-6" style="margin-bottom: 10px;">{{trans("config.servicios.seccion.agregar.servicio.op.nombre")}}</div>
-                    <div class="col-lg-6" style="margin-bottom: 10px;"><input type="text" id="{{Servicio::CONFIG_NOMBRE}}{{$codigo_idioma}}" class="form-control {{Servicio::CONFIG_NOMBRE}}" /></div>
+                    <div class="col-lg-4" style="margin-bottom: 10px;">{{trans("config.servicios.seccion.agregar.servicio.op.nombre")}}</div>
+                    <div class="col-lg-8" style="margin-bottom: 10px;"><input type="text" id="{{Servicio::CONFIG_NOMBRE}}{{$codigo_idioma}}" class="form-control {{Servicio::CONFIG_NOMBRE}}" /></div>
 
-                    <div class="col-lg-6">{{trans("config.servicios.seccion.agregar.servicio.op.descripcion")}}</div>
-                    <div class="col-lg-6" style="margin-bottom: 10px;"><textarea id="{{Servicio::CONFIG_DESCRIPCION}}{{$codigo_idioma}}" class="form-control {{Servicio::CONFIG_DESCRIPCION}}" ></textarea></div>
+                    <div class="col-lg-4">{{trans("config.servicios.seccion.agregar.servicio.op.descripcion")}}</div>
+                    <div class="col-lg-8" style="margin-bottom: 10px;"><textarea style="height: 100px;" id="{{Servicio::CONFIG_DESCRIPCION}}{{$codigo_idioma}}" class="form-control {{Servicio::CONFIG_DESCRIPCION}}" ></textarea></div>
                 </div>
                 @endforeach
 
@@ -179,7 +179,7 @@ $idiomas = array_reverse(Idioma::listado());
                             multiple: false,
                                     showPreview: true,
                                     showRemove: true,
-                                    showUpload: false,
+                                    showUpload: true,
                                     maxFileCount: 1,
                                     previewFileType: "image",
                                     allowedFileExtensions: ['jpg', 'png'],
@@ -189,7 +189,7 @@ $idiomas = array_reverse(Idioma::listado());
                                     removeLabel: "{{trans('otros.info.borrar')}}",
                                     removeIcon: '<i class="glyphicon glyphicon-trash"></i> ',
                                     uploadClass: "btn btn-info",
-                                    uploadLabel: "trans('otros.info.subir')",
+                                    uploadLabel: "{{trans('otros.info.subir')}}",
                                     dropZoneEnabled: false,
                                     dropZoneTitle: "{{trans('otros.info.arrastrar_imagen')}}...",
                                     uploadIcon: '<i class="glyphicon glyphicon-upload"></i> ',
@@ -200,10 +200,6 @@ $idiomas = array_reverse(Idioma::listado());
                                     msgSizeTooLarge: "{{trans('app.config.info.imagen.error02')}}",
                                     uploadAsync: true,
                                     uploadUrl: "{{URL::to('config/ajax/subir/imagen/servicio')}}" // your upload server url
-                            });
-                                    //Sube la imagen una vez seleccionada
-                                    $("#{{Servicio::CONFIG_IMAGEN}}-upload").on('fileimageloaded', function (event, previewId) {
-                            $('#{{Servicio::CONFIG_IMAGEN}}-upload').fileinput('upload');
                             });
                                     //La respuesta a la subida de la imagen
                                     $("#{{Servicio::CONFIG_IMAGEN}}-upload").on('fileuploaded', function (event, data, previewId, index) {
@@ -277,8 +273,7 @@ $idiomas = array_reverse(Idioma::listado());
                                     var nombre = {};
                                     var costo = {};
                                     var descripcion = {};
-                                     var imagen = $("#{{Servicio::CONFIG_IMAGEN}}").val();
-                                   
+                                    var imagen = $("#{{Servicio::CONFIG_IMAGEN}}").val();
                                     $(".{{Servicio::CONFIG_NOMBRE}}").attr("disabled", "disabled");
                                     $(".{{Servicio::CONFIG_DESCRIPCION}}").attr("disabled", "disabled");
                                     $(".{{Servicio::CONFIG_COSTO}}").attr("disabled", "disabled");
@@ -298,7 +293,7 @@ $idiomas = array_reverse(Idioma::listado());
                                     jQuery.ajax({
                                     type: "POST",
                                             url: "{{URL::to('config/ajax/editar/servicio')}}",
-                                            data: {"{{Servicio::COL_ID}}":id_servicio, "{{Servicio::CONFIG_NOMBRE}}":JSON.stringify(nombre), "{{Servicio::CONFIG_DESCRIPCION}}":JSON.stringify(descripcion), "{{Servicio::CONFIG_COSTO}}":JSON.stringify(costo),"{{Servicio::CONFIG_IMAGEN}}":imagen},
+                                            data: {"{{Servicio::COL_ID}}":id_servicio, "{{Servicio::CONFIG_NOMBRE}}":JSON.stringify(nombre), "{{Servicio::CONFIG_DESCRIPCION}}":JSON.stringify(descripcion), "{{Servicio::CONFIG_COSTO}}":JSON.stringify(costo), "{{Servicio::CONFIG_IMAGEN}}":imagen},
                                             success: function (data) {
                                             data = jQuery.parseJSON(data);
                                                     if (data.error){
@@ -383,8 +378,6 @@ $idiomas = array_reverse(Idioma::listado());
                                             $("#{{Servicio::CONFIG_IMAGEN}}").val("");
                                             $('#{{Servicio::CONFIG_IMAGEN}}-upload').fileinput('reset');
                                             $('#{{Servicio::CONFIG_IMAGEN}}-upload').fileinput('clear');
-                                            
-
                                     }
 
 </script>
@@ -411,7 +404,8 @@ $idiomas = array_reverse(Idioma::listado());
                                                     });
                                                     if (data['{{Servicio::CONFIG_IMAGEN}}']){
                                             $("#{{Servicio::CONFIG_IMAGEN}}-upload").fileinput('refresh', {
-                                            initialPreview: "<img src='" + data['{{Servicio::CONFIG_IMAGEN}}'] + "' class='file-preview-image'/>"
+                                            initialPreview: "<img src='" + data['{{Servicio::CONFIG_IMAGEN}}'] + "' class='file-preview-image'/>",
+                                                    showUpload: false
                                             });
                                                     $("#{{Servicio::CONFIG_IMAGEN}}").val(data['{{Servicio::CONFIG_IMAGEN}}']);
                                                     borrarImagenEvento();
@@ -445,8 +439,9 @@ $idiomas = array_reverse(Idioma::listado());
                                             url: "{{URL::to('config/ajax/eliminar/imagen/servicio')}}",
                                             data: {"{{Servicio::CONFIG_IMAGEN}}": imagen},
                                             success: function (response) {
-                                            console.log("LISTO");
-                                                    console.log(response);
+                                            $("#{{Servicio::CONFIG_IMAGEN}}-upload").fileinput('refresh', {
+                                            showUpload: true
+                                            });
                                             }
                                     }, "json");
                             });

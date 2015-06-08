@@ -2,6 +2,60 @@
 
 class UPanelControladorServicios extends Controller {
 
+    function vista_agregar() {
+        if (!Auth::check()) {
+            return User::login();
+        }
+
+        //Valida el acceso solo para el usuario Regular
+        if (!is_null($acceso = User::validarAcceso(User::USUARIO_REGULAR)))
+            return $acceso;
+
+
+        $servicios = Servicio::listado();
+        $hash = HasherPro::crear(UsuarioMetadato::HASH_CREAR_FACTURA);
+
+        return View::make("usuarios/tipo/regular/servicios/agregar")->with("servicios", $servicios)->with("hash", $hash);
+    }
+
+    function post_ordenarServicios() {
+
+        if (!Auth::check()) {
+            return User::login();
+        }
+
+        //Valida el acceso solo para el usuario Regular
+        if (!is_null($acceso = User::validarAcceso(User::USUARIO_REGULAR)))
+            return $acceso;
+
+        $data = Input::all();
+
+        if (isset($data[UsuarioMetadato::HASH_CREAR_FACTURA])) {
+
+            //Verifica el hash de creacion y lo efectua una unica vez
+            if (HasherPro::Verificar($data[UsuarioMetadato::HASH_CREAR_FACTURA], UsuarioMetadato::HASH_CREAR_FACTURA)) {
+                unset($data[UsuarioMetadato::HASH_CREAR_FACTURA]);
+                $id_factura = Facturacion::nueva(Instancia::obtenerValorMetadato(ConfigInstancia::fact_impuestos_iva));
+                Facturacion::agregarMetadato(MetaFacturacion::MONEDA_ID, Monedas::actual(), $id_factura);
+                User::agregarMetaDato(UsuarioMetadato::FACTURACION_ID_PROCESO, $id_factura);
+                Facturacion::generarJSONCliente($id_factura);
+
+                foreach ($data as $index => $servicio) {
+                    $servicioData = array();
+                    $servicioData[MetaFacturacion::PRODUCTO_ID] = $servicio;
+                    $servicioData[MetaFacturacion::PRODUCTO_DESCUENTO] = 0;
+                    $servicioData[MetaFacturacion::PRODUCTO_VALOR] = Instancia::obtenerValorMetadato(Servicio::CONFIG_COSTO . Monedas::actual() . str_replace(Servicio::CONFIG_NOMBRE, "", $servicio));
+                    if (!Facturacion::agregarProducto($id_factura, $servicioData))
+                        return Redirect::back()->with(User::mensaje("error", null, trans("otros.error_solicitud"), 2));
+                }
+
+                return Redirect::to("fact/orden/pago");
+            }
+        }
+
+        return Redirect::back()->with(User::mensaje("error", null, trans("otros.error_solicitud"), 2));
+    }
+
     /** Agrega un nuevo servicio
      * 
      * @return type
@@ -179,6 +233,10 @@ class UPanelControladorServicios extends Controller {
             return json_encode($output);
 
         ConfigInstancia::where("valor", $imagen)->delete();
+
+        //Elimna la imagen del servidor
+        if (File::exists(Util::convertirUrlPath($imagen)))
+            File::delete(Util::convertirUrlPath($imagen));
 
         return json_encode($output);
     }

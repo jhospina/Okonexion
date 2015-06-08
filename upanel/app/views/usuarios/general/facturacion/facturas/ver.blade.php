@@ -58,7 +58,7 @@ $iva = $factura->iva;
 
         <tr>
             <td>
-                <span class="glyphicon glyphicon-ok"></span> {{trans("fact.producto.id.".$id_producto)}}
+                <span class="glyphicon glyphicon-ok"></span> {{(strpos($id_producto,Servicio::CONFIG_NOMBRE)!==false)?Servicio::obtenerNombre($id_producto):trans("fact.producto.id.".$id_producto)}}
             </td>
             <td class="text-right">
                 {{Monedas::simbolo($moneda)}}{{$valor_real}} {{$moneda}}
@@ -69,7 +69,7 @@ $iva = $factura->iva;
 
         <tr>
             <td>
-                <i><span class="glyphicon glyphicon-ok"></span> <b>{{trans("otros.info.descuento")}} {{$descuento_producto}}%</b> - {{trans("fact.producto.id.".$id_producto)}}</i>
+                <i><span class="glyphicon glyphicon-ok"></span> <b>{{trans("otros.info.descuento")}} {{$descuento_producto}}%</b> - {{(strpos($id_producto,Servicio::CONFIG_NOMBRE)!==false)?Servicio::obtenerNombre($id_producto):trans("fact.producto.id.".$id_producto)}}</i>
             </td>
             <td class="text-right">
                 -{{Monedas::simbolo($moneda)}}{{$valor_descontado}} {{$moneda}}

@@ -63,5 +63,6 @@ return array(
     "factura.transaccion.titulo" => "Transacciones",
     "factura.transaccion.fecha" => "Fecha de Transacción",
     "factura.transaccion.metodo" => "Metodo/Gateway",
-    "factura.transaccion.id" => "ID Transacción"
+    "factura.transaccion.id" => "ID Transacción",
+    "factura.pulsa.aqui.pagar" => "¡Pulsa aquí para pagar esta factura!"
 );

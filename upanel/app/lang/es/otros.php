@@ -143,4 +143,7 @@ return array(
     "info.espere.por_favor" => "Espere, por favor...",
     "info.monedas"=>"Modenas",
     "info.suscripcion"=>"Suscripción",
+    "info.realizar.orden"=>"Realizar orden",
+    "info.quitar"=>"Quitar",
+    "info.pagar"=>"Pagar",
 );

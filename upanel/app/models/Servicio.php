@@ -14,6 +14,14 @@ class Servicio extends Eloquent {
     const CONFIG_COSTO = "servicio_costo-";
     const CONFIG_IMAGEN = "servicio_imagen";
 
+    /** Obtiene un array de servicios activos de la instancia
+     * 
+     * @return type
+     */
+    static function listado() {
+        return Servicio::where("instancia", Auth::user()->instancia)->where("estado", Servicio::ESTADO_ACTIVO)->get();
+    }
+
     static function validar($data) {
 
         $nombre = json_decode($data[Servicio::CONFIG_NOMBRE], true);
@@ -81,10 +89,26 @@ class Servicio extends Eloquent {
         return Instancia::obtenerValorMetadato(Servicio::CONFIG_NOMBRE . $idioma . $this->id);
     }
 
+    function getDescripcion($idioma = null) {
+        if (is_null($idioma))
+            $idioma = Idioma::actual();
+
+        return Instancia::obtenerValorMetadato(Servicio::CONFIG_DESCRIPCION . $idioma . $this->id);
+    }
+
     function getCosto($moneda = null) {
         if (is_null($moneda))
             $moneda = Monedas::actual();
         return Instancia::obtenerValorMetadato(Servicio::CONFIG_COSTO . $moneda . $this->id);
+    }
+
+    function getImagen() {
+        return Instancia::obtenerValorMetadato(Servicio::CONFIG_IMAGEN . $this->id);
+    }
+
+    static function obtenerNombre($id) {
+        $id = str_replace(Servicio::CONFIG_NOMBRE, "", $id);
+        return Instancia::obtenerValorMetadato(Servicio::CONFIG_NOMBRE . Idioma::actual() . $id);
     }
 
 }

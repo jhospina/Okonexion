@@ -60,7 +60,7 @@ Class Facturacion extends Eloquent {
     /** Se agrega un producto a una factura dada pro su id
      * 
      * @param int $id_factura
-     * @param array $producto
+     * @param array $producto [MetaFacturacion::PRODUCTO_ID][MetaFacturacion::PRODUCTO_VALOR][MetaFacturacion::PRODUCTO_DESCUENTO] 
      * @return boolean
      */
     static function agregarProducto($id_factura, $producto) {
@@ -69,8 +69,12 @@ Class Facturacion extends Eloquent {
         while (Facturacion::existeMetadato(MetaFacturacion::PRODUCTO_ID . $n, $id_factura))
             $n++;
 
+
+
         if (!isset($producto[MetaFacturacion::PRODUCTO_ID]) || !isset($producto[MetaFacturacion::PRODUCTO_VALOR]) || !isset($producto[MetaFacturacion::PRODUCTO_DESCUENTO]))
             return false;
+
+
 
         $total_producto = doubleval($producto[MetaFacturacion::PRODUCTO_VALOR]);
         $descuento_producto = doubleval($producto[MetaFacturacion::PRODUCTO_DESCUENTO]);
@@ -236,16 +240,7 @@ Class Facturacion extends Eloquent {
      * @param string $tipo_pago El tipo de pago realizado
      */
     static function validarPago($factura, $id_transaccion, $tipo_pago) {
-        $json = array();
-        $json["empresa"] = Auth::user()->empresa;
-        $json["dni"] = Auth::user()->dni;
-        $json["nombre"] = Auth::user()->nombres . " " . Auth::user()->apellidos;
-        $json["email"] = Auth::user()->email;
-        $json["direccion"] = Auth::user()->direccion;
-        $json["lugar"] = Auth::user()->ciudad . ", " . Auth::user()->region;
-        $json["pais"] = Paises::obtenerNombre(Auth::user()->pais);
-        //Almacena una copia de los datos del cliente con la que se hizo la factura
-        Facturacion::agregarMetadato(MetaFacturacion::CLIENTE_INFO, json_encode($json), $factura->id);
+        Facturacion::generarJSONCliente($factura->id);
         //Se almacena el numero de la transaccion arrojada por el servidor de pagos
         Facturacion::agregarMetadato(MetaFacturacion::TRANSACCION_ID, $id_transaccion, $factura->id);
         //Se registra la fecha de pago
@@ -259,6 +254,19 @@ Class Facturacion extends Eloquent {
         $factura->save();
         //Se validan y se efectuan los productos pagados por el usuario
         Facturacion::validarProductos($factura->id);
+    }
+
+    static function generarJSONCliente($id_factura) {
+        $json = array();
+        $json["empresa"] = Auth::user()->empresa;
+        $json["dni"] = Auth::user()->dni;
+        $json["nombre"] = Auth::user()->nombres . " " . Auth::user()->apellidos;
+        $json["email"] = Auth::user()->email;
+        $json["direccion"] = Auth::user()->direccion;
+        $json["lugar"] = Auth::user()->ciudad . ", " . Auth::user()->region;
+        $json["pais"] = Paises::obtenerNombre(Auth::user()->pais);
+        //Almacena una copia de los datos del cliente con la que se hizo la factura
+        Facturacion::agregarMetadato(MetaFacturacion::CLIENTE_INFO, json_encode($json), $id_factura);
     }
 
 }

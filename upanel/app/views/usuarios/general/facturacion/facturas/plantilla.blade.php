@@ -27,9 +27,22 @@ if (is_null($logoPlat = Instancia::obtenerValorMetadato(ConfigInstancia::visual_
             #estado-factura.{{Facturacion::ESTADO_SIN_PAGAR}}{
                 background: red;
             }
-            
+
             #estado-factura.{{Facturacion::ESTADO_VENCIDA}}{
                 background: orange;
+            }
+
+
+            #btn-pagar{
+                width: 50%;
+                -webkit-border-bottom-right-radius: 20px;
+                -webkit-border-bottom-left-radius: 20px;
+                -moz-border-radius-bottomright: 20px;
+                -moz-border-radius-bottomleft: 20px;
+                border-bottom-right-radius: 20px;
+                border-bottom-left-radius: 20px;
+                background-color: lemonchiffon;
+                font-size: 12pt;
             }
         </style>
 
@@ -48,6 +61,13 @@ if (is_null($logoPlat = Instancia::obtenerValorMetadato(ConfigInstancia::visual_
 
     </head>
     <body>
+        <div class="container text-center">
+            <form action="{{URL::to("fact/orden/pago")}}" method="POST">
+                <input type="hidden" name="UsuarioMetadato::FACTURACION_ID_PROCESO" value="{{$factura->id}}"/>
+                <button id="btn-pagar" type="submit"><span class="glyphicon glyphicon-shopping-cart"></span> {{trans("fact.factura.pulsa.aqui.pagar")}}</button>
+            </form>
+        </div>
+
         <header class="container">
             <div class="col-lg-6" style="margin-top: 5px;">
                 <img class="img-rounded" src="{{$logoPlat}}"/>

@@ -48,7 +48,7 @@ array_unshift($paises, trans("otros.info.elegir"));
 
         <tr>
             <td>
-                <span class="glyphicon glyphicon-ok"></span> {{trans("fact.producto.id.".$id_producto)}}
+                <span class="glyphicon glyphicon-ok"></span> {{(strpos($id_producto,Servicio::CONFIG_NOMBRE)!==false)?Servicio::obtenerNombre($id_producto):trans("fact.producto.id.".$id_producto)}}
             </td>
             <td class="text-right">
                 {{Monedas::simbolo($moneda)}}{{$valor_real}} {{$moneda}}

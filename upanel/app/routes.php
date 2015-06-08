@@ -61,6 +61,7 @@ Route::group(array('before' => 'auth'), function() {
     tipoContenido_PQR();
     cookies();
     notificaciones();
+    servicios();
     facturacion();
     pdf();
 
@@ -249,6 +250,18 @@ function ayuda_soporte() {
 //***************************************************************************
 //***************************************************************************
 
+function servicios() {
+    Route::get('servicios/agregar', 'UPanelControladorServicios@vista_agregar');
+    Route::post('servicios/post/agregar', 'UPanelControladorServicios@post_ordenarServicios');
+}
+
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+
 function configuracion() {
     Route::get("config/general", "UPanelControladorConfiguracion@vista_general");
     Route::get("config/suscripcion", "UPanelControladorConfiguracion@vista_suscripcion");
@@ -263,8 +276,8 @@ function configuracion() {
     Route::post("config/ajax/editar/servicio", "UPanelControladorServicios@ajax_editar");
     Route::post("config/ajax/obtener/servicio", "UPanelControladorServicios@ajax_obtener");
     Route::post("config/ajax/estado/servicio", "UPanelControladorServicios@ajax_cambiarEstado");
-      Route::post("config/ajax/subir/imagen/servicio", "UPanelControladorServicios@ajax_subirImagen");
-      Route::post("config/ajax/eliminar/imagen/servicio", "UPanelControladorServicios@ajax_eliminarImagen");
+    Route::post("config/ajax/subir/imagen/servicio", "UPanelControladorServicios@ajax_subirImagen");
+    Route::post("config/ajax/eliminar/imagen/servicio", "UPanelControladorServicios@ajax_eliminarImagen");
 }
 
 //***************************************************************************

@@ -47,7 +47,12 @@ class UPanelControladorFacturacion extends \BaseController {
                 Facturacion::agregarMetadato(MetaFacturacion::MONEDA_ID, $data[MetaFacturacion::MONEDA_ID], $id_factura);
                 User::agregarMetaDato(UsuarioMetadato::FACTURACION_ID_PROCESO, $id_factura);
                 Facturacion::agregarProducto($id_factura, $data);
+                Facturacion::generarJSONCliente($id_factura);
             }
+        }
+
+        if (isset($data[UsuarioMetadato::FACTURACION_ID_PROCESO])) {
+            User::agregarMetaDato(UsuarioMetadato::FACTURACION_ID_PROCESO, $id_factura);
         }
 
         $factura = Facturacion::find(User::obtenerValorMetadato(UsuarioMetadato::FACTURACION_ID_PROCESO));
@@ -229,7 +234,10 @@ class UPanelControladorFacturacion extends \BaseController {
 
             $html .="<tr>";
             $html .=" <td>";
-            $html .="    <span class='glyphicon glyphicon-ok'></span> " . Util::descodificarTexto(trans('fact.producto.id.' . $id_producto)) . "";
+            if (strpos($id_producto, Servicio::CONFIG_NOMBRE) !== false)
+                $html .="    <span class='glyphicon glyphicon-ok'></span> " . Util::descodificarTexto(Servicio::obtenerNombre($id_producto)) . "";
+            else
+                $html .="    <span class='glyphicon glyphicon-ok'></span> " . Util::descodificarTexto(trans('fact.producto.id.' . $id_producto)) . "";
             $html .=" </td>";
             $html .="  <td style='text-align:right;'>";
             $html .="       " . Monedas::simbolo($moneda) . "" . $valor_real . " " . $moneda . "";
