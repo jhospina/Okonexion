@@ -2,6 +2,22 @@
 
 class UPanelControladorServicios extends Controller {
 
+    function vista_misServicios() {
+
+        if (!Auth::check()) {
+            return User::login();
+        }
+
+        //Valida el acceso solo para el usuario Regular
+        if (!is_null($acceso = User::validarAcceso(User::USUARIO_REGULAR)))
+            return $acceso;
+
+
+        $consulta = MetaFacturacion::where("id_usuario", Auth::user()->id)->where("valor", "LIKE", Servicio::CONFIG_NOMBRE . "%")->groupBy('valor')->get(); 
+
+        return View::make("usuarios/tipo/regular/servicios/index")->with("consulta", $consulta);
+    }
+
     function vista_agregar() {
         if (!Auth::check()) {
             return User::login();

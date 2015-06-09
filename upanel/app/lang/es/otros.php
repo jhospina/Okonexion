@@ -146,4 +146,5 @@ return array(
     "info.realizar.orden"=>"Realizar orden",
     "info.quitar"=>"Quitar",
     "info.pagar"=>"Pagar",
+    "info.pagos"=>"Pagos"
 );

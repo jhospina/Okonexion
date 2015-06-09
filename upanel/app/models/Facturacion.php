@@ -145,12 +145,15 @@ Class Facturacion extends Eloquent {
      * @param String $valor El valor del metadato
      * @param Int $id_factura (Opcional) Si no se especifica se toma el de la sesion actual
      */
-    static function agregarMetadato($clave, $valor, $id_factura) {
+    static function agregarMetadato($clave, $valor, $id_factura, $id_usuario = null) {
         $meta = new MetaFacturacion;
 
         if (Facturacion::existeMetadato($clave, $id_factura))
             return Facturacion::actualizarMetadato($clave, $valor, $id_factura);
 
+        if (is_null($id_usuario))
+            $id_usuario = Auth::user()->id;
+        $meta->id_usuario = $id_usuario;
         $meta->id_factura = $id_factura;
         $meta->clave = $clave;
         $meta->valor = $valor;
@@ -166,6 +169,7 @@ Class Facturacion extends Eloquent {
      */
     static function actualizarMetadato($clave, $valor, $id_factura) {
         $meta = Facturacion::obtenerMetadato($clave, $id_factura);
+
         //Si no existe lo agrega
         if (is_null($meta))
             return Facturacion::agregarMetadato($clave, $valor, $id_factura);

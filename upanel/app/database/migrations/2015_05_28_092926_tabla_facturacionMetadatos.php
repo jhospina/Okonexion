@@ -14,6 +14,7 @@ class TablaFacturacionMetadatos extends Migration {
         Schema::create('facturacionMetadatos', function($table) {
             $table->bigIncrements('id');
             $table->integer("id_factura");
+            $table->integer("id_usuario");
             $table->string("clave");
             $table->text("valor");
         });

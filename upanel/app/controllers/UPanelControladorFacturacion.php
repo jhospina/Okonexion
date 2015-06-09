@@ -98,7 +98,7 @@ class UPanelControladorFacturacion extends \BaseController {
             //Si la transaccion ha sido aprobada
             if ($charge['response']['responseCode'] == 'APPROVED') {
                 Facturacion::validarPago($factura, $charge['response']['orderNumber'], Facturacion::TIPOPAGO_TARJETA_CREDITO_ATRAVES_2CHECKOUTS);
-                return Redirect::to("")->with(User::mensaje("exito", null, "<span class='glyphicon glyphicon-ok'></span> " . trans("fact.orden.pago.msj.exito", array("num" => $factura->id)), 2));
+                return Redirect::to("fact/mis-facturas")->with(User::mensaje("exito", null, "<span class='glyphicon glyphicon-ok'></span> " . trans("fact.orden.pago.msj.exito", array("num" => $factura->id)), 2));
             }
         } catch (Twocheckout_Error $e) {
             return Redirect::back()->with(User::mensaje("error", null, "<span class='glyphicon glyphicon-remove-circle'></span> " . trans("fact.orden.pago.informacion.tc.error.proceso"), 2));

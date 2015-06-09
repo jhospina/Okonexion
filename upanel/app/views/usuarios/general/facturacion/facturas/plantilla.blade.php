@@ -61,12 +61,15 @@ if (is_null($logoPlat = Instancia::obtenerValorMetadato(ConfigInstancia::visual_
 
     </head>
     <body>
+
+        @if($factura->estado!=Facturacion::ESTADO_PAGADO)
         <div class="container text-center">
             <form action="{{URL::to("fact/orden/pago")}}" method="POST">
                 <input type="hidden" name="UsuarioMetadato::FACTURACION_ID_PROCESO" value="{{$factura->id}}"/>
                 <button id="btn-pagar" type="submit"><span class="glyphicon glyphicon-shopping-cart"></span> {{trans("fact.factura.pulsa.aqui.pagar")}}</button>
             </form>
         </div>
+        @endif
 
         <header class="container">
             <div class="col-lg-6" style="margin-top: 5px;">

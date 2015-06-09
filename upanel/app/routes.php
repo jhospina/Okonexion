@@ -251,6 +251,7 @@ function ayuda_soporte() {
 //***************************************************************************
 
 function servicios() {
+    Route::get('servicios/', 'UPanelControladorServicios@vista_misServicios');
     Route::get('servicios/agregar', 'UPanelControladorServicios@vista_agregar');
     Route::post('servicios/post/agregar', 'UPanelControladorServicios@post_ordenarServicios');
 }
