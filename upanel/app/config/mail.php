@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'okonexion.upanel@gmail.com', 'name' => 'Okonexion Colombia'),
+	'from' => array('address' => 'appsthergo@gmail.com', 'name' => 'Appsthergo Technologies'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'okonexion.upanel@gmail.com',
+	'username' => 'appsthergo@gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------

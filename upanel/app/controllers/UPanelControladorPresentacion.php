@@ -21,7 +21,14 @@ class UPanelControladorPresentacion extends Controller {
 
     //Panel principal para el usuario regular
     function indexRegular() {
-        return View::make("usuarios/tipo/regular/index");
+
+
+        $tickets = Ticket::where("estado", "!=", Ticket::ESTADO_CERRADO)->where("usuario_cliente", Auth::user()->id)->get();
+        $totalTickets = count(Ticket::where("usuario_cliente", Auth::user()->id)->get());
+
+        $facturas = Facturacion::where("id_usuario", Auth::user()->id)->where("estado", "!=", Facturacion::ESTADO_PAGADO)->orderBy("id", "DESC")->get();
+
+        return View::make("usuarios/tipo/regular/index")->with("tickets", $tickets)->with("facturas", $facturas)->with("totalTickets",$totalTickets);
     }
 
     function indexSoporteGeneral() {

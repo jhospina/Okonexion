@@ -233,6 +233,13 @@ Class Facturacion extends Eloquent {
                 Auth::user()->fin_suscripcion = $fecha->agregarMeses(ConfigInstancia::obtenerCantidadMesesProductosSuscripcion($producto[MetaFacturacion::PRODUCTO_ID]));
                 Auth::user()->estado = User::ESTADO_SUSCRIPCION_VIGENTE;
                 Auth::user()->save();
+
+                if (strpos($producto[MetaFacturacion::PRODUCTO_ID], ConfigInstancia::suscripcion_tipo_bronce) !== false)
+                    User::agregarMetaDato(UsuarioMetadato::SUSCRIPCION_TIPO, ConfigInstancia::suscripcion_tipo_bronce);
+                elseif (strpos($producto[MetaFacturacion::PRODUCTO_ID], ConfigInstancia::suscripcion_tipo_plata) !== false)
+                    User::agregarMetaDato(UsuarioMetadato::SUSCRIPCION_TIPO, ConfigInstancia::suscripcion_tipo_plata);
+                elseif (strpos($producto[MetaFacturacion::PRODUCTO_ID], ConfigInstancia::suscripcion_tipo_oro) !== false)
+                    User::agregarMetaDato(UsuarioMetadato::SUSCRIPCION_TIPO, ConfigInstancia::suscripcion_tipo_oro);
             }
         }
     }

@@ -30,4 +30,7 @@ return array(
     "estado.factura.pagado" => "Pagado",
     "estado.factura.vencida" => "Vencida",
     "tipo.pago.factura." . Facturacion::TIPOPAGO_TARJETA_CREDITO_ATRAVES_2CHECKOUTS => "Tarjeta de credito - 2Checkout",
+    "tipo.suscripcion." . ConfigInstancia::suscripcion_tipo_bronce => "Bronce",
+    "tipo.suscripcion." . ConfigInstancia::suscripcion_tipo_plata => "Plata",
+    "tipo.suscripcion." . ConfigInstancia::suscripcion_tipo_oro => "Oro",
 );

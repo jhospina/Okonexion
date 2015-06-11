@@ -50,13 +50,13 @@ if (Aplicacion::existe()) {
 @endif
 
 {{--SERVICIOS--}}
-<li class="dropdown @if(Request::is('soporte/*')) active @endif "><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list-alt"></span> {{trans("interfaz.menu.principal.facturacion")}}<span class="caret"></span></a>
+<li class="dropdown @if(Request::is('fact/mis-facturas')) active @endif "><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-list-alt"></span> {{trans("interfaz.menu.principal.facturacion")}}<span class="caret"></span></a>
     <ul class="dropdown-menu">
         <li><a href="{{URL::to("fact/mis-facturas")}}"><span class="glyphicon glyphicon-copy"></span> {{trans("interfaz.menu.principal.facturacion.mis.facturas")}}</a></li>
     </ul>
 </li>
 {{--FACTURACION--}}
-<li class="dropdown @if(Request::is('soporte/*')) active @endif "><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-flash"></span> {{trans("interfaz.menu.principal.servicios")}}<span class="caret"></span></a>
+<li class="dropdown @if(Request::is('fact/*')) active @endif "><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-flash"></span> {{trans("interfaz.menu.principal.servicios")}}<span class="caret"></span></a>
     <ul class="dropdown-menu">
         <li><a href="{{URL::to("servicios")}}"><span class="glyphicon glyphicon-flash"></span> {{trans("interfaz.menu.principal.servicios.mis.servicios")}}</a></li>
         <li role="presentation" class="divider"></li>

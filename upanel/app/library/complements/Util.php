@@ -369,7 +369,7 @@ class Util {
             $tiempo = "1 " . trans("otros.time.mes");
         } else if ($diferencia >= $mes * 2 && $diferencia < $ano) {
             $tiempo = floor($diferencia / $mes) . " " . trans("otros.time.meses");
-        } else if ($diferencia >= $ano * 2 && $diferencia < $ano * 2) {
+        } else if ($diferencia >= $ano && $diferencia < $ano * 2) {
             $tiempo = "1 " . trans("otros.time.ano");
         } else if ($diferencia >= $ano * 2) {
             $tiempo = floor($diferencia / $ano) . " " . trans("otros.time.anos");
