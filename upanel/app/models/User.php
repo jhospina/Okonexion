@@ -44,7 +44,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     const ESTADO_SIN_PAGAR = "SP";
     const ESTADO_PERIODO_PRUEBA = "PP";
     const ESTADO_PRUEBA_FINALIZADA = "PF";
-    const ESTADO_SUSCRIPCION_VIGENTE = "SG";
+    const ESTADO_SUSCRIPCION_VIGENTE = "SV";
     const ESTADO_SUSCRIPCION_CADUCADA = "SC";
     //********************************************************
     //METADATOS DE USUARIOS********************************
@@ -184,7 +184,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
             return $this->hasMany("Ticket", "usuario_cliente", "id");
         else {
             if (isset($_GET["ref"])) {
-                if (!(User::esSuperAdmin() || Auth::user()->instancia == User::PARAM_INSTANCIA_SUPER_ADMIN) && $_GET["ref"] == "assist") {
+                if (!(User::esSuperAdmin()) && $_GET["ref"] == "assist") {
                     return $this->hasMany("Ticket", "usuario_cliente", "id");
                 }
             } else {
@@ -376,6 +376,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 
     static function esSuperAdmin() {
         return (Auth::user()->instancia == User::PARAM_INSTANCIA_SUPER_ADMIN && Auth::user()->tipo == User::USUARIO_ADMIN);
+    }
+
+    static function esSuper() {
+        return (User::esSuperAdmin() || Auth::user()->instancia == User::PARAM_INSTANCIA_SUPER_ADMIN);
     }
 
     static function enPrueba() {

@@ -49,7 +49,7 @@ if (Aplicacion::existe()) {
 ?>
 
 
-@if($version>0 && $app->estado!=Aplicacion::ESTADO_TERMINADA)
+@if($version>1 && $app->estado!=Aplicacion::ESTADO_TERMINADA)
 
 <div class="col-lg-12 block">
     <div class="progress" id="progress-app">

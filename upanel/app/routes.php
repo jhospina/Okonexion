@@ -67,6 +67,7 @@ Route::group(array('before' => 'auth'), function() {
 
     control_usuarios();
     control_instancias();
+    control_aplicaciones();
 });
 
 
@@ -123,6 +124,17 @@ function aplicacion_desarrollo() {
     Route::get('aplicacion/desarrollo', 'UPanelControladorAplicacion@desarrollo');
     Route::post('aplicacion/desarrollo', 'UPanelControladorAplicacion@enviarDesarrollo');
     Route::post('aplicacion/desarrollo/iniciar/actualizacion', 'UPanelControladorAplicacion@iniciarActualizacion');
+}
+
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+
+function control_aplicaciones(){
+     Route::get('aplicaciones', 'UPanelControladorAplicacion@vista_listado');
 }
 
 //***************************************************************************
@@ -252,8 +264,12 @@ function ayuda_soporte() {
 
 function servicios() {
     Route::get('servicios/', 'UPanelControladorServicios@vista_misServicios');
+    Route::get("control/servicios",'UPanelControladorServicios@vista_servicios');
     Route::get('servicios/agregar', 'UPanelControladorServicios@vista_agregar');
     Route::post('servicios/post/agregar', 'UPanelControladorServicios@post_ordenarServicios');
+    //AJAX
+    Route::post('servicios/ajax/procesar', 'UPanelControladorServicios@ajax_procesar');
+    Route::post('servicios/ajax/obtener/observacion', 'UPanelControladorServicios@ajax_obtenerObservacion');
 }
 
 //***************************************************************************

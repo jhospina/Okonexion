@@ -9,9 +9,12 @@ if (Auth::user()) {
             Notificacion::crear(Notificacion::TIPO_SUSCRIPCION_PRUEBA_FINALIZADA);
         }
     }
+
+    if (Auth::user()->tipo == User::USUARIO_REGULAR)
+        define("TIEMPO_SUSCRIPCION", Fecha::calcularDiferencia(Util::obtenerTiempoActual(), Auth::user()->fin_suscripcion));
 }
 
-define("TIEMPO_SUSCRIPCION", Fecha::calcularDiferencia(Util::obtenerTiempoActual(), Auth::user()->fin_suscripcion));
+
 
 /*
 if (!Util::esConexionSegura()) {    

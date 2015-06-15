@@ -28,7 +28,21 @@ class UPanelControladorPresentacion extends Controller {
 
         $facturas = Facturacion::where("id_usuario", Auth::user()->id)->where("estado", "!=", Facturacion::ESTADO_PAGADO)->orderBy("id", "DESC")->get();
 
-        return View::make("usuarios/tipo/regular/index")->with("tickets", $tickets)->with("facturas", $facturas)->with("totalTickets",$totalTickets);
+        $factServicios = MetaFacturacion::join('facturacion', 'facturacionMetadatos.id_factura', '=', 'facturacion.id')->where("facturacion.id_usuario", Auth::user()->id)->where("facturacion.estado", Facturacion::ESTADO_PAGADO)->where("facturacionMetadatos.valor", "LIKE", Servicio::CONFIG_NOMBRE . "%")->orderBy('facturacionMetadatos.id', "DESC")->get();
+
+        $totalServicios = 0;
+        $serviciosProcesados = 0;
+
+        foreach ($factServicios as $fact) {
+            $id_servicio = intval(str_replace(Servicio::CONFIG_NOMBRE, "", $fact->valor));
+            $procesado = Util::convertirIntToBoolean(Facturacion::obtenerValorMetadato(MetaFacturacion::PRODUCTO_PROCESADO . $id_servicio, $fact->id));
+
+            if ($procesado)
+                $serviciosProcesados++;
+            $totalServicios++;
+        }
+
+        return View::make("usuarios/tipo/regular/index")->with("tickets", $tickets)->with("facturas", $facturas)->with("totalTickets", $totalTickets)->with("totalServicios",$totalServicios)->with("serviciosProcesados",$serviciosProcesados);
     }
 
     function indexSoporteGeneral() {

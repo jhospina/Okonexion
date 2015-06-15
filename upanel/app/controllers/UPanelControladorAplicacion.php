@@ -96,6 +96,25 @@ class UPanelControladorAplicacion extends Controller {
         return Redirect::to("");
     }
 
+    public function vista_listado() {
+        if (!Auth::check()) {
+            return User::login();
+        }
+
+        //Valida el acceso solo para el usuario Regular
+        if (!is_null($acceso = User::invalidarAcceso(User::USUARIO_REGULAR)))
+            return $acceso;
+
+        if (User::esSuper())
+            $apps = Aplicacion::join('usuarios', 'aplicaciones.id_usuario', '=', 'usuarios.id')->select("aplicaciones.id", "aplicaciones.nombre", "aplicaciones.estado", "usuarios.nombres", "usuarios.apellidos", "usuarios.id as id_usuario")->orderBy("aplicaciones.id", "DESC")->paginate(30);
+        else
+            $apps = Aplicacion::join('usuarios', 'aplicaciones.id_usuario', '=', 'usuarios.id')->where("usuarios.instancia", Auth::user()->instancia)->orderBy("aplicaciones.id", "DESC")->paginate(30);
+
+
+
+        return View::make("usuarios/tipo/soporteGeneral/app/index")->with("apps", $apps);
+    }
+
     public function colaDesarrollo() {
 
         if (!Auth::check()) {

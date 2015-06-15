@@ -25,7 +25,11 @@ class Imagen {
         $this->path = Util::convertirUrlPath($url);
         $this->ruta = str_replace($this->nombre . "." . $this->extension, "", $this->path);
         $this->ruta_url = str_replace($this->nombre . "." . $this->extension, "", $url);
-        $this->mime_type = mime_content_type($this->path);
+        /**
+         * La function mime_content_type esta obsoleta
+         */
+        //$this->mime_type = mime_content_type($this->path);
+        $this->mime_type = null;
         $dimensiones = getimagesize($this->path);
         $this->ancho = $dimensiones[0];
         $this->altura = $dimensiones[1];
@@ -51,7 +55,7 @@ class Imagen {
 
         imagefilledrectangle($copia_redim, 0, 0, $ancho_redim, $altura_redim, $fondo);
         imagecolortransparent($copia_redim, $fondo);
-        
+
         //Redimensiona la imagen al proporcion adecuada
         imagecopyresized($copia_redim, $this->objectImage, 0, 0, 0, 0, $ancho_redim, $altura_redim, $this->ancho, $this->altura);
 

@@ -63,89 +63,6 @@
 </style>
 
 
-<style>
-
-    #stat-servicios,#stat-tiempo,#stat-tickets{
-        color:white;
-        width:31%;
-        margin:0 1%;
-    }
-
-    #stat-servicios .gly,#stat-tiempo .gly,#stat-tickets .gly{
-        font-size: 40pt;
-        margin-top: 10px;
-    }
-
-    #stat-servicios,#stat-tiempo,#stat-tickets{
-        padding: 0px;
-    }
-
-    #stat-servicios .num-cant,#stat-tiempo .num-cant,#stat-tickets .num-cant{
-        display: block;
-        font-size: 25pt;
-    }
-
-    #stat-servicios label,#stat-tiempo label,#stat-tickets label{
-        font-size: 17pt;
-        font-style: italic;
-        font-weight: 100;
-    }
-
-    #stat-servicios .foot ,#stat-tiempo .foot ,#stat-tickets .foot {
-        padding:0px;
-        opacity: 0.7;
-        font-size: 11pt;
-        padding: 2px;
-        font-family: calibri;
-        height: 27px;
-    }
-
-    #stat-servicios{
-        border:1px #468847 solid;
-    }
-
-    #stat-servicios .info{
-        background-color: #468847;
-        padding:0px;
-    }
-
-    #stat-servicios .foot{
-        background-color: #468847;
-        border:1px #468847 solid;
-    }
-
-    #stat-tickets{
-        border:1px #eea236 solid;
-    }
-
-    #stat-tickets .info{
-        background-color: #eea236;
-        padding:0px;
-    }
-
-    #stat-tickets .foot{
-        background-color: #eea236;
-        border:1px #eea236 solid;
-    }
-
-    #stat-tiempo{
-        border:1px #357ebd solid;
-    }
-
-    #stat-tiempo .info{
-        background-color: #357ebd;
-        padding:0px;
-    }
-
-    #stat-tiempo .foot{
-        background-color: #357ebd;
-        border:1px #357ebd solid;
-    }
-
-</style>
-
-
-
 @stop
 
 @section("contenido") 
@@ -163,61 +80,41 @@
         <div class="col-lg-12" style="margin-top: 10px;">
 
             {{-- INFO RAPIDO: TIEMPO SUSCRIPCION--}}
-            <div class="col-lg-4" id="stat-tiempo">
 
-                <div class="col-lg-12 info">
-                    <div class="col-lg-4"><span class="gly glyphicon glyphicon-time"></span></div>
-                    <div class="col-lg-8 text-right">
-                        <span class="num-cant">{{trans("atributos.tipo.suscripcion.".User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_TIPO))}}</span>
-                        <label>{{trans("pres.ar.suscripcion")}}</label>
-                    </div>
-                </div>
-                <div class="col-lg-12 foot">
-                    <div class="col-xs-10">
-                        {{TIEMPO_SUSCRIPCION}}</div>
-                    <div class="col-xs-2 text-right">
-                        <span class="glyphicon glyphicon-circle-arrow-right"></span>
-                    </div>
-                </div>
-
-            </div>
+            @include("interfaz/util/infobox",
+            array("infobox_div"=>4,
+            "infobox_color"=>"#357ebd",
+            "infobox_icon"=>"glyphicon-time",
+            "infobox_cant"=>trans("atributos.tipo.suscripcion.".User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_TIPO)),
+            "infobox_label"=>trans("pres.ar.suscripcion"),
+            "infobox_descripcion"=>TIEMPO_SUSCRIPCION))
 
 
             {{-- INFO RAPIDO: SERVICIOS--}}
-            <div class="col-lg-4" id="stat-servicios">
-                <div class="col-lg-12 info">
-                    <div class="col-lg-4"><span class="gly glyphicon glyphicon-flash"></span></div>
-                    <div class="col-lg-8 text-right">
-                        <span class="num-cant">(0)</span>
-                        <label>{{trans("pres.ar.servicios")}}</label>
-                    </div>
-                </div>
-                <div class="col-lg-12 foot">
-                    <div class="col-xs-10">
-                        {{trans("pres.ar.servicios.foot")}}				</div>
-                    <div class="col-xs-2 text-right">
-                        <span class="glyphicon glyphicon-circle-arrow-right"></span>
-                    </div>
-                </div>
-            </div>
+
+            @include("interfaz/util/infobox",
+            array("infobox_div"=>4,
+            "infobox_color"=>"#468847",
+            "infobox_icon"=>"glyphicon-flash",
+            "infobox_cant"=>$serviciosProcesados."(".$totalServicios.")",
+            "infobox_label"=>trans("pres.ar.servicios"),
+            "infobox_descripcion"=>trans("pres.ar.servicios.foot"),
+            "infobox_link_info"=>URL::to("servicios"),
+            "infobox_link_foot"=>URL::to("servicios/agregar"),
+            ))
+
 
             {{-- INFO RAPIDO: TICKETS--}}
-            <div class="col-lg-4" id="stat-tickets">
-                <div class="col-lg-12 info">
-                    <div class="col-lg-4"><span class="gly glyphicon glyphicon-comment"></span></div>
-                    <div class="col-lg-8 text-right"> 
-                        <span class="num-cant">{{count($tickets)}}({{$totalTickets}})</span>
-                        <label>{{trans("pres.ar.tickets")}}</label>
-                    </div>
-                </div>
-                <div class="col-lg-12 foot">
-                    <div class="col-xs-10">
-                        {{trans("pres.ar.tickets.foot")}}				</div>
-                    <div class="col-xs-2 text-right">
-                        <span class="glyphicon glyphicon-circle-arrow-right"></span>
-                    </div>
-                </div>
-            </div>
+
+            @include("interfaz/util/infobox",
+            array("infobox_div"=>4,
+            "infobox_color"=>"#eea236",
+            "infobox_icon"=>"glyphicon-comment",
+            "infobox_cant"=>count($tickets)."(".$totalTickets.")",
+            "infobox_label"=>trans("pres.ar.tickets"),
+            "infobox_descripcion"=>trans("pres.ar.tickets.foot"),
+            "infobox_link_info"=>URL::to("soporte")
+            ))
 
 
         </div>

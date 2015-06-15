@@ -544,7 +544,7 @@ li#tiempo-suscripcion{
     width: 31%;
     margin:1%;
     border: 1px rgb(205, 205, 205) solid;
-        -webkit-border-radius: 5px;
+    -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
     padding-bottom: 10px;
@@ -614,6 +614,50 @@ li#tiempo-suscripcion{
     -moz-box-shadow: 0px 0px 15px 7px rgba(255,0,0,1);
     box-shadow: 0px 0px 15px 7px rgba(255,0,0,1);
     -webkit-border-radius: 5px;
--moz-border-radius: 5px;
-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+
+.stats-info-box{
+    color:white;
+    width:31%;
+    margin:0 1%;
+    cursor:pointer;
+    padding: 0px;
+}
+
+
+.stats-info-box:hover{
+    opacity: 0.8;
+}
+
+.stats-info-box .gly{
+    font-size: 40pt;
+    margin-top: 10px;
+}
+
+
+.stats-info-box .num-cant{
+    display: block;
+    font-size: 25pt;
+}
+
+.stats-info-box label{
+    font-size: 17pt;
+    font-style: italic;
+    font-weight: 100;
+}
+
+.stats-info-box .foot {
+    padding:0px;
+    opacity: 0.7;
+    font-size: 11pt;
+    padding: 2px;
+    font-family: calibri;
+    height: 27px;
+}
+
+.stats-info-box .info{
+    padding:0px;
 }

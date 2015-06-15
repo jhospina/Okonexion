@@ -89,6 +89,7 @@ Class Facturacion extends Eloquent {
         Facturacion::agregarMetadato(MetaFacturacion::PRODUCTO_ID . $n, $producto[MetaFacturacion::PRODUCTO_ID], $id_factura);
         Facturacion::agregarMetadato(MetaFacturacion::PRODUCTO_VALOR . $n, $total_producto, $id_factura);
         Facturacion::agregarMetadato(MetaFacturacion::PRODUCTO_DESCUENTO . $n, $descuento_producto, $id_factura);
+        Facturacion::agregarMetadato(MetaFacturacion::PRODUCTO_PROCESADO . $n, Util::convertirBooleanToInt(false), $id_factura);
 
 
         //ATENCIÓN: Bajo la premisa de que el del valor producto ya contiene el descuento, se hace el siquiere calculo.
@@ -217,6 +218,9 @@ Class Facturacion extends Eloquent {
     static function validarProductos($id_factura) {
         $productos = Facturacion::obtenerProductos($id_factura);
         foreach ($productos as $producto) {
+
+
+
 
             //Valida la suscripcion y las aplica
             if (strpos($producto[MetaFacturacion::PRODUCTO_ID], "suscripcion") !== false) {

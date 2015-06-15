@@ -13,7 +13,7 @@ class UPanelControladorServicios extends Controller {
             return $acceso;
 
 
-        $consulta = MetaFacturacion::where("id_usuario", Auth::user()->id)->where("valor", "LIKE", Servicio::CONFIG_NOMBRE . "%")->groupBy('valor')->get(); 
+        $consulta = MetaFacturacion::where("id_usuario", Auth::user()->id)->where("valor", "LIKE", Servicio::CONFIG_NOMBRE . "%")->groupBy('valor')->get();
 
         return View::make("usuarios/tipo/regular/servicios/index")->with("consulta", $consulta);
     }
@@ -32,6 +32,23 @@ class UPanelControladorServicios extends Controller {
         $hash = HasherPro::crear(UsuarioMetadato::HASH_CREAR_FACTURA);
 
         return View::make("usuarios/tipo/regular/servicios/agregar")->with("servicios", $servicios)->with("hash", $hash);
+    }
+
+    function vista_servicios() {
+        if (!Auth::check()) {
+            return User::login();
+        }
+
+        //Valida el acceso solo para el usuario Regular
+        if (!is_null($acceso = User::invalidarAcceso(User::USUARIO_REGULAR)))
+            return $acceso;
+
+        if (User::esSuperAdmin())
+            $factServicios = MetaFacturacion::join('facturacion', 'facturacionMetadatos.id_factura', '=', 'facturacion.id')->where("facturacion.estado", Facturacion::ESTADO_PAGADO)->where("facturacion.instancia", Auth::user()->instancia)->where("facturacionMetadatos.valor", "LIKE", Servicio::CONFIG_NOMBRE . "%")->orderBy('facturacionMetadatos.id', "DESC")->paginate(60);
+        else
+            $factServicios = MetaFacturacion::join('facturacion', 'facturacionMetadatos.id_factura', '=', 'facturacion.id')->where("facturacion.estado", Facturacion::ESTADO_PAGADO)->where("facturacionMetadatos.valor", "LIKE", Servicio::CONFIG_NOMBRE . "%")->orderBy('facturacionMetadatos.id', "DESC")->paginate(60);
+
+        return View::make("usuarios/tipo/admin/servicios/index")->with("factServicios", $factServicios);
     }
 
     function post_ordenarServicios() {
@@ -70,6 +87,38 @@ class UPanelControladorServicios extends Controller {
         }
 
         return Redirect::back()->with(User::mensaje("error", null, trans("otros.error_solicitud"), 2));
+    }
+
+    function ajax_procesar() {
+        if (!Request::ajax())
+            return;
+
+        $output = [];
+        $data = Input::all();
+        $id_factura = $data["id_factura"];
+        $id_servicio = $data["id_servicio"];
+        $factura = Facturacion::find($id_factura);
+
+        Facturacion::actualizarMetadato(MetaFacturacion::PRODUCTO_PROCESADO . $id_servicio, Util::convertirBooleanToInt(true), $id_factura);
+        Facturacion::agregarMetadato(MetaFacturacion::PRODUCTO_OBSERVACIONES . $id_servicio, str_replace("\n", "<br/>", $data["observaciones"]), $id_factura, $factura->id_usuario);
+
+        return json_encode($output);
+    }
+
+    function ajax_obtenerObservacion() {
+
+        if (!Request::ajax())
+            return;
+
+        $output = [];
+        $data = Input::all();
+
+        $id_factura = $data["id_factura"];
+        $id_servicio = $data["id_servicio"];
+
+        $observaciones = Facturacion::obtenerValorMetadato(MetaFacturacion::PRODUCTO_OBSERVACIONES . $id_servicio, $id_factura);
+        $output["observacion"] = $observaciones;
+        return json_encode($output);
     }
 
     /** Agrega un nuevo servicio

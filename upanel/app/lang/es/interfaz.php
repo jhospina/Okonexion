@@ -31,6 +31,7 @@ return array(
     "menu.principal.aplicaciones" => "Aplicaciones",
     "menu.principal.aplicaciones.cola_desarrollo" => "Cola",
     "menu.principal.aplicaciones.historial" => "Historial",
+    "menu.principal.aplicaciones.listado" => "Indice",
     "menu.principal.usuarios" => "Usuarios",
     "menu.principal.instancias" => "Instancias",
     "menu.principal.instancias.indice" => "Indice de instancias",
