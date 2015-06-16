@@ -1,6 +1,6 @@
 @extends('interfaz/plantilla')
 
-@section("titulo") UPanel @stop
+@section("titulo") {{trans("interfaz.menu.principal.inicio")}} @stop
 
 
 @section("css")

@@ -3,7 +3,7 @@ $html_loading_ajax = '<div id="loading-ajax" class="text-center"><img src="' . U
 ?>
 @extends('interfaz/plantilla')
 
-@section("titulo"){{trans("app.coldep.titulo")}} @stop
+@section("titulo"){{trans("interfaz.menu.principal.mi_aplicacion.versiones")}} {{$app->nombre}} @stop
 
 
 @section("contenido")  

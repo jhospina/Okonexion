@@ -78,16 +78,21 @@ class UPanelControladorAplicacion extends Controller {
             return Redirect::to("aplicacion/apariencia");
     }
 
-    public function vista_versiones() {
+    public function vista_versiones($id) {
         if (!Auth::check()) {
             return User::login();
         }
 
-        //Valida el acceso solo para el usuario Regular
-        if (!is_null($acceso = User::validarAcceso(User::USUARIO_REGULAR)))
-            return $acceso;
+        $app = Aplicacion::find($id);
 
-        $app = Aplicacion::obtener();
+        if (Auth::user()->tipo == User::USUARIO_REGULAR) {
+            if ($app->id_usuario != Auth::user()->id)
+                return Redirect::to("");
+        }
+        
+        if(!User::esSuper() && $app->getIdInstancia()!=Auth::user()->instancia)
+            return Redirect::to("");
+            
 
         if (!is_null($app)) {
             $versiones = ProcesoApp::where("id_aplicacion", $app->id)->whereNotNull("fecha_finalizacion")->orderBy("id", "DESC")->paginate(30);

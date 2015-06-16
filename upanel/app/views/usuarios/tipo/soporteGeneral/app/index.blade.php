@@ -23,7 +23,9 @@
         <td>{{$app->nombre}}</td>
         <td>{{Aplicacion::obtenerNombreEstado($app->estado)}}</td>
         <td><a target="_blank" href="{{URL::to("usuario/".$app->id_usuario)}}">{{$app->nombres}} {{$app->apellidos}}</a></td>
-        <td></td>
+        <td>
+            <a target="_blank" title="{{trans("interfaz.menu.principal.mi_aplicacion.versiones")}}" class="tooltip-top" href="{{URL::to("aplicacion/".$app->id."/versiones")}}"><span class="glyphicon glyphicon-th"></span></a>
+        </td>
     </tr>
     @endforeach
 

@@ -26,6 +26,15 @@ Class Aplicacion extends Eloquent {
     const configKeyApp = "keyApp";
     const configdisenoApp = "disenoApp";
 
+    /** Obtiene el id de instancia de la aplicacion
+     * 
+     * @return type
+     */
+    public function getIdInstancia() {
+        $usuario = User::find($this->id);
+        return $usuario->instancia;
+    }
+
     /** Retorna una array con las URL y el nombre de los diseños establecidos para una aplicacion
      * 
      * @return Array Retorna un array con las imagenes del los diseños de App
@@ -182,7 +191,7 @@ Class Aplicacion extends Eloquent {
     //****************************************************
     //Relacion de Uno a Uno con el modelo [User]
     function user() {
-        return $this->hasOne('User', 'id',"id_usuario");
+        return $this->hasOne('User', 'id', "id_usuario");
     }
 
 }

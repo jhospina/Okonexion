@@ -46,7 +46,7 @@
     </ul>
 </li>
 @endif
-{{--INSTANCIAS--}}
+{{--SOPORTE--}}
 @if(!User::esSuperAdmin())
 <li class="dropdown @if(Request::is('soporte/*')) active @endif"><a class="dropdown-toggle"  data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-phone-alt"></span> {{trans("interfaz.menu.principal.ayuda")}}<span class="caret"></span></a>
     <ul class="dropdown-menu">

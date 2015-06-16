@@ -3,12 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/public/assets/css/upanel/plantilla.css</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/soporteGeneral/index.blade.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorPresentacion.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/routes.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/interfaz/menu/AD-principal.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/User.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/lang/es/interfaz.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/soporteGeneral/app/index.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorAplicacion.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/interfaz/menu/SG-principal.blade.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/admin/index.blade.php</file>
         </group>
     </open-files>
 </project-private>

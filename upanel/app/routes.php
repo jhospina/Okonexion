@@ -144,7 +144,7 @@ function control_aplicaciones(){
 //***************************************************************************
 //***************************************************************************
 function aplicacion_comp() {
-    Route::get('aplicacion/versiones', 'UPanelControladorAplicacion@vista_versiones');
+    Route::get('aplicacion/{id}/versiones', 'UPanelControladorAplicacion@vista_versiones');
 }
 
 //***************************************************************************
