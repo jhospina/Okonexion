@@ -3,12 +3,10 @@
 return array(
     "hola" => "Hola :nombre",
     "no_responder" => "¡NO RESPONDAS ESTE CORREO!",
-    "activacion.msj_01" => "Nos has pedido que enviemos nuevamente el enlace de activación de tu cuenta. Para activar tu cuenta en Okonexion haz clic <a href='http://" . $_SERVER["SERVER_NAME"] . "/upanel/public/activar/:id_usuario/:codigo'>aquí</a> o tambien puedes copiar y pegar el siguiente enlace",
-    "bienvenida.titular" => "¡BIENVENIDO A OKONEXION!",
-    "confirmacion.msj_01" => "Bienvenido a Okonexion, gracias por registrarte. Tu nueva cuenta ha sido creada satisfactoriamente, pero necesita ser activada.</br></br> Para activar tu nueva cuenta en Okonexion haz clic <a href='http://" . $_SERVER["SERVER_NAME"] . "/upanel/public/activar/:id_usuario/:codigo'>aquí</a> o tambien puedes copiar y pegar el siguiente enlace",
-    "confirmacion.msj_02" => "Recuerda que tus datos para iniciar sesión en Okonexion son los siguientes:",
-    "confirmacion.msj_03" => "Dirección de Email: :email<br>Contraseña: :contrasena",
-    "recuperacion.msj_01" => "Hemos recibido una solicitud para restablecer tu contraseña para ingresar en el panel de usuarios de Okonexion. Si no has solicitado esto por favor ignora este mensaje.",
+    "activacion.msj_01" => "Nos has pedido que enviemos nuevamente el enlace de activación de tu cuenta. Para activar tu cuenta en Appthergo.com haz clic <a href='" . URL::to(""). "activar/:id_usuario/:codigo'>aquí</a> o tambien puedes copiar y pegar el siguiente enlace",
+    "bienvenida.titular" => "¡BIENVENIDO A APPSTHERGO.COM!",
+    "confirmacion.msj" => "Bienvenido a Appsthergo.com, gracias por registrarte. Tu nueva cuenta ha sido creada satisfactoriamente, pero necesita ser activada.</br></br> Para activar tu nueva cuenta en Appsthergo.com haz clic <a href='" . URL::to(""). "activar/:id_usuario/:codigo'>aquí</a> o tambien puedes copiar y pegar el siguiente enlace:",
+    "recuperacion.msj_01" => "Hemos recibido una solicitud para restablecer tu contraseña para ingresar en el panel de usuarios de Appthergo.com. Si no has solicitado esto por favor ignora este mensaje.",
     "recuperacion.msj_02" => "Para reestablecer tu contraseña ingresa en el siguiente enlace o copialo y pegalo en la URL del navegador:",
     "soporte.tickets.crear" => "<p>Estimado :nombre</p>" .
     "<p>Gracias por contactar con nuestro equipo de soporte. Un ticket de soporte ha sido abierto por tu solicitud. Serás notificado por email cuando se haga una respuesta. Los detalles de tu ticket se muestran acontinuación:</p>" .
@@ -31,13 +29,13 @@ return array(
     "<p><b>Hora de inicio: </b>:fecha_inicio</p>",
     "app.dep.aplicacion_terminada" => "<p>Hola :nombre</p>" .
     "<p>Tenemos muy buenas noticias para ti. Tu aplicación <b>:app_nombre</b> ha finalizado su fase de desarrollo y ya se encuentra disponible para que lo descargues, lo distribuyas y lo utilices a tu gusto.</p>" .
-    "<p><b>Hora de inicio: </b>:fecha_inicio</p>".
-    "<p><b>Hora de finalización: </b>:fecha_finalizacion</p></br>".
-    "<p>Ingresa a :link para descargarlo.</p>".
+    "<p><b>Hora de inicio: </b>:fecha_inicio</p>" .
+    "<p><b>Hora de finalización: </b>:fecha_finalizacion</p></br>" .
+    "<p>Ingresa a :link para descargarlo.</p>" .
     "<p>:plataformas</p>",
     "asunto.confirmacion" => "Confirmación de correo electrónico",
     "asunto.activacion" => "Activación de tu cuenta",
-    "asunto.bienvenida" => "¡Bienvenido a Okonexion!",
+    "asunto.bienvenida" => "¡Bienvenido a Appthergo!",
     "asunto.recuperacion" => "Recuperación de contraseña",
     "asunto.tu_pqr_respondido" => "¡Tu :tipo_pqr #:num ha sido contestada!",
     "pqr.respuesta" => "<p>Hola :nombre</p>" .
@@ -46,5 +44,18 @@ return array(
     ":mensaje <br/><br/>" .
     "------------------------------------------------------------" . "<br/></p>" .
     "<p>Para más detalles, conectate desde la aplicación movil de :app.</p>",
-    "app.dep.aplicacion_en_desarrollo"
-);
+    "app.dep.aplicacion_en_desarrollo" => "Aplicación en desarrollo",
+    //****************************************************************
+    //FACTURA GENERADA AUTOMATICAMETE POR SUSCRIPCION
+    //****************************************************************
+    "asunto.factura.generada" => "Factura generada automaticamente",
+    "mensaje.factura.generada" =>
+    "<p><b>Estimado cliente:</b> :nombre</p>" .
+    "<p>Este correo es para informarle que se ha generado automáticamente un factura el día :fecha, debido a que su suscripción esta próxima a vencer. Para continuar utilizando nuestros servicios debe cancelar esta factura antes de su vencimiento.</p>" .
+    "<p>Estos son los datos de la factura generada:<p/>" .
+    "<p><b>Factura N:</b> :id_factura<br/>" .
+    "<b>Monto total:</b> :total_factura<br/>" .
+    "<b>Fecha de vencimiento:</b> :venc_factura</p>" .
+    "<p>Para pagar esta factura debe iniciar sesión en su cuenta de usuario e ingresar a la sección de facturación. Tambien puede ingresar directamente haciendo clic <a href=':link_factura'>AQUÍ</a> o copiando y pegando el siguiente:<br/><br/> <a href=':link_factura'>:link_factura</a></p>" .
+    "<p>Saludos</p>",
+); 

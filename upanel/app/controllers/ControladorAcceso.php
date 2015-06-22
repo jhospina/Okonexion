@@ -47,7 +47,10 @@ class ControladorAcceso extends Controller {
                 $user->email_confirmado = Util::convertirBooleanToInt(true);
                 $user->update();
                 $correo = new Correo();
-                $correo->enviarBienvenida($id);
+
+                $mensaje = "<h2>" . trans("email.bienvenida.titular") . "</h2>";
+                $correo->enviar(trans("email.asunto.bienvenida"), $mensaje, $user->id);
+
                 $url_origen = User::obtenerValorMetadato(User::META_URL_ORIGEN, $user->id);
                 return Redirect::to(Util::obtenerDominioDeUrl($url_origen) . User::CONFIG_URL_LOGIN . "?response=confirmation&email=" . $user->email);
             } else {
@@ -73,7 +76,17 @@ class ControladorAcceso extends Controller {
                 }
                 //Envia un correo con un enlace para la recuperación del a contraseña del usuario
                 $correo = new Correo();
-                $correo->enviarRecuperacion($usuario->id);
+
+                $codigo = $correo->generarCodigo();
+
+                $correo->almacenarCodigo($codigo, $usuario->id);
+
+                $mensaje = "<p>" . rans("email.hola", array("nombre" => $usuario->nombres)) . "</p>" .
+                        "<p>" . trans("email.recuperacion.msj_01") . "</p>" .
+                        "<p>" . trans("email.recuperacion.msj_02") . "<br/>" .
+                        "<a href='" . trans("email.dominio") . "/upanel/public/recovery/" . $usuario->id . "/" . $codigo . "'>" . trans("email.dominio") . "/upanel/public/recovery/" . $usuario->id . "/" . $codigo . "</a></p>";
+
+                $correo->enviar(trans("email.asunto.recuperacion"), $mensaje, $usuario->id);
             }
             return Redirect::to(Util::filtrarUrl($url_origen) . "?response=send&email=" . $usuario->email);
         } else {
@@ -124,9 +137,22 @@ class ControladorAcceso extends Controller {
 
         $user = User::find($id_usuario);
 
+        if (is_null($user))
+            return Redirect::back();
+
         $correo = new Correo;
+
+        $codigo = $correo->generarCodigo();
+
+        $correo->almacenarCodigo($codigo, $id_usuario);
+
+        $mensaje = "<p>" . trans("email.hola", array("nombre" => $user->nombres)) . "</p>" .
+                "<p>" . trans("email.activacion.msj_01", array("id_usuario" => $id_usuario, "codigo" => $codigo)) . "</p>" .
+                "<p>" . trans("otros.dominio") . "/upanel/public/activar/" . $id_usuario . "/" . $codigo . "</p>";
+
         //Envia un mensaje de confirmación con un codigo al correo electronico, para validar la cuenta de usuario
-        $correo->enviarActivacion($id_usuario);
+        $correo->enviar(trans("email.asunto.activacion"), $mensaje, $id_usuario);
+
         $url_origen = User::obtenerValorMetadato(User::META_URL_ORIGEN, $user->id);
         return Redirect::to(Util::obtenerDominioDeUrl($url_origen) . User::CONFIG_URL_LOGIN . "?response=send-confirmation&email=" . $user->email);
     }

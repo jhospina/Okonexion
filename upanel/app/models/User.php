@@ -374,14 +374,27 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return $meta->delete();
     }
 
+    /*     * Indica si el usuario es un superadminitrador 
+     * 
+     * @return boolean
+     */
+
     static function esSuperAdmin() {
         return (Auth::user()->instancia == User::PARAM_INSTANCIA_SUPER_ADMIN && Auth::user()->tipo == User::USUARIO_ADMIN);
     }
 
+    /** Indica si el usuario es super
+     * 
+     * @return boolean
+     */
     static function esSuper() {
         return (User::esSuperAdmin() || Auth::user()->instancia == User::PARAM_INSTANCIA_SUPER_ADMIN);
     }
 
+    /** Indica si el usuario se encuentra en periodo de prueba
+     * 
+     * @return type
+     */
     static function enPrueba() {
         return (Auth::user()->tipo == User::USUARIO_REGULAR && Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA && Util::convertirIntToBoolean(Instancia::obtenerValorMetadato(ConfigInstancia::periodoPrueba_activado)));
     }
@@ -394,6 +407,23 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
             return User::mensaje("advertencia", "text-center", trans("msj.ad.completar.perfil.telefono.celular", array("nombre" => $user->nombres, "link" => Route("usuario.edit", Auth::user()->id))));
         else
             return array();
+    }
+
+    /** Obtiene el id del producto de suscripcion vigente del usuario
+     * 
+     * @return type
+     */
+    public function obtenerProductoIdSuscripcionVigente() {
+        $configs = ConfigInstancia::obtenerListadoConfig();
+
+        $suc = User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_TIPO, $this->id) . User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_CICLO, $this->id);
+
+        foreach ($configs as $index => $valor) {
+            if (strpos($valor, $suc) !== false)
+                return $valor;
+        }
+
+        return null;
     }
 
 }

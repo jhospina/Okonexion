@@ -95,7 +95,7 @@ class Fecha {
         $ano = $mes * 12;
 
         //formateamos las fechas a segundos tipo 1374998435
-        $diferencia = strtotime($fecha2) - strtotime($fecha1);
+        $diferencia = Fecha::difSec($fecha1, $fecha2);
         //comprobamos el tiempo que ha pasado en segundos entre las dos fechas
         //floor devuelve el número entero anterior
         if ($diferencia <= $minuto) {
@@ -117,13 +117,23 @@ class Fecha {
         } elseif ($diferencia >= $mes * 2 && $diferencia < $ano) {
             $tiempo = floor($diferencia / $mes) . " " . trans("otros.time.meses") . " " . Fecha::calcularDiferencia($fecha1, date(Fecha::FORMATO, intval($diferencia - $mes * floor($diferencia / $mes) + strtotime($fecha1))));
         } elseif ($diferencia >= $ano && $diferencia < $ano * 2) {
-            $tiempo = "1 " . trans("otros.time.ano"). " " . Fecha::calcularDiferencia($fecha1, date(Fecha::FORMATO, intval($diferencia - $ano) + strtotime($fecha1)));
+            $tiempo = "1 " . trans("otros.time.ano") . " " . Fecha::calcularDiferencia($fecha1, date(Fecha::FORMATO, intval($diferencia - $ano) + strtotime($fecha1)));
         } elseif ($diferencia >= $ano * 2) {
             $tiempo = floor($diferencia / $ano) . " " . trans("otros.time.anos");
         }
 
 
         return (intval($tiempo) <= 0 ) ? false : strtolower($tiempo);
+    }
+
+    /** Obtiene la diferencia en segundo de dos fechas
+     * 
+     * @param type $fecha1
+     * @param type $fecha2
+     * @return type
+     */
+    static function difSec($fecha1, $fecha2) {
+        return intval(strtotime($fecha2) - strtotime($fecha1));
     }
 
 }

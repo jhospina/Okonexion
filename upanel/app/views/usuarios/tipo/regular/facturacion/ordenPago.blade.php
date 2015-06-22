@@ -51,7 +51,7 @@ array_unshift($paises, trans("otros.info.elegir"));
                 <span class="glyphicon glyphicon-ok"></span> {{(strpos($id_producto,Servicio::CONFIG_NOMBRE)!==false)?Servicio::obtenerNombre($id_producto):trans("fact.producto.id.".$id_producto)}}
             </td>
             <td class="text-right">
-                {{Monedas::simbolo($moneda)}}{{$valor_real}} {{$moneda}}
+                {{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,$valor_real)}} {{$moneda}}
             </td>
         </tr>
 
@@ -62,7 +62,7 @@ array_unshift($paises, trans("otros.info.elegir"));
                 <i><span class="glyphicon glyphicon-ok"></span> <b>{{trans("otros.info.descuento")}} {{$descuento_producto}}%</b> - {{trans("fact.producto.id.".$id_producto)}}</i>
             </td>
             <td class="text-right">
-                -{{Monedas::simbolo($moneda)}}{{$valor_descontado}} {{$moneda}}
+                -{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,$valor_descontado)}} {{$moneda}}
             </td>
         </tr>
 
@@ -71,7 +71,7 @@ array_unshift($paises, trans("otros.info.elegir"));
         @endforeach
 
         <tr>
-            <td class="text-right">{{trans("fact.orden.tu.comprar.subtotal")}}</td><td class="text-right">{{Monedas::simbolo($moneda)}}{{$subtotal}} {{$moneda}}</td>
+            <td class="text-right">{{trans("fact.orden.tu.comprar.subtotal")}}</td><td class="text-right">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,$subtotal)}} {{$moneda}}</td>
         </tr>
         <tr>
             <?php
@@ -79,10 +79,10 @@ array_unshift($paises, trans("otros.info.elegir"));
             $valor_total = $valor_iva + $subtotal;
             ?>
             @if($iva>0)
-            <td class="text-right">{{trans("fact.orden.tu.compra.iva")}} ({{$iva}}%)</td><td class="text-right">{{Monedas::simbolo($moneda)}}{{$valor_iva}} {{$moneda}}</td>
+            <td class="text-right">{{trans("fact.orden.tu.compra.iva")}} ({{$iva}}%)</td><td class="text-right">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,$valor_iva)}} {{$moneda}}</td>
             @endif
         </tr>
-        <tr><td class="text-right" style="font-size: 13pt;"><b>{{trans("fact.info.total")}}</b></td><td class="text-right" style="font-size: 13pt;"><b>{{Monedas::simbolo($moneda)}} {{$valor_total}} {{$moneda}}</b></div> 
+        <tr><td class="text-right" style="font-size: 13pt;"><b>{{trans("fact.info.total")}}</b></td><td class="text-right" style="font-size: 13pt;"><b>{{Monedas::simbolo($moneda)}} {{Monedas::formatearNumero($moneda,$valor_total)}} {{$moneda}}</b></div> 
     </table>
 
 </div>

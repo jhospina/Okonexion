@@ -40,10 +40,14 @@ Class Facturacion extends Eloquent {
         $fecha_creacion = Util::obtenerTiempoActual();
 
         $fact = new Facturacion();
-        $fact->instancia = Auth::user()->instancia;
+
 
         if (is_null($id_usuario))
             $id_usuario = Auth::user()->id;
+
+        $usuario = User::find($id_usuario);
+
+        $fact->instancia = $usuario->instancia;
 
         $fact->id_usuario = $id_usuario;
 
@@ -54,6 +58,7 @@ Class Facturacion extends Eloquent {
         $fecha_venc = new Fecha($fecha_creacion);
         $fact->fecha_vencimiento = $fecha_venc->agregarDias($vencimiento);
 
+
         return ($fact->save()) ? $fact->id : null;
     }
 
@@ -63,7 +68,12 @@ Class Facturacion extends Eloquent {
      * @param array $producto [MetaFacturacion::PRODUCTO_ID][MetaFacturacion::PRODUCTO_VALOR][MetaFacturacion::PRODUCTO_DESCUENTO] 
      * @return boolean
      */
-    static function agregarProducto($id_factura, $producto) {
+    static function agregarProducto($id_factura, $producto, $id_usuario = null) {
+
+        if (is_null($id_usuario))
+            $id_usuario = Auth::user()->id;
+
+
         $n = 1;
         //Intenta determinar el numero del producto en el listado de la factura
         while (Facturacion::existeMetadato(MetaFacturacion::PRODUCTO_ID . $n, $id_factura))
@@ -86,10 +96,10 @@ Class Facturacion extends Eloquent {
             return false;
 
         //Agrega el nuevo producto a la factura y lo almacena en la base de datos
-        Facturacion::agregarMetadato(MetaFacturacion::PRODUCTO_ID . $n, $producto[MetaFacturacion::PRODUCTO_ID], $id_factura);
-        Facturacion::agregarMetadato(MetaFacturacion::PRODUCTO_VALOR . $n, $total_producto, $id_factura);
-        Facturacion::agregarMetadato(MetaFacturacion::PRODUCTO_DESCUENTO . $n, $descuento_producto, $id_factura);
-        Facturacion::agregarMetadato(MetaFacturacion::PRODUCTO_PROCESADO . $n, Util::convertirBooleanToInt(false), $id_factura);
+        Facturacion::agregarMetadato(MetaFacturacion::PRODUCTO_ID . $n, $producto[MetaFacturacion::PRODUCTO_ID], $id_factura, $id_usuario);
+        Facturacion::agregarMetadato(MetaFacturacion::PRODUCTO_VALOR . $n, $total_producto, $id_factura, $id_usuario);
+        Facturacion::agregarMetadato(MetaFacturacion::PRODUCTO_DESCUENTO . $n, $descuento_producto, $id_factura, $id_usuario);
+        Facturacion::agregarMetadato(MetaFacturacion::PRODUCTO_PROCESADO . $n, Util::convertirBooleanToInt(false), $id_factura, $id_usuario);
 
 
         //ATENCIÓN: Bajo la premisa de que el del valor producto ya contiene el descuento, se hace el siquiere calculo.
@@ -220,8 +230,6 @@ Class Facturacion extends Eloquent {
         foreach ($productos as $producto) {
 
 
-
-
             //Valida la suscripcion y las aplica
             if (strpos($producto[MetaFacturacion::PRODUCTO_ID], "suscripcion") !== false) {
 
@@ -234,9 +242,15 @@ Class Facturacion extends Eloquent {
                 else
                     $fecha = new Fecha(Util::obtenerTiempoActual());
 
-                Auth::user()->fin_suscripcion = $fecha->agregarMeses(ConfigInstancia::obtenerCantidadMesesProductosSuscripcion($producto[MetaFacturacion::PRODUCTO_ID]));
+                $ciclo = ConfigInstancia::obtenerCantidadMesesProductosSuscripcion($producto[MetaFacturacion::PRODUCTO_ID]);
+
+                //Asigna el tiempo de suscripcion del usuario
+                Auth::user()->fin_suscripcion = $fecha->agregarMeses($ciclo);
                 Auth::user()->estado = User::ESTADO_SUSCRIPCION_VIGENTE;
                 Auth::user()->save();
+
+                //Asigna al usuario el ciclo de suscripcion
+                User::agregarMetaDato(UsuarioMetadato::SUSCRIPCION_CICLO, $ciclo);
 
                 if (strpos($producto[MetaFacturacion::PRODUCTO_ID], ConfigInstancia::suscripcion_tipo_bronce) !== false)
                     User::agregarMetaDato(UsuarioMetadato::SUSCRIPCION_TIPO, ConfigInstancia::suscripcion_tipo_bronce);
@@ -244,6 +258,8 @@ Class Facturacion extends Eloquent {
                     User::agregarMetaDato(UsuarioMetadato::SUSCRIPCION_TIPO, ConfigInstancia::suscripcion_tipo_plata);
                 elseif (strpos($producto[MetaFacturacion::PRODUCTO_ID], ConfigInstancia::suscripcion_tipo_oro) !== false)
                     User::agregarMetaDato(UsuarioMetadato::SUSCRIPCION_TIPO, ConfigInstancia::suscripcion_tipo_oro);
+
+                User::actualizarMetadato(UsuarioMetadato::FACTURACION_GEN_AUTO_SUSCRIPCION, Util::convertirBooleanToInt(false));
             }
         }
     }
@@ -271,17 +287,162 @@ Class Facturacion extends Eloquent {
         Facturacion::validarProductos($factura->id);
     }
 
-    static function generarJSONCliente($id_factura) {
+    static function generarJSONCliente($id_factura, $id_usuario = null) {
+
+        if (is_null($id_usuario))
+            $usuario = User::find(Auth::user()->id);
+        else
+            $usuario = User::find($id_usuario);
+
         $json = array();
-        $json["empresa"] = Auth::user()->empresa;
-        $json["dni"] = Auth::user()->dni;
-        $json["nombre"] = Auth::user()->nombres . " " . Auth::user()->apellidos;
-        $json["email"] = Auth::user()->email;
-        $json["direccion"] = Auth::user()->direccion;
-        $json["lugar"] = Auth::user()->ciudad . ", " . Auth::user()->region;
-        $json["pais"] = Paises::obtenerNombre(Auth::user()->pais);
+        $json["empresa"] = $usuario->empresa;
+        $json["dni"] = $usuario->dni;
+        $json["nombre"] = $usuario->nombres . " " . $usuario->apellidos;
+        $json["email"] = $usuario->email;
+        $json["direccion"] = $usuario->direccion;
+        $json["lugar"] = $usuario->ciudad . ", " . $usuario->region;
+        $json["pais"] = Paises::obtenerNombre($usuario->pais);
+
+
         //Almacena una copia de los datos del cliente con la que se hizo la factura
-        Facturacion::agregarMetadato(MetaFacturacion::CLIENTE_INFO, json_encode($json), $id_factura);
+        Facturacion::agregarMetadato(MetaFacturacion::CLIENTE_INFO, json_encode($json), $id_factura, $id_usuario);
+    }
+
+    static function pdfHtmlFactura($factura) {
+
+
+        $usuario = User::find($factura->id_usuario);
+
+        if (is_null($logoPlat = Instancia::obtenerValorMetadato(ConfigInstancia::visual_logo_facturacion, $usuario->instancia))) {
+            $logoPlat = URL::to("/assets/img/logo-factura.png");
+            $esLogoPlat = true;
+        } else {
+            $esLogoPlat = false;
+        }
+
+
+
+        $moneda = Facturacion::obtenerValorMetadato(MetaFacturacion::MONEDA_ID, $factura->id);
+        $cliente = json_decode(Facturacion::obtenerValorMetadato(MetaFacturacion::CLIENTE_INFO, $factura->id));
+        $productos = Facturacion::obtenerProductos($factura->id);
+        $subtotal = 0; //Almacenara el subtotal de los productos
+        $iva = $factura->iva;
+
+
+        $html = '<html>';
+        $html .= "<head><title>" . trans("fact.col.numero.factura") . " " . $factura->id . "</title></head>";
+        $html .= '<body>';
+
+        //ENCABEZADo
+        $html .= "<table style='width:100%;border-bottom:1px rgb(229, 229, 229) solid;'><tr><td rowspan='2'><img src='" . $logoPlat . "'/></td>";
+        $html .= '<td style="font-size:20pt;">' . trans("fact.col.numero.factura") . " " . $factura->id . '</span></tr>';
+        $html .= "<tr><td style='font-size:15pt;font-weight:bold;";
+        if ($factura->estado == Facturacion::ESTADO_PAGADO)
+            $html .="color:green";
+        if ($factura->estado == Facturacion::ESTADO_SIN_PAGAR)
+            $html .="color:red";
+        if ($factura->estado == Facturacion::ESTADO_VENCIDA)
+            $html .="color:orange";
+        $html .= "'>";
+        $html .= Facturacion::estado($factura->estado) . '</td></tr><tr><td style="padding:20px;"></td><td></td></tr></table>';
+
+
+        //FECHAS
+        $html.="<table style='width:100%;border-bottom:1px rgb(229, 229, 229) solid;margin-bottom:20px;' ><tr><td>";
+        $html.="<b>" . Util::descodificarTexto(trans("fact.col.fecha.creacion")) . ":</b> " . Fecha::formatear($factura->fecha_creacion) . "</td></tr><tr><td><b>" . trans("fact.col.fecha.vencimiento") . ":</b> " . Fecha::formatear($factura->fecha_creacion) . "</td></tr></table>";
+
+        //Cliente
+        $html.="<table  style='width:100%;' cellpadding='5' cellspacing='20'>";
+        $html.="<tr><td style='border-bottom:1px rgb(229, 229, 229) solid;font-size:14pt;'><b>" . trans("fact.factura.info.a.cliente") . "</b></td><td style='border-bottom:1px rgb(229, 229, 229) solid;font-size:14pt;'><b>" . trans("fact.factura.info.pagar.a") . "</b></td></tr>";
+        $html.="<tr><td>";
+        foreach ($cliente as $indice => $info)
+            $html.="<div>" . $info . "</div>";
+
+        $html.="</td><td valign='top'>" . trans("interfaz.nombre") . " (appsthergo.com)</td></tr>";
+
+        $html.="</table>";
+
+
+        //Productos
+        $html.="<table style='width:100%;border:1px black solid;margin-bottom:50px;' cellpadding='5'>";
+        $html.="<tr style='background:gainsboro;'><th>" . Util::descodificarTexto(Util::convertirMayusculas(trans('fact.orden.tu.comprar.descripcion'))) . "</th><th style='text-align:right;'>" . Util::convertirMayusculas(trans('fact.orden.tu.comprar.precio')) . "</th></tr>";
+
+        foreach ($productos as $producto):
+
+            $id_producto = $producto[MetaFacturacion::PRODUCTO_ID];
+            $valor_producto = $producto[MetaFacturacion::PRODUCTO_VALOR];
+            $descuento_producto = $producto[MetaFacturacion::PRODUCTO_DESCUENTO];
+//Calcula el valor descontado del producto
+            $valor_real = ($valor_producto * 100) / (100 - $descuento_producto);
+            $valor_descontado = $valor_real - $valor_producto;
+
+            $subtotal+=$valor_producto;
+
+
+            $html .="<tr>";
+            $html .=" <td>";
+            if (strpos($id_producto, Servicio::CONFIG_NOMBRE) !== false)
+                $html .="    <span class='glyphicon glyphicon-ok'></span> " . Util::descodificarTexto(Servicio::obtenerNombre($id_producto)) . "";
+            else
+                $html .="    <span class='glyphicon glyphicon-ok'></span> " . Util::descodificarTexto(trans('fact.producto.id.' . $id_producto)) . "";
+            $html .=" </td>";
+            $html .="  <td style='text-align:right;'>";
+            $html .="       " . Monedas::simbolo($moneda) . "" . Monedas::formatearNumero($moneda, $valor_real) . " " . $moneda . "";
+            $html .="    </td>";
+            $html .="  </tr>";
+
+            if ($descuento_producto > 0) {
+
+                $html .=" <tr>";
+                $html .="    <td>";
+                $html .="        <i><span class='glyphicon glyphicon-ok'></span> <b>" . trans('otros.info.descuento') . " " . $descuento_producto . "%</b> - " . Util::descodificarTexto(trans('fact.producto.id.' . $id_producto)) . "</i>";
+                $html .="    </td>";
+                $html .= "     <td style='text-align:right;'>";
+                $html .="        -" . Monedas::simbolo($moneda) . "" . Monedas::formatearNumero($moneda, $valor_descontado) . " " . $moneda . "";
+                $html .="   </td>";
+                $html .="   </tr>";
+            }
+
+        endforeach;
+
+        $html .="<tr>";
+        $html .="     <td style='text-align:right;'>" . trans('fact.orden.tu.comprar.subtotal') . "</td><td style='text-align:right;'>" . Monedas::simbolo($moneda) . "" . Monedas::formatearNumero($moneda, $subtotal) . " " . $moneda . "</td>";
+        $html .="  </tr>";
+        $html .="  <tr>";
+
+        $valor_iva = ($iva / 100) * $subtotal;
+        $valor_total = $valor_iva + $subtotal;
+
+        if ($iva > 0) {
+            $html .=" <td style='text-align:right;'>" . trans('fact.orden.tu.compra.iva') . " (" . $iva . "%)</td><td style='text-align:right;'>" . Monedas::simbolo($moneda) . "" . Monedas::formatearNumero($moneda, $valor_iva) . " " . $moneda . "</td>";
+        }
+        $html .= " </tr>";
+        $html .= " <tr><td style='text-align:right;background:gainsboro;' style='font-size: 13pt;'><b>" . trans('fact.info.total') . "</b></td><td style='text-align:right;' style='font-size: 13pt;'><b>" . Monedas::simbolo($moneda) . " " . Monedas::formatearNumero($moneda, $valor_total) . " " . $moneda . "</b></div> ";
+        $html .= "  </table>";
+
+        $html.="<h3>" . trans("fact.factura.transaccion.titulo") . "</h3>";
+
+        $html .= " <table style='width:100%;border:1px black solid;' cellpadding='5'>";
+        $html .= " <tr style='background:gainsboro;'><th>" . Util::descodificarTexto(Util::convertirMayusculas(trans('fact.factura.transaccion.fecha'))) . "</th>";
+        $html .= "   <th>" . Util::convertirMayusculas(trans('fact.factura.transaccion.metodo')) . "</th>";
+        $html .= "  <th>" . Util::descodificarTexto(Util::convertirMayusculas(trans('fact.factura.transaccion.id'))) . "</th>";
+        $html .= "  <th>" . trans('fact.info.total') . "</th>";
+        $html .= "   </tr>";
+
+        if (!is_null($factura->tipo_pago)) {
+            $html .= "<tr>";
+            $html .= "    <td>" . Fecha::formatear(Facturacion::obtenerValorMetadato(MetaFacturacion::FECHA_PAGO, $factura->id)) . "</td>";
+            $html .= "   <td>" . Facturacion::tipo($factura->tipo_pago) . "</td>";
+            $html .= "    <td>" . Facturacion::obtenerValorMetadato(MetaFacturacion::TRANSACCION_ID, $factura->id) . "</td>";
+            $html .= "    <td>" . Monedas::simbolo($moneda) . " " . $valor_total . " " . $moneda . "</td>";
+            $html .= "  </tr>";
+        }
+        $html .= "  </table>";
+
+
+        $html.= '</body></html>';
+
+        return $html;
     }
 
 }

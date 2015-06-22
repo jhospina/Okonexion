@@ -45,8 +45,14 @@ class UPanelControladorUsuario extends \BaseController {
 
             if ($data["email_confirmado"] == 0) {
                 $correo = new Correo;
+                $codigo = $correo->generarCodigo();
+                $correo->almacenarCodigo($codigo, $user->id);
+
+                $mensaje = "<p>" . trans("email.hola", array("nombre" => $user->nombres)) . "</p>" .
+                        "<p>" . trans("email.confirmacion.msj", array("id_usuario" => $user->id, "codigo" => $codigo)) . "</p>" .
+                        "<p>" . trans("otros.dominio") . "/upanel/public/activar/" . $user->id . "/" . $codigo . "</p>";
                 //Envia un mensaje de confirmación con un codigo al correo electronico, para validar la cuenta de usuario
-                $correo->enviarConfirmacion(array("nombre" => $data["nombre1"] . " " . $data["nombre2"], "email" => $data["email"], "contrasena" => $data["contrasena"]), $user->id);
+                $correo->enviar(trans("email.asunto.confirmacion"), $mensaje, $user->id);
             }
             return Redirect::to('control/usuarios')->with(User::mensaje("exito", null, trans("menu_usuario.crear.usuario.post.exito"), 2));
         }
@@ -67,9 +73,16 @@ class UPanelControladorUsuario extends \BaseController {
         $data["contrasena"] = $data["password"];
 
         if ($user->registrar($data)) {
-            $correo = new Correo;
             //Envia un mensaje de confirmación con un codigo al correo electronico, para validar la cuenta de usuario
-            $correo->enviarConfirmacion(array("nombre" => $data["nombre1"] . " " . $data["nombre2"], "email" => $data["email"], "contrasena" => $data["contrasena"]), $user->id);
+            $correo = new Correo;
+            $codigo = $correo->generarCodigo();
+            $correo->almacenarCodigo($codigo, $user->id);
+
+            $mensaje = "<p>" . trans("email.hola", array("nombre" => $user->nombres)) . "</p>" .
+                    "<p>" . trans("email.confirmacion.msj", array("id_usuario" => $user->id, "codigo" => $codigo)) . "</p>" .
+                    "<p>" . trans("otros.dominio") . "/upanel/public/activar/" . $user->id . "/" . $codigo . "</p>";
+            //Envia un mensaje de confirmación con un codigo al correo electronico, para validar la cuenta de usuario
+            $correo->enviar(trans("email.asunto.confirmacion"), $mensaje, $user->id);
             return Redirect::to(Util::filtrarUrl($data["url"]) . "?response=success&email=" . $data["email"]);
         } else
             return Redirect::to(Util::filtrarUrl($data["url"]) . "?response=error");

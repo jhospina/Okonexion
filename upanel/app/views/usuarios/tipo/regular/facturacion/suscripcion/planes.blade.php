@@ -143,7 +143,7 @@ $moneda = Instancia::obtenerValorMetadato(ConfigInstancia::info_moneda);
                 <li><span class="glyphicon glyphicon-ok"></span> {{trans("fact.suscripcion.plan.item.atencion.personalizada")}}</li>
             </ul>
             <div class="well well-sm"><img title="{{trans("fact.suscripcion.plan.item.aplicacion.android")}}" class="platform tooltip-top" src="{{URL::to("assets/img/android.png")}}" /></div>
-            <div class="precio">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes_bronce))}} {{$moneda}}<span class="mark-mes">/{{trans("otros.time.mes")}}</span></div>
+            <div class="precio">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes_bronce."-".$moneda))}} {{$moneda}}<span class="mark-mes">/{{trans("otros.time.mes")}}</span></div>
             <hr/>
             <div class="block text-center">
                 <a href="{{URL::to("fact/suscripcion/ciclo/".ConfigInstancia::suscripcion_tipo_bronce)}}" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span>  {{Util::convertirMayusculas(trans("fact.btn.ordenar.ahora"))}}</a>
@@ -169,10 +169,10 @@ $moneda = Instancia::obtenerValorMetadato(ConfigInstancia::info_moneda);
                 <img title="{{trans("fact.suscripcion.plan.item.aplicacion.android")}}" class="platform tooltip-top" src="{{URL::to("assets/img/android.png")}}" />
                 <img title="{{trans("fact.suscripcion.plan.item.aplicacion.windows")}}" class="platform tooltip-top" src="{{URL::to("assets/img/windows.png")}}" />
             </div>
-            <div class="precio">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes_plata))}} {{$moneda}}<span class="mark-mes">/{{trans("otros.time.mes")}}</span></div>
+            <div class="precio">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes_plata."-".$moneda))}} {{$moneda}}<span class="mark-mes">/{{trans("otros.time.mes")}}</span></div>
             <hr/>
             <div class="block text-center">
-                <a href="{{URL::to("fact/suscripcion/ciclo/".ConfigInstancia::suscripcion_tipo_plata)}}" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span>  {{Util::convertirMayusculas(trans("fact.btn.ordenar.ahora"))}}</a>
+                <a disabled="disabled" href="{{URL::to("fact/suscripcion/ciclo/".ConfigInstancia::suscripcion_tipo_plata)}}" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span>  {{Util::convertirMayusculas(trans("fact.btn.ordenar.ahora"))}}</a>
             </div>
 
         </div>
@@ -198,10 +198,10 @@ $moneda = Instancia::obtenerValorMetadato(ConfigInstancia::info_moneda);
                 <img title="{{trans("fact.suscripcion.plan.item.aplicacion.windows")}}" class="platform tooltip-top" src="{{URL::to("assets/img/windows.png")}}" />
                 <img title="{{trans("fact.suscripcion.plan.item.aplicacion.iphone")}}" class="platform tooltip-top" src="{{URL::to("assets/img/ios.png")}}" />
             </div>
-            <div class="precio">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes_oro))}} {{$moneda}}<span class="mark-mes">/{{trans("otros.time.mes")}}</span></div>
+            <div class="precio">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes_oro."-".$moneda))}} {{$moneda}}<span class="mark-mes">/{{trans("otros.time.mes")}}</span></div>
             <hr/>
             <div class="block text-center">
-                <a href="{{URL::to("fact/suscripcion/ciclo/".ConfigInstancia::suscripcion_tipo_oro)}}" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span>  {{Util::convertirMayusculas(trans("fact.btn.ordenar.ahora"))}}</a>
+                <a disabled="disabled" href="{{URL::to("fact/suscripcion/ciclo/".ConfigInstancia::suscripcion_tipo_oro)}}" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span>  {{Util::convertirMayusculas(trans("fact.btn.ordenar.ahora"))}}</a>
             </div>
 
         </div>

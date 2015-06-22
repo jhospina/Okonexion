@@ -1,3 +1,26 @@
+<?php
+$susc = array("infobox_div" => 4,
+    "infobox_icon" => "glyphicon-time",
+    "infobox_label" => trans("pres.ar.suscripcion"),
+    "infobox_link_info" => URL::to("fact/suscripcion/plan"),
+    "infobox_link_foot" => URL::to("fact/suscripcion/plan"));
+
+if (Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
+    $susc["infobox_cant"] = trans("pres.ar.suscripcion.prueba");
+    $susc["infobox_color"] = "purple";
+    $susc["infobox_descripcion"] = trans("pres.ar.suscripcion.foot") . " " . TIEMPO_SUSCRIPCION;
+} elseif (Auth::user()->estado == User::ESTADO_SUSCRIPCION_VIGENTE) {
+    $susc["infobox_cant"] = trans("atributos.tipo.suscripcion." . User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_TIPO));
+    $susc["infobox_color"] = "#357ebd";
+    $susc["infobox_descripcion"] = TIEMPO_SUSCRIPCION;
+} elseif (Auth::user()->estado == User::ESTADO_PRUEBA_FINALIZADA || Auth::user()->estado == User::ESTADO_SUSCRIPCION_CADUCADA) {
+    $susc["infobox_cant"] = "<span class='glyphicon glyphicon-shopping-cart'></span>";
+    $susc["infobox_color"] = "red";
+    $susc["infobox_descripcion"] = trans("pres.ar.suscripcion.no.suscrito");
+    $susc["infobox_label"] = trans("pres.ar.suscripcion.suscribete");
+}
+?>
+
 @extends('interfaz/plantilla')
 
 @section("titulo") {{trans("interfaz.menu.principal.inicio")}} @stop
@@ -81,13 +104,8 @@
 
             {{-- INFO RAPIDO: TIEMPO SUSCRIPCION--}}
 
-            @include("interfaz/util/infobox",
-            array("infobox_div"=>4,
-            "infobox_color"=>"#357ebd",
-            "infobox_icon"=>"glyphicon-time",
-            "infobox_cant"=>trans("atributos.tipo.suscripcion.".User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_TIPO)),
-            "infobox_label"=>trans("pres.ar.suscripcion"),
-            "infobox_descripcion"=>TIEMPO_SUSCRIPCION))
+
+            @include("interfaz/util/infobox",$susc)
 
 
             {{-- INFO RAPIDO: SERVICIOS--}}
@@ -145,7 +163,7 @@
                     <td>{{Fecha::formatear($factura->fecha_creacion)}}</td>
                     <td>{{Fecha::formatear($factura->fecha_vencimiento)}}</td>
                     <td class="factura-{{$factura->estado}}"><span>{{Facturacion::estado($factura->estado)}}</span></td>
-                    <td>{{Monedas::simbolo($moneda)}}{{$factura->total}} {{$moneda}}</td>
+                    <td>{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,$factura->total)}} {{$moneda}}</td>
                 </tr>
                 @endforeach
 

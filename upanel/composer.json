@@ -6,7 +6,8 @@
     "type": "project",
     "require": {
         "laravel/framework": "4.2.*",
-        "thujohn/pdf": "dev-master"
+        "thujohn/pdf": "dev-master",
+        "liebig/cron": "dev-master"
     },
     "autoload": {
         "classmap": [
@@ -20,12 +21,12 @@
             "app/library/complements",
             "app/library/contentTypes",
             "app/library/enums",
-            "app/library/config",
             "app/library/security",
             "app/library/plugins/",
-            "app/library/plugins/Twocheckout",
-            "app/library/plugins/Twocheckout/Api"
-            
+            "app/library/plugins/2checkout/",
+            "app/library/plugins/2checkout/Twocheckout",
+            "app/library/plugins/2checkout/Twocheckout/Api"
+
         ]
     },
     "scripts": {

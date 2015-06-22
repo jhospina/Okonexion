@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    "dominio" => "https://appsthergo.com",
     "elegir" => "Elegir",
     "adjuntar_archivo" => "Adjuntar archivo",
     "archivo_adjunto" => "Archivo adjunto",
@@ -148,6 +149,7 @@ return array(
     "info.pagar" => "Pagar",
     "info.pagos" => "Pagos",
     "info.facturas" => "Facturas",
+    "info.factura" => "Factura",
     "info.servicio" => "Servicio",
     "info.fecha" => "Fecha",
     "pregunta.procesado" => "¿Procesado?",

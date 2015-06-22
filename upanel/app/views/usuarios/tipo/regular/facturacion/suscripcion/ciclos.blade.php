@@ -88,7 +88,7 @@ $moneda = Instancia::obtenerValorMetadato(ConfigInstancia::info_moneda);
     @for($i=0;$i< count($ciclos);$i++)
 
     <?php
-    $valor = Instancia::obtenerValorMetadato($prefijo . $ciclos[$i] . "mes_" . $plan);
+    $valor = Instancia::obtenerValorMetadato($prefijo . $ciclos[$i] . "mes_" . $plan."-".$moneda);
     if (is_null($descuento = Instancia::obtenerValorMetadato($prefijo . $ciclos[$i] . "mes_descuento")))
         $descuento = 0;
     ?>

@@ -203,9 +203,10 @@ class Util {
     }
 
     static function obtenerDominioDeUrl($url) {
-        $protocolos = array('http://', 'https://', 'ftp://', 'www.');
-        $url = explode('/', str_replace($protocolos, '', $url));
-        return $url[0];
+        $url = explode('://', $url);
+        $ext = $url[0];
+        $url = explode('/', $url[1]);
+        return $ext . "://" . $url[0];
     }
 
     /** Reemplaza todos los caracteres especiales por codigo html

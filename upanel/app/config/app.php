@@ -107,6 +107,7 @@ return array(
         'Illuminate\View\ViewServiceProvider',
         'Illuminate\Workbench\WorkbenchServiceProvider',
         'Thujohn\Pdf\PdfServiceProvider',
+        "Liebig\Cron\CronServiceProvider" 
     ),
     /*
       |--------------------------------------------------------------------------

@@ -15,7 +15,7 @@ class TablaNotificaciones extends Migration {
             $table->bigIncrements('id');
             $table->integer("instancia");
             $table->integer("id_usuario");
-            $table->integer("id_objetivo")->nullable();
+             $table->string("link")->nullable();
             $table->string('tipo', 4);
             $table->boolean("visto");
             $table->timestamps();

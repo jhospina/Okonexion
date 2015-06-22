@@ -9,15 +9,16 @@ Class Notificacion extends Eloquent {
      */
     const TIPO_SUSCRIPCION_PRUEBA_FINALIZADA = "SUPF";
     const TIPO_SUSCRIPCION_REALIZADA = "SURE";
+    const TIPO_FACTURACION_AUTO_SUSCRIPCION = "FACS";
 
     /** crear una notificacion de usuario
      * 
      * @param string $tipo El tipo de notificacion
      * @param int $usuario [Opcional] El usuario al que se le notificara, si no se define se utilizara el de la sesion actual
-     * @param int $objetivo [Opcional] A que se debe la notificacion
+     * @param int $link [Opcional] A que se debe la notificacion
      * @return boolean
      */
-    static function crear($tipo, $usuario = null, $objetivo = null) {
+    static function crear($tipo, $usuario = null, $link = null) {
         $not = new Notificacion;
 
         if (!is_null($usuario)) {
@@ -29,8 +30,8 @@ Class Notificacion extends Eloquent {
             $instancia = Auth::user()->instancia;
         }
 
-        if (!is_null($objetivo))
-            $not->id_objetivo = $objetivo;
+        if (!is_null($link))
+            $not->link = $link;
 
         $not->instancia = $instancia;
         $not->tipo = $tipo;
@@ -64,7 +65,8 @@ Class Notificacion extends Eloquent {
     static function descripcion($tipo, $params = null) {
         $msj = array(
             Notificacion::TIPO_SUSCRIPCION_PRUEBA_FINALIZADA => trans("nots.suscripcion.prueba.finalizada"),
-            Notificacion::TIPO_SUSCRIPCION_REALIZADA => trans("nots.suscripcion.pago.realizado", array("link" => "#"))
+            Notificacion::TIPO_SUSCRIPCION_REALIZADA => trans("nots.suscripcion.pago.realizado", array("link" => "#")),
+            Notificacion::TIPO_FACTURACION_AUTO_SUSCRIPCION => trans("nots.facturacion.auto.suscripcion")
         );
         return $msj[$tipo];
     }
@@ -72,7 +74,8 @@ Class Notificacion extends Eloquent {
     static function icono($tipo) {
         $msj = array(
             Notificacion::TIPO_SUSCRIPCION_PRUEBA_FINALIZADA => '<span class="glyphicon glyphicon-exclamation-sign"></span>',
-            Notificacion::TIPO_SUSCRIPCION_REALIZADA => '<span class="glyphicon glyphicon-thumbs-up"></span>'
+            Notificacion::TIPO_SUSCRIPCION_REALIZADA => '<span class="glyphicon glyphicon-thumbs-up"></span>',
+            Notificacion::TIPO_FACTURACION_AUTO_SUSCRIPCION => '<span class="glyphicon glyphicon-list-alt"></span>',
         );
         return $msj[$tipo];
     }
@@ -103,7 +106,10 @@ Class Notificacion extends Eloquent {
     }
 
     static function plantilla($not) {
-        $html = "<li class='not-item'><p>";
+        $html = "<li class='not-item'";
+        if (!is_null($not->link))
+            $html .="onClick='location.href=\"" . $not->link . "\";'";
+        $html .="><p>";
         $html.=Notificacion::icono($not->tipo) . " " . Notificacion::descripcion($not->tipo);
         $html.="</p><span class='fecha-not'><span class='glyphicon glyphicon-time'></span> " . trans("otros.info.hace") . " " . Util::calcularDiferenciaFechas($not->created_at, Util::obtenerTiempoActual()) . "</span></li>";
         return $html;

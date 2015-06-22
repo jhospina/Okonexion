@@ -10,70 +10,7 @@ class Correo extends Eloquent implements UserInterface, RemindableInterface {
     use UserTrait,
         RemindableTrait;
 
-    const emailFrom = 'okonexion.upanel@gmail.com';
-
-    //Envia un mensaje a un correo electronico con un codigo de confirmación para la activación de una cuenta de usuario
-    function enviarConfirmacion($data, $id_usuario) {
-
-        //Genera un codigo aleatorio que servira como codigo de confirmación para activar la cuenta del usuario. 
-        $codigo = $this->generarCodigo();
-
-        $this->almacenarCodigo($codigo, $id_usuario);
-
-
-        $data["codigo"] = $codigo;
-        $data["id_usuario"] = $id_usuario;
-
-        return Mail::send('emails.confirmacion', $data, function ($message) use ($data) {
-                    $message->subject(trans("email.asunto.confirmacion"));
-                    $message->to($data["email"]);
-                });
-    }
-
-    function enviarActivacion($id_usuario) {
-
-        //Genera un codigo aleatorio que servira como codigo de confirmación para activar la cuenta del usuario. 
-        $codigo = $this->generarCodigo();
-
-        $this->almacenarCodigo($codigo, $id_usuario);
-
-        $user = User::find($id_usuario);
-
-        $data["nombre"] = $user->nombres;
-        $data["codigo"] = $codigo;
-        $data["id_usuario"] = $id_usuario;
-        $data["email"] = $user->email;
-
-        return Mail::send('emails.activacion', $data, function ($message) use ($data) {
-                    $message->subject(trans("email.asunto.activacion"));
-                    $message->to($data["email"]);
-                });
-    }
-
-    //Envia un correo electronico a un usuario nuevo dandole bienvenido a okonexion
-    function enviarBienvenida($id_usuario) {
-        $user = User::find($id_usuario);
-
-        $data = array("email" => $user->email, "nombre" => $user->nombres);
-
-        return Mail::send('emails.bienvenida', $data, function ($message) use ($data) {
-                    $message->subject(trans("email.asunto.bienvenida"));
-                    $message->to($data["email"]);
-                });
-    }
-
-    function enviarRecuperacion($id_usuario) {
-        $user = User::find($id_usuario);
-
-        $codigo = $this->generarCodigo();
-        $this->almacenarCodigo($codigo, $id_usuario);
-        $data = array("email" => $user->email, "nombre" => $user->nombres, "codigo" => $codigo, "id_usuario" => $id_usuario);
-
-        return Mail::send('emails.recuperacion_contrasena', $data, function ($message) use ($data) {
-                    $message->subject(trans("email.asunto.recuperacion"));
-                    $message->to($data["email"]);
-                });
-    }
+    const emailFrom = 'appsthergo@gmail.com';
 
     //Genera un codigo aleatorio
     function generarCodigo() {
@@ -94,27 +31,48 @@ class Correo extends Eloquent implements UserInterface, RemindableInterface {
         $user->update();
     }
 
-    function enviar($asunto, $mensaje, $id_usuario) {
+    /** Enviar un correo electronico a un usuario
+     * 
+     * @param String $asunto El asunto del correo
+     * @param String $mensaje El mensaje del correo
+     * @param Integer $id_usuario El id del usuario a enviarle el correo
+     * @param (String|Array) $adjuntos [null] El path del archivo a adjuntar, puede ser un array de paths
+     * @param String $plantilla [plantilla1] El nombre de la plantilla a usar para el correo
+     * @return boolean
+     */
+    function enviar($asunto, $mensaje, $id_usuario, $adjuntos = null, $plantilla = "plantilla1") {
 
         $user = User::find($id_usuario);
 
         $data["asunto"] = $asunto;
         $data["email"] = $user->email;
 
-        return Mail::queue('emails.plantilla', array("mensaje" => $mensaje), function ($message) use ($data) {
+        return Mail::queue('emails.' . $plantilla, array("mensaje" => $mensaje), function ($message) use ($data, $adjuntos) {
                     $message->subject($data["asunto"]);
                     $message->to($data["email"]);
+
+                    //Para adjuntar archivos
+                    if (!is_null($adjuntos)) {
+
+                        if (is_array($adjuntos)) {
+                            for ($i = 0; count($adjuntos); $i++) {
+                                $message->attach($adjuntos[$i]);
+                            }
+                        } else {
+                            $message->attach($adjuntos);
+                        }
+                    }
                 });
     }
 
-    function enviarUsuarioApp($from, $email,$asunto,$mensaje) {
-        
+    function enviarUsuarioApp($from, $email, $asunto, $mensaje) {
+
         $data["asunto"] = $asunto;
         $data["email"] = $email;
-        $data["from"]=$from;
+        $data["from"] = $from;
 
-        return Mail::queue('emails.plantillaApp', array("mensaje" => $mensaje,"nombreApp"=>$from), function ($message) use ($data) {
-                     $message->from(Correo::emailFrom,$data["from"]);
+        return Mail::queue('emails.plantillaApp', array("mensaje" => $mensaje, "nombreApp" => $from), function ($message) use ($data) {
+                    $message->from(Correo::emailFrom, $data["from"]);
                     $message->subject($data["asunto"]);
                     $message->to($data["email"]);
                 });
