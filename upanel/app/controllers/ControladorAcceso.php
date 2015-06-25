@@ -63,9 +63,12 @@ class ControladorAcceso extends Controller {
 
     //Recibe una solicitud para reestablecer contraseña
     function recuperarContrasena() {
+
+        $lang = (!isset($_GET["lang"])) ? "es" : $_GET["lang"];
+
         $email = Input::get('email');
         $url_origen = Input::get('url');
-        $resultado = DB::select('select id,email,email_confirmado from usuarios where email = ?', array($email));
+        $resultado = User::where("email", $email)->get();
         if (count($resultado) > 0) {
             foreach ($resultado as $usuario) {
 
@@ -81,16 +84,16 @@ class ControladorAcceso extends Controller {
 
                 $correo->almacenarCodigo($codigo, $usuario->id);
 
-                $mensaje = "<p>" . rans("email.hola", array("nombre" => $usuario->nombres)) . "</p>" .
+                $mensaje = "<p>" . trans("email.hola", array("nombre" => $usuario->nombres)) . "</p>" .
                         "<p>" . trans("email.recuperacion.msj_01") . "</p>" .
                         "<p>" . trans("email.recuperacion.msj_02") . "<br/>" .
-                        "<a href='" . trans("email.dominio") . "/upanel/public/recovery/" . $usuario->id . "/" . $codigo . "'>" . trans("email.dominio") . "/upanel/public/recovery/" . $usuario->id . "/" . $codigo . "</a></p>";
+                        "<a href='" . trans("otros.dominio") . "/upanel/public/recovery/" . $usuario->id . "/" . $codigo . "?lang_get=" . $lang . "'>" . trans("otros.dominio") . "/upanel/public/recovery/" . $usuario->id . "/" . $codigo . "?lang_get=" . $lang . "</a></p>";
 
                 $correo->enviar(trans("email.asunto.recuperacion"), $mensaje, $usuario->id);
             }
-            return Redirect::to(Util::filtrarUrl($url_origen) . "?response=send&email=" . $usuario->email);
+            return Redirect::to(Util::filtrarUrl($url_origen) . "?stage=recovery&response=send&email=" . $usuario->email);
         } else {
-            return Redirect::to(Util::filtrarUrl($url_origen) . "?response=fail&email=" . $email);
+            return Redirect::to(Util::filtrarUrl($url_origen) . "?stage=recovery&response=fail&email=" . $email);
         }
     }
 
@@ -102,8 +105,7 @@ class ControladorAcceso extends Controller {
         }
         if ($codigo == $user->cod_ver_email) {
             if ($user->email_confirmado == 1) {
-                $url_recovery = User::obtenerValorMetadato(User::META_URL_RECOVERY, $user->id);
-                return Redirect::to($url_recovery . "?response=recovery&user=" . $id . "&code=" . $codigo);
+                return View::make("usuarios/general/recovery")->with("usuario", $id)->with("codigo", $codigo);
             } else {
                 App::abort(404);
             }

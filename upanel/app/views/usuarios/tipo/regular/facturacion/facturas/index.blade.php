@@ -50,7 +50,7 @@
         <td>{{Fecha::formatear($factura->fecha_creacion)}}</td>
         <td>{{Fecha::formatear($factura->fecha_vencimiento)}}</td>
         <td class="factura-{{$factura->estado}}"><span>{{Facturacion::estado($factura->estado)}}</span></td>
-        <td>{{Monedas::simbolo($moneda)}}{{$factura->total}} {{$moneda}}</td>
+        <td>{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,$factura->total)}} {{$moneda}}</td>
     </tr>
     @endforeach
 </table>

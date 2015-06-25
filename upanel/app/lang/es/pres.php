@@ -18,7 +18,7 @@ return array(
     "ar.facturacion" => "Facturación",
     "ar.facturacion.foot" => "Ver facturas",
     "ar.servicios" => "Servicios",
-    "ar.servicios.foot" => "Ver servicios",
+    "ar.servicios.foot" => "Agregar nuevo servicio",
     "ar.usuarios" => "Usuarios",
     "ar.usuarios.foot" => "Crear nuevo usuario",
     "ar.ventas.foot" => "Total de ventas",

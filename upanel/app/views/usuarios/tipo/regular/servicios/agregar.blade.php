@@ -1,4 +1,7 @@
 <?php
+
+$moneda=Auth::user()->getMoneda();
+
 //Divide los servicios en un fragmentos de array de 3;
 $cant = 3;
 $divServicios = array();
@@ -52,7 +55,7 @@ foreach ($servicios as $servicio) {
             <img src="{{$servicio->getImagen()}}">
         </div>
         <div class="costo">
-            {{Monedas::nomenclatura(Monedas::actual(),$servicio->getCosto())}}
+            {{Monedas::nomenclatura($moneda,$servicio->getCosto($moneda))}}
         </div>
         <div class="content-seleccion">
             <button class="btn btn-info seleccionar" onclick="seleccionar(this,{{$servicio->id}})"><span class="glyphicon glyphicon-ok"></span> {{trans("otros.info.seleccionar")}}</button>

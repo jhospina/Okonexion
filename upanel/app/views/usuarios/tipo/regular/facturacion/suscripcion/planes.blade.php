@@ -1,5 +1,5 @@
 <?php
-$moneda = Instancia::obtenerValorMetadato(ConfigInstancia::info_moneda);
+$moneda = Auth::user()->getMoneda();
 ?>
 
 

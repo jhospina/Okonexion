@@ -73,6 +73,8 @@ $metaFacturas = array();
 
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
 
+@if(count($consulta)>0)
+
 <div class="col-lg-12" id="content-mis-servicios">
     <div class="col-lg-5" id="listado">
         <div class="list-group">
@@ -136,6 +138,15 @@ $metaFacturas = array();
         </div>
     </div>
 </div>
+
+@else
+
+<div class="col-lg-12 text-center" style="height: 400px;background-color: rgb(247, 247, 247);padding-top: 150px;border: 1px gainsboro solid;">
+    <h2><span class="glyphicon glyphicon-exclamation-sign"></span> {{trans("otros.info.no_hay_datos")}}</h2>
+    <a class="btn btn-success" href="{{URL::to("servicios/agregar")}}"><span class="glyphicon glyphicon-plus"></span> {{trans("pres.ar.servicios.foot")}}</a>
+</div>
+
+@endif
 
 @stop
 

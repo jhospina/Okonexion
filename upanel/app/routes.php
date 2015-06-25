@@ -43,6 +43,8 @@ Route::get('correo/{usuario}/activacion', 'ControladorAcceso@enviarActivacion');
 Route::resource('usuario', 'UPanelControladorUsuario');
 
 
+
+
 // Nos indica que las rutas que están dentro de él sólo serán mostradas si antes el usuario se ha autenticado.
 Route::group(array('before' => 'auth'), function() {
     aplicacion_desarrollo();

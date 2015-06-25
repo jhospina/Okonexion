@@ -4,13 +4,16 @@ Event::listen('cron.collectJobs', function() {
     /**
      * CRON: Creación de facturas
      * DESCRIPCION: Creación de facturas anticipadamente para los usuarios suscriptos, la factura se crea con 10 dias de antelacion.
-     * EJECUCION: Cada dia
+     * EJECUCION: Una vez al dia
      */
     Cron::add('userGenFacts', '0 0 * * *', function() {
 //Obtiene un array de objetos con todos los usuarios de tipo regular
         $usuarios = User::where("tipo", User::USUARIO_REGULAR)->get();
 
         $prefijo = "suscripcion_valor_";
+
+        $n = 0;
+        $ids = array();
 
         foreach ($usuarios as $usuario) {
 
@@ -41,6 +44,7 @@ Event::listen('cron.collectJobs', function() {
             $id_factura = Facturacion::nueva(Instancia::obtenerValorMetadato(ConfigInstancia::fact_impuestos_iva, $usuario->instancia), 10, $usuario->id);
             Facturacion::generarJSONCliente($id_factura, $usuario->id);
 
+            $ids[] = $id_factura;
 
             Facturacion::agregarMetadato(MetaFacturacion::MONEDA_ID, $moneda, $id_factura, $usuario->id);
 
@@ -86,9 +90,34 @@ Event::listen('cron.collectJobs', function() {
 
             //Crea una notificacion para el usuario
             Notificacion::crear(Notificacion::TIPO_FACTURACION_AUTO_SUSCRIPCION, $usuario->id, URL::to("fact/factura/" . $id_factura));
+
+            $n++;
         }
 
-        return "Facturas generadas automaticamente";
+        return "$n facturas generadas [" . Util::formatearResultadosArray($ids, "|", "(", ")") . "]";
+    });
+
+    /**
+     * CRON: Vencimiento de facturas
+     * DESCRIPCION: Establece como vencidas todas las facturas sin pagar que su fecha de vencimiento hayan culminado
+     * EJECUCION: Una vez al dia
+     */
+    Cron::add("factVencimiento", "0 0 * * *", function() {
+
+        $facturas = Facturacion::where("estado", Facturacion::ESTADO_SIN_PAGAR)->get();
+
+        $n = 0;
+        $ids = array();
+        foreach ($facturas as $factura) {
+
+            if (Fecha::difSec(Util::obtenerTiempoActual(), $factura->fecha_vencimiento) < 0) {
+                $factura->estado = Facturacion::ESTADO_VENCIDA;
+                $factura->save();
+                $ids[] = $factura->id;
+            }
+        }
+
+        return "$n facturas vencidas [" . Util::formatearResultadosArray($ids, "|", "(", ")") . "]";
     });
 });
 

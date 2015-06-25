@@ -1,7 +1,7 @@
 <?php
 $ciclos = array(1, 3, 6, 12);
 $prefijo = "suscripcion_valor_";
-$moneda = Instancia::obtenerValorMetadato(ConfigInstancia::info_moneda);
+$moneda = Auth::user()->getMoneda();
 ?>
 
 @extends('interfaz/plantilla')

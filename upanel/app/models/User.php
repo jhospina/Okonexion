@@ -426,4 +426,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return null;
     }
 
+    //Obtiene la tipo de moneda del usuario
+    public function getMoneda() {
+        return User::obtenerValorMetadato(UsuarioMetadato::OP_MONEDA, $this->id);
+    }
+
 }

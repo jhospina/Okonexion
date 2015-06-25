@@ -27,7 +27,7 @@ return array(
     "msj_responder.placeholder" => "Escribe aquí tu respuesta...",
     "info.cliente" => "Cliente",
     "info.soporte" => "Soporte",
-    "info.soporte.okonexion" => "Soporte Okonexion",
+    "info.soporte.okonexion" => "Equipo de soporte",
     "info.todos" => "Todos",
     "btn.guardar" => "Guardar",
     "info.izquierda" => "Izquierda",

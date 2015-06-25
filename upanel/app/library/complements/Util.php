@@ -98,6 +98,23 @@ class Util {
         return substr($contenido, 0, strlen($contenido) - strlen($separador));
     }
 
+    /** Da formato de salida a un array
+     *  
+     * @param Object $array Listado de objetos de una misma clase
+     * @param String $separador [, ] Un String separador entre cada propiedad del objeto
+     * @param String $prefijo [null] Un String a colocar antecedido de la propiedad  del objeto 
+     * @param String $sufijo [null] Un String a colocar posteriormente al valor de la propiedad del objeto
+     * @return string Retorna un string en formato indicado. 
+     */
+    static function formatearResultadosArray($array, $separador = ", ", $prefijo = null, $sufijo = null) {
+        $contenido = ""; //Almacena el resultado final
+        if (count($array) == 0)
+            return null;
+        foreach ($array as $indice => $valor)
+            $contenido.=$prefijo . $valor . $sufijo . $separador;
+        return substr($contenido, 0, strlen($contenido) - strlen($separador));
+    }
+
     /** Extraer la extension de un archivo
      * 
      * @param type $nombre

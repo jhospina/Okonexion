@@ -67,9 +67,12 @@ class UPanelControladorServicios extends Controller {
 
             //Verifica el hash de creacion y lo efectua una unica vez
             if (HasherPro::Verificar($data[UsuarioMetadato::HASH_CREAR_FACTURA], UsuarioMetadato::HASH_CREAR_FACTURA)) {
+
+                $moneda = Auth::user()->getMoneda();
+
                 unset($data[UsuarioMetadato::HASH_CREAR_FACTURA]);
                 $id_factura = Facturacion::nueva(Instancia::obtenerValorMetadato(ConfigInstancia::fact_impuestos_iva));
-                Facturacion::agregarMetadato(MetaFacturacion::MONEDA_ID, Monedas::actual(), $id_factura);
+                Facturacion::agregarMetadato(MetaFacturacion::MONEDA_ID, $moneda, $id_factura);
                 User::agregarMetaDato(UsuarioMetadato::FACTURACION_ID_PROCESO, $id_factura);
                 Facturacion::generarJSONCliente($id_factura);
 
@@ -77,11 +80,10 @@ class UPanelControladorServicios extends Controller {
                     $servicioData = array();
                     $servicioData[MetaFacturacion::PRODUCTO_ID] = $servicio;
                     $servicioData[MetaFacturacion::PRODUCTO_DESCUENTO] = 0;
-                    $servicioData[MetaFacturacion::PRODUCTO_VALOR] = Instancia::obtenerValorMetadato(Servicio::CONFIG_COSTO . Monedas::actual() . str_replace(Servicio::CONFIG_NOMBRE, "", $servicio));
+                    $servicioData[MetaFacturacion::PRODUCTO_VALOR] = Instancia::obtenerValorMetadato(Servicio::CONFIG_COSTO . $moneda . str_replace(Servicio::CONFIG_NOMBRE, "", $servicio));
                     if (!Facturacion::agregarProducto($id_factura, $servicioData))
                         return Redirect::back()->with(User::mensaje("error", null, trans("otros.error_solicitud"), 2));
                 }
-
                 return Redirect::to("fact/orden/pago");
             }
         }
@@ -133,9 +135,7 @@ class UPanelControladorServicios extends Controller {
         $data = Input::all();
         $servicio = new Servicio();
 
-        $idioma = User::obtenerValorMetadato(UsuarioMetadato::OP_IDIOMA);
-
-
+   
         if (!Servicio::validar($data))
             return json_encode(array("error" => "error"));
 

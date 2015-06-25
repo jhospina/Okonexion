@@ -64,7 +64,8 @@ class Monedas {
     }
 
     static function nomenclatura($id, $numero) {
-        return Monedas::simbolo($id) . "" . $numero . " " . $id;
+        $numero=  Monedas::desformatearNumero($id, $numero);
+        return Monedas::simbolo($id) . "" . Monedas::formatearNumero($id, $numero). " " . $id;
     }
 
     /** Retorna un numero formateado indicado por la moneda 

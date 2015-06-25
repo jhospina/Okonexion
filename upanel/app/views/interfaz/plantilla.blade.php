@@ -41,7 +41,6 @@ if (is_null($logoPlat = Instancia::obtenerValorMetadato(ConfigInstancia::visual_
         {{--MENSAJES EMERGENTES PARA EL USUARIO--}}
         @include("interfaz/mensaje/global")
 
-
         <nav class="navbar navbar-inverse" id="menu">
             <div class="container-fluid container">
                 <div class="navbar-header" style="width: 170px;">

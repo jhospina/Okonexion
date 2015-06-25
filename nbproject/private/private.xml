@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/E:/Documents/GitHub/Okonexion/wp-content/themes/doctype/appsthergo/API/Config.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/ControladorAcceso.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/wp-content/themes/doctype/appsthergo/API/Html.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/wp-content/themes/doctype/appsthergo/Appsthergo.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/routes.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/global/cronjobs.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/library/complements/Fecha.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/general/facturacion/facturas/ver.blade.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/Notificacion.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/Facturacion.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/lang/es/otros.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/wp-content/themes/doctype/template-login.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/wp-content/themes/doctype/appsthergo/API/Lang.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/wp-content/themes/doctype/appsthergo/API/languages/Lang_ES.php</file>
         </group>
     </open-files>
 </project-private>
