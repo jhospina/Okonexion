@@ -5,16 +5,18 @@ namespace Appsthergo\API;
 require 'Config.php';
 require 'Lang.php';
 require 'Util.php';
+require 'Css.php';
 
 use Appsthergo\API\Config as Config;
 use Appsthergo\API\Lang as Lang;
 use Appsthergo\API\Util as Util;
+use Appsthergo\API\Css as Css;
 
 class Html extends Lang {
 
     public function formCreateUserHeader($title) {
-        $output = " <header class='page-header'>";
-        $output.="<h1 class='blog-title'>" . $title . "</h1>";
+        $output = " <header id='aptg-header-create-user' style='text-align:center;'>";
+        $output.="<h1>" . $title . "</h1>";
         $output.=" </header>";
         return $output;
     }
@@ -26,43 +28,40 @@ class Html extends Lang {
 
     public function formCreateUser() {
 
-        $output = "";
-        $output.="<div id='aptg-form-create-user' class='contact-form-wrapper' style='margin-bottom:20px;'>";
+        $output = "<div id='aptg-form-create-user' style='width: 100%;text-align:center;'>";
         $output.="<h2>" . parent::printText(parent::CREATE_USER_FORM_DESCRIPTION) . "</h2>";
         $output.="<form id='form_cuenta' method='post' action='" . Config::URL_POST_CREATE_USER . "'>";
-        $output.=" <div class='grids'>";
-        $output.="    <div class='msj-error' id='msj-error'>" . parent::printText(parent::MSJ_ERROR_CREATE_FORM) . "</br><ul style='margin: 5px;' id='error-description'></ul></div>";
-        $output.="    <p class='grid-6'>";
-        $output.="        <label for='nombre1'>" . parent::printText(parent::CREATE_USER_FORM_TEXT_INPUT_NAME1) . "</label>";
-        $output.="        <input type='text' name='nombre1' id='nombre1' value=''>";
+        $output.=" <div class='grid'>";
+        $output.="    <div style='" . Css::trap_msj_error . "display:none;' id='msj-error'>" . parent::printText(parent::MSJ_ERROR_CREATE_FORM) . "</br><ul style='margin: 5px;' id='error-description'></ul></div>";
+        $output.="    <p class='cell-2' " . Css::trap_cell2 . ">";
+        $output.="        <label " . Css::trap_cell_label . " for='nombre1'>" . parent::printText(parent::CREATE_USER_FORM_TEXT_INPUT_NAME1) . "</label>";
+        $output.="        <input " . Css::trap_cell_input_text . " type='text' name='nombre1' id='nombre1' value=''>";
         $output.="    </p>";
-        $output.="     <p class='grid-6'>";
-        $output.="         <label for='nombre2'>" . parent::printText(parent::CREATE_USER_FORM_TEXT_INPUT_NAME2) . "</label>";
-        $output.="        <input type='text' name='nombre2' id='nombre2' value=''>";
+        $output.="     <p class='cell-2' " . Css::trap_cell2 . ">";
+        $output.="         <label " . Css::trap_cell_label . " for='nombre2'>" . parent::printText(parent::CREATE_USER_FORM_TEXT_INPUT_NAME2) . "</label>";
+        $output.="        <input " . Css::trap_cell_input_text . " type='text' name='nombre2' id='nombre2' value=''>";
         $output.="     </p>";
-        $output.="     <p class='grid-6'>";
-        $output.="         <label for='apellidos'>" . parent::printText(parent::CREATE_USER_FORM_TEXT_INPUT_LASTNAME) . "</label>";
-        $output.="         <input type='text' name='apellidos' id='apellidos' value=''>";
+        $output.="     <p class='cell-2' " . Css::trap_cell2 . ">";
+        $output.="         <label " . Css::trap_cell_label . " for='apellidos'>" . parent::printText(parent::CREATE_USER_FORM_TEXT_INPUT_LASTNAME) . "</label>";
+        $output.="         <input " . Css::trap_cell_input_text . " type='text' name='apellidos' id='apellidos' value=''>";
         $output.="     </p>";
-        $output.="       <p class='grid-6'>";
-        $output.="          <label for='email'>" . parent::printText(parent::CREATE_USER_FORM_TEXT_INPUT_EMAIL) . "</label>";
-        $output.="          <input type='text' name='email' id='email' value=''>";
+        $output.="       <p class='cell-2' " . Css::trap_cell2 . ">";
+        $output.="          <label " . Css::trap_cell_label . " for='email'>" . parent::printText(parent::CREATE_USER_FORM_TEXT_INPUT_EMAIL) . "</label>";
+        $output.="          <input " . Css::trap_cell_input_text . " type='text' name='email' id='email' value=''>";
         $output.="      </p>";
-        $output.="       <p class='grid-6'>";
-        $output.="          <label for='password'>" . parent::printText(parent::CREATE_USER_FORM_TEXT_INPUT_PASSWORD) . "</label>";
-        $output.="           <input type='password' name='password' id='password' value=''>";
+        $output.="       <p class='cell-2' " . Css::trap_cell2 . ">";
+        $output.="          <label " . Css::trap_cell_label . " for='password'>" . parent::printText(parent::CREATE_USER_FORM_TEXT_INPUT_PASSWORD) . "</label>";
+        $output.="           <input " . Css::trap_cell_input_text . " type='password' name='password' id='password' value=''>";
         $output.="       </p>";
-        $output.="       <p class='grid-6'>";
-        $output.="           <label for='password_rep'>" . parent::printText(parent::CREATE_USER_FORM_TEXT_INPUT_REPEAT_PASSWORD) . "</label>";
-        $output.="           <input type='password' name='password_rep' id='password_rep' value=''>";
+        $output.="       <p class='cell-2' " . Css::trap_cell2 . ">";
+        $output.="           <label " . Css::trap_cell_label . " for='password_rep'>" . parent::printText(parent::CREATE_USER_FORM_TEXT_INPUT_REPEAT_PASSWORD) . "</label>";
+        $output.="           <input " . Css::trap_cell_input_text . " type='password' name='password_rep' id='password_rep' value=''>";
         $output.="       </p>";
-        $output.="       <p class='buttons'>";
-        $output.="           <input style='color: #fff;font-weight: bold;text-align: center;text-transform: uppercase; line-height: 1;-moz-transition: all 0.35s;-o-transition: all 0.35s;-webkit-transition: all 0.35s;transition: all 0.35s;background-color: #00b7e5;' type='button' id='submitted' class='contact-form-button' name='submitted' value='" . parent::printText(parent::CREATE_USER_FORM_SUBMIT) . "'>";
+        $output.="       <p class='cell-button' " . Css::trap_cell2 . ">";
+        $output.="           <input " . Css::trap_button . " type='button' id='submitted' name='submitted' value='" . parent::printText(parent::CREATE_USER_FORM_SUBMIT) . "'>";
         $output.="        </p>";
         $output.="    </div>";
-        $output.="      <input type='hidden' name='url' value='";
-        $output.=($_SERVER['HTTPS']) ? 'https://' : 'http://';
-        $output.=$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'] . "'/>";
+        $output.="      <input type='hidden' name='url' value='" . Util::getUrlCurrent() . "'/>";
         $output.="  </form>";
         $output.=" </div>";
 
@@ -144,12 +143,12 @@ class Html extends Lang {
     }
 
     public function msj_error_email_exists() {
-        $output = " <div style='padding: 10px;margin-bottom: 20px;font-size: 12pt;color:red;border:1px red dashed;'><p>" . parent::printText(parent::CREATE_USER_FORM_ERROR_EMAIL_EXISTS) . "</p></div>";
+        $output = " <div  id='aptg-msj-error' style='" . Css::trap_msj_error . "'><p>" . parent::printText(parent::CREATE_USER_FORM_ERROR_EMAIL_EXISTS) . "</p></div>";
         return $output;
     }
 
     public function msj_success_create_user($email, $link_login) {
-        $output = "<div style='padding: 20px;margin-bottom: 20px;font-size: 15pt;'><p>" . parent::printText(parent::CREATE_USER_FORM_MSJ_SUCCESS, array("email" => $email, "link_login" => $link_login)) . "</p></div>";
+        $output = "<div id='aptg-msj' " . Css::trap_content_msj . "><p>" . parent::printText(parent::CREATE_USER_FORM_MSJ_SUCCESS, array("email" => $email, "link_login" => $link_login."?response=refused&email=".$email)) . "</p></div>";
         return $output;
     }
 
@@ -158,29 +157,29 @@ class Html extends Lang {
     //********************************************************************
 
     public function formLogin() {
-        $output = " <div id='aptg-login' class='contact-form-wrapper' style='margin-bottom:150px;'>";
-        $output.="  <form id='form_cuenta' method='post' action='" . Config::URL_POST_LOGIN . "'>";
-
+        $output = " <div id='aptg-login' style='width: 100%;text-align:center;'>";
+        $output.="  <form id='form_cuenta' style='width: 50%;display: inline-block;min-width:340px;' method='post' action='" . Config::URL_POST_LOGIN . "'>";
         $output.="    <h2>" . parent::printText(parent::LOGIN_FORM_DESCRIPTION_LABEL) . "</h2>";
-        $output.="  <div class='grids' style='max-width: 500px;margin: auto;'>";
-        $output.="     <p class='grid-12'>";
-        $output.="        <label for='email'>" . parent::printText(parent::LOGIN_FORM_INPUT_EMAIL) . "</label>";
-        $output.="       <input type='text' name='email' id='email' value='";
+        $output.="  <div class='grid'>";
+        $output.="     <p class='cell' " . Css::trap_cell . ">";
+        $output.="        <label " . Css::trap_cell_label . " for='email'>" . parent::printText(parent::LOGIN_FORM_INPUT_EMAIL) . "</label>";
+        $output.="       <input " . Css::trap_cell_input_text . " type='text' name='email' id='email' value='";
         $output.=(isset($_GET['email'])) ? $_GET['email'] : '';
         $output.="'></p>";
-        $output.="    <p class='grid-12'>";
-        $output.="        <label for='contrasena'>" . parent::printText(parent::LOGIN_FORM_INPUT_PASSWORD) . "</label>";
-        $output.="        <input type='password' name='contrasena' id='contrasena' value=''>";
+        $output.="    <p class='cell' " . Css::trap_cell . ">";
+        $output.="        <label " . Css::trap_cell_label . " for='contrasena'>" . parent::printText(parent::LOGIN_FORM_INPUT_PASSWORD) . "</label>";
+        $output.="        <input " . Css::trap_cell_input_text . " type='password' name='contrasena' id='contrasena' value=''>";
         $output.="    </p>";
-        $output.="    <p class='grid-6'>";
-        $output.="       <input type='checkbox' name='recordarme'/> " . parent::printText(parent::LOGIN_FORM_CHECK_REMEMBER);
+        $output.="    <p class='cell-2' " . Css::trap_cell2 . ">";
+        $output.="      <span style='text-align:left;display: block;'><input type='checkbox' name='recordarme'/> " . parent::printText(parent::LOGIN_FORM_CHECK_REMEMBER) . "</span>";
         $output.="     </p>";
-        $output.="     <p class='grid-6' style='text-align: right;'>";
-        $output.="          <a href='" . Util::UrlFiltrate(Util::getUrlCurrent()) . "?stage=recovery'>" . parent::printText(parent::LOGIN_FORM_LINK_RECOVERY) . "</a>";
+        $output.="     <p class='cell-2' " . Css::trap_cell2 . ">";
+        $output.="          <span style='text-align:right;display: block;'><a href='" . Util::UrlFiltrate(Util::getUrlCurrent()) . "?stage=recovery'>" . parent::printText(parent::LOGIN_FORM_LINK_RECOVERY) . "</a></span>";
         $output.="      </p>";
         $output.="       <input type='hidden' name='url' value='" . Util::UrlFiltrate(Util::getUrlCurrent()) . "'/>";
-        $output.=" <p class='buttons'>";
-        $output.="    <input type='submit' id='submitted' class='contact-form-button' name='submitted' value='" . parent::printText(parent::LOGIN_FORM_SUBMIT) . "'>";
+        $output.=" <p class='buttons' class='cell' " . Css::trap_cell . ">";
+        $output.="<span style='wdith:100%;display:block;margin-top:20px;'></span>";
+        $output.="    <input  " . Css::trap_button . " type='submit' id='submitted' name='submitted' value='" . parent::printText(parent::LOGIN_FORM_SUBMIT) . "'>";
         $output.="  </p>";
         $output.="    </div>";
         $output.="   </form>";
@@ -190,27 +189,12 @@ class Html extends Lang {
     }
 
     public function msj_logout() {
-        $output = " <div style='color: white;
-                 padding: 8px;
-                 border: 1px rgb(0, 94, 0) solid;
-                 background: rgba(0, 128, 0, 0.8);
-                 -webkit-border-radius: 5px;
-                 -moz-border-radius: 5px;
-                 border-radius: 5px;'>
-                <p style='font-size: 15pt;'>" . parent::printText(parent::LOGIN_FORM_MSJ_LOGOUT) . "</p>
-            </div>";
+        $output = " <div id='aptg-msj-logout' " . Css::trap_msj_logout . ">" . parent::printText(parent::LOGIN_FORM_MSJ_LOGOUT) . "</div>";
         return $output;
     }
 
     public function msj_send_email_confirmation() {
-        $output = "<div style='color: white;
-                 padding: 8px;
-                 border: 1px rgb(0, 94, 0) solid;
-                 background: rgba(0, 128, 0, 0.8);
-                 -webkit-border-radius: 5px;
-                 -moz-border-radius: 5px;
-                 border-radius: 5px;'>
-                <p style='font-size: 15pt;'>" . parent::printText(parent::LOGIN_FORM_SEND_EMAIL_CONFIRMATION, array("email" => (isset($_GET["email"])) ? $_GET["email"] : "")) . "</div>";
+        $output = "<div id='aptg-msj-success' " . Css::trap_msj_success . ">" . parent::printText(parent::LOGIN_FORM_SEND_EMAIL_CONFIRMATION, array("email" => (isset($_GET["email"])) ? $_GET["email"] : "")) . "</div>";
         return $output;
     }
 
@@ -220,31 +204,28 @@ class Html extends Lang {
                     "email" => (isset($_GET["email"])) ? $_GET["email"] : "",
                     "link" => str_replace(":id_user", (isset($_GET["user"])) ? $_GET["user"] : 0, Config::URL_GET_FORWARD_ACTIVATION_ACCOUNT)));
 
-        $output = "<div style='color: red;padding: 10px;border: 1px red dashed;'>";
-        $output.="<p style='font-size: 15pt;'>" . $text . "</p></div>";
+        $output = "<div id='aptg-msj-error' style='" . Css::trap_msj_error . "'><p>" . $text . "</p></div>";
 
         return $output;
     }
 
     public function msj_login_fail() {
-        $output = " <div style='color: red;padding: 10px;border: 1px red dashed;'><p style='font-size: 15pt;'>" . parent::printText(parent::LOGIN_FORM_MSJ_FAIL_LOGIN) . "</p></div>";
+        $output = "<div id='aptg-msj-error' style='" . Css::trap_msj_error . "'><p>" . parent::printText(parent::LOGIN_FORM_MSJ_FAIL_LOGIN) . "</p></div>";
         return $output;
     }
 
     public function msj_fail_password_recovery() {
-        $output = "<div style='color: red;padding: 10px;border: 1px red dashed;'>
-                <p style='font-size: 15pt;'>" . parent::printText(parent::LOGIN_FORM_FAIL_RECOVERY_PASSWORD) . "</p>
-            </div>";
+        $output = "<div id='aptg-msj-error' style='" . Css::trap_msj_error . "'><p>" . parent::printText(parent::LOGIN_FORM_FAIL_RECOVERY_PASSWORD) . "</p></div>";
         return $output;
     }
 
     public function msj_recovery_password() {
-        $output = "<header class='page-header'>" . parent::printText(parent::LOGIN_FORM_MSJ_RECOVERY_PASSWORD) . "</header>";
+        $output = "<header style='text-align:center;'>" . parent::printText(parent::LOGIN_FORM_MSJ_RECOVERY_PASSWORD) . "</header>";
         return $output;
     }
 
     public function msj_confirmation_email() {
-        $output = "<header class='page-header'>" . parent::printText(parent::LOGIN_FORM_MSJ_CONFIRMATION_MAIL) . "</header>";
+        $output = "<header style='text-align:center;'><h1>" . parent::printText(parent::LOGIN_FORM_MSJ_CONFIRMATION_MAIL) . "</h1></header>";
         return $output;
     }
 
@@ -253,18 +234,18 @@ class Html extends Lang {
     //********************************************************************
 
     public function formRecoveryPassword($lang) {
-        $output = "<div id='aptg-form-recovery' class='contact-form-wrapper'>";
-        $output.="<form id='form' method='post' action='" . Config::URL_POST_RECOVERY_PASSWORD . "?lang=" . $lang . "'>";
+        $output = "<div id='aptg-form-recovery' style='width: 100%;text-align:center;'>";
+        $output.="<form id='form' method='post' style='width: 50%;display: inline-block;min-width:340px;' action='" . Config::URL_POST_RECOVERY_PASSWORD . "?lang=" . $lang . "'>";
         $output.="    <h2>" . parent::printText(parent::RECOVERY_FORM_TITLE) . "</h2>";
-        $output.="    <div class='msj-error' id='msj-error' style='display:none;'></div>";
-        $output.="    <div class='grids' style='max-width: 500px;margin: auto;'>";
-        $output.="<p class='grid-12'>";
-        $output.="    <label for='email'>" . parent::printText(parent::RECOVERY_FORM_INPUT_EMAIL) . "</label>";
-        $output.="   <input type='text' name='email' id='email' value=''>";
+        $output.="    <div  style='" . Css::trap_msj_error . "display:none;' id='msj-error' ></div>";
+        $output.="    <div class='grid' style='max-width: 500px;margin: auto;'>";
+        $output.="<p class='cell' " . Css::trap_cell . ">";
+        $output.="    <label " . Css::trap_cell_label . " for='email'>" . parent::printText(parent::RECOVERY_FORM_INPUT_EMAIL) . "</label>";
+        $output.="   <input " . Css::trap_cell_input_text . " type='text' name='email' id='email' value=''>";
         $output.="<input type='hidden' name='url' value='" . Util::getUrlCurrent() . "'/>";
         $output.=" </p>";
-        $output.=" <p class='buttons'>";
-        $output.="     <input style='color: #fff;font-weight: bold;text-align: center;text-transform: uppercase; line-height: 1;-moz-transition: all 0.35s;-o-transition: all 0.35s;-webkit-transition: all 0.35s;transition: all 0.35s;background-color: #00b7e5;' type='button' id='submitted' class='contact-form-button' name='submitted' value='" . parent::printText(parent::RECOVERY_FORM_SUBMIT) . "'>";
+        $output.=" <p class='cell' " . Css::trap_cell . ">";
+        $output.="     <input " . Css::trap_button . " type='button' id='submitted' class='contact-form-button' name='submitted' value='" . parent::printText(parent::RECOVERY_FORM_SUBMIT) . "'>";
         $output.=" </p>";
         $output.=" </div>";
         $output.="     </form>";
@@ -279,11 +260,12 @@ class Html extends Lang {
         $output.= "  var email = jQuery('#email').val();";
         $output.= "   var val = true;";
         $output.= " if (!validarEmail(email)) {";
-        $output.= "      jQuery('#msj-error').html('El correo electrónico ingresado es invalido');";
+        $output.= "      jQuery('#msj-error').html('".parent::printText(parent::RECOVERY_FORM_ERROR_INPUT_EMAIL)."');";
         $output.= "      jQuery('#msj-error').slideToggle();";
         $output.= "      val = false;";
         $output.= "  }";
-        $output.= "   if (val)";
+      
+        $output.= "  if (val)";
         $output.= "       jQuery('#form').submit();";
         $output.= "  });";
         $output.= "  function validarEmail(email) {";
@@ -304,23 +286,23 @@ class Html extends Lang {
                     "email" => (isset($_GET["email"])) ? $_GET["email"] : "",
                     "link" => str_replace(":id_user", (isset($_GET["user"])) ? $_GET["user"] : 0, Config::URL_GET_FORWARD_ACTIVATION_ACCOUNT)));
 
-        $output = "<div style='color: orangered;padding: 10px;border: 1px orangered dashed;'>";
+        $output = "<div id='aptg-msj-error' style='" . Css::trap_msj_error . "'>";
         $output.="<div style='text-align: center;font-size: 17pt;'><b>" . parent::printText(parent::RECOVERY_FORM_MSJ_ACCOUNT_INACTIVE_TITLE) . "</b></div>";
         $output.="<p>" . $text_description . "</p></div>";
         return $output;
     }
 
     public function msj_rp_response_fail_email() {
-        $output = "<div style='color: red;padding: 10px;border: 1px red dashed;'><p>" . parent::printText(parent::RECOVERY_FORM_MSJ_FAIL_EMAIL, array(
+        $output = "<div id='aptg-msj-error' style='" . Css::trap_msj_error . "'><p>" . parent::printText(parent::RECOVERY_FORM_MSJ_FAIL_EMAIL, array(
                     "email" => (isset($_GET["email"])) ? $_GET["email"] : "")) . "</p></div>";
         return $output;
     }
 
     public function msj_rp_response_send_email() {
-        $output = " <header class='page-header'>";
-        $output.="<h1 class='blog-title'>" . parent::printText(parent::RECOVERY_FORM_MSJ_SEND_EMAIL_TITLE) . "</h1>";
+        $output = " <header>";
+        $output.="<h1>" . parent::printText(parent::RECOVERY_FORM_MSJ_SEND_EMAIL_TITLE) . "</h1>";
         $output.=" </header>";
-        $output.=" <div style='padding: 20px;margin-bottom: 20px;font-size: 15pt;'>";
+        $output.=" <div id='aptg-msj' " . Css::trap_content_msj . ">";
         $output.="  <p>" . parent::printText(parent::RECOVERY_FORM_MSJ_SEND_EMAIL, array(
                     "email" => (isset($_GET["email"])) ? $_GET["email"] : "")) . "</p>";
         $output.="  </div>";

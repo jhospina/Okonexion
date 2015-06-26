@@ -64,8 +64,8 @@ class Monedas {
     }
 
     static function nomenclatura($id, $numero) {
-        $numero=  Monedas::desformatearNumero($id, $numero);
-        return Monedas::simbolo($id) . "" . Monedas::formatearNumero($id, $numero). " " . $id;
+        $numero = Monedas::desformatearNumero($id, $numero);
+        return Monedas::simbolo($id) . "" . Monedas::formatearNumero($id, $numero) . " " . $id;
     }
 
     /** Retorna un numero formateado indicado por la moneda 
@@ -101,6 +101,28 @@ class Monedas {
         $get = explode("<span class=bld>", $get);
         $get = explode("</span>", $get[1]);
         return preg_replace("/[^0-9\.]/", null, $get[0]);
+    }
+
+    /** Obtiene el tipo moneda asignada para el pais dado
+     * 
+     * @param String $pais El nombre del pais en Ingles
+     * @return String
+     */
+    static function asignacionPais($pais) {
+        $paises = Paises::listado();
+
+        if ($pais == "Colombia")
+            return Monedas::COP;
+
+        if (in_array($pais, $paises)) {
+            $codPais = array_search($pais, $paises);
+            if (strpos($codPais, "_EUR") !== false)
+                return Monedas::EUR;
+            else
+                return Monedas::USD;
+        }
+
+        return Monedas::USD;
     }
 
 }

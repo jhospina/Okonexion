@@ -10,8 +10,13 @@ namespace Appsthergo;
  */
 /** Requeriments
  *  - From Version PHP 5.3
+ */
+
+/** NOTAS: 
+ * Esta API aun esta incompleta, falta por implemente un sistema de seguridad, por Token y API Key que permita validar el uso de la API de un sistema legitimo
  *  
  */
+
 include 'API/Html.php';
 
 use Appsthergo\API\Html as Html;

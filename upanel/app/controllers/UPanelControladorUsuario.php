@@ -73,6 +73,15 @@ class UPanelControladorUsuario extends \BaseController {
         $data["contrasena"] = $data["password"];
 
         if ($user->registrar($data)) {
+
+            $ip = Util::obtenerDireccionIP();
+            $pais = Paises::obtenerPaisDesdeIP($ip, "name");
+            //Obtiene la moneda asignado para el pais del usuario
+            $moneda = Monedas::asignacionPais($pais);
+            //Asigna la moneda al usuario
+            User::agregarMetaDato(UsuarioMetadato::OP_MONEDA, $moneda, $user->id);
+
+
             //Envia un mensaje de confirmación con un codigo al correo electronico, para validar la cuenta de usuario
             $correo = new Correo;
             $codigo = $correo->generarCodigo();

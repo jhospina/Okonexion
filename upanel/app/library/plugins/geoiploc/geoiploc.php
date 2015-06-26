@@ -1,333 +1,205 @@
 <?php
 
-class Paises {
+/*
 
-    const AF = 'Afghanistan';
-    const AL = 'Albania';
-    const ALG = 'Algeria';
-    const AMS = 'American Samoa';
-    const AD = 'Andorra';
-    const AO = 'Angola';
-    const AI = 'Anguilla';
-    const AQ = 'Antarctica';
-    const AG = 'Antigua and Barbuda';
-    const AR = 'Argentina';
-    const AM = 'Armenia';
-    const AW = 'Aruba';
-    const AU = 'Australia';
-    const AT_EU = 'Austria';
-    const AZ = 'Azerbaijan';
-    const BS = 'Bahamas';
-    const BH = 'Bahrain';
-    const BD = 'Bangladesh';
-    const BB = 'Barbados';
-    const BY = 'Belarus';
-    const BE_EU = 'Belgium';
-    const BZ = 'Belize';
-    const BJ = 'Benin';
-    const BM = 'Bermuda';
-    const BT = 'Bhutan';
-    const BO = 'Bolivia';
-    const BA = 'Bosnia and Herzegovina';
-    const BW = 'Botswana';
-    const BV = 'Bouvet Island';
-    const BR = 'Brazil';
-    const BQ = 'British Antarctic Territory';
-    const IO = 'British Indian Ocean Territory';
-    const VG = 'British Virgin Islands';
-    const BN = 'Brunei';
-    const BG_EU = 'Bulgaria';
-    const BF = 'Burkina Faso';
-    const BI = 'Burundi';
-    const KH = 'Cambodia';
-    const CM = 'Cameroon';
-    const CA = 'Canada';
-    const CT = 'Canton and Enderbury Islands';
-    const CV = 'Cape Verde';
-    const KY = 'Cayman Islands';
-    const CF = 'Central African Republic';
-    const TD = 'Chad';
-    const CL = 'Chile';
-    const CN = 'China';
-    const CO = 'Colombia';
-    const KM = 'Comoros';
-    const CG = 'Congo';
-    const CK = 'Cook Islands';
-    const CR = 'Costa Rica';
-    const HR_EU = 'Croatia';
-    const CU = 'Cuba';
-    const CY_EU = 'Cyprus';
-    const CZ_EU = 'Czech Republic';
-    const CI = 'Côte d’Ivoire';
-    const DK_EU = 'Denmark';
-    const DJ = 'Djibouti';
-    const DM = 'Dominica';
-    const DOR = 'Dominican Republic';
-    const NQ = 'Dronning Maud Land';
-    const DD = 'East Germany';
-    const EC = 'Ecuador';
-    const EG = 'Egypt';
-    const SV = 'El Salvador';
-    const ES_EU = 'España';
-    const GQ = 'Equatorial Guinea';
-    const ER = 'Eritrea';
-    const EE_EU = 'Estonia';
-    const ET = 'Ethiopia';
-    const FK = 'Falkland Islands';
-    const FO = 'Faroe Islands';
-    const FJ = 'Fiji';
-    const FI_EU = 'Finland';
-    const FR_EU = 'France';
-    const GF = 'French Guiana';
-    const PF = 'French Polynesia';
-    const TF = 'French Southern Territories';
-    const FQ = 'French Southern and Antarctic Territories';
-    const GA = 'Gabon';
-    const GM = 'Gambia';
-    const GE = 'Georgia';
-    const DE_EU = 'Germany';
-    const GH = 'Ghana';
-    const GI = 'Gibraltar';
-    const GR_EU = 'Greece';
-    const GL = 'Greenland';
-    const GD = 'Grenada';
-    const GP = 'Guadeloupe';
-    const GU = 'Guam';
-    const GT = 'Guatemala';
-    const GG = 'Guernsey';
-    const GN = 'Guinea';
-    const GW = 'Guinea-Bissau';
-    const GY = 'Guyana';
-    const HT = 'Haiti';
-    const HM = 'Heard Island and McDonald Islands';
-    const HN = 'Honduras';
-    const HK = 'Hong Kong SAR China';
-    const HU_EU = 'Hungary';
-    const IS = 'Iceland';
-    const IN = 'India';
-    const ID = 'Indonesia';
-    const IR = 'Iran';
-    const IQ = 'Iraq';
-    const IE_EU = 'Ireland';
-    const IM = 'Isle of Man';
-    const IL = 'Israel';
-    const IT_EU = 'Italy';
-    const JM = 'Jamaica';
-    const JP = 'Japan';
-    const JE = 'Jersey';
-    const JT = 'Johnston Island';
-    const JO = 'Jordan';
-    const KZ = 'Kazakhstan';
-    const KE = 'Kenya';
-    const KI = 'Kiribati';
-    const KW = 'Kuwait';
-    const KG = 'Kyrgyzstan';
-    const LA = 'Laos';
-    const LV_EU = 'Latvia';
-    const LB = 'Lebanon';
-    const LS = 'Lesotho';
-    const LR = 'Liberia';
-    const LY = 'Libya';
-    const LI = 'Liechtenstein';
-    const LT_EU = 'Lithuania';
-    const LU_EU = 'Luxembourg';
-    const MO = 'Macau SAR China';
-    const MK = 'Macedonia';
-    const MG = 'Madagascar';
-    const MW = 'Malawi';
-    const MY = 'Malaysia';
-    const MV = 'Maldives';
-    const ML = 'Mali';
-    const MT_EU = 'Malta';
-    const MH = 'Marshall Islands';
-    const MQ = 'Martinique';
-    const MR = 'Mauritania';
-    const MU = 'Mauritius';
-    const YT = 'Mayotte';
-    const FX = 'Metropolitan France';
-    const MX = 'Mexico';
-    const FM = 'Micronesia';
-    const MI = 'Midway Islands';
-    const MD = 'Moldova';
-    const MC = 'Monaco';
-    const MN = 'Mongolia';
-    const ME = 'Montenegro';
-    const MS = 'Montserrat';
-    const MA = 'Morocco';
-    const MZ = 'Mozambique';
-    const MM = 'Myanmar [Burma]';
-    const NA = 'Namibia';
-    const NR = 'Nauru';
-    const NP = 'Nepal';
-    const NL_EU = 'Netherlands';
-    const AN_EU = 'Netherlands Antilles';
-    const NT = 'Neutral Zone';
-    const NC = 'New Caledonia';
-    const NZ = 'New Zealand';
-    const NI = 'Nicaragua';
-    const NE = 'Niger';
-    const NG = 'Nigeria';
-    const NU = 'Niue';
-    const NF = 'Norfolk Island';
-    const KP = 'North Korea';
-    const VD = 'North Vietnam';
-    const MP = 'Northern Mariana Islands';
-    const NO = 'Norway';
-    const OM = 'Oman';
-    const PC = 'Pacific Islands Trust Territory';
-    const PK = 'Pakistan';
-    const PW = 'Palau';
-    const PS = 'Palestinian Territories';
-    const PA = 'Panama';
-    const PZ = 'Panama Canal Zone';
-    const PG = 'Papua New Guinea';
-    const PY = 'Paraguay';
-    const YD = 'People\'s Democratic Republic of Yemen';
-    const PE = 'Peru';
-    const PH = 'Philippines';
-    const PN = 'Pitcairn Islands';
-    const PL_EU = 'Poland';
-    const PT_EU = 'Portugal';
-    const PR = 'Puerto Rico';
-    const QA = 'Qatar';
-    const RO_EU = 'Romania';
-    const RU = 'Russia';
-    const RW = 'Rwanda';
-    const RE = 'Réunion';
-    const BL = 'Saint Barthélemy';
-    const SH = 'Saint Helena';
-    const KN = 'Saint Kitts and Nevis';
-    const LC = 'Saint Lucia';
-    const MF = 'Saint Martin';
-    const PM = 'Saint Pierre and Miquelon';
-    const VC = 'Saint Vincent and the Grenadines';
-    const WS = 'Samoa';
-    const SM = 'San Marino';
-    const SA = 'Saudi Arabia';
-    const SN = 'Senegal';
-    const RS = 'Serbia';
-    const CS = 'Serbia and Montenegro';
-    const SC = 'Seychelles';
-    const SL = 'Sierra Leone';
-    const SG = 'Singapore';
-    const SK_EU = 'Slovakia';
-    const SI_EU = 'Slovenia';
-    const SB = 'Solomon Islands';
-    const SO = 'Somalia';
-    const ZA = 'South Africa';
-    const GS = 'South Georgia and the South Sandwich Islands';
-    const KR = 'South Korea';
-    const LK = 'Sri Lanka';
-    const SD = 'Sudan';
-    const SR = 'Suriname';
-    const SJ = 'Svalbard and Jan Mayen';
-    const SZ = 'Swaziland';
-    const SE_EU = 'Sweden';
-    const CH_EU = 'Switzerland';
-    const SY = 'Syria';
-    const ST = 'São Tomé and Príncipe';
-    const TW = 'Taiwan';
-    const TJ = 'Tajikistan';
-    const TZ = 'Tanzania';
-    const TH = 'Thailand';
-    const TL = 'Timor-Leste';
-    const TG = 'Togo';
-    const TK = 'Tokelau';
-    const TO = 'Tonga';
-    const TT = 'Trinidad and Tobago';
-    const TN = 'Tunisia';
-    const TR = 'Turkey';
-    const TM = 'Turkmenistan';
-    const TC = 'Turks and Caicos Islands';
-    const TV = 'Tuvalu';
-    const UM = 'U.S. Minor Outlying Islands';
-    const PU = 'U.S. Miscellaneous Pacific Islands';
-    const VI = 'U.S. Virgin Islands';
-    const UG = 'Uganda';
-    const UA = 'Ukraine';
-    const SU = 'Union of Soviet Socialist Republics';
-    const AE = 'United Arab Emirates';
-    const GB_EU = 'United Kingdom';
-    const US = 'United States';
-    const ZZ = 'Unknown or Invalid Region';
-    const UY = 'Uruguay';
-    const UZ = 'Uzbekistan';
-    const VU = 'Vanuatu';
-    const VA = 'Vatican City';
-    const VE = 'Venezuela';
-    const VN = 'Vietnam';
-    const WK = 'Wake Island';
-    const WF = 'Wallis and Futuna';
-    const EH = 'Western Sahara';
-    const YE = 'Yemen';
-    const ZM = 'Zambia';
-    const ZW = 'Zimbabwe';
-    const AX = 'Land Islands';
++-----------------------------------------------------------------+
+|   Created by Chirag Mehta - http://chir.ag/projects/geoiploc    |
+|-----------------------------------------------------------------|
+|                 For PHP GeoIPLocation Library                   |
++-----------------------------------------------------------------+
 
-    static function listado() {
-        $class = new ReflectionClass("Paises");
-        return $class->getConstants();
+All the functions, data conversion etc. have been written specifically
+for the PHP GeoIPLocation Library by Chirag Mehta.
+
+GeoIPLoc code & data last updated: Fri Jun 26 0:02:04 PDT 2015.
+Note: This library is updated automatically once a day.
+
+This library is released under the: Creative Commons License: Attribution 2.5
+http://creativecommons.org/licenses/by/2.5/
+
+The IP Country data is from: http://Software77.net (A Webnet77.com Company)
+
+Please review the following copy of license for more information:
+
+# INFORMATION AND NOTES ON IpToCountry.csv.gz
+# ===========================================
+#
+# ------------------------------------------------------------------------------
+# LICENSE
+# =======
+# This database is provided FREE under the terms of the
+# GENERAL PUBLIC LICENSE, June 1991
+# ------------------------------------------------------------------------------
+#
+# Generator         : ip.pl on http://Software77.net (A Webnet77.com Company)
+# Software Author   : BRM
+# Contact           : http://Webnet77.com/contact.html
+# Download          : http://software77.net/cgi-bin/ip-country/geo-ip.pl
+#
+# IMPORTANT NOTES
+# ===============
+# If you discover a bug in the database, please let us know at the contact
+# address above.
+#
+# What this database is
+# =====================
+#
+# This Database is operated and maintained by Webnet77 and updated every 1
+# days and represents [almost] all  2 billion IP numbers [approximately] in use on the
+# internet today.
+#
+# This Database is automatically reconstituted every 1 days by special
+# software running on our servers. The bottom of the main page shows how long ago
+# it was updated as well as giving an indication of when the next update will
+# take place.
+# ------------------------------------------------------------------------------
+#
+# FILE FORMAT
+# ===========
+#
+#      --------------------------------------------------------------
+#      All lines beginning with either "#" or whitespace are comments
+#      --------------------------------------------------------------
+#
+# IP FROM      IP TO        REGISTRY  ASSIGNED   CTRY CNTRY COUNTRY
+# "1346797568","1346801663","ripencc","20010601","IL","ISR","ISRAEL"
+#
+# IP FROM   : Numerical representation of IP address.
+#             Example: (from Right to Left)
+#             1.2.3.4 = 4 + (3 * 256) + (2 * 256 * 256) + (1 * 256 * 256 * 256)
+#             is 4 + 768 + 13,1072 + 16,777,216 = 16,909,060
+#
+# REGISTRY  : apcnic, arin, lacnic, ripencc and afrinic
+#             Also included as of April 22, 2005 are the IANA IETF Reserved
+#             address numbers. These are important since any source claiming
+#             to be from one of these IP's must be spoofed.
+#
+# ASSIGNED  : The date this IP or block was assigned. (In Epoch seconds)
+#             NOTE: Where the allocation or assignment has been transferred from
+#                   one registry to another, the date represents the date of first
+#                   assignment or allocation as received in from the original RIR.
+#                   It is noted that where records do not show a date of first
+#                   assignment, the date is given as "0".
+#
+# CTRY      : 2 character international country code
+#             NOTE: ISO 3166 2-letter code of the organisation to which the
+#             allocation or assignment was made, and the enumerated variances of:
+#           AP - non-specific Asia-Pacific location
+#           CS - Serbia and Montenegro (Formally Czechoslovakia)
+#           YU - Serbia and Montenegro (Formally Yugoslavia) (Being phased out)
+#           EU - non-specific European Union location
+#           FX - France, Metropolitan
+#           PS - Palestinian Territory, Occupied
+#           UK - United Kingdom (standard says GB)
+#         * ZZ - IETF RESERVED address space.
+#
+#             These values are not defined in ISO 3166 but are widely used.
+#           * IANA Reserved Address space
+#
+# CNTRY     : Country Abbreviation. Usually 3 Character representation
+#
+# COUNTRY   : Country Name. Full Country Name.
+#
+# Countries falling under AFRINIC now show correctly (June 27, 2005)
+# ------------------------------------------------------------------------------
+# THIS DATABSE IS PROVIDED WITHOUT ANY WARRANTY WHATSOEVER. USE ENTIRELY AT YOUR
+# OWN RISK. NO LIABILITY WHATSOEVER, OF ANY NATURE, WILL BE ASSUMEND BY
+# Webnet77.com, IT'S DISTRIBUTORS, RESELLERS OR AGENTS. SHOULD THE DATABASE
+# PROVE TO BE FAULTY, CAUSE YOU LOSS OR OTHER FINANCIAL DAMAGE, YOU AGREE YOU
+# HAVE NO CLAIM AGINST Webnet77.com IT'S DISTRIBUTORS, RESELLERS OR AGENTS. IF
+# YOU DO NOT ACCEPT THESE TERMS YOU MAY NOT USE THIS DATABASE.
+# ------------------------------------------------------------------------------
+#
+#                            � 2002-12:08:03 Webnet77.com
+#
+#
+#
+#
+
+*/
+
+
+/* usage:
+
+     $cCode = getCountryFromIP($ip);           // returns country code by default
+     $cCode = getCountryFromIP($ip, "code");   // you can specify code - optional
+     $cAbbr = getCountryFromIP($ip, "AbBr");   // returns country abbreviation - case insensitive
+     $cName = getCountryFromIP($ip, " NamE "); // full name of country - spaces are trimmed
+
+     $ip must be of the form "192.168.1.100"
+     $type can be "code", "abbr", "name", or omitted
+
+  ip cacheing:
+
+     this function has a simple cache that works pretty well when you are calling
+     getCountryFromIP thousands of times in the same script and IPs are repeated e.g.
+     while parsing access logs. Without caching, each IP would be searched everytime
+     you called this function. The only time caching would slow down performance
+     is if you have 100k+ unique IP addresses. But then you should use a dedicated
+     box for GeoLocation anyway and of course feel free to optimize this script.
+*/
+
+function getCountryFromIP($ip, $type = "code")
+{
+  global $geoipaddrfrom, $geoipaddrupto;
+  global $geoipctry, $geoipcntry, $geoipcountry;
+  global $geoipcount, $geoipcache;
+
+  if(strpos($ip, ".") === false)
+    return "";
+
+  $ip = substr("0000000000" . sprintf("%u", ip2long($ip)), -10);
+  $ipn = base64_encode($ip);
+
+  if(isset($geoipcache[$ipn])) // search in cache
+  {
+    $ct = $geoipcache[$ipn];
+  }
+  else // search in IP Address array
+  {
+    $from = 0;
+    $upto = $geoipcount;
+    $ct   = "ZZ"; // default: Reserved or Not Found
+
+    // simple binary search within the array for given text-string within IP range
+    while($upto > $from)
+    {
+      $idx = $from + intval(($upto - $from)/2);
+      $loip = substr("0000000000" . $geoipaddrfrom[$idx], -10);
+      $hiip = substr("0000000000" . $geoipaddrupto[$idx], -10);
+
+      if($loip <= $ip && $hiip >= $ip)
+      {
+        $ct = $geoipctry[$idx];
+        break;
+      }
+      else if($loip > $ip)
+      {
+        if($upto == $idx)
+          break;
+        $upto = $idx;
+      }
+      else if($hiip < $ip)
+      {
+        if($from == $idx)
+          break;
+        $from = $idx;
+      }
     }
 
-    static function obtenerNombre($id) {
-        $paises = Paises::listado();
-        return (!is_numeric($id)) ? $paises[$id] : "";
-    }
+    // cache the country code
+    $geoipcache[$ipn] = $ct;
+  }
 
-    static function obtenerPaisDesdeIP($ip, $type = "code") {
-        global $geoipaddrfrom, $geoipaddrupto;
-        global $geoipctry, $geoipcntry, $geoipcountry;
-        global $geoipcount, $geoipcache;
+  $type = trim(strtolower($type));
 
-        if (strpos($ip, ".") === false)
-            return "";
+  if($type == "abbr")
+    $ct = $geoipcntry[$ct];
+  else if($type == "name")
+    $ct = $geoipcountry[$ct];
 
-        $ip = substr("0000000000" . sprintf("%u", ip2long($ip)), -10);
-        $ipn = base64_encode($ip);
-
-        if (isset($geoipcache[$ipn])) { // search in cache
-            $ct = $geoipcache[$ipn];
-        } else { // search in IP Address array
-            $from = 0;
-            $upto = $geoipcount;
-            $ct = "ZZ"; // default: Reserved or Not Found
-            // simple binary search within the array for given text-string within IP range
-            while ($upto > $from) {
-                $idx = $from + intval(($upto - $from) / 2);
-                $loip = substr("0000000000" . $geoipaddrfrom[$idx], -10);
-                $hiip = substr("0000000000" . $geoipaddrupto[$idx], -10);
-
-                if ($loip <= $ip && $hiip >= $ip) {
-                    $ct = $geoipctry[$idx];
-                    break;
-                } else if ($loip > $ip) {
-                    if ($upto == $idx)
-                        break;
-                    $upto = $idx;
-                }
-                else if ($hiip < $ip) {
-                    if ($from == $idx)
-                        break;
-                    $from = $idx;
-                }
-            }
-
-            // cache the country code
-            $geoipcache[$ipn] = $ct;
-        }
-
-        $type = trim(strtolower($type));
-
-        if ($type == "abbr")
-            $ct = $geoipcntry[$ct];
-        else if ($type == "name")
-            $ct = $geoipcountry[$ct];
-
-        return $ct;
-    }
-
+  return $ct;
 }
-
 
 $GLOBALS['geoipaddrfrom'] = array('0','16777216','16777472','16778240','16779264','16781312','16785408','16793600','16809984','16842752','16843008','16843264','16859136','16875520','16908288','16909056','16909312','16941056','16973824','17039360','17039616','17072128','17104896','17170432','17301504','17367040','17432576','17435136','17435392','17465344','17498112','17563648','17825792','18087936','18153472','18219008','18350080','18874368','18907136','18923520','18939904','19005440','19136512','19202048','19267584','19398656','19726336','19791872','19922944','20185088','20447232','20971520','21102592','21233664','21495808','22020096','23068672','24117248','24379392','24641536','27262976','28311552','28442624','28540928',
   '28573696','28966912','29097984','29884416','29949952','30015488','30408704','33554432','34603008','35127296','35651584','36700160','36962304','37486592','37748736','38273024','38797312','39059456','39321600','39583744','39845888','40370176','40894464','41418752','41943040','42205184','42467328','42991616','43253760','43515904','43778048','44040192','45088768','46137344','46661632','47710208','48234496','49283072','49807360','50331648','83886080','83951616','83959808','83961856','83963904','83965952','83968000','83976192','83978240','83980288','83982336','84017152','84021248','84023296','84025344','84033536','84037632','84039680','84041728','84049920','84082688','84148224','84410368','84434944','84443136','84451328','84457472','84459520','84471808','84475904','84545536','84549632','84551680','84557824','84574208','84576256','84582400','84590592','84592640','84594688','84598784','84600832','84602880','84606976','84609024','84615168','84617216','84619264','84621312','84623360','84627456','84631552','84639744','84672512','84934656','85196800','85262336','85327872','85360640','85362688','85364736','85366784','85368832','85377024','85385216','85387264','85389312','85391360','85393408','85401600','85403648','85405696','85407744','85409792','85417984','85422080','85424128','85426176','85458944','85721088','85723136','85725184','85729280','85731328','85733376','85737472','85753856','85770240','85786624','85852160','86016000','86018048','86020096','86022144','86024192','86026240','86028288','86030336','86032384','86048768','86114304','86147072','86155264','86157312','86159360','86161408','86163456','86171648','86173696','86175744','86177792','86179840','86224896','86226944','86228992','86231040','86233088','86235136','86237184','86245376','86376448','86409216','86441984','86474752','86482944','86484992','86487040','86489088','86491136','86493184','86495232','86497280','86499328','86503424','86505472','86507520',
@@ -2700,3 +2572,5 @@ $GLOBALS['geoipcount'] = count($GLOBALS['geoipaddrfrom']);
 // can use direct hash because max # possible IPAddress = max size of cache array
 // realistically, cache size will be much much smaller
 $GLOBALS['geoipcache'] = array();
+
+?>

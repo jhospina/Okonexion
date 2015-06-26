@@ -3,6 +3,7 @@
 namespace Appsthergo\API;
 
 require "languages/Lang_ES.php";
+require "languages/Lang_EN.php"; 
 
 class Lang {
 
@@ -49,6 +50,7 @@ class Lang {
     const RECOVERY_FORM_MSJ_FAIL_EMAIL="RECOVERY_FORM_MSJ_FAIL_EMAIL";
     const RECOVERY_FORM_MSJ_SEND_EMAIL_TITLE="RECOVERY_FORM_MSJ_SEND_EMAIL_TITLE";
     const RECOVERY_FORM_MSJ_SEND_EMAIL="RECOVERY_FORM_MSJ_SEND_EMAIL";
+    const RECOVERY_FORM_ERROR_INPUT_EMAIL="RECOVERY_FORM_ERROR_INPUT_EMAIL";
     
     public function __call($name, $args) {
         $text = constant('Appsthergo\API\Lang\Lang_' . $this->lang . '::' . $args[0]);
