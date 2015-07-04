@@ -222,7 +222,8 @@ class Util {
     static function obtenerDominioDeUrl($url) {
         $url = explode('://', $url);
         $ext = $url[0];
-        $url = explode('/', $url[1]);
+        if (isset($url[1]))
+            $url = explode('/', $url[1]);
         return $ext . "://" . $url[0];
     }
 
@@ -421,7 +422,7 @@ class Util {
     /** Obtiene la direccion IP del usuario
      * 
      * @return type
-     */ 
+     */
     static function obtenerDireccionIP() {
         if (isset($_SERVER["HTTP_CLIENT_IP"])) {
             return $_SERVER["HTTP_CLIENT_IP"];

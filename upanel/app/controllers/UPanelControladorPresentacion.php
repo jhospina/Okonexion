@@ -83,7 +83,7 @@ class UPanelControladorPresentacion extends Controller {
         //USUARIOS****************************************************
         if (User::esSuper()) {
             $cant_usuarios_suscritos = User::where("estado", User::ESTADO_SUSCRIPCION_VIGENTE)->where("tipo", User::USUARIO_REGULAR)->count();
-            $total_usuarios = User::where("estado", User::ESTADO_SUSCRIPCION_VIGENTE)->where("tipo", User::USUARIO_REGULAR)->count();
+            $total_usuarios = User::where("tipo", User::USUARIO_REGULAR)->count();
         } else {
             $cant_usuarios_suscritos = User::where("estado", User::ESTADO_SUSCRIPCION_VIGENTE)->where("instancia", Auth::user()->instancia)->where("tipo", User::USUARIO_REGULAR)->count();
             $total_usuarios = User::where("estado", User::ESTADO_SUSCRIPCION_VIGENTE)->where("instancia", Auth::user()->instancia)->where("tipo", User::USUARIO_REGULAR)->count();
@@ -164,7 +164,7 @@ class UPanelControladorPresentacion extends Controller {
         //USUARIOS****************************************************
         if (User::esSuper()) {
             $cant_usuarios_suscritos = User::where("estado", User::ESTADO_SUSCRIPCION_VIGENTE)->where("tipo", User::USUARIO_REGULAR)->count();
-            $total_usuarios = User::where("estado", User::ESTADO_SUSCRIPCION_VIGENTE)->where("tipo", User::USUARIO_REGULAR)->count();
+            $total_usuarios = User::where("tipo", User::USUARIO_REGULAR)->count();
         } else {
             $cant_usuarios_suscritos = User::where("estado", User::ESTADO_SUSCRIPCION_VIGENTE)->where("instancia", Auth::user()->instancia)->where("tipo", User::USUARIO_REGULAR)->count();
             $total_usuarios = User::where("estado", User::ESTADO_SUSCRIPCION_VIGENTE)->where("instancia", Auth::user()->instancia)->where("tipo", User::USUARIO_REGULAR)->count();

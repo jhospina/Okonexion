@@ -26,6 +26,8 @@ if (Aplicacion::existe()) {
     if (!isset($app))
         $app = Aplicacion::obtener();
     $version = ProcesoApp::obtenerNumeroVersion($app->id);
+}else{
+    $version=0;
 }
 ?>
 

@@ -233,14 +233,16 @@ Class Facturacion extends Eloquent {
             //Valida la suscripcion y las aplica
             if (strpos($producto[MetaFacturacion::PRODUCTO_ID], "suscripcion") !== false) {
 
-                //Crea una notificacion
-                Notificacion::crear(Notificacion::TIPO_SUSCRIPCION_REALIZADA);
-
                 //SI el usuario tiene una suscripcion vigente, se le añade el tiempo si afectar el tiempo de la suscripcion actual
-                if (Auth::user()->estado == User::ESTADO_SUSCRIPCION_VIGENTE)
+                if (Auth::user()->estado == User::ESTADO_SUSCRIPCION_VIGENTE) {
                     $fecha = new Fecha(Auth::user()->fin_suscripcion);
-                else
+                    //Crea una notificacion
+                    Notificacion::crear(Notificacion::TIPO_SUSCRIPCION_RENOVADA);
+                } else {
                     $fecha = new Fecha(Util::obtenerTiempoActual());
+                    //Crea una notificacion
+                    Notificacion::crear(Notificacion::TIPO_SUSCRIPCION_REALIZADA);
+                }
 
                 $ciclo = ConfigInstancia::obtenerCantidadMesesProductosSuscripcion($producto[MetaFacturacion::PRODUCTO_ID]);
 

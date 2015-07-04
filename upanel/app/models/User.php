@@ -431,4 +431,23 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return User::obtenerValorMetadato(UsuarioMetadato::OP_MONEDA, $this->id);
     }
 
+    /**
+     *  Obtiene el numero de plataformas permitidas para el usuario
+     */
+    public function getNumeroPlataformas() {
+        if ($this->estado == User::ESTADO_PERIODO_PRUEBA)
+            return 1;
+
+        if ($this->estado == User::ESTADO_SUSCRIPCION_VIGENTE) {
+            if (User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_TIPO) == ConfigInstancia::suscripcion_tipo_bronce)
+                return 1;
+            if (User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_TIPO) == ConfigInstancia::suscripcion_tipo_plata)
+                return 2;
+            if (User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_TIPO) == ConfigInstancia::suscripcion_tipo_oro)
+                return 3;
+        }
+
+        return 0;
+    }
+
 }

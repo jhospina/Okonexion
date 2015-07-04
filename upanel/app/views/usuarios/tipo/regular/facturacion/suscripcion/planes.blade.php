@@ -1,5 +1,8 @@
 <?php
 $moneda = Auth::user()->getMoneda();
+$hab_android = true;
+$hab_ios = false;
+$hab_windows = false;
 ?>
 
 
@@ -20,6 +23,12 @@ $moneda = Auth::user()->getMoneda();
         width: 30%;
         padding-bottom: 20px;
         margin-bottom: 50px;
+    }
+
+    #plan-bronce .description-item,#plan-plata .description-item,#plan-oro .description-item{
+        display: inline-block;
+        max-width: 265px;
+        vertical-align: top;
     }
 
     #plan-bronce .glyphicon-certificate,#plan-bronce h2{
@@ -70,10 +79,27 @@ $moneda = Auth::user()->getMoneda();
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffd65e', endColorstr='#febf04',GradientType=1 ); /* IE6-9 */
     }
 
-    #plan-bronce ul,#plan-plata ul,#plan-oro ul{
+    #plan-bronce ul.list-items,#plan-plata ul.list-items,#plan-oro ul.list-items{
         list-style: none;
         padding: 5px;
         min-height: 183px;
+    }
+
+    #plan-bronce ul.list-subitems,#plan-plata ul.list-subitems,#plan-oro ul.list-subitems{
+        list-style: none;
+        padding-left: 22px;
+        border: 1px rgb(144, 144, 144) solid;
+        background-color: cornsilk;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        padding-top: 10px;
+    }
+
+    #plan-bronce ul.list-subitems li,#plan-plata ul.list-subitems li,#plan-oro ul.list-subitems li{
+        font-size: 10pt;
     }
 
     #plan-bronce .platform,#plan-plata .platform,#plan-oro .platform{
@@ -137,12 +163,23 @@ $moneda = Auth::user()->getMoneda();
             <span class="glyphicon glyphicon-certificate"></span> {{trans("fact.suscripcion.plan.bronce.titulo")}}
         </h2>
         <div class="block">
-            <ul>
-                <li><span class="glyphicon glyphicon-ok"></span> {{trans("fact.suscripcion.plan.item.aplicacion.android")}}</li>
-                <li><span class="glyphicon glyphicon-ok"></span> {{trans("fact.suscripcion.plan.item.todas.plantillas")}}</li>
-                <li><span class="glyphicon glyphicon-ok"></span> {{trans("fact.suscripcion.plan.item.atencion.personalizada")}}</li>
+            <ul class="list-items">
+                <li><span class="glyphicon glyphicon-ok"></span> <span class="description-item">{{trans("fact.suscripcion.plan.item.plataformas.1")}}</span></li>
+                <li><span class="glyphicon glyphicon-ok"></span> <span class="description-item">{{trans("fact.suscripcion.plan.item.atencion.personalizada")}}</span></li>
+                <li><span class="glyphicon glyphicon-ok"></span> <span class="description-item">{{trans("fact.suscripcion.plan.item.disenos.apps")}}</span>
+                    <ul class="list-subitems">
+                        <li><span class="glyphicon glyphicon-plus"></span> {{trans("fact.suscripcion.plan.item.disenos.apps.soluciones.noticias")}}</li>
+                        <li><span class="glyphicon glyphicon-plus"></span> {{trans("fact.suscripcion.plan.item.disenos.apps.soluciones.institucional")}}</li>
+                        <li><span class="glyphicon glyphicon-plus"></span> {{trans("fact.suscripcion.plan.item.disenos.apps.soluciones.encuestas")}}</li>
+                        <li><span class="glyphicon glyphicon-plus"></span> {{trans("fact.suscripcion.plan.item.disenos.apps.soluciones.pqr")}}</li>
+                    </ul>
+                </li>
             </ul>
-            <div class="well well-sm"><img title="{{trans("fact.suscripcion.plan.item.aplicacion.android")}}" class="platform tooltip-top" src="{{URL::to("assets/img/android.png")}}" /></div>
+            <div class="well well-sm">
+                @if($hab_android) <img title="{{trans("fact.suscripcion.plan.item.aplicacion.android")}}" class="platform tooltip-top" src="{{URL::to("assets/img/android.png")}}" /> @endif
+                @if($hab_windows)<img title="{{trans("fact.suscripcion.plan.item.aplicacion.windows")}}" class="platform tooltip-top" src="{{URL::to("assets/img/windows.png")}}" /> @endif
+                @if($hab_ios)<img title="{{trans("fact.suscripcion.plan.item.aplicacion.iphone")}}" class="platform tooltip-top" src="{{URL::to("assets/img/ios.png")}}" /> @endif
+            </div>
             <div class="precio">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes_bronce."-".$moneda))}} {{$moneda}}<span class="mark-mes">/{{trans("otros.time.mes")}}</span></div>
             <hr/>
             <div class="block text-center">
@@ -159,15 +196,22 @@ $moneda = Auth::user()->getMoneda();
             <span class="glyphicon glyphicon-certificate"></span> {{trans("fact.suscripcion.plan.plata.titulo")}}
         </h2>
         <div class="block">
-            <ul>
-                <li><span class="glyphicon glyphicon-ok"></span> {{trans("fact.suscripcion.plan.item.aplicacion.android")}}</li>
-                <li><span class="glyphicon glyphicon-ok"></span> {{trans("fact.suscripcion.plan.item.aplicacion.windows")}}</li>
-                <li><span class="glyphicon glyphicon-ok"></span> {{trans("fact.suscripcion.plan.item.todas.plantillas")}}</li>
-                <li><span class="glyphicon glyphicon-ok"></span> {{trans("fact.suscripcion.plan.item.atencion.personalizada")}}</li>
+           <ul class="list-items">
+                <li><span class="glyphicon glyphicon-ok"></span> <span class="description-item">{{trans("fact.suscripcion.plan.item.plataformas.2")}}</span></li>
+                <li><span class="glyphicon glyphicon-ok"></span> <span class="description-item">{{trans("fact.suscripcion.plan.item.atencion.personalizada")}}</span></li>
+                <li><span class="glyphicon glyphicon-ok"></span> <span class="description-item">{{trans("fact.suscripcion.plan.item.disenos.apps")}}</span>
+                    <ul class="list-subitems">
+                        <li><span class="glyphicon glyphicon-plus"></span> {{trans("fact.suscripcion.plan.item.disenos.apps.soluciones.noticias")}}</li>
+                        <li><span class="glyphicon glyphicon-plus"></span> {{trans("fact.suscripcion.plan.item.disenos.apps.soluciones.institucional")}}</li>
+                        <li><span class="glyphicon glyphicon-plus"></span> {{trans("fact.suscripcion.plan.item.disenos.apps.soluciones.encuestas")}}</li>
+                        <li><span class="glyphicon glyphicon-plus"></span> {{trans("fact.suscripcion.plan.item.disenos.apps.soluciones.pqr")}}</li>
+                    </ul>
+                </li>
             </ul>
             <div class="well well-sm">
-                <img title="{{trans("fact.suscripcion.plan.item.aplicacion.android")}}" class="platform tooltip-top" src="{{URL::to("assets/img/android.png")}}" />
-                <img title="{{trans("fact.suscripcion.plan.item.aplicacion.windows")}}" class="platform tooltip-top" src="{{URL::to("assets/img/windows.png")}}" />
+                @if($hab_android) <img title="{{trans("fact.suscripcion.plan.item.aplicacion.android")}}" class="platform tooltip-top" src="{{URL::to("assets/img/android.png")}}" /> @endif
+                @if($hab_windows)<img title="{{trans("fact.suscripcion.plan.item.aplicacion.windows")}}" class="platform tooltip-top" src="{{URL::to("assets/img/windows.png")}}" /> @endif
+                @if($hab_ios)<img title="{{trans("fact.suscripcion.plan.item.aplicacion.iphone")}}" class="platform tooltip-top" src="{{URL::to("assets/img/ios.png")}}" /> @endif
             </div>
             <div class="precio">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes_plata."-".$moneda))}} {{$moneda}}<span class="mark-mes">/{{trans("otros.time.mes")}}</span></div>
             <hr/>
@@ -186,17 +230,22 @@ $moneda = Auth::user()->getMoneda();
             <span class="glyphicon glyphicon-certificate"></span> {{trans("fact.suscripcion.plan.oro.titulo")}}
         </h2>
         <div class="block">
-            <ul>
-                <li><span class="glyphicon glyphicon-ok"></span> {{trans("fact.suscripcion.plan.item.aplicacion.android")}}</li>
-                <li><span class="glyphicon glyphicon-ok"></span> {{trans("fact.suscripcion.plan.item.aplicacion.windows")}}</li>
-                <li><span class="glyphicon glyphicon-ok"></span> {{trans("fact.suscripcion.plan.item.aplicacion.iphone")}}</li>
-                <li><span class="glyphicon glyphicon-ok"></span> {{trans("fact.suscripcion.plan.item.todas.plantillas")}}</li>
-                <li><span class="glyphicon glyphicon-ok"></span> {{trans("fact.suscripcion.plan.item.atencion.personalizada")}}</li>
+           <ul class="list-items">
+                <li><span class="glyphicon glyphicon-ok"></span> <span class="description-item">{{trans("fact.suscripcion.plan.item.plataformas.3")}}</span></li>
+                <li><span class="glyphicon glyphicon-ok"></span> <span class="description-item">{{trans("fact.suscripcion.plan.item.atencion.personalizada")}}</span></li>
+                <li><span class="glyphicon glyphicon-ok"></span> <span class="description-item">{{trans("fact.suscripcion.plan.item.disenos.apps")}}</span>
+                    <ul class="list-subitems">
+                        <li><span class="glyphicon glyphicon-plus"></span> {{trans("fact.suscripcion.plan.item.disenos.apps.soluciones.noticias")}}</li>
+                        <li><span class="glyphicon glyphicon-plus"></span> {{trans("fact.suscripcion.plan.item.disenos.apps.soluciones.institucional")}}</li>
+                        <li><span class="glyphicon glyphicon-plus"></span> {{trans("fact.suscripcion.plan.item.disenos.apps.soluciones.encuestas")}}</li>
+                        <li><span class="glyphicon glyphicon-plus"></span> {{trans("fact.suscripcion.plan.item.disenos.apps.soluciones.pqr")}}</li>
+                    </ul>
+                </li>
             </ul>
             <div class="well well-sm">
-                <img title="{{trans("fact.suscripcion.plan.item.aplicacion.android")}}" class="platform tooltip-top" src="{{URL::to("assets/img/android.png")}}" />
-                <img title="{{trans("fact.suscripcion.plan.item.aplicacion.windows")}}" class="platform tooltip-top" src="{{URL::to("assets/img/windows.png")}}" />
-                <img title="{{trans("fact.suscripcion.plan.item.aplicacion.iphone")}}" class="platform tooltip-top" src="{{URL::to("assets/img/ios.png")}}" />
+                @if($hab_android) <img title="{{trans("fact.suscripcion.plan.item.aplicacion.android")}}" class="platform tooltip-top" src="{{URL::to("assets/img/android.png")}}" /> @endif
+                @if($hab_windows)<img title="{{trans("fact.suscripcion.plan.item.aplicacion.windows")}}" class="platform tooltip-top" src="{{URL::to("assets/img/windows.png")}}" /> @endif
+                @if($hab_ios)<img title="{{trans("fact.suscripcion.plan.item.aplicacion.iphone")}}" class="platform tooltip-top" src="{{URL::to("assets/img/ios.png")}}" /> @endif
             </div>
             <div class="precio">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes_oro."-".$moneda))}} {{$moneda}}<span class="mark-mes">/{{trans("otros.time.mes")}}</span></div>
             <hr/>

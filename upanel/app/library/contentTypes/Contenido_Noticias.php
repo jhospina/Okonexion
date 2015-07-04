@@ -300,7 +300,7 @@ class Contenido_Noticias {
      * @return String JSON
      */
     static function cargarDatosJson($id_app,$take=16,$skip=0) {
-        $noticias = ContenidoApp::where("tipo", Contenido_Noticias::nombre)->where("id_aplicacion", $id_app)->where("estado", ContenidoApp::ESTADO_PUBLICO)->orderBy("updated_at", "DESC")->take($take)->skip($skip)->get();
+        $noticias = ContenidoApp::where("tipo", Contenido_Noticias::nombre)->where("id_aplicacion", $id_app)->where("estado", ContenidoApp::ESTADO_PUBLICO)->orderBy("updated_at", "ASC")->take($take)->skip($skip)->get();
 
         $data_noticias = array();
         $n = 1;
@@ -312,7 +312,7 @@ class Contenido_Noticias {
             $data_noticias[Contenido_Noticias::configFecha.$n]=$noticia->updated_at;
             if (Contenido_Noticias::tieneImagen($noticia->id)) {
                 $imagen = Contenido_Noticias::obtenerImagen($noticia->id);
-                $data_noticias[Contenido_Noticias::configImagen . $n] = Util::eliminarExtensionArchivo(Contenido_Noticias::obtenerUrlMiniaturaImagen($imagen->contenido, Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_BG)) . "/" . str_replace("image/", "", $imagen->mime_type);
+                $data_noticias[Contenido_Noticias::configImagen . $n] = Contenido_Noticias::obtenerUrlMiniaturaImagen($imagen->contenido, Contenido_Noticias::IMAGEN_NOMBRE_MINIATURA_BG);
             } else {
                 $data_noticias[Contenido_Noticias::configImagen . $n] = "";
             }

@@ -102,6 +102,7 @@ function aplicacion_construir() {
     //APLICACION----------------------------------------------------------------
     Route::get('aplicacion/basico', 'UPanelControladorAplicacion@basico');
     Route::post("aplicacion/basico", "UPanelControladorAplicacion@guardarBasico");
+    Route::post("aplicacion/basico/ajax/plataformas/","UPanelControladorAplicacion@ajax_plataformas");
 
     Route::get('aplicacion/apariencia', 'UPanelControladorAplicacion@apariencia');
     Route::post("aplicacion/apariencia", "UPanelControladorAplicacion@guardarApariencia");

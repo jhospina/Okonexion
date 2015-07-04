@@ -3,8 +3,8 @@
 return array(
     "soporte.titulo"=>"¿Necesitas soporte?",
     "soporte.titulo.asistencia"=>"¿Necesitas asistencia?",
-    "soporte.regular.descripcion"=>"El equipo de Okonexion siempre estará disponible para responder cualquier inquietud de nuestros clientes, sin embargo, estaremos agradecidos si pudieras chequear la :link  antes de contactarnos. La pregunta ya puede encontrarse respondida allí. Si no encuentras la respuesta que necesitas o si necesitas ayuda o asistencia, siéntete libre de abrir un ticket de soporte y con gusto te ayudaremos.",
-    "soporte.admin.descripcion"=>"Estamos atentos a brindar la mejor asistencia a todos nuestros clientes empresariales que utilizan nuestra plataforma. Si tienes problemas para administrar la plataforma de <b>Okonexion</b> envianos un ticket y con gusto te atenderemos lo antes posible.",
+    "soporte.regular.descripcion"=>"El equipo de Appsthergo siempre estará disponible para responder cualquier inquietud de nuestros clientes, sin embargo, estaremos agradecidos si pudieras chequear la :link  antes de contactarnos. La pregunta ya puede encontrarse respondida allí. Si no encuentras la respuesta que necesitas o si necesitas ayuda o asistencia, siéntete libre de abrir un ticket de soporte y con gusto te ayudaremos.",
+    "soporte.admin.descripcion"=>"Estamos atentos a brindar la mejor asistencia a todos nuestros clientes empresariales que utilizan nuestra plataforma. Si tienes problemas para administrar la plataforma de <b>Appsthergo</b> envianos un ticket y con gusto te atenderemos lo antes posible.",
     "soporte.general.descripcion"=>" Aquí encontraras un listado de tickets de soporte de atención al cliente que debes atender. Todos los que se no encuentren en estado \"Cerrado\" son tickets que requieren atención. Trata de no dejar a ningún cliente esperando mucho tiempo, es de vital importancia atender a los clientes en el menor tiempo posible, esto ayudara a la reputación de nuestra organización.",
     "soporte.tickets.titulo"=>"Tickets",
     "soporte.tickets.titulo.sing"=>"Ticket",

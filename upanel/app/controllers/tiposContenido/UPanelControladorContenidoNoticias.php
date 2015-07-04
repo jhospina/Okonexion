@@ -185,7 +185,6 @@ class UPanelControladorContenidoNoticias extends Controller {
 
         $output = [];
 
-
         $imagenID = Contenido_Noticias::configImagen;
 
         $extension = strtolower(Input::file($imagenID)->getClientOriginalExtension());

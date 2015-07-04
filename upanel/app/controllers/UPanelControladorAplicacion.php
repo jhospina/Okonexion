@@ -89,10 +89,10 @@ class UPanelControladorAplicacion extends Controller {
             if ($app->id_usuario != Auth::user()->id)
                 return Redirect::to("");
         }
-        
-        if(!User::esSuper() && $app->getIdInstancia()!=Auth::user()->instancia)
+
+        if (!User::esSuper() && $app->getIdInstancia() != Auth::user()->instancia)
             return Redirect::to("");
-            
+
 
         if (!is_null($app)) {
             $versiones = ProcesoApp::where("id_aplicacion", $app->id)->whereNotNull("fecha_finalizacion")->orderBy("id", "DESC")->paginate(30);
@@ -180,10 +180,13 @@ class UPanelControladorAplicacion extends Controller {
             $errores.="<li>" . trans("app.config.info.diseno.error") . "</li>";
         }
 
+        if (strlen($data[UsuarioMetadato::PLATAFORMAS_SELECCIONADAS]) == 0) {
+            $errores.="<li>" . trans("app.config.info.plataformas.error") . "</li>";
+        }
+
         if (strlen($errores) > 0) {
             return Redirect::back()->withInput()->with(User::mensaje("error", null, "<p>" . trans("app.config.info.verificar_errores") . "</p><ul>" . $errores . "</ul>", 3));
         } else {
-
 
             //Retorna null si el usuario no tiene una aplicacion
             if (is_null($app = Aplicacion::obtener())) {
@@ -194,6 +197,30 @@ class UPanelControladorAplicacion extends Controller {
             $app->id_usuario = Auth::user()->id;
             $app->nombre = $data["nombre"];
             $app->diseno = $data["mockup"];
+
+            $plataformas = str_replace("|", "", str_replace("||", ",", $data[UsuarioMetadato::PLATAFORMAS_SELECCIONADAS]));
+            $plataformas = explode(",", $plataformas);
+
+            $num_plats = Auth::user()->getNumeroPlataformas();
+
+            //Evita cualquier intento de trampa al seleccionar las plataformas
+            while (count($plataformas) > $num_plats)
+                array_pop($plataformas);
+
+            //Verifica que las plataformas no se puedan cambiar una vez seleccionadas
+            if (Aplicacion::existe()) {
+                $version = ProcesoApp::obtenerNumeroVersion($app->id);
+                if ($version > 0) {
+                    $plats = json_decode(User::obtenerValorMetadato(UsuarioMetadato::PLATAFORMAS_SELECCIONADAS));
+                    for ($i = 0; $i < count($plats); $i++) {
+                        if (!in_array($plats[$i], $plataformas))
+                            return Redirect::back()->withInput()->with(User::mensaje("error", null, trans("otros.error_solicitud"), 3));
+                    }
+                }
+            }
+
+            User::agregarMetaDato(UsuarioMetadato::PLATAFORMAS_SELECCIONADAS, json_encode($plataformas));
+
 
             if (@$app->save()) {
                 return Redirect::to("aplicacion/apariencia")->withInput()->with(User::mensaje("exito", null, trans("app.config.db.post.exito"), 2));
@@ -574,6 +601,8 @@ class UPanelControladorAplicacion extends Controller {
         $id_proceso = Input::get("id_proceso");
         $proceso = ProcesoApp::find($id_proceso);
 
+        $app = Aplicacion::find($proceso->id_aplicacion);
+
         $json = json_decode($proceso->json_config, true);
 
         $datos = array();
@@ -583,7 +612,35 @@ class UPanelControladorAplicacion extends Controller {
         $datos[Aplicacion::configdisenoApp] = $json[Aplicacion::configdisenoApp];
         $datos[Aplicacion::configKeyApp] = $json[Aplicacion::configKeyApp];
 
+        $datos[UsuarioMetadato::PLATAFORMAS_SELECCIONADAS] = "";
+
+        $plataformas_seleccionadas = json_decode(User::obtenerValorMetadato(UsuarioMetadato::PLATAFORMAS_SELECCIONADAS, $app->id_usuario));
+
+        foreach ($plataformas_seleccionadas as $index => $plat) {
+            $datos[UsuarioMetadato::PLATAFORMAS_SELECCIONADAS].="<img style='height:30px;' src='" . URL::to('assets/img/' . $plat . '.png') . "'/>";
+        }
+
         return json_encode($datos);
+    }
+
+    public function ajax_plataformas() {
+        $output = array();
+        $output["plataformas"] = "";
+
+        $data = Input::all();
+
+
+        list($android, $ios, $windows) = AppDesing::obtenerDisponibilidadPlataformas($data["mockup"]);
+
+        if ($android)
+            $output["plataformas"].="<span data-select='false' data-plataforma='" . AppDesing::PLATAFORMA_ANDROID . "' class='img-plataform tooltip-right' rel='tooltip' title='Android'><img id='plat-android' src='" . URL::to("assets/img/android.png") . "' /></span>";
+        if ($ios)
+            $output["plataformas"].="<span data-select='false' data-plataforma='" . AppDesing::PLATAFORMA_IOS . "' class='img-plataform tooltip-right' rel='tooltip' title='IOS Iphone'><img id='plat-ios' src='" . URL::to("assets/img/ios.png") . "' /></span>";
+        if ($windows)
+            $output["plataformas"].="<span data-select='false' data-plataforma='" . AppDesing::PLATAFORMA_WINDOW . "' class='img-plataform tooltip-right' rel='tooltip' title='Windows Phone'><img id='plat-windows' src='" . URL::to("assets/img/windows.png") . "' /></span>";
+
+
+        return json_encode($output);
     }
 
     /** Descarga un archivo comprimido zip, con todos los archivos necesarios para el diseño de la aplicación en android

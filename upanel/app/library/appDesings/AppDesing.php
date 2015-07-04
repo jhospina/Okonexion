@@ -1,11 +1,27 @@
 <?php
 
 class AppDesing {
+    
+    const PLATAFORMA_ANDROID="android";
+    const PLATAFORMA_IOS="ios";
+    const PLATAFORMA_WINDOW="windows";
+
+    /** Obtiene la disponibilidad de una plataforma dado por el ID del diseño
+     * 
+     * @param type $diseno La sigla del diseño
+     * @return type
+     */
+    public static function obtenerDisponibilidadPlataformas($diseno) {
+        switch ($diseno) {
+            case App_Metro::sigla:
+                return App_Metro::plataformas();
+                break;
+        }
+    }
 
     public static function plantillaConfigAndroid($app, $config) {
 
-        $diseno = null;
-        (is_string($app)) ? $diseno = $app : $diseno = $app->diseno;
+        $diseno = (is_string($app)) ? $app : $app->diseno;
 
         switch ($diseno) {
             case App_Metro::sigla:
@@ -20,13 +36,13 @@ class AppDesing {
      * @param type $config
      * @return type
      */
-    public static function prepararArchivosParaAndroid($zip, $app, $config,$ruta) {
+    public static function prepararArchivosParaAndroid($zip, $app, $config, $ruta) {
         $diseno = null;
         (is_string($app)) ? $diseno = $app : $diseno = $app->diseno;
 
         switch ($diseno) {
             case App_Metro::sigla:
-                    App_Metro::prepararArchivosParaAndroid($zip, $config,$ruta);
+                App_Metro::prepararArchivosParaAndroid($zip, $config, $ruta);
                 break;
         }
     }
@@ -79,7 +95,7 @@ class AppDesing {
             $config->save();
         }
 
-       
+
 
         return true;
     }

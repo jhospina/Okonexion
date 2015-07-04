@@ -271,7 +271,8 @@ class Paises {
 
     static function obtenerNombre($id) {
         $paises = Paises::listado();
-        return (!is_numeric($id)) ? $paises[$id] : "";
+       
+        return (!is_numeric($id) && strlen($id)>0) ? $paises[$id] : "";
     }
 
     static function obtenerPaisDesdeIP($ip, $type = "code") {

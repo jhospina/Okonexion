@@ -69,7 +69,7 @@ Event::listen('cron.collectJobs', function() {
                 "id_factura" => $id_factura,
                 "total_factura" => Monedas::nomenclatura($moneda, Monedas::formatearNumero($moneda, $factura->total)),
                 "venc_factura" => $factura->fecha_vencimiento,
-                "link_factura" => "https://appsthergo.com/upanel/public/fact/factura/" . $id_factura
+                "link_factura" => trans("otros.link_upanel") . "fact/factura/" . $id_factura
             ));
 
 
@@ -89,7 +89,7 @@ Event::listen('cron.collectJobs', function() {
             $correo->enviar(trans("email.asunto.factura.generada"), $mensaje, $usuario->id);
 
             //Crea una notificacion para el usuario
-            Notificacion::crear(Notificacion::TIPO_FACTURACION_AUTO_SUSCRIPCION, $usuario->id, URL::to("fact/factura/" . $id_factura));
+            Notificacion::crear(Notificacion::TIPO_FACTURACION_AUTO_SUSCRIPCION, $usuario->id, trans("otros.link_upanel")."fact/factura/" . $id_factura);
 
             $n++;
         }
@@ -118,6 +118,44 @@ Event::listen('cron.collectJobs', function() {
         }
 
         return "$n facturas vencidas [" . Util::formatearResultadosArray($ids, "|", "(", ")") . "]";
+    });
+
+    /**
+     * CRON: Seguimiento de suscripcion
+     * DESCRIPCION: Notifica al usuario cuando suscripcion esta proxima a vencer
+     * EJECUCION: Una vez al dia
+     */
+    Cron::add("userSegSusc", "0 0 * * *", function() {
+
+        $usuarios = User::where("tipo", User::USUARIO_REGULAR)->get();
+
+        $n = 0;
+        $ids = array();
+
+        foreach ($usuarios as $usuario) {
+
+            if ($usuario->estado != User::ESTADO_PERIODO_PRUEBA)
+                continue;
+
+            if (Fecha::difSec(Util::obtenerTiempoActual(), $usuario->fin_suscripcion) > (60 * 60 * 24 * 3))
+                continue;
+
+            $n++;
+
+            $ids[] = $usuario->id;
+
+            Notificacion::crear(Notificacion::TIPO_PRUEBA_AVISO_CADUCIDAD, $usuario->id);
+
+            $correo = new Correo();
+
+            $mensaje = trans("email.mensaje.aviso.caducidad.prueba", array("nombre" => $usuario->nombres,
+                "tiempo" => Fecha::calcularDiferencia(Util::obtenerTiempoActual(), $usuario->fin_suscripcion),
+                "link" => trans("otros.link_upanel") . "fact/suscripcion/plan"));
+
+            $correo->enviar(trans("email.asunto.aviso.caducidad.prueba"), $mensaje, $usuario->id);
+        }
+
+        return "$n usuarios informados [" . Util::formatearResultadosArray($ids, "|", "(", ")") . "]";
     });
 });
 

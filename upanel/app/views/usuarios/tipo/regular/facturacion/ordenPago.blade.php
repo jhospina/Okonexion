@@ -163,7 +163,7 @@ array_unshift($paises, trans("otros.info.elegir"));
         <div class="col-lg-6 input-lg"> 
             {{trans("fact.orden.pago.tc.cvv")}}
         </div>
-        <div class="col-lg-6 input-lg"> <input id="cvv" onkeydown="return soloNumeros(this, '');" class="form-control input-lg" maxlength="4" size="4" type="text" value="" autocomplete="off" required /></div>
+        <div class="col-lg-6 input-lg"> <input id="cvv" onkeydown="return soloNumeros(this, '');" class="form-control input-lg" maxlength="4" size="4" type="password" value="" autocomplete="off" required /></div>
 
         <div class="col-lg-12 text-center" style="margin-top: 50px;">
             <button type="button" id="btn-pagar" class="btn btn-lg btn-primary text-uppercase"><span class="glyphicon glyphicon-ok-circle"></span> {{trans("fact.btn.realizar.pago")}}</button>

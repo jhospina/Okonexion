@@ -58,4 +58,36 @@ return array(
     "<b>Fecha de vencimiento:</b> :venc_factura</p>" .
     "<p>Para pagar esta factura debe iniciar sesión en su cuenta de usuario e ingresar a la sección de facturación. Tambien puede ingresar directamente haciendo clic <a href=':link_factura'>AQUÍ</a> o copiando y pegando el siguiente:<br/><br/> <a href=':link_factura'>:link_factura</a></p>" .
     "<p>Saludos</p>",
+    //****************************************************************
+    //AVISO DE CADUCIDAD DE PRUEBA
+    //****************************************************************
+    "asunto.aviso.caducidad.prueba"=>"Tu periodo prueba esta proxima a vencer",
+    "mensaje.aviso.caducidad.prueba"=>"<p>Hola :nombre</p>".
+    "<div style='text-align:center;'><h2>¡Te faltan :tiempo!</h2></div>".
+    "<p>Este mensaje es para informarte que el periodo de prueba para seguir utilizando nuestros servicios esta a punto de culminar. Te invitamos a que te suscribas antes de que se agote el tiempo y asi evitar cortes en el servicio.</p><br/>".
+    "<br/><div style='text-align:center;'><a href=':link' style='-moz-box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	-webkit-box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #768d87), color-stop(1, #6c7c7c));
+	background:-moz-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-webkit-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-o-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:-ms-linear-gradient(top, #768d87 5%, #6c7c7c 100%);
+	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#768d87', endColorstr='#6c7c7c',GradientType=0);
+	background-color:#768d87;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+	border:1px solid #566963;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:20px;
+	font-weight:bold;
+        width:200px;
+	padding:11px 23px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #2b665e;'>SUSCRIBIRSE</a></div>",
 ); 

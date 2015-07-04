@@ -94,6 +94,31 @@ class App_Metro {
     const txt_info_escribe_tu_respuesta = "txt_info_escribe_tu_respuesta";
     const txt_info_usuario_soporte = "txt_info_usuario_soporte";
     const txt_info_usuario = "txt_info_usuario";
+    //********************************************************
+    //HABILITACION DE PLATAFORMAS*****************************
+    //********************************************************
+    const PLAT_ANDROID = true;
+    const PLAT_IOS_IPHONE = true;
+    const PLAT_WINDOWS = true;
+    
+
+    /** Retorna un array de 3 elementos indicando la disponibidad del diseño en la plataformas (Android, IOS, Windows)
+     * 
+     * @return type
+     */
+    static function plataformas(){
+        $class = new ReflectionClass("App_Metro");
+
+        $plats = array();
+
+        foreach ($class->getConstants() as $index => $indicador) {
+            if (strpos($index, "PLAT_") !== false)
+                $plats[]= $indicador;
+        }
+        
+        return $plats;
+    }
+    
 
     /** Obtiene la descripción basica del diseño a
      *  

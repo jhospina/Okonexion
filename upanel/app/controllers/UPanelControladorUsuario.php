@@ -81,6 +81,9 @@ class UPanelControladorUsuario extends \BaseController {
             //Asigna la moneda al usuario
             User::agregarMetaDato(UsuarioMetadato::OP_MONEDA, $moneda, $user->id);
 
+            if ($user->estado == User::ESTADO_PERIODO_PRUEBA) {
+                Notificacion::crear(Notificacion::TIPO_PRUEBA_MSJ_INICIAL, $user->id);
+            }
 
             //Envia un mensaje de confirmación con un codigo al correo electronico, para validar la cuenta de usuario
             $correo = new Correo;

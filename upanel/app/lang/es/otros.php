@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    "link_upanel"=>"https://appsthergo.com/upanel/public/",
     "dominio" => "https://appsthergo.com",
     "elegir" => "Elegir",
     "adjuntar_archivo" => "Adjuntar archivo",

@@ -44,7 +44,8 @@ class ContenidoApp extends Eloquent {
         $contenido->titulo = $nombre;
         $contenido->contenido = $URL;
         $contenido->estado = ContenidoApp::ESTADO_PUBLICO;
-        $contenido->mime_type = mime_content_type(Util::convertirUrlPath($URL));
+       $contenido->mime_type=null;
+        //$contenido->mime_type = mime_content_type(Util::convertirUrlPath($URL));
         if (@$contenido->save())
             return $contenido->id;
         else

@@ -9,7 +9,11 @@ Class Notificacion extends Eloquent {
      */
     const TIPO_SUSCRIPCION_PRUEBA_FINALIZADA = "SUPF";
     const TIPO_SUSCRIPCION_REALIZADA = "SURE";
+    const TIPO_SUSCRIPCION_RENOVADA = "SURN";
+    const TIPO_SUSCRIPCION_CADUCADA="SUCA";
     const TIPO_FACTURACION_AUTO_SUSCRIPCION = "FACS";
+    const TIPO_PRUEBA_MSJ_INICIAL = "PMSI";
+    const TIPO_PRUEBA_AVISO_CADUCIDAD = "PACA";
 
     /** crear una notificacion de usuario
      * 
@@ -66,7 +70,11 @@ Class Notificacion extends Eloquent {
         $msj = array(
             Notificacion::TIPO_SUSCRIPCION_PRUEBA_FINALIZADA => trans("nots.suscripcion.prueba.finalizada"),
             Notificacion::TIPO_SUSCRIPCION_REALIZADA => trans("nots.suscripcion.pago.realizado", array("link" => "#")),
-            Notificacion::TIPO_FACTURACION_AUTO_SUSCRIPCION => trans("nots.facturacion.auto.suscripcion")
+            Notificacion::TIPO_SUSCRIPCION_CADUCADA=>trans("nots.suscripcion.caducada"),
+            Notificacion::TIPO_FACTURACION_AUTO_SUSCRIPCION => trans("nots.facturacion.auto.suscripcion"),
+            Notificacion::TIPO_SUSCRIPCION_RENOVADA => trans("nots.suscripcion.pago.renovacion"),
+            Notificacion::TIPO_PRUEBA_MSJ_INICIAL => trans("nots.prueba.msj.inicial", array("dias" => Instancia::obtenerValorMetadato(ConfigInstancia::periodoPrueba_numero_dias))),
+            Notificacion::TIPO_PRUEBA_AVISO_CADUCIDAD => trans("nots.prueba.aviso.caducidad", array("tiempo" => Fecha::calcularDiferencia(Util::obtenerTiempoActual(), Auth::user()->fin_suscripcion)))
         );
         return $msj[$tipo];
     }
@@ -76,8 +84,9 @@ Class Notificacion extends Eloquent {
             Notificacion::TIPO_SUSCRIPCION_PRUEBA_FINALIZADA => '<span class="glyphicon glyphicon-exclamation-sign"></span>',
             Notificacion::TIPO_SUSCRIPCION_REALIZADA => '<span class="glyphicon glyphicon-thumbs-up"></span>',
             Notificacion::TIPO_FACTURACION_AUTO_SUSCRIPCION => '<span class="glyphicon glyphicon-list-alt"></span>',
+            Notificacion::TIPO_SUSCRIPCION_RENOVADA => '<span class="glyphicon glyphicon-list-alt"></span>',
         );
-        return $msj[$tipo];
+        return isset($msj[$tipo]) ? $msj[$tipo] : '<span class="glyphicon glyphicon-exclamation-sign"></span>';
     }
 
     /** Obtiene una cantidad de notificaciones
