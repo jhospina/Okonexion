@@ -58,7 +58,7 @@ class Imagen {
 
         //Redimensiona la imagen al proporcion adecuada
         imagecopyresized($copia_redim, $this->objectImage, 0, 0, 0, 0, $ancho_redim, $altura_redim, $this->ancho, $this->altura);
-
+     
         //Almacenara la copia de la imagen redimensiona y recortada adecuadamente
         $copia_rec = imagecreatetruecolor($ancho, $altura);
 
@@ -71,9 +71,9 @@ class Imagen {
 
         //Genera el recorte adecuado de la imagen
         imagecopy($copia_rec, $copia_redim, 0, 0, $x_recorte, $y_recorte, $ancho_redim, $altura_redim);
-
-        $destino = $ruta . $nombre . "." . $this->extension;
-
+   
+        $destino = $ruta .$this->nombre. $nombre . "." . $this->extension;
+        
         $this->almacenarImagen($copia_rec, $destino);
     }
 
@@ -156,7 +156,7 @@ class Imagen {
      * @param type $calidad [90] La calidad de la imagen con la que se guardara
      * @return type
      */
-    private function almacenarImagen($imagen, $destino, $calidad = 9) {
+    private function almacenarImagen($imagen, $destino, $calidad = 99) {
         switch ($this->extension) {
             case "jpg":
                 return imagejpeg($imagen, $destino, $calidad);
