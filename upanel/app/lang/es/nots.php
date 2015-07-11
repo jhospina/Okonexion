@@ -8,5 +8,7 @@ return array(
     "suscripcion.pago.renovacion" => "Tu suscripción ha sido renovada. Muchas gracias por continuar utilizando nuestros servicios.",
     "facturacion.auto.suscripcion" => "Se generado una factura automática para que renueves tu suscripción. Haz clic aquí para verla.",
     "prueba.msj.inicial" => "¡Bienvenido! Gracias por registrarte en nuestra plataforma. Como es tu primera vez aquí queremos regalarte :dias días de prueba totalmente gratis, para que utilices nuestros servicios y te convenzas de los beneficios. ¡Empieza desde ya a crear tu aplicación!",
-    "prueba.aviso.caducidad" => "Tu periodo de prueba esta proxima a vencer. ¡Solo te quedan :tiempo de prueba! Te invitamos que te suscribas, haz clic aquí para hacerlo."
-);
+    "prueba.aviso.caducidad" => "Tu periodo de prueba esta proxima a vencer. ¡Solo te quedan :tiempo de prueba! Te invitamos que te suscribas, haz clic aquí para hacerlo.",
+    "suscripcion.aviso.caducidad" => "Tu periodo de suscripción esta proxima a vencer. ¡Solo te quedan :tiempo! Te invitamos a renovar la suscripción haciendo clic aquí."
+    
+        );

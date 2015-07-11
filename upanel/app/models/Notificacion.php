@@ -10,7 +10,8 @@ Class Notificacion extends Eloquent {
     const TIPO_SUSCRIPCION_PRUEBA_FINALIZADA = "SUPF";
     const TIPO_SUSCRIPCION_REALIZADA = "SURE";
     const TIPO_SUSCRIPCION_RENOVADA = "SURN";
-    const TIPO_SUSCRIPCION_CADUCADA="SUCA";
+    const TIPO_SUSCRIPCION_CADUCADA = "SUCA";
+    const TIPO_SUSCRIPCION_AVISO_CADUCIDAD = "SUAC";
     const TIPO_FACTURACION_AUTO_SUSCRIPCION = "FACS";
     const TIPO_PRUEBA_MSJ_INICIAL = "PMSI";
     const TIPO_PRUEBA_AVISO_CADUCIDAD = "PACA";
@@ -66,27 +67,28 @@ Class Notificacion extends Eloquent {
      * @param type $params Datos opciones
      * @return String El mensaje
      */
-    static function descripcion($tipo, $params = null) {
+    function descripcion() {
         $msj = array(
             Notificacion::TIPO_SUSCRIPCION_PRUEBA_FINALIZADA => trans("nots.suscripcion.prueba.finalizada"),
             Notificacion::TIPO_SUSCRIPCION_REALIZADA => trans("nots.suscripcion.pago.realizado", array("link" => "#")),
-            Notificacion::TIPO_SUSCRIPCION_CADUCADA=>trans("nots.suscripcion.caducada"),
+            Notificacion::TIPO_SUSCRIPCION_CADUCADA => trans("nots.suscripcion.caducada"),
             Notificacion::TIPO_FACTURACION_AUTO_SUSCRIPCION => trans("nots.facturacion.auto.suscripcion"),
             Notificacion::TIPO_SUSCRIPCION_RENOVADA => trans("nots.suscripcion.pago.renovacion"),
             Notificacion::TIPO_PRUEBA_MSJ_INICIAL => trans("nots.prueba.msj.inicial", array("dias" => Instancia::obtenerValorMetadato(ConfigInstancia::periodoPrueba_numero_dias))),
-            Notificacion::TIPO_PRUEBA_AVISO_CADUCIDAD => trans("nots.prueba.aviso.caducidad", array("tiempo" => Fecha::calcularDiferencia(Util::obtenerTiempoActual(), Auth::user()->fin_suscripcion)))
+            Notificacion::TIPO_PRUEBA_AVISO_CADUCIDAD => trans("nots.prueba.aviso.caducidad", array("tiempo" => Fecha::calcularDiferencia($this->created_at, Auth::user()->fin_suscripcion))),
+            Notificacion::TIPO_SUSCRIPCION_AVISO_CADUCIDAD => trans("nots.suscripcion.aviso.caducidad", array("tiempo" => Fecha::calcularDiferencia($this->created_at, Auth::user()->fin_suscripcion)))
         );
-        return $msj[$tipo];
+        return $msj[$this->tipo];
     }
 
-    static function icono($tipo) {
+    function icono() {
         $msj = array(
             Notificacion::TIPO_SUSCRIPCION_PRUEBA_FINALIZADA => '<span class="glyphicon glyphicon-exclamation-sign"></span>',
             Notificacion::TIPO_SUSCRIPCION_REALIZADA => '<span class="glyphicon glyphicon-thumbs-up"></span>',
             Notificacion::TIPO_FACTURACION_AUTO_SUSCRIPCION => '<span class="glyphicon glyphicon-list-alt"></span>',
             Notificacion::TIPO_SUSCRIPCION_RENOVADA => '<span class="glyphicon glyphicon-list-alt"></span>',
         );
-        return isset($msj[$tipo]) ? $msj[$tipo] : '<span class="glyphicon glyphicon-exclamation-sign"></span>';
+        return isset($msj[$this->tipo]) ? $msj[$this->tipo] : '<span class="glyphicon glyphicon-exclamation-sign"></span>';
     }
 
     /** Obtiene una cantidad de notificaciones
@@ -119,7 +121,7 @@ Class Notificacion extends Eloquent {
         if (!is_null($not->link))
             $html .="onClick='location.href=\"" . $not->link . "\";'";
         $html .="><p>";
-        $html.=Notificacion::icono($not->tipo) . " " . Notificacion::descripcion($not->tipo);
+        $html.=$not->icono() . " " . $not->descripcion();
         $html.="</p><span class='fecha-not'><span class='glyphicon glyphicon-time'></span> " . trans("otros.info.hace") . " " . Util::calcularDiferenciaFechas($not->created_at, Util::obtenerTiempoActual()) . "</span></li>";
         return $html;
     }

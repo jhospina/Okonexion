@@ -89,7 +89,7 @@ Event::listen('cron.collectJobs', function() {
             $correo->enviar(trans("email.asunto.factura.generada"), $mensaje, $usuario->id);
 
             //Crea una notificacion para el usuario
-            Notificacion::crear(Notificacion::TIPO_FACTURACION_AUTO_SUSCRIPCION, $usuario->id, trans("otros.link_upanel")."fact/factura/" . $id_factura);
+            Notificacion::crear(Notificacion::TIPO_FACTURACION_AUTO_SUSCRIPCION, $usuario->id, trans("otros.link_upanel") . "fact/factura/" . $id_factura);
 
             $n++;
         }
@@ -134,25 +134,83 @@ Event::listen('cron.collectJobs', function() {
 
         foreach ($usuarios as $usuario) {
 
-            if ($usuario->estado != User::ESTADO_PERIODO_PRUEBA)
-                continue;
-
             if (Fecha::difSec(Util::obtenerTiempoActual(), $usuario->fin_suscripcion) > (60 * 60 * 24 * 3))
                 continue;
 
-            $n++;
+            if ($usuario->estado == User::ESTADO_PERIODO_PRUEBA) {
 
-            $ids[] = $usuario->id;
+                //Si la suscripciòn de prueba se ha vencido
+                if (!Util::calcularDiferenciaFechas(Util::obtenerTiempoActual(), $usuario->fin_suscripcion) && $usuario->estado == User::ESTADO_PERIODO_PRUEBA) {
 
-            Notificacion::crear(Notificacion::TIPO_PRUEBA_AVISO_CADUCIDAD, $usuario->id);
+                    $n++;
+                    $ids[] = $usuario->id;
 
-            $correo = new Correo();
+                    $usuario->estado = User::ESTADO_PRUEBA_FINALIZADA;
+                    $usuario->save();
+                    Notificacion::crear(Notificacion::TIPO_SUSCRIPCION_PRUEBA_FINALIZADA, $usuario->id);
 
-            $mensaje = trans("email.mensaje.aviso.caducidad.prueba", array("nombre" => $usuario->nombres,
-                "tiempo" => Fecha::calcularDiferencia(Util::obtenerTiempoActual(), $usuario->fin_suscripcion),
-                "link" => trans("otros.link_upanel") . "fact/suscripcion/plan"));
+                    $correo = new Correo();
 
-            $correo->enviar(trans("email.asunto.aviso.caducidad.prueba"), $mensaje, $usuario->id);
+                    $mensaje = trans("email.mensaje.aviso.prueba.finalizada", array("nombre" => $usuario->nombres,
+                        "link" => trans("otros.link_upanel") . "fact/suscripcion/plan"));
+
+                    $correo->enviar(trans("email.asunto.aviso.prueba.finalizada"), $mensaje, $usuario->id);
+
+                    continue;
+                }
+
+                $n++;
+
+                $ids[] = $usuario->id;
+
+                Notificacion::crear(Notificacion::TIPO_PRUEBA_AVISO_CADUCIDAD, $usuario->id);
+
+                $correo = new Correo();
+
+                $mensaje = trans("email.mensaje.aviso.caducidad.prueba", array("nombre" => $usuario->nombres,
+                    "tiempo" => Fecha::calcularDiferencia(Util::obtenerTiempoActual(), $usuario->fin_suscripcion),
+                    "link" => trans("otros.link_upanel") . "fact/suscripcion/plan"));
+
+                $correo->enviar(trans("email.asunto.aviso.caducidad.prueba"), $mensaje, $usuario->id);
+            }
+
+
+
+            if ($usuario->estado == User::ESTADO_SUSCRIPCION_VIGENTE) {
+
+                //Si la suscripciòn de prueba se ha vencido
+                if (!Util::calcularDiferenciaFechas(Util::obtenerTiempoActual(), $usuario->fin_suscripcion) && $usuario->estado == User::ESTADO_SUSCRIPCION_VIGENTE) {
+
+                    $n++;
+                    $ids[] = $usuario->id;
+
+                    $usuario->estado = User::ESTADO_SUSCRIPCION_CADUCADA;
+                    $usuario->save();
+                    Notificacion::crear(Notificacion::TIPO_SUSCRIPCION_CADUCADA, $usuario->id);
+
+                    $correo = new Correo();
+
+                    $mensaje = trans("email.mensaje.aviso.suscripcion.finalizada", array("nombre" => $usuario->nombres,
+                        "link" => trans("otros.link_upanel") . "fact/suscripcion/plan"));
+
+                    $correo->enviar(trans("email.asunto.aviso.suscripcion.finalizada"), $mensaje, $usuario->id);
+
+                    continue;
+                }
+
+                $n++;
+                $ids[] = $usuario->id;
+                Notificacion::crear(Notificacion::TIPO_SUSCRIPCION_AVISO_CADUCIDAD, $usuario->id);
+
+                $correo = new Correo();
+
+                $mensaje = trans("email.mensaje.aviso.caducidad.suscripcion", array("nombre" => $usuario->nombres,
+                    "tiempo" => Fecha::calcularDiferencia(Util::obtenerTiempoActual(), $usuario->fin_suscripcion),
+                    "link" => trans("otros.link_upanel") . "fact/suscripcion/plan"));
+
+                $correo->enviar(trans("email.asunto.aviso.caducidad.suscripcion"), $mensaje, $usuario->id);
+            }
+
         }
 
         return "$n usuarios informados [" . Util::formatearResultadosArray($ids, "|", "(", ")") . "]";
