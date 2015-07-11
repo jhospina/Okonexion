@@ -1,0 +1,168 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuPrincipal"
+    android:id="@+id/contenedor_pqr">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/lay_btn1_pqr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:layout_marginBottom="@dimen/espacio_entre_celdas">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_pqr_btn_1"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/img_menu_btn_1"
+                    android:minWidth="@dimen/ancho_icono_menu"
+                    android:minHeight="@dimen/altura_icono_menu"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Institucional"
+                    android:id="@+id/txt_btn1_pqr"
+                    android:gravity="center"
+                    android:textAlignment="gravity"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/lay_btn2_pqr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:layout_marginLeft="@dimen/espacio_entre_celdas"
+            android:layout_marginBottom="@dimen/espacio_entre_celdas">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_pqr_btn_2"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/img_menu_btn_2"
+                    android:minWidth="@dimen/ancho_icono_menu"
+                    android:minHeight="@dimen/altura_icono_menu"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Noticias"
+                    android:id="@+id/txt_btn2_pqr"
+                    android:gravity="center"
+                    android:textAlignment="gravity"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/lay_btn3_pqr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#FFFFFF">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_pqr_btn_3"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/img_menu_btn_3"
+                    android:minWidth="@dimen/ancho_icono_menu"
+                    android:minHeight="@dimen/altura_icono_menu"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Encuestas"
+                    android:id="@+id/txt_btn3_pqr"
+                    android:gravity="center"
+                    android:textAlignment="gravity"/>
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/lay_btn4_pqr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:layout_marginLeft="@dimen/espacio_entre_celdas">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal|center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/img_pqr_btn_4"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@mipmap/img_menu_btn_4"
+                    android:minWidth="@dimen/ancho_icono_menu"
+                    android:minHeight="@dimen/altura_icono_menu"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="PQR"
+                    android:id="@+id/txt_btn4_pqr"
+                    android:gravity="center"
+                    android:textAlignment="gravity"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </TableRow>
+
+</TableLayout>

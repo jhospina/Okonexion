@@ -1,0 +1,54 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jhon.okonexionmetro.pqr.PQR_PeticionesActivity"
+    android:id="@+id/contenedor_pqr_tipo"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Crear una petición"
+        android:id="@+id/btn_crear_pqr"
+        android:drawableLeft="@android:drawable/ic_input_add"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lay_cont_form_crear_pqr"
+        android:orientation="vertical"
+        android:padding="5dp"
+        android:gravity="center"
+        android:visibility="gone">
+        </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Mis peticiones"
+        android:id="@+id/txt_pqr_tipo"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:textStyle="bold"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/lay_cargar_contenido_pqr"
+        android:background="#FF00FF">
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

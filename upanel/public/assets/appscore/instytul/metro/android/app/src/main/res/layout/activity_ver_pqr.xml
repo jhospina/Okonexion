@@ -1,0 +1,139 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jhon.okonexionmetro.pqr.VerPqrActivity"
+    android:id="@+id/scroll_ver_pqr">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/contenedor_descr_pqr">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="30dp"
+            android:text="Large Text"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:id="@+id/txt_titulo_pqr" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Asunto"
+                    android:textStyle="bold"
+                    android:padding="5dp"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center_vertical"
+                    android:background="#000000"
+                    android:id="@+id/txt_titulo_asunto" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Titulo asunto"
+                    android:padding="5dp"
+                    android:id="@+id/txt_pqr_asunto" />
+
+
+                </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:gravity="center_vertical"
+                    android:text="Nombre"
+                    android:textStyle="bold"
+                    android:padding="5dp"
+                    android:textColor="#FFFFFF"
+                    android:background="#000000"
+                    android:id="@+id/txt_titulo_nombre" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="John Ospina"
+                    android:padding="5dp"
+                    android:id="@+id/txt_pqr_nombre" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Correo eletrónico"
+                    android:textStyle="bold"
+                    android:padding="5dp"
+                    android:textColor="#FFFFFF"
+                    android:background="#000000"
+                    android:gravity="center_vertical"
+                    android:id="@+id/txt_titulo_email" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="jhonospina150@gmail.com"
+                    android:padding="5dp"
+                    android:id="@+id/txt_pqr_email" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/cont_mensajes_pqr"
+            android:layout_marginTop="10dp">
+
+            </LinearLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

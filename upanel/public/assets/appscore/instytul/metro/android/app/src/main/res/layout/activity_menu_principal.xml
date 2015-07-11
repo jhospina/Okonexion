@@ -1,0 +1,161 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuPrincipal"
+    android:id="@+id/contenedor_menu_principal">
+
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/lay_menu1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#FF0000"
+            android:layout_marginBottom="@dimen/espacio_entre_celdas">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_menu_btn_1"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/img_menu_btn_1"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Institucional"
+                android:id="@+id/txt_menu1"
+                android:gravity="center"
+                android:textAlignment="gravity"/>
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/lay_menu2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#FFF000"
+            android:layout_marginLeft="@dimen/espacio_entre_celdas"
+            android:layout_marginBottom="@dimen/espacio_entre_celdas">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_menu_btn_2"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/img_menu_btn_2"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Noticias"
+                android:id="@+id/txt_menu2"
+                android:gravity="center"
+                android:textAlignment="gravity"
+                />
+
+        </LinearLayout>
+        </LinearLayout>
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/lay_menu3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ff0629ff">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_menu_btn_3"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/img_menu_btn_3"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Encuestas"
+                android:id="@+id/txt_menu3"
+                android:gravity="center"
+                android:textAlignment="gravity"/>
+        </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/lay_menu4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#ff54ff18"
+            android:layout_marginLeft="@dimen/espacio_entre_celdas">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal|center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/img_menu_btn_4"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/img_menu_btn_4"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="PQR"
+                android:id="@+id/txt_menu4"
+                android:gravity="center"
+                android:textAlignment="gravity"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </TableRow>
+
+    </TableLayout>

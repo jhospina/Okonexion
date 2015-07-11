@@ -1,0 +1,51 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jhon.okonexionmetro.EncuestasActivity"
+    android:id="@+id/scroll_encuestas">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="top"
+        android:id="@+id/contenedor_encuestas">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lay_encuesta_vigente"
+        android:orientation="vertical"
+        android:layout_gravity="top"
+        android:layout_marginBottom="40dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lay_indicadorCarga_encuesta_vigente"
+            android:orientation="vertical"
+            android:layout_gravity="top"
+            android:visibility="visible">
+            <ProgressBar
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_gravity="center" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Buscando encuesta vigente..."
+                android:gravity="center"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:id="@+id/txt_buscando_encuesta_vigente"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lay_encuestas_archivadas"
+            android:orientation="vertical"
+            android:layout_gravity="top">
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

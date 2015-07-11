@@ -184,7 +184,7 @@ class Util {
         end($nombre);
         $nombre = explode(".", pos($nombre));
         reset($nombre);
-        return str_replace("." . $nombre[1], "", $url);
+        return (isset($nombre[1]))?str_replace("." . $nombre[1], "", $url):null;
     }
 
     /** Retorna la url actual

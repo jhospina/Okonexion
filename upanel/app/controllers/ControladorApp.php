@@ -53,7 +53,7 @@ class ControladorApp extends \BaseController {
         if (is_null($app))
             return null;
 
-        Contenido_Encuestas::contestar($respuesta, $id_encuesta, $id_dispositivo, $app->id_usuario);
+        return Contenido_Encuestas::contestar($respuesta, $id_encuesta, $id_dispositivo, $app->id_usuario);
     }
 
     function enviarPqr() {

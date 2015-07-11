@@ -19,17 +19,6 @@ class AppDesing {
         }
     }
 
-    public static function plantillaConfigAndroid($app, $config) {
-
-        $diseno = (is_string($app)) ? $app : $app->diseno;
-
-        switch ($diseno) {
-            case App_Metro::sigla:
-                return App_Metro::plantillaConfigAndroid($config);
-                break;
-        }
-    }
-
     /** Prepara los archivos necesarios del diseño o los agrega a un archivo comprimidio previamente creado
      *  
      * @param type $app

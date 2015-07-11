@@ -17,6 +17,7 @@ class Imagen {
     public $path;
     public $objectImage;
     public $ruta_url;
+    public $calidad = 99;
 
     function __construct($url) {
 
@@ -42,7 +43,7 @@ class Imagen {
      * @param type $nombre Nombre de la copia
      * @param type $ruta La ruta donde se almacenara la copia
      */
-    public function crearCopia($ancho, $altura, $nombre, $ruta) {
+    public function crearCopia($ancho, $altura, $nombre, $ruta, $incluirNombre = true) {
 
         $this->objectImage = $this->crearImagenDesdeOriginal();
 
@@ -58,7 +59,7 @@ class Imagen {
 
         //Redimensiona la imagen al proporcion adecuada
         imagecopyresized($copia_redim, $this->objectImage, 0, 0, 0, 0, $ancho_redim, $altura_redim, $this->ancho, $this->altura);
-     
+
         //Almacenara la copia de la imagen redimensiona y recortada adecuadamente
         $copia_rec = imagecreatetruecolor($ancho, $altura);
 
@@ -71,9 +72,10 @@ class Imagen {
 
         //Genera el recorte adecuado de la imagen
         imagecopy($copia_rec, $copia_redim, 0, 0, $x_recorte, $y_recorte, $ancho_redim, $altura_redim);
-   
-        $destino = $ruta .$this->nombre. $nombre . "." . $this->extension;
-        
+
+        $destino = ($incluirNombre) ? $ruta . $this->nombre . $nombre . "." . $this->extension : $ruta . $nombre . "." . $this->extension;
+
+
         $this->almacenarImagen($copia_rec, $destino);
     }
 
@@ -156,19 +158,19 @@ class Imagen {
      * @param type $calidad [90] La calidad de la imagen con la que se guardara
      * @return type
      */
-    private function almacenarImagen($imagen, $destino, $calidad = 99) {
+    private function almacenarImagen($imagen, $destino) {
         switch ($this->extension) {
             case "jpg":
-                return imagejpeg($imagen, $destino, $calidad);
+                return imagejpeg($imagen, $destino, $this->calidad);
                 break;
             case "jpeg":
-                return imagejpeg($imagen, $destino, $calidad);
+                return imagejpeg($imagen, $destino, $this->calidad);
                 break;
             case "png":
-                return imagepng($imagen, $destino, $calidad);
+                return imagepng($imagen, $destino, $this->calidad);
                 break;
             case "gif":
-                return imagegif($imagen, $destino, $calidad);
+                return imagegif($imagen, $destino, $this->calidad);
                 break;
         }
     }
@@ -182,6 +184,15 @@ class Imagen {
         "Path: " . $this->path . "<br/>" .
                 "Ancho: " . $this->ancho . " px<br/>" .
                 "Altura: " . $this->altura . " px";
+    }
+
+    /** Indica si el archivo es una imagen, dado por su ruta
+     * 
+     * @param type $path
+     * @return boolean
+     */
+    public static function pertenece($path) {
+        return (@is_array(getimagesize($path)));
     }
 
     //***************************************************
@@ -253,6 +264,10 @@ class Imagen {
 
     function setObjectImage($objectImage) {
         $this->objectImage = $objectImage;
+    }
+
+    function setCalidad($calidad) {
+        $this->calidad = $calidad;
     }
 
 }

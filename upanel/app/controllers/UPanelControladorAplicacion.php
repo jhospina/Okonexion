@@ -675,7 +675,7 @@ class UPanelControladorAplicacion extends Controller {
         if (!file_exists($ruta_android))
             mkdir($ruta_android);
 
-        $nombreZip = $app->nombre . $id_aplicacion . "_android.zip";
+        $nombreZip = $app->nombre.".zip";
         //Ruta de la archivo zip
         $archivoZIP = public_path("usuarios/downloads/" . $nombreZip);
 
@@ -683,39 +683,11 @@ class UPanelControladorAplicacion extends Controller {
         $zip = new ZipArchive;
         $zip->open($nombreZip, ZipArchive::CREATE);
 
-        //Obtiene el contenido config java del usuario en android
-        $java = AppDesing::plantillaConfigAndroid($app, $proceso->json_config);
-        //Crear el archivo java de configuracion de android del usuario
-        $ruta_javaConfig = $ruta_android . "AppConfig.java";
-        $fp = fopen($ruta_javaConfig, "c");
-        fwrite($fp, $java);
-        fclose($fp);
-
-        //Añade el archivo config de Java para Android
-        $zip->addFile($ruta_javaConfig, "app/src/main/java/libreria/sistema/AppConfig.java");
-
         $config = json_decode($proceso->json_config, true);
 
-        AppDesing::prepararArchivosParaAndroid($zip, $app, $config, $ruta . "/");
-
-        //Carga el logo de la aplicaciòn
-        $logoApp = new Imagen($config[Aplicacion::configLogoApp]);
-
-        $logoApp->crearCopia(192, 192, "ic_launcherx192", $ruta . "/");
-        $zip->addFile($ruta . "/" . "ic_launcherx192." . $logoApp->getExtension(), "app/src/main/res/mipmap-xxxhdpi/ic_launcher.png");
-        //mipmap-xxhdpi
-        $logoApp->crearCopia(144, 144, "ic_launcherx144", $ruta . "/");
-        $zip->addFile($ruta . "/" . "ic_launcherx144." . $logoApp->getExtension(), "app/src/main/res/mipmap-xxhdpi/ic_launcher.png");
-        //mipmap-xhdpi
-        $logoApp->crearCopia(96, 96, "ic_launcherx96", $ruta . "/");
-        $zip->addFile($ruta . "/" . "ic_launcherx96." . $logoApp->getExtension(), "app/src/main/res/mipmap-xhdpi/ic_launcher.png");
-        //mipmap-mdpi
-        $logoApp->crearCopia(48, 48, "ic_launcherx48", $ruta . "/");
-        $zip->addFile($ruta . "/" . "ic_launcherx48." . $logoApp->getExtension(), "app/src/main/res/mipmap-mdpi/ic_launcher.png");
-        //mipmap-hdpi
-        $logoApp->crearCopia(72, 72, "ic_launcherx72", $ruta . "/");
-        $zip->addFile($ruta . "/" . "ic_launcherx72." . $logoApp->getExtension(), "app/src/main/res/mipmap-hdpi/ic_launcher.png");
-
+        AppDesing::prepararArchivosParaAndroid($zip, $app, $config, $ruta_android); 
+        
+         
         $zip->close();
 
         //Mueve la el archivo zip a la ruta final
@@ -727,6 +699,15 @@ class UPanelControladorAplicacion extends Controller {
 
         $fp = fopen("$archivoZIP", "r");
         fpassthru($fp);
+        
+        
+          //************************************************************
+        //ELIMINA TODOS LOS ARCHIVOS DEL BUFFER
+        //************************************************************
+
+        ArchivosCTR::borrarArchivos($ruta_android);
+      
+        
     }
 
 }

@@ -1,0 +1,80 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.appsthergo.instytul.metro.nombreapp">
+
+
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" >
+    </uses-permission>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/appName"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MenuPrincipal"
+            android:label="@string/appName" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".NoticiasActivity"
+            android:label="@string/title_activity_noticias" >
+        </activity>
+        <activity
+            android:name=".VerNoticiaActivity"
+            android:label="@string/title_activity_ver_noticia" >
+        </activity>
+        <activity
+            android:name=".InstitucionalActivity"
+            android:label="@string/title_activity_institucional" >
+        </activity>
+        <activity
+            android:name=".VerInstitucionalActivity"
+            android:label="@string/title_activity_ver_institucional" >
+        </activity>
+        <activity
+            android:name=".EncuestasActivity"
+            android:label="@string/title_activity_encuestas" >
+        </activity>
+        <activity
+            android:name=".VerEncuestaActivity"
+            android:label="@string/title_activity_ver_encuesta" >
+        </activity>
+        <activity
+            android:name=".PqrActivity"
+            android:label="@string/title_activity_pqr" >
+        </activity>
+        <activity
+            android:name=".pqr.PQR_PeticionesActivity"
+            android:label="@string/title_activity_pqr__peticiones" >
+        </activity>
+        <activity
+            android:name=".pqr.PQR_QuejasActivity"
+            android:label="@string/title_activity_pqr__quejas" >
+        </activity>
+        <activity
+            android:name=".pqr.PQR_ReclamosActivity"
+            android:label="@string/title_activity_pqr__reclamos" >
+        </activity>
+        <activity
+            android:name=".pqr.PQR_SugerenciasActivity"
+            android:label="@string/title_activity_pqr__sugerencias" >
+        </activity>
+        <activity
+            android:name=".pqr.VerPqrActivity"
+            android:label="@string/title_activity_ver_pqr" >
+        </activity>
+
+        <service
+            android:name="libreria.servicios.ServicioNoticias"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+    </application>
+
+</manifest>
