@@ -133,6 +133,8 @@ return array(
     "admin.encuestas.info.encuesta_vigente"=>"Encuesta vigente",
     "admin.encuestas.info.sin_encuestas"=>"No tienes :encuestas",
     "admin.encuestas.info.no_hay_archivados"=>"No hay :encuestas archivadas",
+    "admin.encuestas.get.exito.archivar"=>"La :encuesta se ha terminado y archivado con éxito. Ahora hace parte del historial.",
+    "admin.encuestas.btn.archivar"=>"Terminar :encuesta",
     "admin.pqr.info.peticiones"=>"Peticiones",
     "admin.pqr.info.peticion"=>"Petición",
     "admin.pqr.info.quejas"=>"Quejas",

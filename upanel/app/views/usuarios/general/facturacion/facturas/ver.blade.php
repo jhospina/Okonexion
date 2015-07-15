@@ -102,28 +102,57 @@ $iva = $factura->iva;
     <p class="label label-sm label-grey arrowed arrowed-right">{{trans("fact.factura.transaccion.titulo")}}</p>
 </div>
 
-
-<div class="col-lg-12" style="margin-bottom: 50px;">
-
+<div class="col-lg-12" style="margin-bottom: 5px;">
     <table class="table table-striped table-bordered" style="  margin-bottom: 0px;">
         <tr>
-        <th>{{Util::convertirMayusculas(trans("fact.factura.transaccion.fecha"))}}</th>
-        <th>{{Util::convertirMayusculas(trans("fact.factura.transaccion.metodo"))}}</th>
-        <th>{{Util::convertirMayusculas(trans("fact.factura.transaccion.id"))}}</th>
-        <th>{{trans("fact.info.total")}}</th>
+            <th>{{Util::convertirMayusculas(trans("fact.factura.transaccion.fecha"))}}</th>
+            <th>{{Util::convertirMayusculas(trans("fact.factura.transaccion.gateway"))}}</th>
+            <th>{{Util::convertirMayusculas(trans("fact.factura.transaccion.id"))}}</th>
+            <th>{{trans("fact.info.total")}}</th>
         </tr>
 
-        @if(!is_null($factura->tipo_pago))
+        @if(!is_null($factura->gateway))
         <tr>
             <td>{{Fecha::formatear(Facturacion::obtenerValorMetadato(MetaFacturacion::FECHA_PAGO, $factura->id))}}</td>
-            <td>{{Facturacion::tipo($factura->tipo_pago)}}</td>
+            <td>{{Facturacion::tipo($factura->gateway)}}</td>
             <td>{{Facturacion::obtenerValorMetadato(MetaFacturacion::TRANSACCION_ID, $factura->id)}}</td>
             <td>{{Monedas::simbolo($moneda)}} {{$valor_total}} {{$moneda}}</td>
         </tr>
         @endif
     </table>
-
 </div>
+
+<?php
+$fecha_operacion = Facturacion::obtenerValorMetadato(MetaFacturacion::TRANSACCION_FECHA_OPERACION, $factura->id);
+?>
+
+@if(!is_null($fecha_operacion))
+
+<div class="col-md-12" style="margin: 10px 0px;">
+    <p class="label label-sm label-grey arrowed arrowed-right">{{trans("fact.factura.info.operacion.titulo")}}</p>
+</div>
+
+<div class="col-lg-12" style="margin-bottom: 20px;">
+    <table class="table table-striped table-bordered" style="  margin-bottom: 0px;">
+        <tr>
+            <th>{{Util::convertirMayusculas(trans("fact.factura.transaccion.fecha.operacion"))}}</th>
+            <th>{{Util::convertirMayusculas(trans("fact.factura.transaccion.metodo.pago"))}}</th>
+            <th>{{Util::convertirMayusculas(trans("fact.factura.transaccion.codigo.autorizacion"))}}</th>
+            <th>{{Util::convertirMayusculas(trans("fact.factura.transaccion.id.orden"))}}</th>
+        </tr>
+
+        @if(!is_null($factura->gateway))
+        <tr>
+            <td>{{$fecha_operacion}}</td>
+            <td>{{Facturacion::obtenerValorMetadato(MetaFacturacion::METODO_PAGO, $factura->id)}}</td>
+            <td>{{Facturacion::obtenerValorMetadato(MetaFacturacion::TRANSACCION_CODIGO_AUTORIZACION, $factura->id)}}</td>
+            <td>{{Facturacion::obtenerValorMetadato(MetaFacturacion::TRANSACCION_ID_ORDEN, $factura->id)}}</td>
+        </tr>
+        @endif
+    </table>
+</div>
+
+@endif
 
 
 @stop

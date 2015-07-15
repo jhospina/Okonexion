@@ -664,3 +664,50 @@ li#tiempo-suscripcion{
 .stats-info-box .info{
     padding:0px;
 }
+
+#metodos-pagos-tab-payu{
+    font-size: 12pt;
+}
+
+#metodos-pagos-tab-payu img{
+    width: 40px;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+
+#pagos-payou-tab-content{
+    margin-bottom: 20px;
+}
+
+#logos-cert{
+    margin-bottom: 20px;
+}
+
+#logos-cert img{
+    height: 60px;
+    margin: 10px 20px;
+}
+
+.btn-icon-plat-efectivo{
+    display: inline-block;
+    padding: 10px;
+    border: 1px rgb(187, 187, 187) solid;
+    height: 120px;
+    vertical-align: top;
+    text-align: center;
+    width: 30%;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f6f6f6+47,ededed+100;White+3D+%231 */
+    background: #ffffff; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ffffff 0%, #f6f6f6 47%, #ededed 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
+    cursor:pointer;
+}

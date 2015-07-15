@@ -65,6 +65,17 @@ class ConfigInstancia extends Eloquent {
     const fact_2checkout_publicKey = "fact_2checkout_publicKey";
     const fact_2checkout_privateKey = "fact_2checkout_privateKey";
     const fact_2checkout_sandbox = "fact_2checkout_sandbox";
+    //************************************************************
+    //CONFIGURACION DE FACTURACIÓN - PAY-U*********************
+    //************************************************************
+    const fact_payu_merchantId="fact_payu_merchantId";
+    const fact_payu_apiKey="fact_payu_apiKey";
+    const fact_payu_apiLogin="fact_payu_apiLogin";
+    const fact_payu_accountId="fact_payu_accountId";
+    const fact_payu_sandbox="fact_payu_sandbox";
+    
+    
+    
 
     static function obtenerListadoConfig() {
         $class = new ReflectionClass("ConfigInstancia");

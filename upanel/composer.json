@@ -22,10 +22,16 @@
             "app/library/contentTypes",
             "app/library/enums",
             "app/library/security",
+            "app/library/metPay",
             "app/library/plugins/",
             "app/library/plugins/2checkout/",
             "app/library/plugins/2checkout/Twocheckout",
-            "app/library/plugins/2checkout/Twocheckout/Api"
+            "app/library/plugins/2checkout/Twocheckout/Api",
+            "app/library/plugins/payu/",
+            "app/library/plugins/payu/PayU",
+            "app/library/plugins/payu/PayU/api",
+            "app/library/plugins/payu/PayU/exceptions",
+            "app/library/plugins/payu/PayU/util"
 
         ]
     },

@@ -30,7 +30,7 @@ $total_votos = intval(ContenidoApp::obtenerValorMetadato($encuesta_vigente->id, 
 <div class="panel panel-default" style="clear: both;margin-bottom:50px;">
     <div class="panel-heading">
         @if($encuesta_vigente!=null)
-        <h3 class="panel-title"><span style="width: 50%;display: inline-block;">{{Util::convertirMayusculas(trans("app.admin.encuestas.info.encuesta_vigente"))}}</span><span style="width: 50%;display: inline-block;" class="text-right">{{$encuesta_vigente->created_at}}</span></h3>
+        <h3 class="panel-title"><span style="width: 50%;display: inline-block;">{{Util::convertirMayusculas(trans("app.admin.encuestas.info.encuesta_vigente"))}}</span><span style="width: 50%;display: inline-block;" class="text-right">{{$encuesta_vigente->created_at}} <a href="{{URL::to("aplicacion/administrar/encuestas/editar/".$encuesta_vigente->id."/archivar")}}" class="btn btn-danger"><span class="glyphicon glyphicon-save"></span> {{trans("app.admin.encuestas.btn.archivar",array("encuesta"=>$singNombre))}}</a></span></h3>
         @else
         <h3 class="panel-title">{{trans("app.admin.encuestas.info.sin_encuestas",array("encuestas"=>$nombreContenido))}} <a class="link" href="{{URL::to("aplicacion/administrar/".$tipoContenido."/agregar")}}">{{trans("otros.info.quieres_crear_una")}}</a></h3>
         @endif

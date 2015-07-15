@@ -71,7 +71,7 @@ list($decimales, $sep_millar, $sep_decimal) = Monedas::formato($moneda);
                         </div>
                     </div>
 
-
+                    {{-- GATEWAY - 2CHECKOUT --}}
                     <div class="panel panel-primary">
                         <div class="panel-heading">{{trans("config.facturacion.seccion.2co.titulo")}}</div>
                         <div class="panel-body">
@@ -102,6 +102,46 @@ list($decimales, $sep_millar, $sep_decimal) = Monedas::formato($moneda);
                             </div>
                         </div>
                     </div>
+                    
+                    {{--GATEWAY PAY-U--}}
+                    
+                     <div class="panel panel-primary">
+                        <div class="panel-heading">{{trans("config.facturacion.seccion.payu.titulo")}}</div>
+                        <div class="panel-body">
+                            <div class="col-lg-6">
+                                <label>{{trans("config.facturacion.seccion.payu.merchantId")}}</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="{{ ConfigInstancia::fact_payu_merchantId; }}" value="{{ Instancia::obtenerValorMetadato(ConfigInstancia::fact_payu_merchantId); }}"/>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>{{trans("config.facturacion.seccion.payu.apiKey")}}</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="{{ ConfigInstancia::fact_payu_apiKey; }}" value="{{ Instancia::obtenerValorMetadato(ConfigInstancia::fact_payu_apiKey); }}"/>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>{{trans("config.facturacion.seccion.payu.apiLogin")}}</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="{{ ConfigInstancia::fact_payu_apiLogin; }}" value="{{ Instancia::obtenerValorMetadato(ConfigInstancia::fact_payu_apiLogin); }}"/>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>{{trans("config.facturacion.seccion.payu.accountId")}}</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="text" class="form-control" name="{{ ConfigInstancia::fact_payu_accountId; }}" value="{{ Instancia::obtenerValorMetadato(ConfigInstancia::fact_payu_accountId); }}"/>
+                            </div>
+                            <div class="col-lg-6">
+                                <label>{{trans("config.facturacion.seccion.payu.sandbox")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans('config.facturacion.seccion.payu.sandbox.ayuda')))</label>
+                            </div>
+                            <div class="col-lg-6">
+                                <input type="checkbox" class="js-switch" data-for="{{ConfigInstancia::fact_payu_sandbox}}" {{HtmlControl::setCheck(Util::convertirIntToBoolean(Instancia::obtenerValorMetadato(ConfigInstancia::fact_payu_sandbox)));}}>
+                                <input type="hidden" id="{{ConfigInstancia::fact_payu_sandbox}}" name="{{ConfigInstancia::fact_payu_sandbox}}" value="{{ Instancia::obtenerValorMetadato(ConfigInstancia::fact_payu_sandbox); }}"/>
+                            </div>
+                        </div>
+                    </div>
+
 
                     <div class="text-right">
                         <button class="btn btn-info" type="button" id="btn-guardar" type="button"><span class="glyphicon glyphicon-save"></span> {{trans("otros.info.guardar")}}</button>

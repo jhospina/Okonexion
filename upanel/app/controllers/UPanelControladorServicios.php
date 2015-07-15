@@ -30,6 +30,9 @@ class UPanelControladorServicios extends Controller {
 
         $servicios = Servicio::listado();
         $hash = HasherPro::crear(UsuarioMetadato::HASH_CREAR_FACTURA);
+        if (strlen($hash) == 0) {
+            return Redirect::to("servicios/agregar");
+        }
 
         return View::make("usuarios/tipo/regular/servicios/agregar")->with("servicios", $servicios)->with("hash", $hash);
     }
@@ -135,7 +138,7 @@ class UPanelControladorServicios extends Controller {
         $data = Input::all();
         $servicio = new Servicio();
 
-   
+
         if (!Servicio::validar($data))
             return json_encode(array("error" => "error"));
 

@@ -16,7 +16,7 @@ class TablaFacturacion extends Migration {
             $table->integer("instancia");
             $table->integer("id_usuario");
             $table->string("estado", 2);
-            $table->string("tipo_pago",2)->nullable();
+            $table->string("gateway", 3)->nullable();
             $table->double("iva")->default(0);
             $table->double("subtotal")->default(0);
             $table->double("total")->default(0);

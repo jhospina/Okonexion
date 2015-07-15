@@ -8,7 +8,8 @@ Class Facturacion extends Eloquent {
     const ESTADO_SIN_PAGAR = "SP";
     const ESTADO_PAGADO = "PA";
     const ESTADO_VENCIDA = "VE";
-    const TIPOPAGO_TARJETA_CREDITO_ATRAVES_2CHECKOUTS = "T2";
+    const GATEWAY_2CHECKOUT = "2CH";
+    const GATEWAY_PAYU = "PYU";
 
     /** Retorna la descripcion del estado de la factura
      * 
@@ -25,7 +26,7 @@ Class Facturacion extends Eloquent {
     }
 
     static function tipo($id_tipo) {
-        return trans("atributos.tipo.pago.factura." . Facturacion::TIPOPAGO_TARJETA_CREDITO_ATRAVES_2CHECKOUTS);
+        return trans("atributos.gateway.factura." . $id_tipo);
     }
 
     /** Crear una nueva factura, con estado SIN PAGAR
@@ -269,19 +270,21 @@ Class Facturacion extends Eloquent {
     /** Valida el pago de una factura
      * 
      * @param Facturacion $factura El objeto de la factura
-     * @param int $id_transaccion //El id de la trasaccion
+     * @param Array $infoValidacion Información de validación de la transaccion
      * @param string $tipo_pago El tipo de pago realizado
      */
-    static function validarPago($factura, $id_transaccion, $tipo_pago) {
+    static function validarPago($factura, $infoValidacion, $gateway) {
         Facturacion::generarJSONCliente($factura->id);
         //Se almacena el numero de la transaccion arrojada por el servidor de pagos
-        Facturacion::agregarMetadato(MetaFacturacion::TRANSACCION_ID, $id_transaccion, $factura->id);
+        foreach ($infoValidacion as $tipo => $info) {
+            Facturacion::agregarMetadato($tipo, $info, $factura->id);
+        }
         //Se registra la fecha de pago
         Facturacion::agregarMetadato(MetaFacturacion::FECHA_PAGO, Util::obtenerTiempoActual(), $factura->id);
         //Se establece el estado de la factura como pagado
         $factura->estado = Facturacion::ESTADO_PAGADO;
         //Se establece tipo de pago de la factura
-        $factura->tipo_pago = $tipo_pago;
+        $factura->gateway = $gateway;
         //Se elimina la factura en proceso del cliente
         User::eliminarMetadato(UsuarioMetadato::FACTURACION_ID_PROCESO);
         $factura->save();
@@ -422,19 +425,19 @@ Class Facturacion extends Eloquent {
         $html .= " <tr><td style='text-align:right;background:gainsboro;' style='font-size: 13pt;'><b>" . trans('fact.info.total') . "</b></td><td style='text-align:right;' style='font-size: 13pt;'><b>" . Monedas::simbolo($moneda) . " " . Monedas::formatearNumero($moneda, $valor_total) . " " . $moneda . "</b></div> ";
         $html .= "  </table>";
 
-        $html.="<h3>" . trans("fact.factura.transaccion.titulo") . "</h3>";
+        $html.="<h3>" . Util::descodificarTexto(trans("fact.factura.transaccion.titulo")) . "</h3>";
 
         $html .= " <table style='width:100%;border:1px black solid;' cellpadding='5'>";
         $html .= " <tr style='background:gainsboro;'><th>" . Util::descodificarTexto(Util::convertirMayusculas(trans('fact.factura.transaccion.fecha'))) . "</th>";
-        $html .= "   <th>" . Util::convertirMayusculas(trans('fact.factura.transaccion.metodo')) . "</th>";
+        $html .= "   <th>" . Util::convertirMayusculas(trans('fact.factura.transaccion.gateway')) . "</th>";
         $html .= "  <th>" . Util::descodificarTexto(Util::convertirMayusculas(trans('fact.factura.transaccion.id'))) . "</th>";
         $html .= "  <th>" . trans('fact.info.total') . "</th>";
         $html .= "   </tr>";
 
-        if (!is_null($factura->tipo_pago)) {
+        if (!is_null($factura->gateway)) {
             $html .= "<tr>";
             $html .= "    <td>" . Fecha::formatear(Facturacion::obtenerValorMetadato(MetaFacturacion::FECHA_PAGO, $factura->id)) . "</td>";
-            $html .= "   <td>" . Facturacion::tipo($factura->tipo_pago) . "</td>";
+            $html .= "   <td>" . Facturacion::tipo($factura->gateway) . "</td>";
             $html .= "    <td>" . Facturacion::obtenerValorMetadato(MetaFacturacion::TRANSACCION_ID, $factura->id) . "</td>";
             $html .= "    <td>" . Monedas::simbolo($moneda) . " " . $valor_total . " " . $moneda . "</td>";
             $html .= "  </tr>";
@@ -442,9 +445,51 @@ Class Facturacion extends Eloquent {
         $html .= "  </table>";
 
 
+        $fecha_operacion = Facturacion::obtenerValorMetadato(MetaFacturacion::TRANSACCION_FECHA_OPERACION, $factura->id);
+
+        if (!is_null($fecha_operacion)) {
+            $html.="<h3>" . Util::descodificarTexto(trans("fact.factura.info.operacion.titulo")) . "</h3>";
+
+            $html .= " <table style='width:100%;border:1px black solid;' cellpadding='5'>";
+            $html .= " <tr style='background:gainsboro;'><th>" . Util::descodificarTexto(Util::convertirMayusculas(trans('fact.factura.transaccion.fecha.operacion'))) . "</th>";
+            $html .= "   <th>" . Util::convertirMayusculas(trans('fact.factura.transaccion.metodo.pago')) . "</th>";
+            $html .= "  <th>" . Util::descodificarTexto(Util::convertirMayusculas(trans('fact.factura.transaccion.codigo.autorizacion'))) . "</th>";
+            $html .= "  <th>" . trans('fact.factura.transaccion.id.orden') . "</th>";
+            $html .= "   </tr>";
+
+            if (!is_null($factura->gateway)) {
+                $html .= "<tr>";
+                $html .= "    <td>" . $fecha_operacion . "</td>";
+                $html .= "   <td>" . Facturacion::obtenerValorMetadato(MetaFacturacion::METODO_PAGO, $factura->id) . "</td>";
+                $html .= "    <td>" . Facturacion::obtenerValorMetadato(MetaFacturacion::TRANSACCION_CODIGO_AUTORIZACION, $factura->id) . "</td>";
+                $html .= "    <td>" . Facturacion::obtenerValorMetadato(MetaFacturacion::TRANSACCION_ID_ORDEN, $factura->id) . "</td>";
+                $html .= "  </tr>";
+            }
+            $html .= "  </table>";
+        }
+
+
         $html.= '</body></html>';
 
         return $html;
+    }
+
+    /** Calcula el numero de cuotas maxima a escoger de un valor. Utilizado para las cuotas de las tarjetas de credito.
+     * 
+     * @param type $valor
+     * @param type $cantMax
+     * @param type $valorCuotaMin
+     * @return type
+     */
+    static function calcularNumeroCuotasMaxima($valor, $cantMax = 24, $valorCuotaMin = 25000) {
+        $valorCuota = $valor / $cantMax;
+
+        while ($valorCuota < $valorCuotaMin) {
+            $cantMax--;
+            $valorCuota = $valor / $cantMax;
+        }
+
+        return $cantMax;
     }
 
 }

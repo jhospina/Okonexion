@@ -102,7 +102,7 @@ function aplicacion_construir() {
     //APLICACION----------------------------------------------------------------
     Route::get('aplicacion/basico', 'UPanelControladorAplicacion@basico');
     Route::post("aplicacion/basico", "UPanelControladorAplicacion@guardarBasico");
-    Route::post("aplicacion/basico/ajax/plataformas/","UPanelControladorAplicacion@ajax_plataformas");
+    Route::post("aplicacion/basico/ajax/plataformas/", "UPanelControladorAplicacion@ajax_plataformas");
 
     Route::get('aplicacion/apariencia', 'UPanelControladorAplicacion@apariencia');
     Route::post("aplicacion/apariencia", "UPanelControladorAplicacion@guardarApariencia");
@@ -136,8 +136,8 @@ function aplicacion_desarrollo() {
 //***************************************************************************
 //***************************************************************************
 
-function control_aplicaciones(){
-     Route::get('aplicaciones', 'UPanelControladorAplicacion@vista_listado');
+function control_aplicaciones() {
+    Route::get('aplicaciones', 'UPanelControladorAplicacion@vista_listado');
 }
 
 //***************************************************************************
@@ -267,7 +267,7 @@ function ayuda_soporte() {
 
 function servicios() {
     Route::get('servicios/', 'UPanelControladorServicios@vista_misServicios');
-    Route::get("control/servicios",'UPanelControladorServicios@vista_servicios');
+    Route::get("control/servicios", 'UPanelControladorServicios@vista_servicios');
     Route::get('servicios/agregar', 'UPanelControladorServicios@vista_agregar');
     Route::post('servicios/post/agregar', 'UPanelControladorServicios@post_ordenarServicios');
     //AJAX
@@ -326,7 +326,15 @@ function facturacion() {
     //Facturacion y Pagos
     Route::post("fact/orden/pago", "UPanelControladorFacturacion@vistaPost_ordenPago");
     Route::get("fact/orden/pago", "UPanelControladorFacturacion@vistaPost_ordenPago");
-    Route::post("fact/orden/pago/procesar/", "UPanelControladorFacturacion@post_ordenPagoProcesar");
+    //Proceso de pago - Tarjeta de credito - 2Checkout
+    Route::post("fact/orden/pago/procesar/tcredito/2checkout", "UPanelControladorFacturacion@post_ordenPagoProcesar_TCredito_2Checkout");
+     //Proceso de pago - Tarjeta de credito - Pay-U
+    Route::post("fact/orden/pago/procesar/tcredito/payu", "UPanelControladorFacturacion@post_ordenPagoProcesar_TCredito_PayU");
+     //Proceso de pago - PSE - Pay-U
+    Route::post("fact/orden/pago/procesar/tbancaria/payu", "UPanelControladorFacturacion@post_ordenPagoProcesar_TBancaria_PayU");
+    
+    
+    
     //USUARIO
     Route::get("fact/mis-facturas", "UPanelControladorFacturacion@vista_misFacturas");
     Route::get("fact/facturas", "UPanelControladorFacturacion@vista_facturas");
@@ -430,6 +438,9 @@ function tipoContenido_Encuestas() {
     Route::post("aplicacion/administrar/encuestas/publicar", "UPanelControladorContenidoEncuestas@publicar");
     // Guardar 
     Route::post("aplicacion/administrar/encuestas/guardar", "UPanelControladorContenidoEncuestas@guardar");
+    //ARCHIVAR ENCUESTA
+    Route::get("aplicacion/administrar/encuestas/editar/{id}/archivar", "UPanelControladorContenidoEncuestas@archivar");
+
 
     /*     * AJAX* */
     //ELIMINAR

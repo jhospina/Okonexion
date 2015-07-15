@@ -13,15 +13,10 @@ array_unshift($paises, trans("otros.info.elegir"));
 
 
 @section("css")
-
-<style>
-
-</style>
-
-
+{{ HTML::style('assets/plugins/switchery/switchery.css', array('media' => 'screen')) }}
+{{ HTML::style('assets/plugins/pretty-checkbox/checkbox.css', array('media' => 'screen')) }}
 @stop
-
-@section("contenido") 
+@section("contenido")
 
 <h1><span class="glyphicon glyphicon-list-alt"></span> {{trans("fact.ordenPago.titulo")}} #{{$factura->id}}</h1>
 
@@ -111,68 +106,6 @@ array_unshift($paises, trans("otros.info.elegir"));
 <hr/>
 <hr/>
 
-<h2><span class="glyphicon glyphicon-credit-card"></span> {{trans("fact.orden.pago.informacion.pago.titulo")}}</h2>
-
-<div id="msj-error-tc" style="display: none;" class="alert alert-danger"></div>
-
-<form id="CCForm" action="{{URL::to("fact/orden/pago/procesar/")}}" method="post">
-    <input name="token" id="token" type="hidden" value="" />
-    <div class="col-lg-12" style="margin-bottom: 30px;">
-        <div class="col-lg-6 input-lg" style="margin-bottom: 10px;"></div>
-        <div class="col-lg-6 input-lg" style="margin-bottom: 10px;">
-            <img style="height: 30px;" src="{{URL::to('assets/img/icons/mastercard.png')}}"/>
-            <img style="height: 30px;" src="{{URL::to('assets/img/icons/visa.png')}}"/>
-            <img style="height: 30px;" src="{{URL::to('assets/img/icons/americanexpress.png')}}"/>
-            <img style="height: 30px;" src="{{URL::to('assets/img/icons/dinersclub.png')}}"/>
-            <img style="height: 30px;" src="{{URL::to('assets/img/icons/discover.png')}}"/>
-        </div>
-        <div class="col-lg-6 input-lg"> 
-            {{trans("fact.orden.pago.tc.titulo")}}
-        </div>
-        <div class="col-lg-6">
-            <input id="ccNo" class="form-control input-lg" maxlength="20" onkeydown="return soloNumeros(this, '');" type="text" size="20" value="" autocomplete="off" required />
-        </div>
-        <div class="col-lg-6 input-lg"> 
-            {{trans("fact.orden.pago.tc.fecha.vencimiento")}}
-        </div>
-        <div class="col-lg-6 input-lg">
-            <select id="mes-exp" class="form-control" style="width: 20%;display:initial;  font-size: 12pt;">
-                <option value=""></option>
-                <option value="01">01</option>
-                <option value="02">02</option>
-                <option value="03">03</option>
-                <option value="04">04</option>
-                <option value="05">05</option>
-                <option value="06">06</option>
-                <option value="07">07</option>
-                <option value="08">08</option>
-                <option value="09">09</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-            </select>
-            <span> / </span>
-            <select id="ano-exp" class="form-control" style="width: 20%;display:initial; font-size: 12pt;">
-                <option value=""></option>
-                <?php for ($i = date("Y"); $i < date("Y") + 12; $i++): ?>
-                    <option value="{{$i}}">{{$i}}</option>
-                <?php endfor; ?>
-            </select>
-            <input type="hidden" size="2" id="expMonth" value="" required />
-            <input type="hidden" size="2" id="expYear" value="" required /></div>
-        <div class="col-lg-6 input-lg"> 
-            {{trans("fact.orden.pago.tc.cvv")}}
-        </div>
-        <div class="col-lg-6 input-lg"> <input id="cvv" onkeydown="return soloNumeros(this, '');" class="form-control input-lg" maxlength="4" size="4" type="password" value="" autocomplete="off" required /></div>
-
-        <div class="col-lg-12 text-center" style="margin-top: 50px;">
-            <button type="button" id="btn-pagar" class="btn btn-lg btn-primary text-uppercase"><span class="glyphicon glyphicon-ok-circle"></span> {{trans("fact.btn.realizar.pago")}}</button>
-        </div>
-    </div>
-</form>
-
-
-
 <div id="modal-proceso" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -194,27 +127,42 @@ array_unshift($paises, trans("otros.info.elegir"));
 </div><!-- /.modal -->
 
 
-
-@stop
-
-
-@section("script")
-
+{{ HTML::script('assets/jscode/verInfoFact.js') }}
 <script>
-    var idSeller = "{{Instancia::obtenerValorMetadato(ConfigInstancia::fact_2checkout_idSeller)}}";
-    var publicKeyUser = "{{Instancia::obtenerValorMetadato(ConfigInstancia::fact_2checkout_publicKey)}}";
-    var sandbox = <?php echo (Util::convertirIntToBoolean(Instancia::obtenerValorMetadato(ConfigInstancia::fact_2checkout_sandbox))) ? "true" : "false"; ?>;
     var btn_msj_inicial = '<span class="glyphicon glyphicon-ok-circle"></span> {{trans("fact.btn.realizar.pago")}}';
     var btn_msj_verificando = "<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('otros.info.verificando')}}...";
     var btn_msj_procesando = "<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('otros.info.procesando')}}...";
     var msj_error_tc = "<span class='glyphicon glyphicon-exclamation-sign'></span> {{trans('fact.orden.pago.informacion.tc.error')}}";
     var msj_error_tc_invalido = "<span class='glyphicon glyphicon-exclamation-sign'></span> {{trans('fact.orden.pago.informacion.tc.error.invalido')}}";
     var msj_error_tc_descon = "<span class='glyphicon glyphicon-exclamation-sign'></span> {{trans('fact.orden.pago.informacion.tc.error.desconocido',array('link'=>URL::to('soporte')))}}";
+    var msj_error_infoPagador = "<span class='glyphicon glyphicon-exclamation-sign'></span> {{trans('fact.orden.pago.payu.tcredito.infoPagador.error')}}";
+    var msj_error_pse = "<span class='glyphicon glyphicon-exclamation-sign'></span> {{trans('fact.orden.pago.payu.pse.error')}}";
     var url_postInfo = "{{URL::to('usuario/ajax/actualizar/')}}";
 </script>
 
+@if($moneda==Monedas::COP)
+@include("usuarios/general/facturacion/gateway/payu",array("valor_total"=>$valor_total,"moneda"=>$moneda))
+@else
+@include("usuarios/general/facturacion/gateway/2checkout")
+@endif
 
-<script src="https://www.2checkout.com/checkout/api/2co.min.js"></script>
-{{ HTML::script('assets/jscode/util.js') }}
-{{ HTML::script('assets/jscode/checkoutpay.js') }}
+
+@stop
+
+
+@section("script")
+
+{{ HTML::script('assets/plugins/switchery/switchery.js') }}
+<script>
+
+    var btn_pagar = "#btn-pagar";
+    var id_form = "#formPay";
+
+    var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+    elems.forEach(function (html) {
+        var switchery = new Switchery(html, {secondaryColor: '#FF5656', className: "switchery switchery-small"});
+
+    });
+</script>
+
 @stop

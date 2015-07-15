@@ -40,6 +40,12 @@ if (Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
         margin: 0px;
         clear: both;
     }
+
+    #msj-popup.alert.alert-danger{
+        margin-top: 10px;
+        padding: 10px;
+        font-size: 13pt;
+    }
 </style>
 
 
@@ -111,7 +117,7 @@ if (Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
             {{-- INFO RAPIDO: SERVICIOS--}}
 
             @if($totalServicios>0)
-            
+
             @include("interfaz/util/infobox",
             array("infobox_div"=>4,
             "infobox_color"=>"#468847",
@@ -122,9 +128,9 @@ if (Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
             "infobox_link_info"=>URL::to("servicios"),
             "infobox_link_foot"=>URL::to("servicios/agregar"),
             ))
-            
+
             @else
-            
+
             @include("interfaz/util/infobox",
             array("infobox_div"=>4,
             "infobox_color"=>"#468847",
@@ -135,7 +141,7 @@ if (Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
             "infobox_link_info"=>URL::to("servicios/agregar"),
             "infobox_link_foot"=>URL::to("servicios/agregar"),
             ))
-            
+
             @endif
 
 

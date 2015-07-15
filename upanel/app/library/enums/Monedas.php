@@ -97,6 +97,8 @@ class Monedas {
      * @return type
      */
     static function convertir($moneda_origen, $moneda_destino, $cantidad) {
+        if ($moneda_destino == $moneda_origen)
+            return $cantidad;
         $get = file_get_contents("https://www.google.com/finance/converter?a=$cantidad&from=$moneda_origen&to=$moneda_destino");
         $get = explode("<span class=bld>", $get);
         $get = explode("</span>", $get[1]);
