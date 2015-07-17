@@ -85,14 +85,13 @@ $moneda = Auth::user()->getMoneda();
 
 <div class="col-lg-12" style="margin-top:20px;" id="ciclos">
 
-    @for($i=0;$i< count($ciclos);$i++)
 
+    @for($i=0;$i< count($ciclos);$i++)
     <?php
-    $valor = Instancia::obtenerValorMetadato($prefijo . $ciclos[$i] . "mes_" . $plan."-".$moneda);
+    $valor = Instancia::obtenerValorMetadato($prefijo . $ciclos[$i] . "mes_" . $plan . "-" . $moneda);
     if (is_null($descuento = Instancia::obtenerValorMetadato($prefijo . $ciclos[$i] . "mes_descuento")))
         $descuento = 0;
     ?>
-
     <div class="col-lg-12">
         <div class="col-lg-3"><span class="glyphicon glyphicon-calendar"></span> {{trans("config.suscripcion.seccion.planes.op.valor.".$ciclos[$i]."mensual")}}</div>
         <div class="col-lg-3">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,$valor)}} {{$moneda}}</div>

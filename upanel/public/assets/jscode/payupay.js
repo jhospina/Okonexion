@@ -1,6 +1,9 @@
 $(function () {
 //PAGOS POR TARJETA DE CREDITO
     $(btn_pagar + "-tcredito").click(function () {
+        $("#msj-error-fact").hide();
+        $("#msj-error-tc").hide();
+        $("#msj-error-pse").hide();
         if (verificar()) {
             if (verificarTC()) {
                 if (verificarInfoPagador())
@@ -27,14 +30,15 @@ $(function () {
     $(btn_pagar + "-pse").click(function () {
         $("#msj-error-fact").hide();
         $("#msj-error-tc").hide();
+        $("#msj-error-pse").hide();
         // Call our token request function
         if (verificar()) {
             if (verificarDatosPSE())
             {
                 alert("SISTEMA DE PAGOS PSE AUN NO IMPLEMENTADO");
                 return;
-                jQuery(btn_pagar).attr("disabled", "disabled");
-                jQuery(btn_pagar).html(btn_msj_verificando);
+                jQuery(btn_pagar + "-pse").attr("disabled", "disabled");
+                jQuery(btn_pagar + "-pse").html(btn_msj_verificando);
                 $("#modal-proceso").modal({show: true, backdrop: "static"});
                 actualizarDatos(id_form + "-pse", btn_pagar + "-pse");
             } else {
@@ -47,9 +51,37 @@ $(function () {
         }
     });
 
+    //PAGOS DE EN EFECITO
+    $(btn_pagar + "-efectivo").click(function () {
+        $("#msj-error-fact").hide();
+        $("#msj-error-efectivo").hide();
+        if (verificar()) {
+            if ($("#puntorec").val().length > 0)
+            {
+                alert("SISTEMA DE PAGOS EN EFECTIVO AUN NO IMPLEMENTADO");
+                return;
+                jQuery(btn_pagar + "-efectivo").attr("disabled", "disabled");
+                jQuery(btn_pagar + "-efectivo").html(btn_msj_verificando);
+                $("#modal-proceso").modal({show: true, backdrop: "static"});
+                actualizarDatos(id_form + "-pse", btn_pagar + "-pse");
+            } else {
+                $("#msj-error-efectivo").show();
+                $("#msj-error-efectivo").html(msj_error_efect);
+            }
+        }
+        else {
+            $("#msj-error-fact").show();
+        }
+    });
+
+
+    $(".btn-icon-plat-efectivo").click(function () {
+        $("#puntorec").val($(this).attr("data-rec"));
+        $(".btn-icon-plat-efectivo").removeClass("select");
+        $(this).addClass("select");
+    });
+
 });
-
-
 
 
 function verificarInfoPagador() {

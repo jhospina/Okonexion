@@ -36,7 +36,7 @@ Class Facturacion extends Eloquent {
      * @param int $id_factura [null] El id del usuario al que se le creara la factura
      * @return int Retorna el id de la factura creada, de lo contrario retorna Null
      */
-    static function nueva($iva = 0, $vencimiento = 1, $id_usuario = null) {
+    static function nueva($vencimiento = 1, $id_usuario = null) {
 
         $fecha_creacion = Util::obtenerTiempoActual();
 
@@ -53,7 +53,7 @@ Class Facturacion extends Eloquent {
         $fact->id_usuario = $id_usuario;
 
         $fact->estado = Facturacion::ESTADO_SIN_PAGAR;
-        $fact->iva = $iva;
+        $fact->iva = (Auth::user()->getMoneda() == Monedas::COP) ? Instancia::obtenerValorMetadato(ConfigInstancia::fact_impuestos_iva) : 0;
         $fact->total = 0;
         $fact->fecha_creacion = $fecha_creacion;
         $fecha_venc = new Fecha($fecha_creacion);
@@ -230,8 +230,19 @@ Class Facturacion extends Eloquent {
         $productos = Facturacion::obtenerProductos($id_factura);
         foreach ($productos as $producto) {
 
+            if (strpos($producto[MetaFacturacion::PRODUCTO_ID], "actualizacion") !== false) {
 
-            //Valida la suscripcion y las aplica
+                //Actualiza la suscripcion a plata
+                if ($producto[MetaFacturacion::PRODUCTO_ID] == ConfigInstancia::producto_suscripcion_plata_actualizacion)
+                    User::actualizarMetadato(UsuarioMetadato::SUSCRIPCION_TIPO, ConfigInstancia::suscripcion_tipo_plata);
+                //Actualiza la suscripcion a oro
+                if ($producto[MetaFacturacion::PRODUCTO_ID] == ConfigInstancia::producto_suscripcion_oro_actualizacion)
+                    User::actualizarMetadato(UsuarioMetadato::SUSCRIPCION_TIPO, ConfigInstancia::suscripcion_tipo_oro);
+
+                continue;
+            }
+
+            //Valida la suscripcion nuevas o de renovacion y las aplica
             if (strpos($producto[MetaFacturacion::PRODUCTO_ID], "suscripcion") !== false) {
 
                 //SI el usuario tiene una suscripcion vigente, se le añade el tiempo si afectar el tiempo de la suscripcion actual

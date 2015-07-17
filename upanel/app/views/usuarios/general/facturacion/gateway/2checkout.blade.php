@@ -7,7 +7,7 @@
 
 
 
-<form id="CCForm" action="{{URL::to("fact/orden/pago/procesar/tcredito/2checkout")}}" method="post">
+<form id="formPay" action="{{URL::to("fact/orden/pago/procesar/tcredito/2checkout")}}" method="post">
     <input name="token" id="token" type="hidden" value="" />
     <div class="col-lg-12" style="margin-bottom: 30px;">
         <div class="col-lg-6 input-lg" style="margin-bottom: 10px;"></div>

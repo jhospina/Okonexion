@@ -43,6 +43,8 @@ class ConfigInstancia extends Eloquent {
     const producto_suscripcion_oro3 = "producto_suscripcion_oro3";
     const producto_suscripcion_oro6 = "producto_suscripcion_oro6";
     const producto_suscripcion_oro12 = "producto_suscripcion_oro12";
+    const producto_suscripcion_plata_actualizacion = "producto_suscripcion_plata_actualizacion";
+    const producto_suscripcion_oro_actualizacion = "producto_suscripcion_oro_actualizacion";
     //************************************************************
     //CONFIGURACION DE DATOS****************************************
     //************************************************************
@@ -68,14 +70,11 @@ class ConfigInstancia extends Eloquent {
     //************************************************************
     //CONFIGURACION DE FACTURACIÓN - PAY-U*********************
     //************************************************************
-    const fact_payu_merchantId="fact_payu_merchantId";
-    const fact_payu_apiKey="fact_payu_apiKey";
-    const fact_payu_apiLogin="fact_payu_apiLogin";
-    const fact_payu_accountId="fact_payu_accountId";
-    const fact_payu_sandbox="fact_payu_sandbox";
-    
-    
-    
+    const fact_payu_merchantId = "fact_payu_merchantId";
+    const fact_payu_apiKey = "fact_payu_apiKey";
+    const fact_payu_apiLogin = "fact_payu_apiLogin";
+    const fact_payu_accountId = "fact_payu_accountId";
+    const fact_payu_sandbox = "fact_payu_sandbox";
 
     static function obtenerListadoConfig() {
         $class = new ReflectionClass("ConfigInstancia");

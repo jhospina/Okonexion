@@ -711,3 +711,7 @@ li#tiempo-suscripcion{
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
     cursor:pointer;
 }
+
+.btn-icon-plat-efectivo.select{
+    border: 2px red solid;
+}

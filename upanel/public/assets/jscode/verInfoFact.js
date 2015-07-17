@@ -86,13 +86,6 @@ function actualizarDatos(id_form, btn_pagar) {
 }
 
 
-$("#mes-exp").change(function () {
-    $("#expMonth").val($(this).val());
-});
-$("#ano-exp").change(function () {
-    $("#expYear").val($(this).val());
-});
-
 
 
 

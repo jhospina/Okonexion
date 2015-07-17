@@ -11,7 +11,7 @@ $docs = MetPayU::getTiposDocumentos();
         </div>
         <div class="col-lg-2"></div>
         <div class="col-lg-8">
-            <div class="col-lg-12"><div id="msj-error-pse" style="display: none;" class="alert alert-danger"></div></div>
+            <div class="col-lg-12" style="margin-bottom: 10px;"><div id="msj-error-pse" style="display: none;" class="alert alert-danger"></div></div>
 
             <div class="col-lg-6 input-lg" style="">
                 {{trans("fact.orden.pago.payu.pse.seleccionar.banco")}}

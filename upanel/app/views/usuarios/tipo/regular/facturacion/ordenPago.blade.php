@@ -43,7 +43,11 @@ array_unshift($paises, trans("otros.info.elegir"));
 
         <tr>
             <td>
-                <span class="glyphicon glyphicon-ok"></span> {{(strpos($id_producto,Servicio::CONFIG_NOMBRE)!==false)?Servicio::obtenerNombre($id_producto):trans("fact.producto.id.".$id_producto)}}
+                <span class="glyphicon glyphicon-ok"></span> {{(strpos($id_producto,Servicio::CONFIG_NOMBRE)!==false)?Servicio::obtenerNombre($id_producto):trans("fact.producto.id.".$id_producto)}} 
+                @if(strpos($id_producto,"actualizacion")!==false)
+                    <?php $dias_suscripcion = round(Fecha::difSec(Util::obtenerTiempoActual(), Auth::user()->fin_suscripcion) / (60 * 60 * 24)); ?>
+                    ({{$dias_suscripcion." ".trans("otros.time.dias")}})
+                @endif
             </td>
             <td class="text-right">
                 {{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,$valor_real)}} {{$moneda}}
@@ -137,6 +141,7 @@ array_unshift($paises, trans("otros.info.elegir"));
     var msj_error_tc_descon = "<span class='glyphicon glyphicon-exclamation-sign'></span> {{trans('fact.orden.pago.informacion.tc.error.desconocido',array('link'=>URL::to('soporte')))}}";
     var msj_error_infoPagador = "<span class='glyphicon glyphicon-exclamation-sign'></span> {{trans('fact.orden.pago.payu.tcredito.infoPagador.error')}}";
     var msj_error_pse = "<span class='glyphicon glyphicon-exclamation-sign'></span> {{trans('fact.orden.pago.payu.pse.error')}}";
+    var msj_error_efect = "<span class='glyphicon glyphicon-exclamation-sign'></span> {{trans('fact.orden.pago.payu.efectivo.error')}}";
     var url_postInfo = "{{URL::to('usuario/ajax/actualizar/')}}";
 </script>
 

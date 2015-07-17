@@ -3,6 +3,17 @@ $moneda = Auth::user()->getMoneda();
 $hab_android = true;
 $hab_ios = false;
 $hab_windows = false;
+$tipo_suscripcion = User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_TIPO);
+$dias_suscripcion = round(Fecha::difSec(Util::obtenerTiempoActual(), Auth::user()->fin_suscripcion) / (60 * 60 * 24));
+
+$valor_bronce = Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes_bronce . "-" . $moneda);
+$valor_plata = Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes_plata . "-" . $moneda);
+$valor_oro = Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes_oro . "-" . $moneda);
+
+//*************************************
+$precioDia_bronce = $valor_bronce / 30;
+$precioDia_plata = $valor_plata / 30;
+$precioDia_oro = $valor_oro / 30;
 ?>
 
 
@@ -125,7 +136,6 @@ $hab_windows = false;
         font-size: 16pt;
         font-weight: bold;
         margin-top: 10px;
-        font-family: cursive;
     }
 
     #plan-bronce .precio .mark-mes,#plan-plata .precio .mark-mes,#plan-oro .precio .mark-mes{
@@ -134,7 +144,7 @@ $hab_windows = false;
         color: gray;
     }
 
-    #plan-bronce .btn-primary,#plan-plata .btn-primary,#plan-oro .btn-primary{
+    #plan-bronce .btn,#plan-plata .btn,#plan-oro .btn{
         width: 100%;
         padding: 10px;
         font-size: 13pt;
@@ -180,10 +190,18 @@ $hab_windows = false;
                 @if($hab_windows)<img title="{{trans("fact.suscripcion.plan.item.aplicacion.windows")}}" class="platform tooltip-top" src="{{URL::to("assets/img/windows.png")}}" /> @endif
                 @if($hab_ios)<img title="{{trans("fact.suscripcion.plan.item.aplicacion.iphone")}}" class="platform tooltip-top" src="{{URL::to("assets/img/ios.png")}}" /> @endif
             </div>
-            <div class="precio">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes_bronce."-".$moneda))}} {{$moneda}}<span class="mark-mes">/{{trans("otros.time.mes")}}</span></div>
+            <div class="precio">
+                {{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,$valor_bronce)}} {{$moneda}}<span class="mark-mes">/{{trans("otros.time.mes")}}</span>
+            </div>
             <hr/>
-            <div class="block text-center">
+            <div class="block text-center">  
+                @if($tipo_suscripcion==ConfigInstancia::suscripcion_tipo_bronce && Auth::user()->estado==User::ESTADO_SUSCRIPCION_VIGENTE)
+                <a href="{{URL::to("fact/suscripcion/ciclo/".ConfigInstancia::suscripcion_tipo_bronce)}}" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> {{Util::convertirMayusculas(trans("fact.btn.renovar"))}}</a>
+                @elseif(($tipo_suscripcion==ConfigInstancia::suscripcion_tipo_plata || $tipo_suscripcion==ConfigInstancia::suscripcion_tipo_oro) && Auth::user()->estado==User::ESTADO_SUSCRIPCION_VIGENTE)
+                <a disabled="disabled" href="{{URL::to("fact/suscripcion/ciclo/".ConfigInstancia::suscripcion_tipo_bronce)}}" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span>  {{Util::convertirMayusculas(trans("fact.btn.adquirido"))}}</a>
+                @else
                 <a href="{{URL::to("fact/suscripcion/ciclo/".ConfigInstancia::suscripcion_tipo_bronce)}}" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span>  {{Util::convertirMayusculas(trans("fact.btn.ordenar.ahora"))}}</a>
+                @endif
             </div>
 
         </div>
@@ -196,7 +214,7 @@ $hab_windows = false;
             <span class="glyphicon glyphicon-certificate"></span> {{trans("fact.suscripcion.plan.plata.titulo")}}
         </h2>
         <div class="block">
-           <ul class="list-items">
+            <ul class="list-items">
                 <li><span class="glyphicon glyphicon-ok"></span> <span class="description-item">{{trans("fact.suscripcion.plan.item.plataformas.2")}}</span></li>
                 <li><span class="glyphicon glyphicon-ok"></span> <span class="description-item">{{trans("fact.suscripcion.plan.item.atencion.personalizada")}}</span></li>
                 <li><span class="glyphicon glyphicon-ok"></span> <span class="description-item">{{trans("fact.suscripcion.plan.item.disenos.apps")}}</span>
@@ -213,10 +231,31 @@ $hab_windows = false;
                 @if($hab_windows)<img title="{{trans("fact.suscripcion.plan.item.aplicacion.windows")}}" class="platform tooltip-top" src="{{URL::to("assets/img/windows.png")}}" /> @endif
                 @if($hab_ios)<img title="{{trans("fact.suscripcion.plan.item.aplicacion.iphone")}}" class="platform tooltip-top" src="{{URL::to("assets/img/ios.png")}}" /> @endif
             </div>
-            <div class="precio">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes_plata."-".$moneda))}} {{$moneda}}<span class="mark-mes">/{{trans("otros.time.mes")}}</span></div>
+            <div class="precio">
+                @if($tipo_suscripcion==ConfigInstancia::suscripcion_tipo_bronce && Auth::user()->estado==User::ESTADO_SUSCRIPCION_VIGENTE)
+                {{Monedas::nomenclatura($moneda,round($dias_suscripcion*($precioDia_plata-$precioDia_bronce),($moneda==Monedas::COP)?-3:0))}}
+                @else
+                {{Monedas::nomenclatura($moneda,$valor_plata)}} <span class="mark-mes">/{{trans("otros.time.mes")}}</span>
+                @endif
+            </div>
             <hr/>
             <div class="block text-center">
-                <a disabled="disabled" href="{{URL::to("fact/suscripcion/ciclo/".ConfigInstancia::suscripcion_tipo_plata)}}" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span>  {{Util::convertirMayusculas(trans("fact.btn.ordenar.ahora"))}}</a>
+                @if($tipo_suscripcion==ConfigInstancia::suscripcion_tipo_plata && Auth::user()->estado==User::ESTADO_SUSCRIPCION_VIGENTE)
+                <a href="{{URL::to("fact/suscripcion/ciclo/".ConfigInstancia::suscripcion_tipo_plata)}}" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> {{Util::convertirMayusculas(trans("fact.btn.renovar"))}}</a>
+                @elseif($tipo_suscripcion==ConfigInstancia::suscripcion_tipo_oro && Auth::user()->estado==User::ESTADO_SUSCRIPCION_VIGENTE)
+                <a disabled="disabled" href="{{URL::to("fact/suscripcion/ciclo/".ConfigInstancia::suscripcion_tipo_plata)}}" class="btn btn-default"><span class="glyphicon glyphicon-ok"></span>  {{Util::convertirMayusculas(trans("fact.btn.adquirido"))}}</a>
+                @elseif($tipo_suscripcion==ConfigInstancia::suscripcion_tipo_bronce && Auth::user()->estado==User::ESTADO_SUSCRIPCION_VIGENTE)
+                <form action="{{URL::to("fact/orden/pago")}}" method="POST">
+                    <input type="hidden" name="{{UsuarioMetadato::HASH_CREAR_FACTURA}}" value="{{$hash}}"/>
+                    <input type="hidden" name="{{MetaFacturacion::PRODUCTO_ID}}" value="{{ConfigInstancia::producto_suscripcion_plata_actualizacion}}"/>
+                    <input type="hidden" name="{{MetaFacturacion::PRODUCTO_VALOR}}" value="{{round($dias_suscripcion*($precioDia_plata-$precioDia_bronce),($moneda==Monedas::COP)?-3:0)}}"/>
+                    <input type="hidden" name="{{MetaFacturacion::PRODUCTO_DESCUENTO}}" value="0"/>
+                    <input type="hidden" name="{{MetaFacturacion::MONEDA_ID}}" value="{{$moneda}}"/>
+                    <button class="btn btn-success"><span class="glyphicon glyphicon-circle-arrow-up"></span>  {{Util::convertirMayusculas(trans("fact.btn.mejorar"))}}</button>
+                </form>
+                @else
+                <a href="{{URL::to("fact/suscripcion/ciclo/".ConfigInstancia::suscripcion_tipo_plata)}}" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span>  {{Util::convertirMayusculas(trans("fact.btn.ordenar.ahora"))}}</a>
+                @endif
             </div>
 
         </div>
@@ -230,7 +269,7 @@ $hab_windows = false;
             <span class="glyphicon glyphicon-certificate"></span> {{trans("fact.suscripcion.plan.oro.titulo")}}
         </h2>
         <div class="block">
-           <ul class="list-items">
+            <ul class="list-items">
                 <li><span class="glyphicon glyphicon-ok"></span> <span class="description-item">{{trans("fact.suscripcion.plan.item.plataformas.3")}}</span></li>
                 <li><span class="glyphicon glyphicon-ok"></span> <span class="description-item">{{trans("fact.suscripcion.plan.item.atencion.personalizada")}}</span></li>
                 <li><span class="glyphicon glyphicon-ok"></span> <span class="description-item">{{trans("fact.suscripcion.plan.item.disenos.apps")}}</span>
@@ -247,11 +286,35 @@ $hab_windows = false;
                 @if($hab_windows)<img title="{{trans("fact.suscripcion.plan.item.aplicacion.windows")}}" class="platform tooltip-top" src="{{URL::to("assets/img/windows.png")}}" /> @endif
                 @if($hab_ios)<img title="{{trans("fact.suscripcion.plan.item.aplicacion.iphone")}}" class="platform tooltip-top" src="{{URL::to("assets/img/ios.png")}}" /> @endif
             </div>
-            <div class="precio">{{Monedas::simbolo($moneda)}}{{Monedas::formatearNumero($moneda,Instancia::obtenerValorMetadato(ConfigInstancia::suscripcion_valor_1mes_oro."-".$moneda))}} {{$moneda}}<span class="mark-mes">/{{trans("otros.time.mes")}}</span></div>
+            <div class="precio">
+                @if($tipo_suscripcion==ConfigInstancia::suscripcion_tipo_bronce && Auth::user()->estado==User::ESTADO_SUSCRIPCION_VIGENTE)
+                {{Monedas::nomenclatura($moneda,round($dias_suscripcion*($precioDia_oro-$precioDia_bronce),($moneda==Monedas::COP)?-3:0))}}
+                @elseif($tipo_suscripcion==ConfigInstancia::suscripcion_tipo_plata && Auth::user()->estado==User::ESTADO_SUSCRIPCION_VIGENTE)
+                {{Monedas::nomenclatura($moneda,round($dias_suscripcion*($precioDia_oro-$precioDia_plata),($moneda==Monedas::COP)?-3:0))}}
+                @else
+                {{Monedas::nomenclatura($moneda,$valor_oro)}} <span class="mark-mes">/{{trans("otros.time.mes")}}</span>
+                @endif   
+            </div>
             <hr/>
             <div class="block text-center">
-                <a disabled="disabled" href="{{URL::to("fact/suscripcion/ciclo/".ConfigInstancia::suscripcion_tipo_oro)}}" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span>  {{Util::convertirMayusculas(trans("fact.btn.ordenar.ahora"))}}</a>
-            </div>
+                @if($tipo_suscripcion==ConfigInstancia::suscripcion_tipo_oro && Auth::user()->estado==User::ESTADO_SUSCRIPCION_VIGENTE)
+                <a href="{{URL::to("fact/suscripcion/ciclo/".ConfigInstancia::suscripcion_tipo_oro)}}" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> {{Util::convertirMayusculas(trans("fact.btn.renovar"))}}</a>
+                @elseif(($tipo_suscripcion==ConfigInstancia::suscripcion_tipo_bronce || $tipo_suscripcion==ConfigInstancia::suscripcion_tipo_plata) && Auth::user()->estado==User::ESTADO_SUSCRIPCION_VIGENTE)
+                <form action="{{URL::to("fact/orden/pago")}}" method="POST">
+                    <input type="hidden" name="{{UsuarioMetadato::HASH_CREAR_FACTURA}}" value="{{$hash}}"/>
+                    <input type="hidden" name="{{MetaFacturacion::PRODUCTO_ID}}" value="{{ConfigInstancia::producto_suscripcion_oro_actualizacion}}"/>
+                    @if($tipo_suscripcion==ConfigInstancia::suscripcion_tipo_bronce)
+                    <input type="hidden" name="{{MetaFacturacion::PRODUCTO_VALOR}}" value="{{round($dias_suscripcion*($precioDia_oro-$precioDia_bronce),($moneda==Monedas::COP)?-3:0)}}"/>
+                    @elseif($tipo_suscripcion==ConfigInstancia::suscripcion_tipo_plata)
+                    <input type="hidden" name="{{MetaFacturacion::PRODUCTO_VALOR}}" value="{{round($dias_suscripcion*($precioDia_oro-$precioDia_plata),($moneda==Monedas::COP)?-3:0)}}"/>
+                    @endif
+                    <input type="hidden" name="{{MetaFacturacion::PRODUCTO_DESCUENTO}}" value="0"/>
+                    <input type="hidden" name="{{MetaFacturacion::MONEDA_ID}}" value="{{$moneda}}"/>
+                    <button class="btn btn-success"><span class="glyphicon glyphicon-circle-arrow-up"></span>  {{Util::convertirMayusculas(trans("fact.btn.mejorar"))}}</button>
+                </form>
+                @else
+                <a href="{{URL::to("fact/suscripcion/ciclo/".ConfigInstancia::suscripcion_tipo_oro)}}" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span>  {{Util::convertirMayusculas(trans("fact.btn.ordenar.ahora"))}}</a>
+                @endif </div>
 
         </div>
     </div>   

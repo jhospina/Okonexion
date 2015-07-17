@@ -12,7 +12,13 @@ class UPanelControladorFacturacion extends \BaseController {
         if (!is_null($acceso = User::validarAcceso(User::USUARIO_REGULAR)))
             return $acceso;
 
-        return View::make("usuarios/tipo/regular/facturacion/suscripcion/planes");
+        $hash = HasherPro::crear(UsuarioMetadato::HASH_CREAR_FACTURA);
+
+        if (strlen($hash) == 0) {
+            return Redirect::to("fact/suscripcion/plan");
+        }
+
+        return View::make("usuarios/tipo/regular/facturacion/suscripcion/planes")->with("hash", $hash);
     }
 
     function vista_suscripcion_ciclos($plan) {
@@ -48,7 +54,7 @@ class UPanelControladorFacturacion extends \BaseController {
 
             //Verifica el hash de creacion y lo efectua una unica vez
             if (HasherPro::Verificar($data[UsuarioMetadato::HASH_CREAR_FACTURA], UsuarioMetadato::HASH_CREAR_FACTURA)) {
-                $id_factura = Facturacion::nueva(Instancia::obtenerValorMetadato(ConfigInstancia::fact_impuestos_iva));
+                $id_factura = Facturacion::nueva();
                 Facturacion::agregarMetadato(MetaFacturacion::MONEDA_ID, $data[MetaFacturacion::MONEDA_ID], $id_factura);
                 User::agregarMetaDato(UsuarioMetadato::FACTURACION_ID_PROCESO, $id_factura);
                 Facturacion::agregarProducto($id_factura, $data);
@@ -216,6 +222,7 @@ class UPanelControladorFacturacion extends \BaseController {
     }
 
     function post_ordenPagoProcesar_TBancaria_PayU() {
+
         $data = Input::all();
 
         $factura = Facturacion::find(User::obtenerValorMetadato(UsuarioMetadato::FACTURACION_ID_PROCESO));
@@ -267,6 +274,37 @@ class UPanelControladorFacturacion extends \BaseController {
 
         $payu = new MetPayU();
         return $payu->procesarPagoTBancaria($parameters, $factura);
+    }
+
+    function post_ordenPagoProcesar_efectivo_PayU() {
+
+        $data = Input::all();
+
+        $factura = Facturacion::find(User::obtenerValorMetadato(UsuarioMetadato::FACTURACION_ID_PROCESO));
+        $productos = Facturacion::obtenerProductos($factura->id);
+        $descripcion = "";
+        foreach ($productos as $producto) {
+            $desProducto = (strpos($producto[MetaFacturacion::PRODUCTO_ID], Servicio::CONFIG_NOMBRE) !== false) ? Servicio::obtenerNombre($producto[MetaFacturacion::PRODUCTO_ID]) : trans("fact.producto.id." . $producto[MetaFacturacion::PRODUCTO_ID]);
+            $descripcion.="[" . $desProducto . "]";
+        }
+
+        $parameters = array(
+            PayUParameters::REFERENCE_CODE => MetPayU::PREFIJO_REF . $factura->id,
+            PayUParameters::DESCRIPTION => $descripcion,
+            PayUParameters::VALUE => $factura->total,
+            PayUParameters::CURRENCY => Monedas::COP,
+            PayUParameters::BUYER_EMAIL => Auth::user()->email,
+            PayUParameters::PAYER_NAME => Auth::user()->nombres . " " . Auth::user()->apellidos,
+            PayUParameters::PAYER_DNI => Auth::user()->dni);
+        $parameters[PayUParameters::PAYMENT_METHOD] = ($data["puntorec"] == "baloto") ? PaymentMethods::BALOTO : PaymentMethods::EFECTY;
+        $parameters[PayUParameters::COUNTRY] = PayUCountries::CO;
+
+        $fecha = new Fecha(Util::obtenerTiempoActual());
+        //Agrega 3 dias a la fecha de expiracion
+        $parameters[PayUParameters::EXPIRATION_DATE] = str_replace(" ", "T", $fecha->agregarDias(3));
+        $parameters[PayUParameters::DEVICE_SESSION_ID] = Session::getId();
+        $parameters[PayUParameters::IP_ADDRESS] = Util::obtenerDireccionIP();
+        $parameters[PayUParameters::USER_AGENT] = $_SERVER['HTTP_USER_AGENT'];
     }
 
     function vista_misFacturas() {

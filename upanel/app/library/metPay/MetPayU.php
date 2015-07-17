@@ -126,15 +126,13 @@ class MetPayU {
         $parameters[PayUParameters::RESPONSE_URL] = "http://www.test.com/response";
         try {
             $response = PayUPayments::doAuthorizationAndCapture($parameters);
-            print_r($response);
-            exit();
             if ($response) {
 
                 if ($response->transactionResponse->state)
                     if ($response->transactionResponse->state == "PENDING") {
                         $response->transactionResponse->pendingReason;
                         $response->transactionResponse->extraParameters->BANK_URL;
-                        
+
                         //COMPLETAR UNA VEZ QUE LA EMPRESA ESTE LEGALMENTE CONSTITUIDA Y SE TENGA UNA CUENTA DE PAYU ACTIVA
                         //**************************************************************************
                         //**************************************************************************
@@ -146,11 +144,43 @@ class MetPayU {
                         //**************************************************************************
                         //**************************************************************************
                         //**************************************************************************
-                        
-                        
-                        
                     }
                 $response->transactionResponse->responseCode;
+            }
+        } catch (PayUException $e) {
+            if ($e->payUCode == PayUErrorCodes::JSON_DESERIALIZATION_ERROR)
+                return Redirect::back()->with(User::mensaje("advertencia", null, trans("fact.payu.error.exception"), 2));
+            if ($e->payUCode == PayUErrorCodes::API_ERROR)
+                return Redirect::back()->with(User::mensaje("error", null, $e->getMessage(), 2));
+            if ($e->payUCode == PayUErrorCodes::INVALID_PARAMETERS)
+                return Redirect::back()->with(User::mensaje("advertencia", null, trans("fact.payu.error.exception"), 2));
+            return Redirect::back()->with(User::mensaje("advertencia", null, trans("fact.orden.pago.informacion.tc.error.invalido"), 2));
+        }
+    }
+
+    function procesarPagoEfectivo($parameters, $factura) {
+        $parameters[PayUParameters::ACCOUNT_ID] = $this->account_id;
+             
+           try {
+            $response = PayUPayments::doAuthorizationAndCapture($parameters);
+ 
+            if ($response) {
+
+                if ($response->transactionResponse->state){
+                   
+                        //COMPLETAR UNA VEZ QUE LA EMPRESA ESTE LEGALMENTE CONSTITUIDA Y SE TENGA UNA CUENTA DE PAYU ACTIVA
+                        //**************************************************************************
+                        //**************************************************************************
+                        //**************************************************************************
+                        //**************************************************************************
+                        //**************************************************************************
+                        //**************************************************************************
+                        //**************************************************************************
+                        //**************************************************************************
+                        //**************************************************************************
+                        //**************************************************************************
+                    }
+
             }
         } catch (PayUException $e) {
             if ($e->payUCode == PayUErrorCodes::JSON_DESERIALIZATION_ERROR)

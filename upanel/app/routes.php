@@ -328,13 +328,14 @@ function facturacion() {
     Route::get("fact/orden/pago", "UPanelControladorFacturacion@vistaPost_ordenPago");
     //Proceso de pago - Tarjeta de credito - 2Checkout
     Route::post("fact/orden/pago/procesar/tcredito/2checkout", "UPanelControladorFacturacion@post_ordenPagoProcesar_TCredito_2Checkout");
-     //Proceso de pago - Tarjeta de credito - Pay-U
+    //Proceso de pago - Tarjeta de credito - Pay-U
     Route::post("fact/orden/pago/procesar/tcredito/payu", "UPanelControladorFacturacion@post_ordenPagoProcesar_TCredito_PayU");
-     //Proceso de pago - PSE - Pay-U
+    //Proceso de pago - PSE - Pay-U
     Route::post("fact/orden/pago/procesar/tbancaria/payu", "UPanelControladorFacturacion@post_ordenPagoProcesar_TBancaria_PayU");
-    
-    
-    
+    //Proceso de pago - Efectivo - Pay-U
+    Route::post("fact/orden/pago/procesar/efectivo/payu", "UPanelControladorFacturacion@post_ordenPagoProcesar_efectivo_PayU");
+
+
     //USUARIO
     Route::get("fact/mis-facturas", "UPanelControladorFacturacion@vista_misFacturas");
     Route::get("fact/facturas", "UPanelControladorFacturacion@vista_facturas");

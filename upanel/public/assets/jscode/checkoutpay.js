@@ -6,7 +6,7 @@ var successCallback = function (data) {
     $("#token").val(data.response.token.token);
     $("#modal-proceso").modal({show: true, backdrop: "static"});
     // IMPORTANT: Here we call `submit()` on the form element directly instead of using jQuery to prevent and infinite token request loop.
-    actualizarDatos();
+    actualizarDatos(id_form,btn_pagar);
 };
 // Called when token creation fails.
 var errorCallback = function (data) {
@@ -52,9 +52,10 @@ $(function () {
                 jQuery(btn_pagar).html(btn_msj_verificando);
                 tokenRequest();
             }
-            else
+            else {
                 $("#msj-error-tc").show();
-            $("#msj-error-tc").html(msj_error_tc);
+                $("#msj-error-tc").html(msj_error_tc);
+            }
         }
         else {
             $("#msj-error-fact").show();
@@ -63,4 +64,15 @@ $(function () {
         // Prevent form from submitting
         return false;
     });
+    
+    
+    
+$("#mes-exp").change(function () {
+    $("#expMonth").val($(this).val());
+});
+$("#ano-exp").change(function () {
+    $("#expYear").val($(this).val());
+});
+
+    
 });
