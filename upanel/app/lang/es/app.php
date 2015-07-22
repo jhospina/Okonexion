@@ -25,7 +25,7 @@ return array(
     "coldep.info.descargar_diseno_android"=>"Descargar Diseño para Android",
     "coldep.info.descargar_diseno_iphone"=>"Descargar Diseño para IOS Iphone",
     "coldep.info.descargar_diseno_windows"=>"Descargar Diseño para Windows Phone",
-    "hd.mi_aplicacion.descripcion"=>"Crear y diseña tu aplicación movil y en 24 horas estara disponible para distribuirla en la plataformas de Android, Windows y Iphone.",
+    "hd.mi_aplicacion.descripcion"=>"Crear y diseña tu aplicación móvil en unos simples pasos.",
     "config.info.nombre"=>"Nombre de la aplicación",
     "config.info.nombre.placeholder"=>"¿Cómo se llamara tu aplicación móvil?",
     "config.info.diseno"=>"Diseño",
@@ -43,7 +43,7 @@ return array(
     "config.info.titulo.general"=>"General",
     "config.info.titulo.menu_principal"=>"Menú principal",
     "config.info.panel.titulo.logo_aplicacion"=>"Logo de aplicación",
-    "config.info.panel.titulo.logo_aplicacion.descripcion"=>"<p><b>Atención:</b> Las dimensiones de la imagen del logo deben ser mayores o iguales a 256px y deben ser exactamente iguales en el ancho y la altura. Ejemplo (256x256).</p>",
+    "config.info.panel.titulo.logo_aplicacion.descripcion"=>"<p><b>Atención:</b> El tamaño de la imagen debe ser mayor o igual a 256px.</p>",
     "config.info.logo_app"=>"Logo App",
     "config.info.imagen.error01"=>"El archivo que has escogido no es valido. Solo se permiten imagenes en formatos {extensions}.",
     "config.info.imagen.error02"=>"El tamaño de la imagen es demasiado grande. Maximo <b>{maxSize} KB</b>. Esta imagen pesa <b>{size} KB.",
@@ -151,4 +151,5 @@ return array(
     "dep.crear.version.descripcion.titulo"=>"Crear nueva versión",
     "dep.crear.version.descripcion"=>"Al iniciar el proceso de actualización o crear una nueva versión de tu aplicación, es como si empezaras a crear una nueva aplicación y podrás modificar todos los aspectos de tu aplicación como el nombre y el diseño, la información creada de tu aplicación no se borrara, pero no podras administrarla durante este proceso. <br/><br/> <b>¿Quieres continuar creando una nueva versión?</b>",
     "config.actualizando.version"=>"Actualizando aplicación a versión :version",
+    "info.previsualizacion"=>"Previsualización",
     );

@@ -22,4 +22,7 @@ return array(
     "ar.usuarios" => "Usuarios",
     "ar.usuarios.foot" => "Crear nuevo usuario",
     "ar.ventas.foot" => "Total de ventas",
-);
+    "info.bienvenido"=>"¡Bienvenido!",
+    "info.bienvenido.descripcion"=>"Queremos darte la bievenida a Appsthergo, una plataforma amigable para crear y administrar tu aplicación móvil. En tan solo unos pasos podrás crear tu aplicación sin saber programar.",
+    "info.bienvenido.btn"=>"Crear aplicación",
+        );

@@ -89,8 +89,8 @@ Class ConfiguracionApp extends Eloquent {
      */
     static function obtenerNullables($diseno) {
         switch ($diseno) {
-            case App_Metro::sigla:
-                return App_Metro::$configDefecto;
+            case App_Instytul_Metro::sigla:
+                return App_Instytul_Metro::$configDefecto;
                 break;
         } 
     }

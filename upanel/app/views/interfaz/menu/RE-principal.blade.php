@@ -12,6 +12,9 @@ if (Aplicacion::existe()) {
 
 <li class="dropdown @if(Request::is('aplicacion/*')) active @endif"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-phone"></span> {{trans("interfaz.menu.principal.mi_aplicacion")}}<span class="caret"></span></a>
     <ul class="dropdown-menu">
+        @if(!Aplicacion::existe())
+            <li><a href="{{URL::to("aplicacion/basico")}}"><span class="glyphicon glyphicon-plus-sign"></span> {{trans("otros.info.crear")}}</a></li>
+        @else
         <li class="dropdown-submenu"><a tabindex="0" data-toggle="dropdown" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span> {{trans("interfaz.menu.principal.mi_aplicacion.configuracion")}}</a>
             <ul class="dropdown-menu">
                 <li><a href="{{URL::to("aplicacion/basico")}}"><span class="glyphicon glyphicon-pencil"></span> {{trans("interfaz.menu.principal.mi_aplicacion.configuracion.datos_basicos")}}</a></li>
@@ -19,6 +22,7 @@ if (Aplicacion::existe()) {
                 <li @if(!Aplicacion::existe()) class="disabled" @endif><a @if(Aplicacion::existe())href="{{URL::to("aplicacion/textos")}}"@endif><span class="glyphicon glyphicon-font"></span> {{trans("interfaz.menu.principal.mi_aplicacion.configuracion.textos")}}</a></li>
             </ul>
         </li>
+        @endif
         @if(Aplicacion::existe())
         @include("interfaz/menu/app/administrar/index")
         @endif

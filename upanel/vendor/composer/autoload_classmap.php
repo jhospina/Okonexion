@@ -8,7 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Aplicacion' => $baseDir . '/app/models/Aplicacion.php',
     'AppDesing' => $baseDir . '/app/library/appDesings/AppDesing.php',
-    'App_Metro' => $baseDir . '/app/library/appDesings/App_Metro.php',
+    'App_Instytul_Metro' => $baseDir . '/app/library/appDesings/Instytul/App_Instytul_Metro.php',
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
     'Boris\\Boris' => $vendorDir . '/d11wtq/boris/lib/Boris/Boris.php',
     'Boris\\CLIOptionsHandler' => $vendorDir . '/d11wtq/boris/lib/Boris/CLIOptionsHandler.php',

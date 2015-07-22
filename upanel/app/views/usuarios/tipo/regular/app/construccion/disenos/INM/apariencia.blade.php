@@ -8,104 +8,104 @@ if (!isset($version))
 $logo = $app->url_logo;
 
 //ID de las claves de las configuraciones de los iconos del menu principal
-$iconosMenuID = array(App_Metro::iconoMenu1, App_Metro::iconoMenu2, App_Metro::iconoMenu3, App_Metro::iconoMenu4);
+$iconosMenuID = array(App_Instytul_Metro::iconoMenu1, App_Instytul_Metro::iconoMenu2, App_Instytul_Metro::iconoMenu3, App_Instytul_Metro::iconoMenu4);
 
 //Color de barra de la app
-if (ConfiguracionApp::existeConfig(App_Metro::colorBarraApp))
-    $colorBarraApp = ConfiguracionApp::obtenerValorConfig(App_Metro::colorBarraApp);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::colorBarraApp))
+    $colorBarraApp = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::colorBarraApp);
 else
     $colorBarraApp = "#000000";
 
 //MOSTRAR NOMBRE
-if (ConfiguracionApp::existeConfig(App_Metro::mostrarNombre))
-    $mostrarNombre = ConfiguracionApp::obtenerValorConfig(App_Metro::mostrarNombre);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::mostrarNombre))
+    $mostrarNombre = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::mostrarNombre);
 else
     $mostrarNombre = "textoLogo";
 
 //ALINEACION NOMBRE
-if (ConfiguracionApp::existeConfig(App_Metro::alineacionNombre))
-    $alineacionNombre = ConfiguracionApp::obtenerValorConfig(App_Metro::alineacionNombre);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::alineacionNombre))
+    $alineacionNombre = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::alineacionNombre);
 else
     $alineacionNombre = "izquierda";
 
 //Color del texto del nombre de la APP
-if (ConfiguracionApp::existeConfig(App_Metro::colorNombreApp))
-    $colorNombreApp = ConfiguracionApp::obtenerValorConfig(App_Metro::colorNombreApp);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::colorNombreApp))
+    $colorNombreApp = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::colorNombreApp);
 else
     $colorNombreApp = "#FFFFFF";
 
 
 //Texto del boton del menu  #1
-if (ConfiguracionApp::existeConfig(App_Metro::txt_menuBtn_1))
-    $txt_menuBtn_1 = ConfiguracionApp::obtenerValorConfig(App_Metro::txt_menuBtn_1);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::txt_menuBtn_1))
+    $txt_menuBtn_1 = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::txt_menuBtn_1);
 else
     $txt_menuBtn_1 = Contenido_Institucional::nombreDefecto();
 
 //Texto del boton del menu  #2
-if (ConfiguracionApp::existeConfig(App_Metro::txt_menuBtn_2))
-    $txt_menuBtn_2 = ConfiguracionApp::obtenerValorConfig(App_Metro::txt_menuBtn_2);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::txt_menuBtn_2))
+    $txt_menuBtn_2 = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::txt_menuBtn_2);
 else
     $txt_menuBtn_2 = Contenido_Noticias::nombreDefecto();
 
 //Texto del boton del menu  #3
-if (ConfiguracionApp::existeConfig(App_Metro::txt_menuBtn_3))
-    $txt_menuBtn_3 = ConfiguracionApp::obtenerValorConfig(App_Metro::txt_menuBtn_3);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::txt_menuBtn_3))
+    $txt_menuBtn_3 = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::txt_menuBtn_3);
 else
     $txt_menuBtn_3 = Contenido_Encuestas::nombreDefecto();
 
 //Texto del boton del menu  #4
-if (ConfiguracionApp::existeConfig(App_Metro::txt_menuBtn_4))
-    $txt_menuBtn_4 = ConfiguracionApp::obtenerValorConfig(App_Metro::txt_menuBtn_4);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::txt_menuBtn_4))
+    $txt_menuBtn_4 = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::txt_menuBtn_4);
 else
     $txt_menuBtn_4 = Contenido_PQR::nombreDefecto();
 
 
 //COLOR DE FONDO DE LA OPCION #1
-if (ConfiguracionApp::existeConfig(App_Metro::colorFondoMenuBt_1))
-    $colorFondoMenuBt_1 = ConfiguracionApp::obtenerValorConfig(App_Metro::colorFondoMenuBt_1);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::colorFondoMenuBt_1))
+    $colorFondoMenuBt_1 = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::colorFondoMenuBt_1);
 else
     $colorFondoMenuBt_1 = "#FFFFFF";
 
 //COLOR DE FONDO DE LA OPCION #2
-if (ConfiguracionApp::existeConfig(App_Metro::colorFondoMenuBt_2))
-    $colorFondoMenuBt_2 = ConfiguracionApp::obtenerValorConfig(App_Metro::colorFondoMenuBt_2);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::colorFondoMenuBt_2))
+    $colorFondoMenuBt_2 = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::colorFondoMenuBt_2);
 else
     $colorFondoMenuBt_2 = "#FFFFFF";
 
 //COLOR DE FONDO DE LA OPCION #3
-if (ConfiguracionApp::existeConfig(App_Metro::colorFondoMenuBt_3))
-    $colorFondoMenuBt_3 = ConfiguracionApp::obtenerValorConfig(App_Metro::colorFondoMenuBt_3);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::colorFondoMenuBt_3))
+    $colorFondoMenuBt_3 = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::colorFondoMenuBt_3);
 else
     $colorFondoMenuBt_3 = "#FFFFFF";
 
 //COLOR DE FONDO DE LA OPCION #4
-if (ConfiguracionApp::existeConfig(App_Metro::colorFondoMenuBt_4))
-    $colorFondoMenuBt_4 = ConfiguracionApp::obtenerValorConfig(App_Metro::colorFondoMenuBt_4);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::colorFondoMenuBt_4))
+    $colorFondoMenuBt_4 = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::colorFondoMenuBt_4);
 else
     $colorFondoMenuBt_4 = "#FFFFFF";
 
 
 //COLOR DEL TEXTO DE LA OPCION #1
-if (ConfiguracionApp::existeConfig(App_Metro::txt_menuBtn_1_color))
-    $txt_menuBtn_1_color = ConfiguracionApp::obtenerValorConfig(App_Metro::txt_menuBtn_1_color);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::txt_menuBtn_1_color))
+    $txt_menuBtn_1_color = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::txt_menuBtn_1_color);
 else
     $txt_menuBtn_1_color = "rgb(0,0,0)";
 
 //COLOR DEL TEXTO DE LA OPCION #2
-if (ConfiguracionApp::existeConfig(App_Metro::txt_menuBtn_2_color))
-    $txt_menuBtn_2_color = ConfiguracionApp::obtenerValorConfig(App_Metro::txt_menuBtn_2_color);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::txt_menuBtn_2_color))
+    $txt_menuBtn_2_color = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::txt_menuBtn_2_color);
 else
     $txt_menuBtn_2_color = "rgb(0,0,0)";
 
 //COLOR DEL TEXTO DE LA OPCION #3
-if (ConfiguracionApp::existeConfig(App_Metro::txt_menuBtn_3_color))
-    $txt_menuBtn_3_color = ConfiguracionApp::obtenerValorConfig(App_Metro::txt_menuBtn_3_color);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::txt_menuBtn_3_color))
+    $txt_menuBtn_3_color = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::txt_menuBtn_3_color);
 else
     $txt_menuBtn_3_color = "rgb(0,0,0)";
 
 //COLOR DEL TEXTO DE LA OPCION #4
-if (ConfiguracionApp::existeConfig(App_Metro::txt_menuBtn_4_color))
-    $txt_menuBtn_4_color = ConfiguracionApp::obtenerValorConfig(App_Metro::txt_menuBtn_4_color);
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::txt_menuBtn_4_color))
+    $txt_menuBtn_4_color = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::txt_menuBtn_4_color);
 else
     $txt_menuBtn_4_color = "rgb(0,0,0)";
 
@@ -129,8 +129,10 @@ else
 
 @section("titulo"){{trans("app.hd.mi_aplicacion")}} @stop
 
-
 @section("css")
+{{ HTML::style('assets/css/upanel/preview.css', array('media' => 'screen')) }}
+{{ HTML::style('assets/css/apps/Institytul/Metro.css', array('media' => 'screen')) }}
+{{ HTML::style('assets/plugins/colorpicket/css/colorpicker.css', array('media' => 'screen')) }}
 {{ HTML::style('assets/plugins/colorpicket/css/colorpicker.css', array('media' => 'screen')) }}
 {{ HTML::style('assets/plugins/colorpicket/css/layout.css', array('media' => 'screen')) }}
 {{ HTML::style('assets/plugins/fileinput/css/fileinput.css', array('media' => 'screen')) }}
@@ -140,6 +142,10 @@ else
 
 
 @section("contenido") 
+
+{{-- PREVIEW DE LA APP--}}
+@include("usuarios/tipo/regular/app/construccion/secciones/preview",array("app"=>$app))
+
 
 {{--CABECERA--}}
 @include("usuarios/tipo/regular/app/construccion/secciones/cabecera")
@@ -183,36 +189,37 @@ else
                         {{--COLOR DEL FONDO DE LA BARRA (1)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("app.config.di.me.info.colorbarraapp")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans('app.config.di.me.info.colorbarraapp.ayuda')))</div>
                         <div class="col-lg-8 input-lg">
-                            <div class="colorSelector" id="colorSelector_{{App_Metro::colorBarraApp}}"><div style="background-color:{{$colorBarraApp}}"></div></div>
+                            <div class="colorSelector" id="colorSelector_{{App_Instytul_Metro::colorBarraApp}}"><div style="background-color:{{$colorBarraApp}}"></div></div>
                         </div>
-                        <input type="hidden" name="{{App_Metro::colorBarraApp}}" id="{{App_Metro::colorBarraApp}}" value="{{$colorBarraApp}}" />
+                        <input type="hidden" name="{{App_Instytul_Metro::colorBarraApp}}" id="{{App_Instytul_Metro::colorBarraApp}}" value="{{$colorBarraApp}}" />
 
 
                         {{--PROPIEDADES DEL NOMBRE--}}
                         <div class="col-lg-4 input-lg">
                             {{trans("app.config.di.me.info.mostrar_nombre")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.di.me.info.mostrar_nombre.ayuda"))) 
                         </div>
-                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Metro::mostrarNombre}}" value="soloTexto" class="radio-inline" @if($mostrarNombre=="soloTexto") checked @endif> <span class="radio-value">{{trans("app.config.di.me.info.mostrar_nombre.op.solo_texto")}}</span></div>
-                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Metro::mostrarNombre}}" value="textoLogo" class="radio-inline" @if($mostrarNombre=="textoLogo") checked @endif> <span class="radio-value">{{trans("app.config.di.me.info.mostrar_nombre.op.texto_logo")}}</span></div>
-                        <div class="col-lg-2 input-lg"><input type="radio" name="{{App_Metro::mostrarNombre}}" value="soloLogo" class="radio-inline" @if($mostrarNombre=="soloLogo") checked @endif> <span class="radio-value">{{trans("app.config.di.me.info.mostrar_nombre.op.solo_logo")}}</span></div>
+                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Instytul_Metro::mostrarNombre}}" value="soloTexto" class="radio-inline" @if($mostrarNombre=="soloTexto") checked @endif> <span class="radio-value">{{trans("app.config.di.me.info.mostrar_nombre.op.solo_texto")}}</span></div>
+                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Instytul_Metro::mostrarNombre}}" value="textoLogo" class="radio-inline" @if($mostrarNombre=="textoLogo") checked @endif> <span class="radio-value">{{trans("app.config.di.me.info.mostrar_nombre.op.texto_logo")}}</span></div>
+                        <div class="col-lg-2 input-lg"><input type="radio" name="{{App_Instytul_Metro::mostrarNombre}}" value="soloLogo" class="radio-inline" @if($mostrarNombre=="soloLogo") checked @endif> <span class="radio-value">{{trans("app.config.di.me.info.mostrar_nombre.op.solo_logo")}}</span></div>
 
 
                         {{--ALINEACIÓN--}}
+                        @if(1!=1)
                         <div class="col-lg-4 input-lg">
                             {{trans("app.config.di.me.info.alineacion_nombre")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.di.me.info.alineacion_nombre.ayuda"))) 
-                        </div>
-                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Metro::alineacionNombre}}" value="izquierda" class="radio-inline" @if($alineacionNombre=="izquierda") checked @endif> <span class="radio-value">{{trans("otros.info.izquierda")}}</span></div>
-                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Metro::alineacionNombre}}" value="centro" class="radio-inline" @if($alineacionNombre=="centro") checked @endif> <span class="radio-value">{{trans("otros.info.centro")}}</span></div>
-                        <div class="col-lg-2 input-lg"><input type="radio" name="{{App_Metro::alineacionNombre}}" value="derecha" class="radio-inline" @if($alineacionNombre=="derecha") checked @endif> <span class="radio-value">{{trans("otros.info.derecha")}}</span></div>
-
+                        </div>      
+                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Instytul_Metro::alineacionNombre}}" value="izquierda" class="radio-inline" @if($alineacionNombre=="izquierda") checked @endif> <span class="radio-value">{{trans("otros.info.izquierda")}}</span></div>
+                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Instytul_Metro::alineacionNombre}}" value="centro" class="radio-inline" @if($alineacionNombre=="centro") checked @endif> <span class="radio-value">{{trans("otros.info.centro")}}</span></div>
+                        <div class="col-lg-2 input-lg"><input type="radio" name="{{App_Instytul_Metro::alineacionNombre}}" value="derecha" class="radio-inline" @if($alineacionNombre=="derecha") checked @endif> <span class="radio-value">{{trans("otros.info.derecha")}}</span></div>
+                        @endif
 
                         {{--COLOR DEL NOMBRE DE LA APLICACIÒN--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("app.config.di.me.info.color_nombre")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.di.me.info.color_nombre.ayuda"))) </div>
                         <div class="col-lg-8 input-lg">
-                            <div class="colorSelector" id="colorSelector_{{App_Metro::colorNombreApp}}"><div style="background-color:{{$colorNombreApp}}"></div></div>
+                            <div class="colorSelector" id="colorSelector_{{App_Instytul_Metro::colorNombreApp}}"><div style="background-color:{{$colorNombreApp}}"></div></div>
                         </div>
 
-                        <input type="hidden" name="{{App_Metro::colorNombreApp}}" id="{{App_Metro::colorNombreApp}}" value="{{$colorNombreApp}}" />
+                        <input type="hidden" name="{{App_Instytul_Metro::colorNombreApp}}" id="{{App_Instytul_Metro::colorNombreApp}}" value="{{$colorNombreApp}}" />
 
                     </div>
                 </div>
@@ -242,27 +249,27 @@ else
                             {{trans("app.tipo.contenido.institucional.descripcion")}}
                         </div>
 
-                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_1}}" id="{{App_Metro::txt_menuBtn_1}}" class="form-control input-lg" value="{{$txt_menuBtn_1}}"/></div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Instytul_Metro::txt_menuBtn_1}}" id="{{App_Instytul_Metro::txt_menuBtn_1}}" class="form-control input-lg" value="{{$txt_menuBtn_1}}"/></div>
 
                         {{--COLOR DEL FONDO (1)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_fondo")}}</div> 
                         <div class="col-lg-8 input-lg">
-                            <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_1}}"><div style="background-color:{{$colorFondoMenuBt_1}}"></div></div>
+                            <div class="colorSelector" id="colorSelector_{{App_Instytul_Metro::colorFondoMenuBt_1}}"><div style="background-color:{{$colorFondoMenuBt_1}}"></div></div>
                         </div>
-                        <input type="hidden" name="{{App_Metro::colorFondoMenuBt_1}}" id="{{App_Metro::colorFondoMenuBt_1}}" value="{{$colorFondoMenuBt_1}}" />
+                        <input type="hidden" name="{{App_Instytul_Metro::colorFondoMenuBt_1}}" id="{{App_Instytul_Metro::colorFondoMenuBt_1}}" value="{{$colorFondoMenuBt_1}}" />
 
                         {{--COLOR DEL TEXTO (1)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_texto")}}</div>
                         <div class="col-lg-8 input-lg">
-                            <div class="colorSelector" id="colorSelector_{{App_Metro::txt_menuBtn_1_color}}"><div style="background-color:{{$txt_menuBtn_1_color}}"></div></div>
+                            <div class="colorSelector" id="colorSelector_{{App_Instytul_Metro::txt_menuBtn_1_color}}"><div style="background-color:{{$txt_menuBtn_1_color}}"></div></div>
                         </div>
 
-                        <input type="hidden" name="{{App_Metro::txt_menuBtn_1_color}}" id="{{App_Metro::txt_menuBtn_1_color}}" value="{{$txt_menuBtn_1_color}}" />
+                        <input type="hidden" name="{{App_Instytul_Metro::txt_menuBtn_1_color}}" id="{{App_Instytul_Metro::txt_menuBtn_1_color}}" value="{{$txt_menuBtn_1_color}}" />
 
                         {{--ICONO DE LA OPCIÓN (1)--}}
-                        <div class="col-lg-12 uploadIconMenu">
+                        <div class="col-lg-12 uploadIconMenu" id="{{App_Instytul_Metro::iconoMenu1}}-content">
                             <a  href="#" class="tooltip-left" rel="tooltip" title="{{trans('otros.extensiones_permitidas')}}: png, jpeg. Max 500Kb."> 
-                                <input name="{{App_Metro::iconoMenu1}}" id="{{App_Metro::iconoMenu1}}" class="iconoMenu" accept="image/*" type="file" multiple=true>
+                                <input name="{{App_Instytul_Metro::iconoMenu1}}" id="{{App_Instytul_Metro::iconoMenu1}}" class="iconoMenu" accept="image/*" type="file" multiple=true>
                             </a>
                         </div>
                     </div>
@@ -285,27 +292,27 @@ else
                             {{trans("app.tipo.contenido.noticias.descripcion")}}
                         </div>
 
-                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_2}}" id="{{App_Metro::txt_menuBtn_2}}" class="form-control input-lg" value="{{$txt_menuBtn_2}}"/></div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Instytul_Metro::txt_menuBtn_2}}" id="{{App_Instytul_Metro::txt_menuBtn_2}}" class="form-control input-lg" value="{{$txt_menuBtn_2}}"/></div>
 
                         {{--COLOR DEL FONDO (2)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_fondo")}}</div>
                         <div class="col-lg-8 input-lg">
-                            <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_2}}"><div style="background-color:{{$colorFondoMenuBt_2}}"></div></div>
+                            <div class="colorSelector" id="colorSelector_{{App_Instytul_Metro::colorFondoMenuBt_2}}"><div style="background-color:{{$colorFondoMenuBt_2}}"></div></div>
                         </div>
-                        <input type="hidden" name="{{App_Metro::colorFondoMenuBt_2}}" id="{{App_Metro::colorFondoMenuBt_2}}" value="{{$colorFondoMenuBt_2}}" />
+                        <input type="hidden" name="{{App_Instytul_Metro::colorFondoMenuBt_2}}" id="{{App_Instytul_Metro::colorFondoMenuBt_2}}" value="{{$colorFondoMenuBt_2}}" />
 
                         {{--COLOR DEL TEXTO (2)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_texto")}}</div>
                         <div class="col-lg-8 input-lg">
-                            <div class="colorSelector" id="colorSelector_{{App_Metro::txt_menuBtn_2_color}}"><div style="background-color:{{$txt_menuBtn_2_color}}"></div></div>
+                            <div class="colorSelector" id="colorSelector_{{App_Instytul_Metro::txt_menuBtn_2_color}}"><div style="background-color:{{$txt_menuBtn_2_color}}"></div></div>
                         </div>
 
-                        <input type="hidden" name="{{App_Metro::txt_menuBtn_2_color}}" id="{{App_Metro::txt_menuBtn_2_color}}" value="{{$txt_menuBtn_2_color}}" />
+                        <input type="hidden" name="{{App_Instytul_Metro::txt_menuBtn_2_color}}" id="{{App_Instytul_Metro::txt_menuBtn_2_color}}" value="{{$txt_menuBtn_2_color}}" />
 
                         {{--ICONO DE LA OPCIÓN (2)--}}
-                        <div class="col-lg-12 uploadIconMenu">
+                        <div class="col-lg-12 uploadIconMenu" id="{{App_Instytul_Metro::iconoMenu2}}-content">
                             <a  href="#" class="tooltip-left" rel="tooltip" title="{{trans('otros.extensiones_permitidas')}}: png, jpeg. Max 500Kb."> 
-                                <input name="{{App_Metro::iconoMenu2}}" id="{{App_Metro::iconoMenu2}}" class="iconoMenu" accept="image/*" type="file" multiple=true>
+                                <input name="{{App_Instytul_Metro::iconoMenu2}}" id="{{App_Instytul_Metro::iconoMenu2}}" class="iconoMenu" accept="image/*" type="file" multiple=true>
                             </a>
 
                         </div>
@@ -329,27 +336,27 @@ else
                             {{trans("app.tipo.contenido.encuestas.descripcion")}}
                         </div>
 
-                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_3}}" id="{{App_Metro::txt_menuBtn_3}}" class="form-control input-lg" value="{{$txt_menuBtn_3}}"/></div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Instytul_Metro::txt_menuBtn_3}}" id="{{App_Instytul_Metro::txt_menuBtn_3}}" class="form-control input-lg" value="{{$txt_menuBtn_3}}"/></div>
 
                         {{--COLOR DEL FONDO (3)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_fondo")}}</div> 
                         <div class="col-lg-8 input-lg">
-                            <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_3}}"><div style="background-color:{{$colorFondoMenuBt_3}}"></div></div>
+                            <div class="colorSelector" id="colorSelector_{{App_Instytul_Metro::colorFondoMenuBt_3}}"><div style="background-color:{{$colorFondoMenuBt_3}}"></div></div>
                         </div>
-                        <input type="hidden" name="{{App_Metro::colorFondoMenuBt_3}}" id="{{App_Metro::colorFondoMenuBt_3}}" value="{{$colorFondoMenuBt_3}}" />
+                        <input type="hidden" name="{{App_Instytul_Metro::colorFondoMenuBt_3}}" id="{{App_Instytul_Metro::colorFondoMenuBt_3}}" value="{{$colorFondoMenuBt_3}}" />
 
                         {{--COLOR DEL TEXTO (3)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_texto")}}</div>
                         <div class="col-lg-8 input-lg">
-                            <div class="colorSelector" id="colorSelector_{{App_Metro::txt_menuBtn_3_color}}"><div style="background-color:{{$txt_menuBtn_3_color}}"></div></div>
+                            <div class="colorSelector" id="colorSelector_{{App_Instytul_Metro::txt_menuBtn_3_color}}"><div style="background-color:{{$txt_menuBtn_3_color}}"></div></div>
                         </div>
 
-                        <input type="hidden" name="{{App_Metro::txt_menuBtn_3_color}}" id="{{App_Metro::txt_menuBtn_3_color}}" value="{{$txt_menuBtn_3_color}}" />
+                        <input type="hidden" name="{{App_Instytul_Metro::txt_menuBtn_3_color}}" id="{{App_Instytul_Metro::txt_menuBtn_3_color}}" value="{{$txt_menuBtn_3_color}}" />
 
                         {{--ICONO DE LA OPCIÓN (3)--}}
-                        <div class="col-lg-12 uploadIconMenu">
+                        <div class="col-lg-12 uploadIconMenu" id="{{App_Instytul_Metro::iconoMenu3}}-content">
                             <a  href="#" class="tooltip-left" rel="tooltip" title="{{trans('otros.extensiones_permitidas')}}: png, jpeg. Max 500Kb."> 
-                                <input name="{{App_Metro::iconoMenu3}}" id="{{App_Metro::iconoMenu3}}" class="iconoMenu" accept="image/*" type="file" multiple=true>
+                                <input name="{{App_Instytul_Metro::iconoMenu3}}" id="{{App_Instytul_Metro::iconoMenu3}}" class="iconoMenu" accept="image/*" type="file" multiple=true>
                             </a>
 
                         </div>
@@ -373,27 +380,27 @@ else
                             {{trans("app.tipo.contenido.pqr.descripcion")}}
                         </div>
 
-                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Metro::txt_menuBtn_4}}" id="{{App_Metro::txt_menuBtn_4}}" class="form-control input-lg" value="{{$txt_menuBtn_4}}"/></div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Instytul_Metro::txt_menuBtn_4}}" id="{{App_Instytul_Metro::txt_menuBtn_4}}" class="form-control input-lg" value="{{$txt_menuBtn_4}}"/></div>
 
                         {{--COLOR DEL FONDO (4)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_fondo")}}</div> 
                         <div class="col-lg-8 input-lg">
-                            <div class="colorSelector" id="colorSelector_{{App_Metro::colorFondoMenuBt_4}}"><div style="background-color:{{$colorFondoMenuBt_4}}"></div></div>
+                            <div class="colorSelector" id="colorSelector_{{App_Instytul_Metro::colorFondoMenuBt_4}}"><div style="background-color:{{$colorFondoMenuBt_4}}"></div></div>
                         </div>
-                        <input type="hidden" name="{{App_Metro::colorFondoMenuBt_4}}" id="{{App_Metro::colorFondoMenuBt_4}}" value="{{$colorFondoMenuBt_4}}" />
+                        <input type="hidden" name="{{App_Instytul_Metro::colorFondoMenuBt_4}}" id="{{App_Instytul_Metro::colorFondoMenuBt_4}}" value="{{$colorFondoMenuBt_4}}" />
 
                         {{--COLOR DEL TEXTO (4)--}}
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.color_texto")}}</div>
                         <div class="col-lg-8 input-lg">
-                            <div class="colorSelector" id="colorSelector_{{App_Metro::txt_menuBtn_4_color}}"><div style="background-color:{{$txt_menuBtn_4_color}}"></div></div>
+                            <div class="colorSelector" id="colorSelector_{{App_Instytul_Metro::txt_menuBtn_4_color}}"><div style="background-color:{{$txt_menuBtn_4_color}}"></div></div>
                         </div>
 
-                        <input type="hidden" name="{{App_Metro::txt_menuBtn_4_color}}" id="{{App_Metro::txt_menuBtn_4_color}}" value="{{$txt_menuBtn_4_color}}" />
+                        <input type="hidden" name="{{App_Instytul_Metro::txt_menuBtn_4_color}}" id="{{App_Instytul_Metro::txt_menuBtn_4_color}}" value="{{$txt_menuBtn_4_color}}" />
 
                         {{--ICONO DE LA OPCIÓN (4)--}}
-                        <div class="col-lg-12 uploadIconMenu">
+                        <div class="col-lg-12 uploadIconMenu" id="{{App_Instytul_Metro::iconoMenu4}}-content">
                             <a  href="#" class="tooltip-left" rel="tooltip" title="{{trans('otros.extensiones_permitidas')}}: png, jpeg. Max 500Kb."> 
-                                <input name="{{App_Metro::iconoMenu4}}" id="{{App_Metro::iconoMenu4}}" class="iconoMenu" accept="image/*" type="file" multiple=true>
+                                <input name="{{App_Instytul_Metro::iconoMenu4}}" id="{{App_Instytul_Metro::iconoMenu4}}" class="iconoMenu" accept="image/*" type="file" multiple=true>
                             </a>
                         </div>
                     </div>
@@ -422,13 +429,12 @@ else
 {{ HTML::script('assets/plugins/plunk/jquery.simplecolorpicker.js') }}
 {{ HTML::script('assets/plugins/fileinput/js/fileinput.js') }}
 
+{{ HTML::script('assets/jscode/preview/'.$app->diseno.".js") }}
+
 
 <script>
 
     jQuery(document).ready(function () {
-
-   
-
 
         //ACTIVA EL SELECTOR DE COLOR PARA EL COLOR DEL TEXTO
         jQuery('.colorSelector').each(function () {
@@ -570,6 +576,20 @@ else
     });
 
 
+    $('#logoApp').on('fileuploaded', function (event, data, previewId, index) {
+        var form = data.form, files = data.files, extra = data.extra,
+                response = data.response, reader = data.reader;
+        $("#logoApp-content .file-preview-image").attr("src", response.url);
+    });
+    
+    
+    $('.iconoMenu').on('fileuploaded', function (event, data, previewId, index) {
+        var form = data.form, files = data.files, extra = data.extra,
+                response = data.response, reader = data.reader;
+        $("#"+response.id+"-content .file-preview-image").attr("src", response.url);
+    });
+
+
     jQuery("#btn-guardar").click(function () {
 
         jQuery(this).html("<span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span> {{trans('otros.info.procesando')}}...");
@@ -578,6 +598,37 @@ else
         setTimeout(function () {
             $("#form").submit();
         }, 2500);
+    });
+
+    var posX = 0;
+    var posY = 0;
+    var timeout;
+
+    $(document).ready(function () {
+        $(document).mousemove(function (event) {
+            posX = event.clientX;
+            posY = event.clientY;
+        });
+    });
+
+
+    $("#drag-bar").mousedown(event, function () {
+        //do something here
+        timeout = setInterval(function (event) {
+            $("#preview").removeClass("pos-bottom");
+            $("#preview").css("left", posX - ($("#preview").width() / 2));
+            $("#preview").css("top", (posY - 15));
+        }, 1);
+
+        return false;
+    });
+    $("#drag-bar").mouseup(function () {
+        clearInterval(timeout);
+        return false;
+    });
+    $("#drag-bar").mouseout(function () {
+        clearInterval(timeout);
+        return false;
     });
 
 

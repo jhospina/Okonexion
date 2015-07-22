@@ -40,7 +40,7 @@ Class Aplicacion extends Eloquent {
      * @return Array Retorna un array con las imagenes del los diseños de App
      */
     public static function mockups() {
-        $mockups[App_Metro::sigla] = URL::to("assets/img/app/" . App_Metro::sigla . ".png");
+        $mockups[App_Instytul_Metro::sigla] = URL::to("assets/img/app/" . App_Instytul_Metro::sigla . ".png");
         return $mockups;
     }
 

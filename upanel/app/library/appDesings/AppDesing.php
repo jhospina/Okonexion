@@ -13,8 +13,8 @@ class AppDesing {
      */
     public static function obtenerDisponibilidadPlataformas($diseno) {
         switch ($diseno) {
-            case App_Metro::sigla:
-                return App_Metro::plataformas();
+            case App_Instytul_Metro::sigla:
+                return App_Instytul_Metro::plataformas();
                 break;
         }
     }
@@ -30,8 +30,8 @@ class AppDesing {
         (is_string($app)) ? $diseno = $app : $diseno = $app->diseno;
 
         switch ($diseno) {
-            case App_Metro::sigla:
-                App_Metro::prepararArchivosParaAndroid($zip, $config, $ruta);
+            case App_Instytul_Metro::sigla:
+                App_Instytul_Metro::prepararArchivosParaAndroid($zip, $config, $ruta);
                 break;
         }
     }
@@ -44,8 +44,8 @@ class AppDesing {
      */
     public static function guardarConfigDiseno($data, $app) {
         switch ($app->diseno) {
-            case App_Metro::sigla:
-                return App_Metro::guardarConfigDiseno($data, $app);
+            case App_Instytul_Metro::sigla:
+                return App_Instytul_Metro::guardarConfigDiseno($data, $app);
                 break;
         }
     }
@@ -103,8 +103,8 @@ class AppDesing {
      */
     public static function prepararRequisitosDeAdministracion($app) {
         switch ($app->diseno) {
-            case App_Metro::sigla:
-                App_Metro::prepararRequisitosDeAdministracion($app);
+            case App_Instytul_Metro::sigla:
+                App_Instytul_Metro::prepararRequisitosDeAdministracion($app);
                 break;
         }
     }
@@ -120,8 +120,8 @@ class AppDesing {
         (is_string($app)) ? $diseno = $app : $diseno = $app->diseno;
 
         switch ($diseno) {
-            case App_Metro::sigla:
-                return App_Metro::descripcion();
+            case App_Instytul_Metro::sigla:
+                return App_Instytul_Metro::descripcion();
                 break;
         }
     }
@@ -163,8 +163,8 @@ class AppDesing {
         (is_string($app)) ? $diseno = $app : $diseno = $app->diseno;
 
         switch ($diseno) {
-            case App_Metro::sigla:
-                return App_Metro::obtenerNombresTextoInfo();
+            case App_Instytul_Metro::sigla:
+                return App_Instytul_Metro::obtenerNombresTextoInfo();
                 break;
         }
     }
@@ -176,8 +176,8 @@ class AppDesing {
      */
     public static function cargarDatosJson($app) {
         switch ($app->diseno) {
-            case App_Metro::sigla:
-                return App_Metro::cargarDatosJson($app->id);
+            case App_Instytul_Metro::sigla:
+                return App_Instytul_Metro::cargarDatosJson($app->id);
                 break;
         }
     }

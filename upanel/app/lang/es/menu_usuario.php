@@ -48,7 +48,7 @@ return array(
     "mi_perfil.info.telefono.error" => "El teléfono solo debe contener números [0-9]",
     "mi_perfil.info.celular.error" => "El celular solo debe contener números [0-9]",
     "mi_perfil.editar.titulo" => "Editar mi perfil",
-    "mi_perfil.editar.submit" => "Editar perfil",
+    "mi_perfil.editar.submit" => "Guardar perfil",
     "mi_perfil.editar.post.exito" => "Tus datos han sido actualizados.",
     "crear.usuario.submit" => "Crear nuevo usuario",
     "crear.instancia.submit" => "Crear nueva instancia",

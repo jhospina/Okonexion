@@ -89,6 +89,40 @@ if (Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
         border-radius: 3px;
     }
 
+    #msj-crear-app{
+        background-image: -webkit-linear-gradient(top, #3c3c3c 0%, #222 100%);
+        background-image: -o-linear-gradient(top, #3c3c3c 0%, #222 100%);
+        background-image: -webkit-gradient(linear, left top, left bottom, from(#3c3c3c), to(#222));
+        background-image: linear-gradient(to bottom, #3c3c3c 0%, #222 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3c3c3c', endColorstr='#ff222222', GradientType=0);
+        filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+        background-repeat: repeat-x;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 0px;
+        padding-top: 10px;
+        margin-left: 10px;
+        width: 98%;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        padding-bottom:10px;
+
+    }
+
+    #msj-crear-app .jumbotron{
+        background: none;
+        color: white;
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #msj-crear-app .jumbotron h1{
+        padding: 0px;
+        margin: 0px;
+        padding-bottom: 10px;
+    }
+
 </style>
 
 
@@ -103,7 +137,20 @@ if (Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
 <div class="col-lg-12" style="padding: 0px;">
     <div class="col-lg-9" style="padding: 0px;">
 
+        @if(!Aplicacion::existe())
 
+        <div class="col-lg-12" id="msj-crear-app">
+            <div class="col-lg-6 text-center"><img width="400" class="img-rounded" src="{{URL::to("assets/img/appsimg1.jpg")}}"></div>
+            <div class="col-lg-6">
+                <div class="jumbotron">
+                    <h1>{{trans("pres.info.bienvenido")}}</h1>
+                    <p class="text-justify">{{trans("pres.info.bienvenido.descripcion")}}</p>
+                    <p class="text-center"><a class="btn btn-success btn-lg" href="{{trans("aplicacion/basico")}}" role="button"><span class="glyphicon glyphicon-phone"></span> {{trans("pres.info.bienvenido.btn")}}</a></p>
+                </div>
+            </div>
+        </div>
+
+        @endif
 
 
         <div class="col-lg-12" style="margin-top: 10px;">

@@ -8,9 +8,11 @@
         </div>
         {{--ICONO DE LA APLICACION--}}
         <div class="col-lg-12 uploadIconMenu">
-            <a  href="#" class="tooltip-left" rel="tooltip" title="{{trans('otros.extensiones_permitidas')}}: png, jpeg. Max 500Kb"> 
-                <input name="{{Aplicacion::configLogoApp}}" id="{{Aplicacion::configLogoApp}}" accept="image/*" type="file" multiple=true>
-            </a>
+            <div id="{{Aplicacion::configLogoApp}}-content">
+                <a  href="#" class="tooltip-left" rel="tooltip" title="{{trans('otros.extensiones_permitidas')}}: png, jpeg. Max 500Kb"> 
+                    <input name="{{Aplicacion::configLogoApp}}" id="{{Aplicacion::configLogoApp}}" accept="image/*" type="file" multiple=true>
+                </a>
+            </div>
         </div>
 
     </div>

@@ -1,8 +1,8 @@
 <?php
 
-class App_Metro {
+class App_Instytul_Metro {
 
-    const sigla = "ME"; // La sigla que representa el diseño en la base de datos
+    const sigla = "INM"; // La sigla que representa el diseño en la base de datos
     const package_default = "AppsthergoAppName";
 
     public static $tipos_contenidos = array(Contenido_Institucional::nombre, Contenido_Noticias::nombre, Contenido_Encuestas::nombre, Contenido_PQR::nombre); // Tipos de contenidos
@@ -100,15 +100,15 @@ class App_Metro {
     //HABILITACION DE PLATAFORMAS*****************************
     //********************************************************
     const PLAT_ANDROID = true;
-    const PLAT_IOS_IPHONE = true;
-    const PLAT_WINDOWS = true;
+    const PLAT_IOS_IPHONE = false;
+    const PLAT_WINDOWS = false;
 
     /** Retorna un array de 3 elementos indicando la disponibidad del diseño en la plataformas (Android, IOS, Windows)
      * 
      * @return type
      */
     static function plataformas() {
-        $class = new ReflectionClass("App_Metro");
+        $class = new ReflectionClass("App_Instytul_Metro");
 
         $plats = array();
 
@@ -168,10 +168,10 @@ class App_Metro {
         //************************************************************
         //CREA LA ESTRUCTURA DE CARPETAS DEL PROYECTO ANDROID
         //************************************************************
-        $projectDir = ArchivosCTR::obtenerListadoDir(App_Metro::PATH_PROJECT_ANDROID);
+        $projectDir = ArchivosCTR::obtenerListadoDir(App_Instytul_Metro::PATH_PROJECT_ANDROID);
 
         for ($i = 0; $i < count($projectDir); $i++) {
-            $dir = str_replace(strtolower(App_Metro::package_default), $nombreApp, str_replace(App_Metro::PATH_PROJECT_ANDROID, $ruta, $projectDir[$i]));
+            $dir = str_replace(strtolower(App_Instytul_Metro::package_default), $nombreApp, str_replace(App_Instytul_Metro::PATH_PROJECT_ANDROID, $ruta, $projectDir[$i]));
             if (!file_exists($dir))
                 mkdir($dir);
         }
@@ -181,7 +181,7 @@ class App_Metro {
         //CREAR LOS ARCHIVOS DEL PROYECTO*********
         //************************************************************
 
-        $projectAndroid = ArchivosCTR::obtenerListadoArchivos(App_Metro::PATH_PROJECT_ANDROID);
+        $projectAndroid = ArchivosCTR::obtenerListadoArchivos(App_Instytul_Metro::PATH_PROJECT_ANDROID);
 
 
 
@@ -191,19 +191,19 @@ class App_Metro {
                 continue;
             }
 
-            $ruta_dest = str_replace(strtolower(App_Metro::package_default), $nombreApp, str_replace(App_Metro::PATH_PROJECT_ANDROID, $ruta, $projectAndroid[$i]));
+            $ruta_dest = str_replace(strtolower(App_Instytul_Metro::package_default), $nombreApp, str_replace(App_Instytul_Metro::PATH_PROJECT_ANDROID, $ruta, $projectAndroid[$i]));
             if (Imagen::pertenece($projectAndroid[$i])) {
                 copy($projectAndroid[$i], $ruta_dest);
                 continue;
             }
 
             if (strpos($projectAndroid[$i], "Instytul_Metro") !== false) {
-                $ruta_dest = str_replace(strtolower(App_Metro::package_default), $nombreApp, str_replace(App_Metro::PATH_PROJECT_ANDROID, $ruta, str_replace("Instytul_Metro", $nombreAppOrigin, $projectAndroid[$i])));
+                $ruta_dest = str_replace(strtolower(App_Instytul_Metro::package_default), $nombreApp, str_replace(App_Instytul_Metro::PATH_PROJECT_ANDROID, $ruta, str_replace("Instytul_Metro", $nombreAppOrigin, $projectAndroid[$i])));
                 copy($projectAndroid[$i], $ruta_dest);
                 continue;
             }
 
-            ArchivosCTR::buscarReemplazarTexto(array(strtolower(App_Metro::package_default), App_Metro::package_default,"Instytul_Metro"), array($nombreApp, $nombreAppOrigin,$nombreAppOrigin), $projectAndroid[$i], $ruta_dest, true);
+            ArchivosCTR::buscarReemplazarTexto(array(strtolower(App_Instytul_Metro::package_default), App_Instytul_Metro::package_default,"Instytul_Metro"), array($nombreApp, $nombreAppOrigin,$nombreAppOrigin), $projectAndroid[$i], $ruta_dest, true);
         }
 
         //************************************************************
@@ -219,7 +219,7 @@ class App_Metro {
         //ARCHIVO DE CONFIGURACION DE LA APLICACION
         //************************************************************
         //Obtiene el contenido config java del usuario en android
-        $java = App_Metro::plantillaConfigAndroid(json_encode($config));
+        $java = App_Instytul_Metro::plantillaConfigAndroid(json_encode($config));
         //Crear el archivo java de configuracion de android del usuario
         $ruta_javaConfig = $ruta . "app/src/main/java/libreria/sistema/AppConfig.java";
         $fp = fopen($ruta_javaConfig, "c");
@@ -234,7 +234,7 @@ class App_Metro {
         //ICONOS DEL MENU ********************************************
         //************************************************************
         //Crea los iconos necesarios de la aplicacion
-        $iconos = array(App_Metro::iconoMenu1, App_Metro::iconoMenu2, App_Metro::iconoMenu3, App_Metro::iconoMenu4);
+        $iconos = array(App_Instytul_Metro::iconoMenu1, App_Instytul_Metro::iconoMenu2, App_Instytul_Metro::iconoMenu3, App_Instytul_Metro::iconoMenu4);
 
         for ($i = 1; $i <= count($iconos); $i++) {
             //Valida si el icono existe
@@ -262,17 +262,17 @@ class App_Metro {
                 $imagen->crearCopia($dim_mdpi, $dim_mdpi, "img_menu_btn_" . $i . "x$dim_mdpi", $ruta . "app/src/main/");
                 $zip->addFile($ruta . "app/src/main/" . "img_menu_btn_" . $i . "x$dim_mdpi." . $imagen->getExtension(), "app/src/main/res/mipmap-mdpi/img_menu_btn_" . $i . ".png");
             } else {
-                $zip->addFile(public_path("assets/img/desing/" . App_Metro::sigla . "/img_menu_btn_" . $i . "-web.png"), "app/src/main/img_menu_btn_" . $i . "-web.png");
+                $zip->addFile(public_path("assets/img/desing/" . App_Instytul_Metro::sigla . "/img_menu_btn_" . $i . "-web.png"), "app/src/main/img_menu_btn_" . $i . "-web.png");
                 //mipmap-xxxhdpi
-                $zip->addFile(public_path("assets/img/desing/" . App_Metro::sigla . "/mipmap-xxxhdpi/img_menu_btn_" . $i . ".png"), "app/src/main/res/mipmap-xxxhdpi/img_menu_btn_" . $i . ".png");
+                $zip->addFile(public_path("assets/img/desing/" . App_Instytul_Metro::sigla . "/mipmap-xxxhdpi/img_menu_btn_" . $i . ".png"), "app/src/main/res/mipmap-xxxhdpi/img_menu_btn_" . $i . ".png");
                 //mipmap-xxhdpi
-                $zip->addFile(public_path("assets/img/desing/" . App_Metro::sigla . "/mipmap-xxhdpi/img_menu_btn_" . $i . ".png"), "app/src/main/res/mipmap-xxhdpi/img_menu_btn_" . $i . ".png");
+                $zip->addFile(public_path("assets/img/desing/" . App_Instytul_Metro::sigla . "/mipmap-xxhdpi/img_menu_btn_" . $i . ".png"), "app/src/main/res/mipmap-xxhdpi/img_menu_btn_" . $i . ".png");
                 //mipmap-xhdpi
-                $zip->addFile(public_path("assets/img/desing/" . App_Metro::sigla . "/mipmap-xhdpi/img_menu_btn_" . $i . ".png"), "app/src/main/res/mipmap-xhdpi/img_menu_btn_" . $i . ".png");
+                $zip->addFile(public_path("assets/img/desing/" . App_Instytul_Metro::sigla . "/mipmap-xhdpi/img_menu_btn_" . $i . ".png"), "app/src/main/res/mipmap-xhdpi/img_menu_btn_" . $i . ".png");
                 //mipmap-hdpi
-                $zip->addFile(public_path("assets/img/desing/" . App_Metro::sigla . "/mipmap-hdpi/img_menu_btn_" . $i . ".png"), "app/src/main/res/mipmap-hdpi/img_menu_btn_" . $i . ".png");
+                $zip->addFile(public_path("assets/img/desing/" . App_Instytul_Metro::sigla . "/mipmap-hdpi/img_menu_btn_" . $i . ".png"), "app/src/main/res/mipmap-hdpi/img_menu_btn_" . $i . ".png");
                 //mipmap-mdpi
-                $zip->addFile(public_path("assets/img/desing/" . App_Metro::sigla . "/mipmap-mdpi/img_menu_btn_" . $i . ".png"), "app/src/main/res/mipmap-mdpi/img_menu_btn_" . $i . ".png");
+                $zip->addFile(public_path("assets/img/desing/" . App_Instytul_Metro::sigla . "/mipmap-mdpi/img_menu_btn_" . $i . ".png"), "app/src/main/res/mipmap-mdpi/img_menu_btn_" . $i . ".png");
             }
         }
 
@@ -320,7 +320,7 @@ class App_Metro {
      * @return type
      */
     public static function obtenerNombresTextoInfo() {
-        $class = new ReflectionClass("App_Metro");
+        $class = new ReflectionClass("App_Instytul_Metro");
 
         $claves = array();
 
@@ -341,16 +341,16 @@ class App_Metro {
     public static function obtenerNombreTipoContenidoPorUsuario($tipoContenido) {
         switch ($tipoContenido) {
             case Contenido_Institucional::nombre:
-                return ConfiguracionApp::obtenerValorConfig((string) App_Metro::txt_menuBtn_1);
+                return ConfiguracionApp::obtenerValorConfig((string) App_Instytul_Metro::txt_menuBtn_1);
                 break;
             case Contenido_Noticias::nombre:
-                return ConfiguracionApp::obtenerValorConfig((string) App_Metro::txt_menuBtn_2);
+                return ConfiguracionApp::obtenerValorConfig((string) App_Instytul_Metro::txt_menuBtn_2);
                 break;
             case Contenido_Encuestas::nombre:
-                return ConfiguracionApp::obtenerValorConfig((string) App_Metro::txt_menuBtn_3);
+                return ConfiguracionApp::obtenerValorConfig((string) App_Instytul_Metro::txt_menuBtn_3);
                 break;
             case Contenido_PQR::nombre:
-                return ConfiguracionApp::obtenerValorConfig((string) App_Metro::txt_menuBtn_4);
+                return ConfiguracionApp::obtenerValorConfig((string) App_Instytul_Metro::txt_menuBtn_4);
                 break;
         }
     }
@@ -375,7 +375,7 @@ class App_Metro {
 
 
         foreach ($data as $clave => $valor) {
-            if (!in_array($clave, App_Metro::$configExcepciones)) {
+            if (!in_array($clave, App_Instytul_Metro::$configExcepciones)) {
                 $config = new ConfiguracionApp;
 
                 ConfiguracionApp::eliminarConfigDesdeClave($clave);

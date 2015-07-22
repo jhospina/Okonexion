@@ -394,11 +394,12 @@ class UPanelControladorAplicacion extends Controller {
                     $output = ['error' => trans("otros.error_solicitud")];
                 }
 
+                $output["id"] = $index;
+                $output["url"] = URL::to($path . $archivo);
+
                 break;
             }
         }
-
-        //
 
         return json_encode($output);
     }
@@ -443,16 +444,12 @@ class UPanelControladorAplicacion extends Controller {
 
         list($width, $height, $type, $attr) = getimagesize(Input::file($logo));
 
-        //Verifica si las dimensiones de la imagen son iguales
-        if (intval($width) != intval($height)) {
-            $output = ['error' => trans("app.config.imagen.error01", array("w" => $width, "h" => $height))];
-            return json_encode($output);
-        }
 
         if (intval($width) < 256 && intval($height) < 256) {
             $output = ['error' => trans("app.config.imagen.error02", array("width_objetivo" => 256, "height_objetivo" => 256, "width" => $width, "height" => $height))];
             return json_encode($output);
         }
+
 
         Input::file($logo)->move($path, $archivo);
 
@@ -464,10 +461,18 @@ class UPanelControladorAplicacion extends Controller {
         }
 
         $app->url_logo = URL::to($path . $archivo);
+
+        if ($height != $width) {
+            $imagen = new Imagen(URL::to($path . $archivo));
+            $imagen->crearCopia(256, 256, null, $imagen->getRuta(), true);
+        }
+
         if (!$app->save()) {
             $output = ['error' => trans("otros.error_solicitud")];
             return json_encode($output);
         }
+
+        $output["url"] = URL::to($path . $archivo);
 
         return json_encode($output);
     }
@@ -675,7 +680,7 @@ class UPanelControladorAplicacion extends Controller {
         if (!file_exists($ruta_android))
             mkdir($ruta_android);
 
-        $nombreZip = $app->nombre.".zip";
+        $nombreZip = $app->nombre . ".zip";
         //Ruta de la archivo zip
         $archivoZIP = public_path("usuarios/downloads/" . $nombreZip);
 
@@ -685,9 +690,9 @@ class UPanelControladorAplicacion extends Controller {
 
         $config = json_decode($proceso->json_config, true);
 
-        AppDesing::prepararArchivosParaAndroid($zip, $app, $config, $ruta_android); 
-        
-         
+        AppDesing::prepararArchivosParaAndroid($zip, $app, $config, $ruta_android);
+
+
         $zip->close();
 
         //Mueve la el archivo zip a la ruta final
@@ -699,15 +704,13 @@ class UPanelControladorAplicacion extends Controller {
 
         $fp = fopen("$archivoZIP", "r");
         fpassthru($fp);
-        
-        
-          //************************************************************
+
+
+        //************************************************************
         //ELIMINA TODOS LOS ARCHIVOS DEL BUFFER
         //************************************************************
 
         ArchivosCTR::borrarArchivos($ruta_android);
-      
-        
     }
 
 }

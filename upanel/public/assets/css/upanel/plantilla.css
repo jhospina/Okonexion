@@ -621,19 +621,26 @@ li#tiempo-suscripcion{
 }
 
 
-.stats-info-box{
+.stats-info-box{ 
     color:white;
-    width:31%;
     margin:0 1%;
     cursor:pointer;
     padding: 0px;
     margin-top: 10px;
+    width:31%;
+}
+
+
+@media (min-width: 200px) and (max-width: 1199px) { 
+  .stats-info-box{
+    width:100%;
+  } 
 }
 
 
 .stats-info-box:hover{
     opacity: 0.8;
-}
+} 
 
 .stats-info-box .gly{
     font-size: 40pt;

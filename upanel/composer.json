@@ -18,6 +18,7 @@
             "app/database/seeds",
             "app/tests/TestCase.php",
             "app/library/appDesings",
+            "app/library/appDesings/Instytul",
             "app/library/complements",
             "app/library/contentTypes",
             "app/library/enums",

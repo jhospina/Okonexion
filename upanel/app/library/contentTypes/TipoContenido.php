@@ -10,8 +10,8 @@ class TipoContenido {
     static function obtenerTiposContenidoDelDiseno($diseno) {
         switch ($diseno) {
             //Diseño de Metro
-            case App_Metro::sigla:
-                return App_Metro::$tipos_contenidos;
+            case App_Instytul_Metro::sigla:
+                return App_Instytul_Metro::$tipos_contenidos;
                 break;
         }
     }
@@ -24,8 +24,8 @@ class TipoContenido {
      */
     static function obtenerNombre($diseno, $tipo) {
         switch ($diseno) {
-            case App_Metro::sigla:
-                return App_Metro::obtenerNombreTipoContenidoPorUsuario($tipo);
+            case App_Instytul_Metro::sigla:
+                return App_Instytul_Metro::obtenerNombreTipoContenidoPorUsuario($tipo);
                 break;
         }
 
