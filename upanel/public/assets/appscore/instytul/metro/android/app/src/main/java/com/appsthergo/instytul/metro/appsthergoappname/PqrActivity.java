@@ -1,4 +1,4 @@
-package com.appsthergo.instytul.metro.nombreapp;
+package com.appsthergo.instytul.metro.appsthergoappname;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,15 +11,17 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-import com.appsthergo.instytul.metro.nombreApp.pqr.PQR_PeticionesActivity;
-import com.appsthergo.instytul.metro.nombreApp.pqr.PQR_QuejasActivity;
-import com.appsthergo.instytul.metro.nombreApp.pqr.PQR_ReclamosActivity;
-import com.appsthergo.instytul.metro.nombreApp.pqr.PQR_SugerenciasActivity;
+import com.appsthergo.instytul.metro.appsthergoappname.pqr.PQR_PeticionesActivity;
+import com.appsthergo.instytul.metro.appsthergoappname.pqr.PQR_QuejasActivity;
+import com.appsthergo.instytul.metro.appsthergoappname.pqr.PQR_ReclamosActivity;
+import com.appsthergo.instytul.metro.appsthergoappname.pqr.PQR_SugerenciasActivity;
 
 import libreria.complementos.Util;
 import libreria.conexion.ComunicacionPQR;
 import libreria.conexion.Conexion;
 import libreria.sistema.App;
+import libreria.tipos_contenido.Encuesta;
+import libreria.tipos_contenido.PQR;
 
 
 public class PqrActivity extends ActionBarActivity {
@@ -37,6 +39,15 @@ public class PqrActivity extends ActionBarActivity {
             ComunicacionPQR com = new ComunicacionPQR(this);
             com.execute();
         }
+
+        //Envia información de actividad al servidor
+        Thread hilo = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Conexion.registrarActividad(PqrActivity.this,PQR.iden);
+            }
+        });
+        hilo.start();
     }
 
 

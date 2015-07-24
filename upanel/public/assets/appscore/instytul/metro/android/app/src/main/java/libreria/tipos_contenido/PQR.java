@@ -19,8 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.appsthergo.instytul.metro.nombreApp.R;
-import com.appsthergo.instytul.metro.nombreApp.pqr.VerPqrActivity;
+import com.appsthergo.instytul.metro.appsthergoappname.R;
+import com.appsthergo.instytul.metro.appsthergoappname.pqr.VerPqrActivity;
 
 import java.util.ArrayList;
 
@@ -34,6 +34,7 @@ import libreria.sistema.ControladorBaseDatos;
  */
 public class PQR extends TipoContenido {
 
+    public static final String iden = "pqr";
     public static final String TIPO_PETICION = "peticion";
     public static final String TIPO_QUEJA = "queja";
     public static final String TIPO_RECLAMO = "reclamo";

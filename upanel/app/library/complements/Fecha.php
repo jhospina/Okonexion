@@ -67,6 +67,18 @@ class Fecha {
         $this->asignarAtributos($this->object->format($this->formato));
         return $nueva_fecha;
     }
+    
+    /** Sustraer un numero definido de dias a la fecha objeto
+     * 
+     * @param type $num
+     * @return type
+     */
+    function sustraerDias($num){
+        $this->object->sub(date_interval_create_from_date_string("$num days"));
+        $nueva_fecha = $this->object->format($this->formato);
+        $this->asignarAtributos($this->object->format($this->formato));
+        return $nueva_fecha;
+    }
 
     /** Asigna los atributos de fecha al objeto de la clase
      * 

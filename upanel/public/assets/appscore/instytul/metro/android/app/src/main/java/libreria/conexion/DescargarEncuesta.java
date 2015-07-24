@@ -160,7 +160,7 @@ public class DescargarEncuesta extends AsyncTask<String, Void, Void> {
         for (int i = 0; i < jsonEncuestas.length(); i++) {
             try {
                 //OBtiene el JSON de una encuesta individual del conjunto
-                JSONObject encuesta = jsonEncuestas.getJSONObject(Encuesta.tipoDato + "" + i);
+                JSONObject encuesta = jsonEncuestas.getJSONObject(Encuesta.iden + "" + i);
                 //Obtiene los JSon de datos integrados dentro de una encuesta
                 JSONObject fecha = encuesta.getJSONObject("fecha");
                 JSONObject respuestas = encuesta.getJSONObject("resp");

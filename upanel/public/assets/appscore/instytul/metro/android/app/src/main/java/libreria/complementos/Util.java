@@ -5,6 +5,8 @@ import android.graphics.Point;
 import android.util.Log;
 import android.view.Display;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -143,6 +145,17 @@ public class Util {
         } catch (NumberFormatException nfe){
             return false;
         }
+    }
+
+
+    public static String obtenerFechaActual(){
+        return Util.obtenerFechaActual("yyyy-MM-dd HH:mm:ss");
+    }
+
+    public static String obtenerFechaActual(String formatoFecha){
+        SimpleDateFormat sdf = new SimpleDateFormat(formatoFecha);
+        String fecha = sdf.format(new Date());
+        return fecha;
     }
 
 }

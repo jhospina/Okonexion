@@ -194,4 +194,90 @@ Class Aplicacion extends Eloquent {
         return $this->hasOne('User', 'id', "id_usuario");
     }
 
+    //****************************************************
+    //CONTROLADOR META************************************
+    //****************************************************
+
+    /**
+     * Indica si una opcion de configuracion existe, dada por su dato clave. 
+     *
+     * @param String clave
+     * @return boolean
+     */
+    static function existeMetadato($clave, $id_app) {
+        $configs = AppMeta::where("id_app", $id_app)->where("clave", "=", $clave)->get();
+        return (count($configs) > 0);
+    }
+
+    /** Agrega una nuevo metadato a aplicacion, si el metadato ya existe, lo actualiza
+     * 
+     * @param String $clave La clave del metadato
+     * @param String $valor El valor del metadato
+     * @param Int $id_app (Opcional) Si no se especifica se toma el de la sesion actual
+     */
+    static function agregarMetadato($clave, $valor, $id_app, $id_usuario = null) {
+        $meta = new AppMeta;
+
+        if (Aplicacion::existeMetadato($clave, $id_app))
+            return Aplicacion::actualizarMetadato($clave, $valor, $id_app);
+
+        if (is_null($id_usuario))
+            $id_usuario = Auth::user()->id;
+        $meta->id_usuario = $id_usuario;
+        $meta->id_app = $id_app;
+        $meta->clave = $clave;
+        $meta->valor = $valor;
+        return $meta->save();
+    }
+
+    /** Actualiza el valor de un metadato de una factura, y si no existe lo crea
+     * 
+     * @param String $clave La clave del metadato
+     * @param String $valor El valor del metadato a actualizar
+     * @param Int $id_app (Opcional) Si no se especifica se toma el de la sesion actual
+     * @return boolean El resultado de la operacion
+     */
+    static function actualizarMetadato($clave, $valor, $id_app) {
+        $meta = Aplicacion::obtenerMetadato($clave, $id_app);
+
+        //Si no existe lo agrega
+        if (is_null($meta))
+            return Aplicacion::agregarMetadato($clave, $valor, $id_app);
+
+        $meta->valor = $valor;
+
+        return $meta->save();
+    }
+
+    /** Obtiene el objeto de un metadado dado por su valor clave
+     * 
+     * @param type $clave El valor clave que identifica el metadato
+     * @param Int $id_app (Opcional) Si no se especifica se toma el de la sesion actual
+     * @return type Retorna el valor del metadato en caso de exito, de lo contrario Null. 
+     */
+    static function obtenerMetadato($clave, $id_app) {
+        $metas = AppMeta::where("id_app", $id_app)->where("clave", $clave)->get();
+        foreach ($metas as $meta)
+            return $meta;
+        return null;
+    }
+
+    static function eliminarMetadato($clave, $id_app) {
+        $config = Aplicacion::obtenerMetadato($clave, $id_app);
+        return $config->delete();
+    }
+
+    /** Obtiene el valor de un metadato dado por su nombre clave
+     * 
+     * @param type $clave
+     * @param Int $id_app (Opcional) Si no se especifica se toma el de la sesion actual
+     * @return String Retorna el valro del metatado o null si no existe
+     */
+    static function obtenerValorMetadato($clave, $id_app) {
+        $metas = AppMeta::where("id_app", $id_app)->where("clave", $clave)->get();
+        foreach ($metas as $meta)
+            return $meta->valor;
+        return null;
+    }
+
 }

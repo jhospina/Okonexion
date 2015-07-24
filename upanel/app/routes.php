@@ -84,6 +84,7 @@ Route::post("app/descargar/institucional", "ControladorApp@descargar_institucion
 Route::post("app/descargar/encuestas/vigente", "ControladorApp@descargar_encuestas_vigente");
 Route::post("app/descargar/encuestas/archivadas", "ControladorApp@descargar_encuestas_archivadas");
 Route::post("app/enviar/encuestas/respuesta", "ControladorApp@enviar_encuestas_respuesta");
+Route::post("app/enviar/meta/registrar","ControladorApp@enviar_metaRegistrar"); 
 //PQR
 Route::post("app/enviar/pqr", "ControladorApp@enviarPqr");
 Route::post("app/recibir/pqr", "ControladorApp@recibirPqr");
@@ -148,6 +149,7 @@ function control_aplicaciones() {
 //***************************************************************************
 function aplicacion_comp() {
     Route::get('aplicacion/{id}/versiones', 'UPanelControladorAplicacion@vista_versiones');
+    Route::get('aplicacion/{id}/estadisticas', 'UPanelControladorAplicacion@vista_estadisticas');
 }
 
 //***************************************************************************

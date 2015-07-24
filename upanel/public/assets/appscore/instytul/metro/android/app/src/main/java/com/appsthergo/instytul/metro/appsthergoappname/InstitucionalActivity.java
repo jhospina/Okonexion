@@ -1,4 +1,4 @@
-package com.appsthergo.instytul.metro.nombreapp;
+package com.appsthergo.instytul.metro.appsthergoappname;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
@@ -11,6 +11,7 @@ import libreria.complementos.Mensaje;
 import libreria.conexion.Conexion;
 import libreria.conexion.DescargarInstitucional;
 import libreria.sistema.App;
+import libreria.tipos_contenido.Encuesta;
 import libreria.tipos_contenido.Institucional;
 
 
@@ -46,6 +47,16 @@ public class InstitucionalActivity extends ActionBarActivity {
             cargarInstitucional();
             App.institucional_descargadas = true;
         }
+
+        //Envia información de actividad al servidor
+        Thread hilo = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Conexion.registrarActividad(InstitucionalActivity.this, Institucional.iden);
+            }
+        });
+        hilo.start();
+
     }
 
 

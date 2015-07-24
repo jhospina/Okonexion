@@ -1,4 +1,4 @@
-package com.appsthergo.instytul.metro.nombreapp;
+package com.appsthergo.instytul.metro.appsthergoappname;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -19,10 +19,16 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.util.Random;
 
+import libreria.complementos.Util;
+import libreria.conexion.Conexion;
 import libreria.servicios.ServicioNoticias;
 import libreria.sistema.App;
+import libreria.sistema.AppConfig;
+import libreria.sistema.AppMeta;
 import libreria.tipos_contenido.Institucional;
 import libreria.tipos_contenido.Noticias;
 
@@ -35,6 +41,14 @@ public class MenuPrincipal extends ActionBarActivity {
         setContentView(R.layout.activity_menu_principal);
         App.establecerBarraAccion(this,null);
         establecerApariencia();
+
+        Thread hilo = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                registrarInstalacion();
+            }
+        });
+        hilo.start();
 
     }
 
@@ -113,6 +127,35 @@ public class MenuPrincipal extends ActionBarActivity {
         txt_menu_4.setTextColor(Color.parseColor(App.txt_menuBtn_4_color));
     }
 
+
+    private void registrarInstalacion(){
+
+        if(!Conexion.verificar(this))
+            return;
+
+        String regInstalacion="instalacion_"+App.obtenerIdDispositivo(this);
+
+        if(AppMeta.findByClave(this,regInstalacion)!=null)
+           return;
+
+        String fecha=Util.obtenerFechaActual();;
+
+        AppMeta meta=new AppMeta(this);
+
+        meta.setClave(regInstalacion);
+        meta.setValor(fecha);
+        meta.save();
+
+        String[][] datos = new String[3][2];
+        datos[0][0] = "key_app";
+        datos[0][1] = App.keyApp;
+        datos[1][0] = "clave";
+        datos[1][1] = regInstalacion;
+        datos[2][0] = "valor";
+        datos[2][1] =  fecha;
+
+        Conexion.conectar(App.URL_META_REGISTRAR, datos);
+    }
 
 
 }

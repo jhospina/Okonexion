@@ -1,4 +1,4 @@
-package com.appsthergo.instytul.metro.nombreapp;
+package com.appsthergo.instytul.metro.appsthergoappname;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -20,6 +20,7 @@ import libreria.conexion.Conexion;
 import libreria.conexion.DescargarNoticias;
 import libreria.servicios.ServicioNoticias;
 import libreria.sistema.App;
+import libreria.tipos_contenido.Encuesta;
 import libreria.tipos_contenido.Noticias;
 
 
@@ -60,6 +61,16 @@ public class NoticiasActivity extends ActionBarActivity {
 
         startService(new Intent(this,
                 ServicioNoticias.class));
+
+
+        //Envia información de actividad al servidor
+        Thread hilo = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Conexion.registrarActividad(NoticiasActivity.this, Noticias.iden);
+            }
+        });
+        hilo.start();
     }
 
 

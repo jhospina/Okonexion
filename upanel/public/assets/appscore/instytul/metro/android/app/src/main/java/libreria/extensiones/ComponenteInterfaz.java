@@ -21,7 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.appsthergo.instytul.metro.nombreApp.R;
+import com.appsthergo.instytul.metro.appsthergoappname.R;
 
 import libreria.sistema.App;
 

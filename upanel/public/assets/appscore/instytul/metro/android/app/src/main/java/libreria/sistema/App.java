@@ -7,7 +7,9 @@ import android.graphics.drawable.GradientDrawable;
 import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
-import com.appsthergo.instytul.metro.nombreapp.R;
+
+import com.appsthergo.instytul.metro.appsthergoappname.R;
+
 import libreria.complementos.Util;
 import libreria.extensiones.ComponenteInterfaz;
 
@@ -28,6 +30,7 @@ public class App extends AppConfig {
     public static final String URL_ENVIAR_ENCUESTA_RESPUESTA="https://appsthergo.com/upanel/public/app/enviar/encuestas/respuesta";
     public static final String URL_ENVIAR_PQR="https://appsthergo.com/upanel/public/app/enviar/pqr";
     public static final String URL_RECIBIR_PQR="https://appsthergo.com/upanel/public/app/recibir/pqr";
+    public static final String URL_META_REGISTRAR="https://appsthergo.com/upanel/public/app/enviar/meta/registrar";
 
     /**
      * *******************************************************

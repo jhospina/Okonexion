@@ -101,6 +101,81 @@ class UPanelControladorAplicacion extends Controller {
         return Redirect::to("");
     }
 
+    public function vista_estadisticas($id) {
+
+        if (!Auth::check()) {
+            return User::login();
+        }
+
+        $app = Aplicacion::find($id);
+
+        if (Auth::user()->tipo == User::USUARIO_REGULAR) {
+            if ($app->id_usuario != Auth::user()->id)
+                return Redirect::to("");
+        }
+
+        //Obtiene el numero de instalaciones
+        $instalaciones = AppMeta::where("id_app", $app->id)->where("clave", "LIKE", AppMeta::stds_instalacion . "%")->get()->count();
+        $instalaciones_hoy = AppMeta::where("id_app", $app->id)->where("clave", "LIKE", AppMeta::stds_instalacion . "%")->where("valor", "LIKE", date("Y-m-d") . "%")->get()->count();
+
+        $regActividad = AppMeta::where("id_app", $app->id)->where("clave", "LIKE", "%" . date("Ymd"))->orderBy("id_app", "DESC")->get();
+
+        $cantActividad = 0;
+        $aux = null;
+
+        foreach ($regActividad as $actividad) {
+
+            $parts = explode("_", $actividad->clave);
+
+            if ($aux != $parts[0]) {
+                $cantActividad++;
+                $aux = $parts[0];
+            }
+        }
+        
+        $cantActividad_hoy=$cantActividad;
+
+        $fecha = new Fecha(Util::obtenerTiempoActual());
+        $dias = array();
+        $dias[] = $fecha->dia . " " . Util::obtenerNombreMes(($fecha->mes < 10) ? "0" . $fecha->mes : $fecha->mes);
+        
+        //Almacena las estadisticas de instalaciones
+        $stat_instalaciones = array();
+        //Almacena las estadisticas de actividad
+        $stat_actividad = array();
+        $stat_instalaciones[] = $instalaciones;
+        $stat_actividad[] = $cantActividad;
+
+        for ($i = 1; $i < 6; $i++) {
+            $fecha = new Fecha(Util::obtenerTiempoActual());
+            $fecha->sustraerDias($i);
+            $dias[] = $fecha->dia . " " . Util::obtenerNombreMes(($fecha->mes < 10) ? "0" . $fecha->mes : $fecha->mes);
+            $stat_instalaciones[] = AppMeta::where("id_app", $app->id)->where("clave", "LIKE", AppMeta::stds_instalacion . "%")->where("valor", "LIKE", $fecha->ano . $fecha->mes . $fecha->dia . "%")->get()->count();
+
+            $regActividad = AppMeta::where("id_app", $app->id)->where("clave", "LIKE", "%" . $fecha->ano . $fecha->mes . $fecha->dia)->orderBy("id_app", "DESC")->get();
+
+            $cantActividad = 0;
+            $aux = null;
+
+            foreach ($regActividad as $actividad) {
+
+                $parts = explode("_", $actividad->clave);
+
+                if ($aux != $parts[0]) {
+                    $cantActividad++;
+                    $aux = $parts[0];
+                }
+            }
+
+            $stat_actividad[] = $cantActividad;
+        }
+        $dias = array_reverse($dias);
+        $stat_instalaciones = array_reverse($stat_instalaciones);
+        $stat_actividad = array_reverse($stat_actividad);
+
+        return View::make("usuarios/tipo/regular/app/estadisticas")->with("app", $app)->with("instalaciones", $instalaciones)->with("instalaciones_hoy", $instalaciones_hoy)->with("actividad", $cantActividad_hoy)->with("stat_instalaciones", $stat_instalaciones)->with("stat_actividad", $stat_actividad)->with("dias", $dias);
+    }
+
     public function vista_listado() {
         if (!Auth::check()) {
             return User::login();

@@ -1,4 +1,4 @@
-package com.appsthergo.instytul.metro.nombreapp;
+package com.appsthergo.instytul.metro.appsthergoappname;
 
 import android.graphics.Color;
 import android.graphics.Point;
@@ -34,7 +34,6 @@ public class EncuestasActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_encuestas);
 
-
         init();
 
         if (!Conexion.verificar(this)) {
@@ -55,6 +54,15 @@ public class EncuestasActivity extends ActionBarActivity {
           }
 
         cargarMas();
+
+        //Envia información de actividad al servidor
+        Thread hilo = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Conexion.registrarActividad(EncuestasActivity.this,Encuesta.iden);
+            }
+        });
+        hilo.start();
     }
 
     public void init(){

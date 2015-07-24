@@ -1,5 +1,6 @@
 package libreria.conexion;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,6 +27,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import libreria.complementos.Util;
+import libreria.sistema.App;
+import libreria.sistema.AppMeta;
+import libreria.tipos_contenido.Noticias;
 
 /**
  * Created by Jhon on 27/03/2015.
@@ -124,6 +130,37 @@ public class Conexion {
             }
         }
         return bConectado;
+    }
+
+
+    public static void registrarActividad(Activity activity,String tipo_contenido){
+
+        if(!Conexion.verificar(activity))
+            return;
+
+        String regClave=App.obtenerIdDispositivo(activity)+"_"+tipo_contenido+"_"+Util.obtenerFechaActual("yyyyMMdd");
+
+        if(AppMeta.findByClave(activity, regClave)!=null)
+            return;
+
+        String fecha= Util.obtenerFechaActual();;
+
+        AppMeta meta=new AppMeta(activity);
+
+        meta.setClave(regClave);
+        meta.setValor(fecha);
+        meta.save();
+
+        String[][] datos = new String[3][2];
+        datos[0][0] = "key_app";
+        datos[0][1] = App.keyApp;
+        datos[1][0] = "clave";
+        datos[1][1] = regClave;
+        datos[2][0] = "valor";
+        datos[2][1] =  fecha;
+
+        Conexion.conectar(App.URL_META_REGISTRAR, datos);
+
     }
 
 }

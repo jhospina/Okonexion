@@ -342,6 +342,11 @@ class Util {
             "11" => trans("otros.fecha.noviembre"),
             "12" => trans("otros.fecha.diciembre"));
     }
+    
+    static function obtenerNombreMes($mes){
+        $meses=Util::obtenerNombreMeses();
+        return $meses[$mes];
+    }
 
     static function convertirMayusculas($cadena) {
         $cadena = mb_strtoupper($cadena, 'utf-8');

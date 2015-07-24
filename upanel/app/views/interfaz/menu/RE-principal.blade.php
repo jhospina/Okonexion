@@ -26,9 +26,6 @@ if (Aplicacion::existe()) {
         @if(Aplicacion::existe())
         @include("interfaz/menu/app/administrar/index")
         @endif
-        <li role="presentation" class="divider"></li>
-        <li @if(intval($version)==0) class="disabled" @endif><a @if(intval($version)>0) href="{{URL::to("aplicacion/".$app->id."/versiones")}}" @endif><span class="glyphicon glyphicon-th"></span> {{trans("interfaz.menu.principal.mi_aplicacion.versiones")}}</a></li>
-        <li role="presentation" class="divider"></li>
         <li @if(!Aplicacion::existe()) class="disabled" @endif>
              <a @if(Aplicacion::existe())href="{{URL::to("aplicacion/desarrollo")}}"@endif>
             @if(Aplicacion::existe())
@@ -40,6 +37,9 @@ if (Aplicacion::existe()) {
                 @endif
             </a>
         </li>
+        <li @if(intval($version)==0) class="disabled" @endif><a @if(intval($version)>0) href="{{URL::to("aplicacion/".$app->id."/versiones")}}" @endif><span class="glyphicon glyphicon-th"></span> {{trans("interfaz.menu.principal.mi_aplicacion.versiones")}}</a></li>
+        <li @if(intval($version)==0) class="disabled" @endif><a @if(intval($version)>0) href="{{URL::to("aplicacion/".$app->id."/estadisticas")}}" @endif><span class="glyphicon glyphicon-stats"></span> {{trans("interfaz.menu.principal.mi_aplicacion.estadisticas")}}</a></li>
+        
 
     </ul>
 </li>

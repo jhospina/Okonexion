@@ -17,6 +17,7 @@ return array(
     "menu.principal.mi_aplicacion.desarrollo" => "Desarrollo",
     "menu.principal.mi_aplicacion.administrar" => "Administrar",
     "menu.principal.mi_aplicacion.versiones" => "Versiones",
+    "menu.principal.mi_aplicacion.estadisticas" => "Estadisticas",
     "menu.principal.servicios" => "Servicios",
     "menu.principal.servicios.mis.servicios" => "Mis servicios",
     "menu.principal.servicios.agregar.servicio" => "Agregar servicio",

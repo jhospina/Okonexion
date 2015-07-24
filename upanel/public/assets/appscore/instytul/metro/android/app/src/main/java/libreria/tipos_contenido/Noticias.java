@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.appsthergo.instytul.metro.nombreApp.VerNoticiaActivity;
+import com.appsthergo.instytul.metro.appsthergoappname.VerNoticiaActivity;
 
 import libreria.complementos.Util;
 import libreria.conexion.CargarImagen;
@@ -30,6 +30,7 @@ import libreria.sistema.ControladorBaseDatos;
 public class Noticias extends TipoContenido {
 
     public String urlImagen;
+    public static final String iden = "noticias";
 
     public Noticias(Activity act) {
         super(act);

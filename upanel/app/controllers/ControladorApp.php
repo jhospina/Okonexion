@@ -70,7 +70,7 @@ class ControladorApp extends \BaseController {
         if (is_null($app))
             return null;
 
-        return Contenido_PQR::registrar($app->id, $app->id_usuario, $dispositivo, $nombre, $email, $asunto, $descripcion, Contenido_PQR::tipo($tipo),$id_padre);
+        return Contenido_PQR::registrar($app->id, $app->id_usuario, $dispositivo, $nombre, $email, $asunto, $descripcion, Contenido_PQR::tipo($tipo), $id_padre);
     }
 
     function recibirPqr() {
@@ -82,6 +82,22 @@ class ControladorApp extends \BaseController {
                 $ids_pqr[] = $id;
 
         return Contenido_PQR::obtenerPrqUsuario($ids_pqr);
+    }
+
+    function enviar_metaRegistrar() {
+        $data = Input::all();
+        $key_app = $data["key_app"];
+        $clave = $data["clave"];
+        $valor = $data["valor"];
+        
+        $app = Aplicacion::buscar($key_app);
+        if (is_null($app))
+            return null;
+
+        if (Aplicacion::existeMetadato($clave, $app->id))
+            return null;
+        
+        return json_encode(Aplicacion::agregarMetadato($clave, $valor, $app->id,$app->id_usuario));
     }
 
     //RUTA DE ACCESO: usuarios/uploads/{usuario}/{imagen}/{mime_type}

@@ -1,4 +1,4 @@
-package com.appsthergo.instytul.metro.nombreapp.pqr;
+package com.appsthergo.instytul.metro.appsthergoappname.pqr;
 
 import android.app.ProgressDialog;
 import android.graphics.Color;
@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.appsthergo.instytul.metro.nombreApp.R;
+import com.appsthergo.instytul.metro.appsthergoappname.R;
 
 import java.util.ArrayList;
 

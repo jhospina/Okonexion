@@ -16,7 +16,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 
-import com.appsthergo.instytul.metro.nombreApp.VerInstitucionalActivity;
+import com.appsthergo.instytul.metro.appsthergoappname.VerInstitucionalActivity;
 
 import libreria.complementos.Util;
 import libreria.extensiones.ComponenteInterfaz;
@@ -28,9 +28,12 @@ import libreria.sistema.ControladorBaseDatos;
  */
 public class Institucional extends TipoContenido {
 
+    public static final String iden = "institucional";
+
     public Institucional(Activity activity) {
         super(activity);
     }
+
 
 
     /**

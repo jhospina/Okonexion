@@ -152,4 +152,10 @@ return array(
     "dep.crear.version.descripcion"=>"Al iniciar el proceso de actualización o crear una nueva versión de tu aplicación, es como si empezaras a crear una nueva aplicación y podrás modificar todos los aspectos de tu aplicación como el nombre y el diseño, la información creada de tu aplicación no se borrara, pero no podras administrarla durante este proceso. <br/><br/> <b>¿Quieres continuar creando una nueva versión?</b>",
     "config.actualizando.version"=>"Actualizando aplicación a versión :version",
     "info.previsualizacion"=>"Previsualización",
+    "estadisticas.nombre.instalaciones.total"=>"Total de instalaciones",
+    "estadisticas.nombre.instalaciones.hoy"=>"Instalaciones de hoy",
+    "estadisticas.grafica.actividad"=>"Actividad",
+    "estadisticas.grafica.instalaciones"=>"Instalaciones",
+    "estadisticas.nombre.actividad.hoy"=>"Actividad de hoy",
+    
     );

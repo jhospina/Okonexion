@@ -13,8 +13,8 @@ import android.support.v4.app.NotificationCompat;
 import android.text.Html;
 import android.util.Log;
 
-import com.appsthergo.instytul.metro.nombreApp.R;
-import com.appsthergo.instytul.metro.nombreApp.VerNoticiaActivity;
+import com.appsthergo.instytul.metro.appsthergoappname.R;
+import com.appsthergo.instytul.metro.appsthergoappname.VerNoticiaActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
