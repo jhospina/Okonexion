@@ -19,6 +19,12 @@ if (Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
     $susc["infobox_descripcion"] = trans("pres.ar.suscripcion.no.suscrito");
     $susc["infobox_label"] = trans("pres.ar.suscripcion.suscribete");
 }
+
+$appExiste = Aplicacion::existe();
+
+$app = ($appExiste) ? Aplicacion::obtener() : null;
+
+$imgLoader = "<img src='" . URL::to("assets/img/loaders/barfb.gif") . "'/>";
 ?>
 
 @extends('interfaz/plantilla')
@@ -39,6 +45,7 @@ if (Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
         border-radius: 0px;
         margin: 0px;
         clear: both;
+        border: 0px;
     }
 
     #msj-popup.alert.alert-danger{
@@ -126,6 +133,41 @@ if (Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
 </style>
 
 
+<style>
+
+    .col-lg-2.estadistica,.col-lg-10.cant{
+        padding: 5px;
+        font-size: 12pt;
+        border-bottom:1px slategrey solid;
+        height: 30px;
+        cursor:pointer;
+    }
+
+    .col-lg-2.estadistica{
+        background-color: slategrey;
+        color: white;
+        text-align: center;
+    }
+
+    .col-lg-2.estadistica:hover{
+        background: rgb(165, 170, 174);
+    }
+
+    .col-lg-10.cant{
+        font-family: fantasy;
+        background-color: white;
+        padding: 5px;
+        font-size: 16px;
+    }
+
+    .col-lg-10.cant img{
+        vertical-align: top;
+        margin-top: 5px;
+        margin-left: 5px;
+    }
+
+</style>
+
 @stop
 
 @section("contenido") 
@@ -137,7 +179,7 @@ if (Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
 <div class="col-lg-12" style="padding: 0px;">
     <div class="col-lg-9" style="padding: 0px;">
 
-        @if(!Aplicacion::existe())
+        @if(!$appExiste)
 
         <div class="col-lg-12" id="msj-crear-app">
             <div class="col-lg-6 text-center"><img width="400" class="img-rounded" src="{{URL::to("assets/img/appsimg1.jpg")}}"></div>
@@ -148,6 +190,16 @@ if (Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
                     <p class="text-center"><a class="btn btn-success btn-lg" href="{{trans("aplicacion/basico")}}" role="button"><span class="glyphicon glyphicon-phone"></span> {{trans("pres.info.bienvenido.btn")}}</a></p>
                 </div>
             </div>
+        </div>
+
+        @endif
+
+
+        @if($appExiste && $app->estado==Aplicacion::ESTADO_TERMINADA)
+
+        <div class="col-lg-12" id="dashboard-tcontenido">
+            <div class="col-lg-12 text-center" id="titulo-admin"><span class="glyphicon glyphicon-phone"></span> {{trans("pres.info.administrar.mi.aplicacion")}}</div>
+            @include("interfaz/app/dashboard-tiposContenidos",array("app"=>$app))
         </div>
 
         @endif
@@ -247,7 +299,24 @@ if (Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
         </div>
 
     </div>
-    <div class="col-lg-3" style="padding: 0px;">
+    <div class="col-lg-3" style="padding: 0px;border-left: 1px black solid;">
+
+        @if($appExiste && $app->estado==Aplicacion::ESTADO_TERMINADA)
+
+        <div class="col-lg-12" style="padding: 0px;margin:0px;" onclick="location.href ='{{URL::to("aplicacion/".$app->id."/estadisticas")}}';">
+            <div class="col-lg-2 estadistica tooltip-left" title="{{trans("app.estadisticas.nombre.instalaciones.total")}}">
+                <span class="glyphicon glyphicon-phone"></span></div>
+            <div class="col-lg-10 cant" id="st-total-instalaciones"></div>
+            <div class="col-lg-2 estadistica tooltip-left"  title="{{trans("app.estadisticas.nombre.instalaciones.hoy")}}">
+                <span class="glyphicon glyphicon-phone"></span></div>
+            <div class="col-lg-10 cant" id="st-instalaciones-hoy"></div>
+            <div class="col-lg-2 estadistica tooltip-left" title="{{trans("app.estadisticas.nombre.actividad.hoy")}}">
+                <span class="glyphicon glyphicon-magnet"></span></div>
+            <div class="col-lg-10 cant" id="st-actividad-hoy"></div>
+        </div>
+
+        @endif
+
 
         <div class="panel panel-primary" id="content-noticias" style="border-bottom: 1px white solid;">
             <div class="panel-heading"><span class="glyphicon glyphicon-bullhorn"></span> {{trans("interfaz.menu.principal.ayuda.noticias")}}</div>
@@ -262,7 +331,7 @@ if (Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
 
         <div class="panel panel-primary" id="content-soporte">
             <div class="panel-heading"><span class="glyphicon glyphicon-question-sign"></span> {{trans("interfaz.menu.principal.ayuda.soporte")}} - Tickets</div>
-            <div class="panel-body" style="height:250px;overflow-y: auto;overflow-x: hidden;">
+            <div class="panel-body" style="height:256px;overflow-y: auto;overflow-x: hidden;">
 
                 @if(count($tickets)>0)
 
@@ -288,67 +357,64 @@ if (Auth::user()->estado == User::ESTADO_PERIODO_PRUEBA) {
     </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{--******************************************************--}}
-{{--******************************************************--}}
-{{--******************************************************--}}
-{{--******************************************************--}}
-{{--******************************************************--}}
-
-
-@if(!IDCookies::existe(IDCookies::MSJ_INICIAL_PERIODO_PRUEBA))
-@include(Util::RUTA_MENSAJE_MODAL,array("titulo"=>trans("msj.".IDCookies::MSJ_INICIAL_PERIODO_PRUEBA.".titulo",array("num"=>Instancia::obtenerValorMetadato(ConfigInstancia::periodoPrueba_numero_dias))),"mensaje"=>trans("msj.".IDCookies::MSJ_INICIAL_PERIODO_PRUEBA.".descripcion",array("tiempo"=>Util::calcularDiferenciaFechas(Util::obtenerTiempoActual(),Auth::user()->fin_suscripcion)))))
-
-<script>
-            $("#btn-entendido").click(function () {
-    jQuery.ajax({
-    type: "POST",
-            url: "{{URL::to('cookies/set')}}",
-            data: {IDCookie: "{{IDCookies::MSJ_INICIAL_PERIODO_PRUEBA}}", valor: false}, success: function (response) {
-
-    }}, "html");
-    });</script> 
-@endif
-
-
 @stop
 
 
 
 @section("script")
 
-<script>
 
+
+<script>
             function irFactura(id){
             window.open("{{URL::to('fact/factura')}}/" + id, '_blank');
             }
+</script>
+
+@if($appExiste)
+
+<script>
+    $(document).ready(function(){
+
+    $("#st-total-instalaciones").html("{{$imgLoader}}");
+            $("#st-instalaciones-hoy").html("{{$imgLoader}}");
+            $("#st-actividad-hoy").html("{{$imgLoader}}");
+            estadisticasApp();
+    });</script>
+
+<script>
+
+
+            function estadisticasApp(){
+            jQuery.ajax({
+            type: "POST",
+                    url: "{{URL::to('estadisticas/ajax/app/'.$app->id.'/instalaciones/total')}}",
+                    data: {},
+                    success: function (response) {
+                    data = jQuery.parseJSON(response);
+                            $("#st-total-instalaciones").html(data);
+                            jQuery.ajax({
+                            type: "POST",
+                                    url: "{{URL::to('estadisticas/ajax/app/'.$app->id.'/instalaciones/hoy')}}",
+                                    data: {},
+                                    success: function (response) {
+                                    data = jQuery.parseJSON(response);
+                                            $("#st-instalaciones-hoy").html(data);
+                                            jQuery.ajax({
+                                            type: "POST",
+                                                    url: "{{URL::to('estadisticas/ajax/app/'.$app->id.'/actividad/hoy')}}",
+                                                    data: {},
+                                                    success: function (response) {
+                                                    data = jQuery.parseJSON(response);
+                                                            $("#st-actividad-hoy").html(data);
+                                                            setTimeout("estadisticasApp()", 60000);
+                                                    }}, "html");
+                                    }}, "html");
+                    }}, "html");
+            }
 
 </script>
+
+@endif
 
 @stop

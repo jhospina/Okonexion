@@ -22,6 +22,7 @@
             "app/library/complements",
             "app/library/contentTypes",
             "app/library/enums",
+            "app/library/control",
             "app/library/security",
             "app/library/metPay",
             "app/library/plugins/",

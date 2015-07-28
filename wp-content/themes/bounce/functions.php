@@ -128,9 +128,9 @@ if ( !is_admin() ) {
 					
 			wp_enqueue_style('prettyphoto', get_template_directory_uri().'/lib/scripts/prettyPhoto/css/prettyPhoto.css');
 
-			wp_enqueue_style('lato', 'http://fonts.googleapis.com/css?family=Lato:400,300,100');
+			wp_enqueue_style('lato', 'https://fonts.googleapis.com/css?family=Lato:400,300,100');
 
-			wp_enqueue_style('raleway', 'http://fonts.googleapis.com/css?family=Raleway:100');
+			wp_enqueue_style('raleway', 'https://fonts.googleapis.com/css?family=Raleway:100');
 
 			if((isset($_GET['skin']) && $_GET['skin'] != "default") OR (isset($_COOKIE['SkinCookie']) && $_COOKIE['SkinCookie'] != "default")) {
 			

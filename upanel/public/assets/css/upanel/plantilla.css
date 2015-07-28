@@ -12,6 +12,19 @@ body{
     background-color: darkgray;
 }
 
+.dropdown-menu > li > a {
+    padding: 10px 20px;
+    border-bottom: 1px gainsboro solid;
+}
+
+
+.dropdown-menu .divider {
+    height: 4px;
+    margin-bottom: 5px;
+    overflow: hidden;
+    background-color: gainsboro;
+}
+
 textarea.form-control{
     resize:none;
 }
@@ -632,9 +645,9 @@ li#tiempo-suscripcion{
 
 
 @media (min-width: 200px) and (max-width: 1199px) { 
-  .stats-info-box{
-    width:100%;
-  } 
+    .stats-info-box{
+        width:100%;
+    } 
 }
 
 
@@ -722,3 +735,72 @@ li#tiempo-suscripcion{
 .btn-icon-plat-efectivo.select{
     border: 2px red solid;
 }
+
+#dashboard-tcontenido {
+    margin-top: 10px;
+}
+
+#dashboard-tcontenido #titulo-admin{
+    font-size: 20pt;
+    background-color: slategrey;
+    color: white;
+    padding: 10px;
+    border: 1px black solid;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#dashboard-tcontenido .content{
+    padding: 0px;
+    cursor: pointer;
+}
+
+#dashboard-tcontenido .content:hover{
+    background-color: lemonchiffon;
+}
+
+#dashboard-tcontenido .content .icon{
+    text-align: center;
+    font-size: 27pt!important;
+    background-color: darkred;
+    color: white;
+}
+
+#dashboard-tcontenido .content .nombre{
+
+}
+
+#dashboard-tcontenido .content .info{
+    border-right: 1px black solid;
+}
+
+#dashboard-tcontenido .content .icon:first-child, #dashboard-tcontenido .content:first-child .nombre,#dashboard-tcontenido .content:first-child .info{
+    border-top:1px black solid;   
+}
+
+#dashboard-tcontenido .content:last-child .icon{
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-bottom-left-radius: 5px;
+}
+#dashboard-tcontenido .content:last-child .info{
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+#dashboard-tcontenido .content .icon,#dashboard-tcontenido .content .nombre,#dashboard-tcontenido .content .info{
+    padding: 20px;
+    font-size: 22pt;
+    border-bottom: 1px black solid;
+    height: 78px;
+}
+
+#dashboard-tcontenido .content .info .btn-info{
+    font-size: 14pt;
+}
+

@@ -11,12 +11,10 @@ namespace Appsthergo;
 /** Requeriments
  *  - From Version PHP 5.3
  */
-
 /** NOTAS: 
  * Esta API aun esta incompleta, falta por implemente un sistema de seguridad, por Token y API Key que permita validar el uso de la API de un sistema legitimo
  *  
  */
-
 include 'API/Html.php';
 
 use Appsthergo\API\Html as Html;
@@ -24,13 +22,14 @@ use Appsthergo\API\Html as Html;
 class Appsthergo extends Html {
 
     var $privateKey;
+    var $companyName=null;
 
     function __construct($privateKey, $lang = "ES") {
         $this->privateKey = $privateKey;
         $this->lang = strtoupper($lang);
     }
 
-    public function printFormCreateUser($title, $link_login) {
+    public function printFormCreateUser($title, $link_login, $keyCaptcha = null, $linkTerminos = null) {
         $response = (!isset($_GET["response"])) ? null : $_GET["response"];
         $email = (!isset($_GET["email"])) ? null : $_GET["email"];
 
@@ -47,10 +46,14 @@ class Appsthergo extends Html {
         if ($response == "error"):
             print $this->msj_error_email_exists();
         endif;
+        
+        if ($response == "error-captcha"):
+            print $this->msj_error_captcha();
+        endif;
 
         //Print the form for create user
-        if ($response == null || $response == "error"):
-            print $this->formCreateUser();
+        if ($response == null || $response == "error" || $response=="error-captcha"):
+            print $this->formCreateUser($keyCaptcha, $linkTerminos,$this->companyName);
             print $this->formCreateUser_script();
         endif;
     }
@@ -125,5 +128,11 @@ class Appsthergo extends Html {
 
         return true;
     }
+    
+    function setCompanyName($companyName) {
+        $this->companyName = $companyName;
+    }
+
+
 
 }

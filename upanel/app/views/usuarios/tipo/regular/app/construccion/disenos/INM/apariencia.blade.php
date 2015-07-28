@@ -143,8 +143,6 @@ else
 
 @section("contenido") 
 
-{{-- PREVIEW DE LA APP--}}
-@include("usuarios/tipo/regular/app/construccion/secciones/preview",array("app"=>$app))
 
 
 {{--CABECERA--}}
@@ -166,6 +164,10 @@ else
 
 
     @if($app->estado==Aplicacion::ESTADO_LISTA_PARA_ENVIAR || $app->estado==Aplicacion::ESTADO_ESTABLECIENTO_TEXTOS || $app->estado==Aplicacion::ESTADO_EN_DISENO || $app->estado==Aplicacion::ESTADO_EN_PROCESO_DE_ACTUALIZACION)
+
+    {{-- PREVIEW DE LA APP--}}
+    @include("usuarios/tipo/regular/app/construccion/secciones/preview",array("app"=>$app))
+
 
     <form action="" method="POST" enctype="multipart/form-data" id="form">
 
@@ -581,12 +583,12 @@ else
                 response = data.response, reader = data.reader;
         $("#logoApp-content .file-preview-image").attr("src", response.url);
     });
-    
-    
+
+
     $('.iconoMenu').on('fileuploaded', function (event, data, previewId, index) {
         var form = data.form, files = data.files, extra = data.extra,
                 response = data.response, reader = data.reader;
-        $("#"+response.id+"-content .file-preview-image").attr("src", response.url);
+        $("#" + response.id + "-content .file-preview-image").attr("src", response.url);
     });
 
 

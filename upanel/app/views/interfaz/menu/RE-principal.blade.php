@@ -63,7 +63,7 @@ if (Aplicacion::existe()) {
 <li class="dropdown @if(Request::is('servicios/*')) active @endif "><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-flash"></span> {{trans("interfaz.menu.principal.servicios")}}<span class="caret"></span></a>
     <ul class="dropdown-menu">
         <li><a href="{{URL::to("servicios")}}"><span class="glyphicon glyphicon-flash"></span> {{trans("interfaz.menu.principal.servicios.mis.servicios")}}</a></li>
-        <li role="presentation" class="divider"></li>
+        
         <li><a href="{{URL::to("servicios/agregar")}}"><span class="glyphicon glyphicon-plus-sign"></span> {{trans("interfaz.menu.principal.servicios.agregar.servicio")}}</a></li>
     </ul>
 </li>

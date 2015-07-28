@@ -21,6 +21,9 @@ class Lang_ES {
     const CREATE_USER_FORM_SUBMIT = "Crear Cuenta";
     const CREATE_USER_FORM_ERROR_EMAIL_EXISTS = "El correo eletrónico ingresado ya existe";
     const CREATE_USER_FORM_MSJ_SUCCESS = "¡Tu cuenta esta casi lista! Por favor revisa tu correo electrónico <b>:email</b>, hemos enviado un mensaje con un enlace, haz clic en ese enlace y así podremos confirmar tu correo electrónico y activar tu cuenta. Luego de esto, tu cuenta quedara activada y podrás iniciar sesión en <a href=':link_login'>ingresar</a>.";
+    const CREATE_USER_FORM_CAPTCHA_KEY_ERROR = "Clave pública de Captcha invalida o no existe";
+    const CREATE_USER_FORM_ACCEPT_TERMS = "Acepto que soy mayor de edad y que he leido los <a style='color: #2866FF;text-decoration: underline;' target='_blank' href=':link'>Términos y condiciones del servicio</a> y entiendo que esto vale como un contrato legal entre mi persona y :company.";
+    const CREATE_USER_FORM_ACCEPT_TERMS_ERROR="Para crear una cuenta, debes estar de acuerdo con los términos y condiciones del servicio.";
     const LOGIN_FORM_INPUT_EMAIL = "Correo electrónico";
     const LOGIN_FORM_INPUT_PASSWORD = "Constraseña";
     const LOGIN_FORM_CHECK_REMEMBER = "Recordarme";
@@ -36,12 +39,14 @@ class Lang_ES {
     const LOGIN_FORM_MSJ_CONFIRMATION_MAIL = "<h1>¡MUCHAS GRACIAS!</h1><h2>Tu cuenta ha sido activada</h2>";
     const RECOVERY_FORM_TITLE = "¿Olvidastes tu contraseña?";
     const RECOVERY_FORM_INPUT_EMAIL = "Ingresa tu correo electrónico:";
-    const RECOVERY_FORM_ERROR_INPUT_EMAIL="El correo electrónico ingresado es invalido";
-    const RECOVERY_FORM_SUBMIT = "Enviar Solicitud"; 
+    const RECOVERY_FORM_ERROR_INPUT_EMAIL = "El correo electrónico ingresado es invalido";
+    const RECOVERY_FORM_SUBMIT = "Enviar Solicitud";
     const RECOVERY_FORM_MSJ_ACCOUNT_INACTIVE_TITLE = "¡ATENCIÓN!";
     const RECOVERY_FORM_MSJ_ACCOUNT_INACTIVE = "No podemos ayudarte a reestablecer la contraseña de esta cuenta asociada al correo electrónico <b>:email</b> porque esta cuenta no ha sido activada. Para activarla se debe confirmar el correo electrónico con el que fue registrado. Si eres el dueño de esta cuenta te invitamos a revisar tu correo. <a href=':link'>¿Reenviar enlace de activación?";
     const RECOVERY_FORM_MSJ_FAIL_EMAIL = "El correo electrónico <b>:email</b> ingresado no pertenece a ninguna cuenta registrada.";
     const RECOVERY_FORM_MSJ_SEND_EMAIL_TITLE = "¡SOLICITUD ENVIADA!";
     const RECOVERY_FORM_MSJ_SEND_EMAIL = "Hemos enviado un mensaje a tu correo electrónico <b>:email</b> con un enlace para que puedas reestablecer tu contraseña. ¡Revísalo cuanto antes!";
+    const CAPTCHA_ERROR="Error de Captcha: Debes confirmar que no eres un robot.";
 
+    
 }

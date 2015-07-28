@@ -72,6 +72,24 @@ class UPanelControladorUsuario extends \BaseController {
 
         $data["contrasena"] = $data["password"];
 
+
+        //*******************************************
+        //CONTROL DE CAPTCHA
+        //*******************************************
+
+        $secretKey = "6LcHXwoTAAAAAB7yNDSlmBq6MDOud6Ycd35bOIj1";
+        $reCaptcha = new ReCaptcha($secretKey);
+        // si se detecta la respuesta como enviada
+        if (!$data["g-recaptcha-response"])
+            return Redirect::to(Util::filtrarUrl($data["url"]) . "?response=error-captcha");
+
+        $response = $reCaptcha->verifyResponse($_SERVER["REMOTE_ADDR"], $data["g-recaptcha-response"]);
+
+        //Valida el captcha
+        if ($response == null || !$response->success)
+            return Redirect::to(Util::filtrarUrl($data["url"]) . "?response=error-captcha");
+
+        //REALIZA EL REGISTRO DEL USUARIO
         if ($user->registrar($data)) {
 
             $ip = Util::obtenerDireccionIP();

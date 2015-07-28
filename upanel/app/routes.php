@@ -42,9 +42,6 @@ Route::get('correo/{usuario}/activacion', 'ControladorAcceso@enviarActivacion');
 //Controlador Usuarios
 Route::resource('usuario', 'UPanelControladorUsuario');
 
-
-
-
 // Nos indica que las rutas que están dentro de él sólo serán mostradas si antes el usuario se ha autenticado.
 Route::group(array('before' => 'auth'), function() {
     aplicacion_desarrollo();
@@ -67,6 +64,7 @@ Route::group(array('before' => 'auth'), function() {
     facturacion();
     pdf();
 
+    control_estadisticas();
     control_usuarios();
     control_instancias();
     control_aplicaciones();
@@ -84,7 +82,7 @@ Route::post("app/descargar/institucional", "ControladorApp@descargar_institucion
 Route::post("app/descargar/encuestas/vigente", "ControladorApp@descargar_encuestas_vigente");
 Route::post("app/descargar/encuestas/archivadas", "ControladorApp@descargar_encuestas_archivadas");
 Route::post("app/enviar/encuestas/respuesta", "ControladorApp@enviar_encuestas_respuesta");
-Route::post("app/enviar/meta/registrar","ControladorApp@enviar_metaRegistrar"); 
+Route::post("app/enviar/meta/registrar", "ControladorApp@enviar_metaRegistrar");
 //PQR
 Route::post("app/enviar/pqr", "ControladorApp@enviarPqr");
 Route::post("app/recibir/pqr", "ControladorApp@recibirPqr");
@@ -197,6 +195,19 @@ function usuario() {
 
 function usuario_ajax() {
     Route::post("usuario/ajax/actualizar/", "UPanelControladorUsuario@ajax_actualizar");
+}
+
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+//***************************************************************************
+
+function control_estadisticas() {
+    Route::post("estadisticas/ajax/app/{id_app}/instalaciones/total", "UPanelControladorEstadisticas@ajax_appTotalInstalaciones");
+    Route::post("estadisticas/ajax/app/{id_app}/instalaciones/hoy", "UPanelControladorEstadisticas@ajax_appInstalacionesHoy");
+    Route::post("estadisticas/ajax/app/{id_app}/actividad/hoy", "UPanelControladorEstadisticas@ajax_appActividadHoy");
 }
 
 //***************************************************************************

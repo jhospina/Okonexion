@@ -28,7 +28,7 @@
 <li class="dropdown @if(Request::is('usuario/*') || Request::is('control/usuarios')) active @endif"><a class="dropdown-toggle" title="{{trans("interfaz.menu.principal.usuarios")}}" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span><span class="caret"></span></a>
     <ul class="dropdown-menu">
         <li><a href="{{URL::to("control/usuarios")}}"><span class="glyphicon glyphicon-th-list"></span> {{trans("interfaz.menu.principal.usuarios.indice")}}</a></li>
-        <li role="presentation" class="divider"></li>
+        
         <li><a href="{{Route("usuario.create")}}"><span class="glyphicon glyphicon-plus-sign"></span> {{trans("interfaz.menu.principal.usuarios.agregar_usuario")}}</a></li>
     </ul>
 </li>
@@ -41,7 +41,7 @@
 <li class="dropdown @if(Request::is('instancias/*')) active @endif"><a class="dropdown-toggle" title="{{trans("interfaz.menu.principal.instancias")}}" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-inbox"></span> <span class="caret"></span></a>
     <ul class="dropdown-menu">
         <li><a href="{{URL::to("instancias/")}}"><span class="glyphicon glyphicon-th-list"></span> {{trans("interfaz.menu.principal.instancias.indice")}}</a></li>
-        <li role="presentation" class="divider"></li>
+        
         <li><a href="{{URL::to("instancias/crear")}}"><span class="glyphicon glyphicon-new-window"></span> {{trans("interfaz.menu.principal.instancias.agregar")}}</a></li>
     </ul>
 </li>

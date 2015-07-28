@@ -26,7 +26,7 @@ class Html extends Lang {
     //********************************************************************
 
 
-    public function formCreateUser() {
+    public function formCreateUser($keyCatpcha, $linkTerminos, $company) {
 
         $output = "<div id='aptg-form-create-user' style='width: 100%;text-align:center;'>";
         $output.="<h2>" . parent::printText(parent::CREATE_USER_FORM_DESCRIPTION) . "</h2>";
@@ -57,6 +57,13 @@ class Html extends Lang {
         $output.="           <label " . Css::trap_cell_label . " for='password_rep'>" . parent::printText(parent::CREATE_USER_FORM_TEXT_INPUT_REPEAT_PASSWORD) . "</label>";
         $output.="           <input " . Css::trap_cell_input_text . " type='password' name='password_rep' id='password_rep' value=''>";
         $output.="       </p>";
+        $output.="<div style='width:100%;margin-top:30px;'></div>";
+        $output.="       <div class='cell-2' " . Css::trap_cell2 . ">";
+        $output.="          <span style='" . Css::trap_cell_content_terms_checkbox . "'><input " . Css::trap_cell_input_checkbox . " type='checkbox' name='acceptTerms' id='acceptTerms' value=''></span> <span style='" . Css::trap_cell_content_terms_description . "'>" . parent::printText(parent::CREATE_USER_FORM_ACCEPT_TERMS, array("link" => $linkTerminos, "company" => $company)) . "</span>";
+        $output.="       </div>";
+        $output.="       <div class='cell-2' " . Css::trap_cell2 . ">";
+        $output.=(is_null($keyCatpcha)) ? "<p style='" . Css::trap_msj_captcha_error . "'>" . parent::printText(parent::CREATE_USER_FORM_CAPTCHA_KEY_ERROR) . "</p>" : "<div class='g-recaptcha' data-sitekey='" . $keyCatpcha . "'></div>";
+        $output.="       </div>";
         $output.="       <p class='cell-button' " . Css::trap_cell2 . ">";
         $output.="           <input " . Css::trap_button . " type='button' id='submitted' name='submitted' value='" . parent::printText(parent::CREATE_USER_FORM_SUBMIT) . "'>";
         $output.="        </p>";
@@ -70,8 +77,8 @@ class Html extends Lang {
     }
 
     public function formCreateUser_script() {
-
-        $output = "<script>";
+        $output = "<script src='https://www.google.com/recaptcha/api.js'></script>";
+        $output .= "<script>";
         $output.="    jQuery('#submitted').click(function () {";
         $output.="       var val = true;";
         $output.="      var nombre1 = jQuery('#nombre1').val();";
@@ -101,6 +108,10 @@ class Html extends Lang {
         $output.="        if (contra != contra_rep) {";
         $output.="          val = false;";
         $output.="          jQuery('#error-description').append('<li>" . parent::printText(parent::CREATE_USER_FORM_ERROR_INPUT_REPEAT_PASSWORD) . "</li>');";
+        $output.="       }";
+        $output.="        if (!jQuery('#acceptTerms').is(':checked')) {";
+        $output.="          val = false;";
+        $output.="          jQuery('#error-description').append('<li>" . parent::printText(parent::CREATE_USER_FORM_ACCEPT_TERMS_ERROR) . "</li>');";
         $output.="       }";
         $output.="       if (val)";
         $output.="           jQuery('#form_cuenta').submit();";
@@ -142,13 +153,18 @@ class Html extends Lang {
         return $output;
     }
 
+    public function msj_error_captcha(){
+         $output = " <div  id='aptg-msj-error' style='" . Css::trap_msj_error . "'><p>" . parent::printText(parent::CAPTCHA_ERROR) . "</p></div>";
+        return $output;
+    }
+    
     public function msj_error_email_exists() {
         $output = " <div  id='aptg-msj-error' style='" . Css::trap_msj_error . "'><p>" . parent::printText(parent::CREATE_USER_FORM_ERROR_EMAIL_EXISTS) . "</p></div>";
         return $output;
     }
 
     public function msj_success_create_user($email, $link_login) {
-        $output = "<div id='aptg-msj' " . Css::trap_content_msj . "><p>" . parent::printText(parent::CREATE_USER_FORM_MSJ_SUCCESS, array("email" => $email, "link_login" => $link_login."?response=refused&email=".$email)) . "</p></div>";
+        $output = "<div id='aptg-msj' " . Css::trap_content_msj . "><p>" . parent::printText(parent::CREATE_USER_FORM_MSJ_SUCCESS, array("email" => $email, "link_login" => $link_login . "?response=refused&email=" . $email)) . "</p></div>";
         return $output;
     }
 
@@ -260,11 +276,11 @@ class Html extends Lang {
         $output.= "  var email = jQuery('#email').val();";
         $output.= "   var val = true;";
         $output.= " if (!validarEmail(email)) {";
-        $output.= "      jQuery('#msj-error').html('".parent::printText(parent::RECOVERY_FORM_ERROR_INPUT_EMAIL)."');";
+        $output.= "      jQuery('#msj-error').html('" . parent::printText(parent::RECOVERY_FORM_ERROR_INPUT_EMAIL) . "');";
         $output.= "      jQuery('#msj-error').slideToggle();";
         $output.= "      val = false;";
         $output.= "  }";
-      
+
         $output.= "  if (val)";
         $output.= "       jQuery('#form').submit();";
         $output.= "  });";

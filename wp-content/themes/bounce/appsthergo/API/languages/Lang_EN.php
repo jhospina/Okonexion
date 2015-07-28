@@ -21,6 +21,9 @@ class Lang_EN {
     const CREATE_USER_FORM_SUBMIT = "Create Account";
     const CREATE_USER_FORM_ERROR_EMAIL_EXISTS = "The e-mail entered already exists";
     const CREATE_USER_FORM_MSJ_SUCCESS = "Your account is almost ready! Please check your email <b>:email</b>, We have sent a message with a link, click on that link and we can confirm your email and activate your account. After that, your account will be activated and you can <a href=':link_login'>login</a>.";
+    const CREATE_USER_FORM_CAPTCHA_KEY_ERROR = "Captcha public key invalid or not exist.";
+    const CREATE_USER_FORM_ACCEPT_TERMS = "I accept that I am old and I have read the <a target='_blank' href=':link'>Terms of Service</a> and understand that this is true as a legal contract between myself and :company.";
+    const CREATE_USER_FORM_ACCEPT_TERMS_ERROR = "To register, you must agree to the terms and conditions of service.";
     const LOGIN_FORM_INPUT_EMAIL = "E-mail";
     const LOGIN_FORM_INPUT_PASSWORD = "Password";
     const LOGIN_FORM_CHECK_REMEMBER = "Remember";
@@ -36,11 +39,13 @@ class Lang_EN {
     const LOGIN_FORM_MSJ_CONFIRMATION_MAIL = "<h1>¡THANK YOU!</h1><h2>Your account has been activated</h2>";
     const RECOVERY_FORM_TITLE = "Forgotten Password?";
     const RECOVERY_FORM_INPUT_EMAIL = "Enter your email:";
-    const RECOVERY_FORM_ERROR_INPUT_EMAIL="The email entered is invalid";
+    const RECOVERY_FORM_ERROR_INPUT_EMAIL = "The email entered is invalid";
     const RECOVERY_FORM_SUBMIT = "Send Request";
     const RECOVERY_FORM_MSJ_ACCOUNT_INACTIVE_TITLE = "ATTENTION!";
     const RECOVERY_FORM_MSJ_ACCOUNT_INACTIVE = "We can not help reset the password for this account associated with the email <b>:email</b> because this account has not been activated. To activate it you must confirm the email with which it was registered. If you are the owner of this account we invite you to check your emails. <a href=':link'>Resend activation link?</a>";
     const RECOVERY_FORM_MSJ_FAIL_EMAIL = "The email entered <b>:email</b> does not belong to any registered account.";
     const RECOVERY_FORM_MSJ_SEND_EMAIL_TITLE = "REQUEST SENT!";
     const RECOVERY_FORM_MSJ_SEND_EMAIL = "We've sent a message to your email <b>:email</b> with a link so that you can reset your password. Check it";
+    const CAPTCHA_ERROR = "Captcha Error:  You must confirm that you are human.";
+
 }
