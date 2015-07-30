@@ -184,7 +184,7 @@ class Util {
         end($nombre);
         $nombre = explode(".", pos($nombre));
         reset($nombre);
-        return (isset($nombre[1]))?str_replace("." . $nombre[1], "", $url):null;
+        return (isset($nombre[1])) ? str_replace("." . $nombre[1], "", $url) : null;
     }
 
     /** Retorna la url actual
@@ -342,9 +342,9 @@ class Util {
             "11" => trans("otros.fecha.noviembre"),
             "12" => trans("otros.fecha.diciembre"));
     }
-    
-    static function obtenerNombreMes($mes){
-        $meses=Util::obtenerNombreMeses();
+
+    static function obtenerNombreMes($mes) {
+        $meses = Util::obtenerNombreMeses();
         return $meses[$mes];
     }
 
@@ -444,4 +444,28 @@ class Util {
         }
     }
 
+    /** Conviernte un valor medido en Bytes en otra unidad de medida
+     * 
+     * @param type $valor La cantidad a convertir
+     * @param type $unidad El tipo de unidad a la que se va a convertir (BITS,KB,MB,GB,TB)
+     * @param type $decimales
+     * @return type
+     */
+    static function convertirBytes($valor, $unidad, $decimales = 2) {
+        $valor = intval($valor);
+        $unidad = strtoupper($unidad);
+
+        switch ($unidad) {
+            case "BITS":
+                return number_format($valor * 8, $decimales) . " Bits";
+            case "KB":
+                return number_format(($valor / 1024), $decimales) . " Kb";
+            case "MB":
+                return number_format(($valor / 1048576), $decimales) . " Mb";
+            case "GB":
+                return number_format(($valor / 1073741824), $decimales) . " Gb";
+            case "TB":
+                return number_format(($valor / 1099511627776), $decimales) . " Tb";
+        }
+    }
 }

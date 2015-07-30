@@ -96,6 +96,12 @@ class App_Instytul_Metro {
     const txt_info_escribe_tu_respuesta = "txt_info_escribe_tu_respuesta";
     const txt_info_usuario_soporte = "txt_info_usuario_soporte";
     const txt_info_usuario = "txt_info_usuario";
+    const txt_info_reg_msj_inicial ="txt_info_reg_msj_inicial";
+    const txt_info_reg_pulsar_pantalla ="txt_info_reg_pulsar_pantalla";
+    const txt_info_reg_pregunta1 ="txt_info_reg_pregunta1";
+    const txt_info_reg_pregunta1_resp_op1 ="txt_info_reg_pregunta1_resp_op1";
+    const txt_info_reg_pregunta1_resp_op2 ="txt_info_reg_pregunta1_resp_op2";
+    const txt_info_reg_pregunta2 ="txt_info_reg_pregunta2";
     //********************************************************
     //HABILITACION DE PLATAFORMAS*****************************
     //********************************************************
@@ -138,7 +144,7 @@ class App_Instytul_Metro {
         $java_config = "";
 
         foreach ($datos as $indice => $valor) {
-            $java_config.="public static String $indice=\"$valor\";\n";
+            $java_config.="const $indice=\"$valor\";\n";
         }
         return "package libreria.sistema;\npublic class AppConfig {\n" . $java_config . "}";
     }

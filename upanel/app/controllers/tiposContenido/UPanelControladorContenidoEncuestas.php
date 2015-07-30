@@ -58,6 +58,9 @@ class UPanelControladorContenidoEncuestas extends Controller {
 
         if (!Aplicacion::existe())
             return Redirect::to("/");
+        
+        if(!User::tieneEspacio())
+            return Redirect::to("")->with(User::mensaje ("error","msj-header",trans("msj.espacio.uso.excedido")));
 
         $app = Aplicacion::obtener();
 

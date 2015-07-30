@@ -25,6 +25,11 @@ $appExiste = Aplicacion::existe();
 $app = ($appExiste) ? Aplicacion::obtener() : null;
 
 $imgLoader = "<img src='" . URL::to("assets/img/loaders/barfb.gif") . "'/>";
+
+//Obtiene el espacio en disco permitido por la suscripcion
+$espacioDiscoAsignado = User::obtenerEspacioDiscoAsignado();
+$espacioUtilizado = User::obtenerValorMetadato(UsuarioMetadato::ESPACIO_DISCO_UTILIZADO);
+$porcentajeEspacio = round(($espacioUtilizado / $espacioDiscoAsignado) * 100, 2);
 ?>
 
 @extends('interfaz/plantilla')
@@ -53,6 +58,13 @@ $imgLoader = "<img src='" . URL::to("assets/img/loaders/barfb.gif") . "'/>";
         padding: 10px;
         font-size: 13pt;
     }
+
+    #msj-popup.alert.alert-danger.msj-header{
+        margin-top: 0px;
+        padding: 7px;
+    font-size: 11pt;
+    }
+
 </style>
 
 
@@ -315,7 +327,23 @@ $imgLoader = "<img src='" . URL::to("assets/img/loaders/barfb.gif") . "'/>";
             <div class="col-lg-10 cant" id="st-actividad-hoy"></div>
         </div>
 
-        @endif
+        @endif 
+
+        <div class="col-lg-12" style="padding: 0px;margin:0px;" id="content-progress-size-control">
+            <div class="titulo"><span class="glyphicon glyphicon-hdd"></span> {{trans("pres.info.uso.espacio")}}</div> 
+            <div class="col-lg-2" style="font-size:10px;height: 15px;padding:0;text-align: right;padding-right:5px;">{{$porcentajeEspacio}}%</div>
+            <div class="col-lg-8" style="font-size:10px;height: 15px;padding:0;padding-top: 2px;">
+                <div class="progress">
+                    <?php if ($porcentajeEspacio <= 33.33) $colorProgreso = "progress-bar-success";
+                    elseif ($porcentajeEspacio > 33.33 && $porcentajeEspacio < 66.66) $colorProgreso = "progress-bar-warning";
+                    else $colorProgreso = "progress-bar-danger"; ?>
+                    <div class="progress-bar {{$colorProgreso}}" role="progressbar" aria-valuenow="{{$porcentajeEspacio}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$porcentajeEspacio}}%;">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2" style="font-size:10px;height: 15px;padding:0;text-align: left;padding-left:5px;">100%</div>
+            <div class="col-lg-12 count"><span class="glyphicon glyphicon-tasks"></span> {{Util::convertirBytes($espacioUtilizado,"MB")}} / {{Util::convertirBytes($espacioDiscoAsignado,"MB",0)}}</div>
+        </div>
 
 
         <div class="panel panel-primary" id="content-noticias" style="border-bottom: 1px white solid;">

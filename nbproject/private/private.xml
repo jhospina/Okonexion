@@ -3,14 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/ControladorAcceso.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/wp-content/themes/bounce/appsthergo/API/Css.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/wp-content/themes/bounce/appsthergo/Appsthergo.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/wp-content/themes/bounce/functions.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/wp-content/themes/bounce/header.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/wp-content/themes/bounce/template-create-account.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/ConfigInstancia.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/User.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/UsuarioMetadato.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/models/Facturacion.php</file>
             <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/controllers/UPanelControladorUsuario.php</file>
-            <file>file:/E:/Documents/GitHub/Okonexion/wp-content/themes/bounce/appsthergo/API/Html.php</file>
+            <file>file:/E:/Documents/GitHub/Okonexion/upanel/app/views/usuarios/tipo/regular/index.blade.php</file>
         </group>
     </open-files>
 </project-private>

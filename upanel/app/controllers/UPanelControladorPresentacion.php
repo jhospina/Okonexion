@@ -3,7 +3,6 @@
 class UPanelControladorPresentacion extends Controller {
 
     function index() {
-
         if (!Auth::check()) {
             return User::login();
         }

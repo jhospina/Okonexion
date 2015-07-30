@@ -50,8 +50,12 @@ class ControladorApp extends \BaseController {
         $id_encuesta = intval($data["id_encuesta"]);
 
         $app = Aplicacion::buscar($key_app);
+        
         if (is_null($app))
             return null;
+        
+        if (!User::tieneEspacio($app->id_usuario))
+            return; 
 
         return Contenido_Encuestas::contestar($respuesta, $id_encuesta, $id_dispositivo, $app->id_usuario);
     }
@@ -69,7 +73,7 @@ class ControladorApp extends \BaseController {
         $app = Aplicacion::buscar($key_app);
         if (is_null($app))
             return null;
-
+        
         return Contenido_PQR::registrar($app->id, $app->id_usuario, $dispositivo, $nombre, $email, $asunto, $descripcion, Contenido_PQR::tipo($tipo), $id_padre);
     }
 
@@ -80,7 +84,7 @@ class ControladorApp extends \BaseController {
         foreach ($data as $index => $id)
             if (strpos($index, "id_pqr") !== false)
                 $ids_pqr[] = $id;
-
+            
         return Contenido_PQR::obtenerPrqUsuario($ids_pqr);
     }
 
@@ -93,6 +97,9 @@ class ControladorApp extends \BaseController {
         $app = Aplicacion::buscar($key_app);
         if (is_null($app))
             return null;
+        
+        if (!User::tieneEspacio($app->id_usuario))
+            return; 
 
         if (Aplicacion::existeMetadato($clave, $app->id))
             return null;

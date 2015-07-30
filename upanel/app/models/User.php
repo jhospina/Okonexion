@@ -99,6 +99,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         if (isset($data["url"]))
             $this->agregarMetaDato(User::META_URL_ORIGEN, $data["url"], $this->id);
 
+        $this->agregarMetaDato(UsuarioMetadato::ESPACIO_DISCO_UTILIZADO, 0, $this->id);
+        $this->agregarMetaDato(UsuarioMetadato::SUSCRIPCION_TIPO, ConfigInstancia::suscripcion_tipo_bronce, $this->id);
+        $this->agregarMetaDato(UsuarioMetadato::ESPACIO_DISCO_ASIGNADO, ConfigInstancia::obtenerEspacioEnDiscoPermitidoDeSuscripcion(ConfigInstancia::suscripcion_tipo_bronce), $this->id);
+
         return $save;
     }
 
@@ -409,6 +413,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
             return array();
     }
 
+    static function verificarUsoEspacio() {
+        $porcenaje = User::obtenerPorcentajeOcupacionEspacio();
+        if ($porcenaje >= 85)
+            return User::mensaje("advertencia", null, trans("msj.espacio.uso.casi.lleno", array("porcentaje" => $porcenaje . "%")));
+
+        return array();
+    }
+
     /** Obtiene el id del producto de suscripcion vigente del usuario
      * 
      * @return type
@@ -448,6 +460,36 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         }
 
         return 0;
+    }
+
+    /** Indica si un usuario tiene espacio en disco
+     * 
+     * @param type $id_usuario El id del usuario
+     * @return Boolean
+     */
+    public static function tieneEspacio($id_usuario = null) {
+        $id_usuario = (is_null($id_usuario)) ? Auth::user()->id : $id_usuario;
+        $espacioDiscoAsignado = User::obtenerValorMetadato(UsuarioMetadato::ESPACIO_DISCO_ASIGNADO,$id_usuario);
+        $espacioUtilizado = User::obtenerValorMetadato(UsuarioMetadato::ESPACIO_DISCO_UTILIZADO, $id_usuario);
+        return ($espacioUtilizado < $espacioDiscoAsignado);
+    }
+
+    /** Obtiene el porcetaje de ocupacion del espacio en disco del usuario
+     * 
+     * @param type $id_usuario
+     * @return type
+     */
+    public static function obtenerPorcentajeOcupacionEspacio($id_usuario = null) {
+        $id_usuario = (is_null($id_usuario)) ? Auth::user()->id : $id_usuario;
+        $espacioDiscoAsignado = User::obtenerValorMetadato(UsuarioMetadato::ESPACIO_DISCO_ASIGNADO,$id_usuario);
+        $espacioUtilizado = User::obtenerValorMetadato(UsuarioMetadato::ESPACIO_DISCO_UTILIZADO, $id_usuario);
+        return round(($espacioUtilizado / $espacioDiscoAsignado) * 100, 2);
+    }
+    
+    public static function obtenerEspacioDiscoAsignado($id_usuario=null){
+         $id_usuario = (is_null($id_usuario)) ? Auth::user()->id : $id_usuario;
+        $espacioDiscoAsignado = User::obtenerValorMetadato(UsuarioMetadato::ESPACIO_DISCO_ASIGNADO,$id_usuario);
+        return $espacioDiscoAsignado;
     }
 
 }

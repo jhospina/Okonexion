@@ -2,6 +2,7 @@
 $tipoContenido = Contenido_Noticias::nombre;
 $nombreContenido = TipoContenido::obtenerNombre($app->diseno, $tipoContenido);
 $singNombre=Util::eliminarPluralidad($nombreContenido);
+$tieneEspacio=User::tieneEspacio();
 ?>
 
 @extends('interfaz/plantilla')
@@ -44,7 +45,7 @@ $singNombre=Util::eliminarPluralidad($nombreContenido);
 @include("interfaz/mensaje/index",array("id_mensaje"=>2))
 
 <div class="well well-sm" style="margin-top:10px;">
-    <a href="{{URL::to("aplicacion/administrar/".$tipoContenido."/agregar")}}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {{trans("app.admin.btn.info.agregar_nuevo")}}</a>
+    <a href="{{URL::to("aplicacion/administrar/".$tipoContenido."/agregar")}}" class="@if(!$tieneEspacio){{"disabled"}}@endif btn btn-primary"><span class="glyphicon glyphicon-plus"></span> {{trans("app.admin.btn.info.agregar_nuevo")}}</a>
     <a href="{{URL::to("aplicacion/administrar/".$tipoContenido."/categorias")}}" class="btn btn-info"><span class="glyphicon glyphicon-tags"></span>&nbsp; {{trans("app.admin.noticias.tax.categorias")}}</a>
 </div>
 

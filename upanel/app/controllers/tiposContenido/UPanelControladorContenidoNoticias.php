@@ -13,7 +13,7 @@ class UPanelControladorContenidoNoticias extends Controller {
         $app = Aplicacion::obtener();
         if (!Aplicacion::estaTerminada($app->estado))
             return Redirect::to("/");
-
+        
         $noticias = ContenidoApp::where("tipo", Contenido_Noticias::nombre)->where("id_usuario", Auth::user()->id)->orderBy("id", "DESC")->paginate(10);
       
         return View::make("usuarios/tipo/regular/app/administracion/noticias/index")->with("app", $app)->with(Contenido_Noticias::nombre, $noticias);
@@ -30,6 +30,10 @@ class UPanelControladorContenidoNoticias extends Controller {
         $app = Aplicacion::obtener();
         if (!Aplicacion::estaTerminada($app->estado))
             return Redirect::to("/");
+        
+         if(!User::tieneEspacio())
+            return Redirect::to("")->with(User::mensaje ("error","msj-header",trans("msj.espacio.uso.excedido")));
+
 
 
         $tax = TaxonomiaContenidoApp::obtener(Contenido_Noticias::taxonomia);

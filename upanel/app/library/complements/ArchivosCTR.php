@@ -125,4 +125,17 @@ class ArchivosCTR {
         return true;
     }
 
+    /** Obtiene el peso en Kb de un directorio
+     * 
+     * @param type $directory
+     * @return type
+     */
+    static function obtenerTamanoDirectorio($directory) {
+        $size = 0;
+        foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory)) as $file) {
+            $size+=$file->getSize();
+        }
+        return $size;
+    }
+
 }

@@ -31,6 +31,10 @@ class UPanelControladorContenidoInstitucional extends Controller {
         $app = Aplicacion::obtener();
         if (!Aplicacion::estaTerminada($app->estado))
             return Redirect::to("/");
+        
+            if(!User::tieneEspacio())
+            return Redirect::to("")->with(User::mensaje ("error","msj-header",trans("msj.espacio.uso.excedido")));
+
 
         return View::make("usuarios/tipo/regular/app/administracion/institucional/agregar")->with("app", $app);
     }

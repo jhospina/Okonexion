@@ -172,4 +172,20 @@ class ConfigInstancia extends Eloquent {
         return (isset($tiempos[$producto_id])) ? $tiempos[$producto_id] : null;
     }
 
+    /** Obtiene la cantidad de espacio asignado dado por la suscripcion
+     * 
+     * @param type $suscripcion
+     * @return string
+     */
+    static function obtenerEspacioEnDiscoPermitidoDeSuscripcion($suscripcion) {
+        switch ($suscripcion) {
+            case ConfigInstancia::suscripcion_tipo_bronce:
+                return "1073741824"; // 1GB
+            case ConfigInstancia::suscripcion_tipo_plata:
+                return "2147483648";//2 GB
+            case ConfigInstancia::suscripcion_tipo_oro:
+                return "4294967296"; //4 GB
+        }
+    }
+
 }

@@ -25,5 +25,6 @@ return array(
     "info.bienvenido"=>"¡Bienvenido!",
     "info.bienvenido.descripcion"=>"Queremos darte la bievenida a Appsthergo, una plataforma amigable para crear y administrar tu aplicación móvil. En tan solo unos pasos podrás crear tu aplicación sin saber programar.",
     "info.bienvenido.btn"=>"Crear aplicación",
-    "info.administrar.mi.aplicacion"=>"Administrar Mi aplicación"
+    "info.administrar.mi.aplicacion"=>"Administrar Mi aplicación",
+    "info.uso.espacio"=>"Uso del espacio en disco"
         );

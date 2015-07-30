@@ -34,6 +34,30 @@ textarea.form-control{
     top: 39px;
 }
 
+#content-progress-size-control .titulo{
+        text-align: center;
+    padding: 7px;
+    background-color: slategrey;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-top: 1px black solid;
+    border-bottom: 1px black solid; 
+}
+
+#content-progress-size-control .count{
+    padding: 5px;
+    text-align: center;
+}
+
+#content-progress-size-control .progress-bar{
+    
+}
+
+#content-progress-size-control .progress{
+    height: 10px;
+    margin-bottom: 0px;
+}
 
 nav.navbar.navbar-inverse {
     -webkit-border-radius: 0px;

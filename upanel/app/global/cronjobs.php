@@ -210,10 +210,41 @@ Event::listen('cron.collectJobs', function() {
 
                 $correo->enviar(trans("email.asunto.aviso.caducidad.suscripcion"), $mensaje, $usuario->id);
             }
-
         }
 
         return "$n usuarios informados [" . Util::formatearResultadosArray($ids, "|", "(", ")") . "]";
+    });
+
+    /**
+     * CRON: Actualización de uso de espacio en disco del usuario
+     * DESCRIPCION: Analiza y almacena el uso de espacio en disco de cada usuario
+     * EJECUCION: Una vez al dia
+     */
+    Cron::add("userUsoDisco", "0 0 * * *", function() {
+
+        $usuarios = User::where("tipo", User::USUARIO_REGULAR)->get();
+
+        foreach ($usuarios as $usuario) {
+
+            $pesoTotal = 0;
+
+            //**************************************
+            // VERIFICA Y OBTIENE EL PESO EN DISCO DE LA BASE DE DATOS USADA POR EL USUARIO
+            //**************************************
+            $pesoTotal += strlen(serialize($usuario));
+            $pesoTotal += strlen(serialize(UsuarioMetadato::where("id_usuario", $usuario->id)->get()));
+            $pesoTotal += strlen(serialize(AppMeta::where("id_usuario", $usuario->id)->get()));
+            $pesoTotal += strlen(serialize(MetaContenidoApp::where("id_usuario", $usuario->id)->get()));
+            $pesoTotal += strlen(serialize(ContenidoApp::where("id_usuario", $usuario->id)->get()));
+            $pesoTotal += strlen(serialize(Aplicacion::where("id_usuario", $usuario->id)->get()));
+
+            //Obtiene el peso de los archivos del usuario
+            if (file_exists(public_path("usuarios/uploads/" . $usuario->id))) {
+                $pesoTotal+=ArchivosCTR::obtenerTamanoDirectorio(public_path("usuarios/uploads/" . $usuario->id));
+            }
+
+            User::actualizarMetadato(UsuarioMetadato::ESPACIO_DISCO_UTILIZADO, $pesoTotal, $usuario->id);
+        }
     });
 });
 

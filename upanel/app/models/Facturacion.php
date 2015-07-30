@@ -233,11 +233,18 @@ Class Facturacion extends Eloquent {
             if (strpos($producto[MetaFacturacion::PRODUCTO_ID], "actualizacion") !== false) {
 
                 //Actualiza la suscripcion a plata
-                if ($producto[MetaFacturacion::PRODUCTO_ID] == ConfigInstancia::producto_suscripcion_plata_actualizacion)
+                if ($producto[MetaFacturacion::PRODUCTO_ID] == ConfigInstancia::producto_suscripcion_plata_actualizacion) {
                     User::actualizarMetadato(UsuarioMetadato::SUSCRIPCION_TIPO, ConfigInstancia::suscripcion_tipo_plata);
+                    //Actualiza el espacio asignado
+                    User::actualizarMetadato(UsuarioMetadato::ESPACIO_DISCO_ASIGNADO, ConfigInstancia::obtenerEspacioEnDiscoPermitidoDeSuscripcion(ConfigInstancia::suscripcion_tipo_plata));
+                }
                 //Actualiza la suscripcion a oro
-                if ($producto[MetaFacturacion::PRODUCTO_ID] == ConfigInstancia::producto_suscripcion_oro_actualizacion)
+                if ($producto[MetaFacturacion::PRODUCTO_ID] == ConfigInstancia::producto_suscripcion_oro_actualizacion) {
                     User::actualizarMetadato(UsuarioMetadato::SUSCRIPCION_TIPO, ConfigInstancia::suscripcion_tipo_oro);
+                    //Actualiza el espacio asignado
+                    User::actualizarMetadato(UsuarioMetadato::ESPACIO_DISCO_ASIGNADO, ConfigInstancia::obtenerEspacioEnDiscoPermitidoDeSuscripcion(ConfigInstancia::suscripcion_tipo_oro));
+                }
+
 
                 continue;
             }
