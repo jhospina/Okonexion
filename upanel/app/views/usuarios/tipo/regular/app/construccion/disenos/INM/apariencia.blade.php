@@ -14,7 +14,7 @@ $iconosMenuID = array(App_Instytul_Metro::iconoMenu1, App_Instytul_Metro::iconoM
 if (ConfiguracionApp::existeConfig(App_Instytul_Metro::colorBarraApp))
     $colorBarraApp = ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::colorBarraApp);
 else
-    $colorBarraApp = "#000000";
+    $colorBarraApp = "#D00000";
 
 //MOSTRAR NOMBRE
 if (ConfiguracionApp::existeConfig(App_Instytul_Metro::mostrarNombre))

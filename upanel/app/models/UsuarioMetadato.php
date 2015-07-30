@@ -14,7 +14,6 @@ class UsuarioMetadato extends Eloquent {
     const HASH_CREAR_FACTURA = "hash_crear_factura"; //Codigo hash de seguridad para crear una factura
     const FACTURACION_ID_PROCESO = "facturacion_id_proceso"; // Identificador de factura en proceso para orden de pago
     const FACTURACION_GEN_AUTO_SUSCRIPCION = "facturacion_gen_auto_suscripcion"; //Indicador que indica si al usuario se le ha generado un factura por la suscripcion
-    const PLATAFORMAS_SELECCIONADAS="plataformas_seleccionadas";//Indica las plataformas seleccionadas por el usuario
     
     /** Obtiene un array de con el nombre de las opciones del usuario
      * 

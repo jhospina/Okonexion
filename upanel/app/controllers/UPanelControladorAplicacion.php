@@ -222,16 +222,12 @@ class UPanelControladorAplicacion extends Controller {
         if (strlen($data["nombre"]) <= 1) {
             $errores.="<li>" . trans("app.config.info.nombre.error") . "</li>";
         }
-        if (strlen($data["mockup"]) != 2) {
+        if (strlen($data["mockup"]) != 3) {
             $errores.="<li>" . trans("app.config.info.diseno.error") . "</li>";
         }
 
-        if (strlen($data[UsuarioMetadato::PLATAFORMAS_SELECCIONADAS]) == 0) {
-            $errores.="<li>" . trans("app.config.info.plataformas.error") . "</li>";
-        }
-
         if (strlen($errores) > 0) {
-            return Redirect::back()->withInput()->with(User::mensaje("error", null, "<p>" . trans("app.config.info.verificar_errores") . "</p><ul>" . $errores . "</ul>", 3));
+            return Redirect::back()->withInput()->with(User::mensaje("error", null, trans("app.config.info.verificar_errores") . "<ul>" . $errores . "</ul>", 3));
         } else {
 
             //Retorna null si el usuario no tiene una aplicacion
@@ -243,30 +239,6 @@ class UPanelControladorAplicacion extends Controller {
             $app->id_usuario = Auth::user()->id;
             $app->nombre = $data["nombre"];
             $app->diseno = $data["mockup"];
-
-            $plataformas = str_replace("|", "", str_replace("||", ",", $data[UsuarioMetadato::PLATAFORMAS_SELECCIONADAS]));
-            $plataformas = explode(",", $plataformas);
-
-            $num_plats = Auth::user()->getNumeroPlataformas();
-
-            //Evita cualquier intento de trampa al seleccionar las plataformas
-            while (count($plataformas) > $num_plats)
-                array_pop($plataformas);
-
-            //Verifica que las plataformas no se puedan cambiar una vez seleccionadas
-            if (Aplicacion::existe()) {
-                $version = ProcesoApp::obtenerNumeroVersion($app->id);
-                if ($version > 0) {
-                    $plats = json_decode(User::obtenerValorMetadato(UsuarioMetadato::PLATAFORMAS_SELECCIONADAS));
-                    for ($i = 0; $i < count($plats); $i++) {
-                        if (!in_array($plats[$i], $plataformas))
-                            return Redirect::back()->withInput()->with(User::mensaje("error", null, trans("otros.error_solicitud"), 3));
-                    }
-                }
-            }
-
-            User::agregarMetaDato(UsuarioMetadato::PLATAFORMAS_SELECCIONADAS, json_encode($plataformas));
-
 
             if (@$app->save()) {
                 return Redirect::to("aplicacion/apariencia")->withInput()->with(User::mensaje("exito", null, trans("app.config.db.post.exito"), 2));
@@ -662,14 +634,6 @@ class UPanelControladorAplicacion extends Controller {
         $datos[Aplicacion::configLogoApp] = $json[Aplicacion::configLogoApp];
         $datos[Aplicacion::configdisenoApp] = $json[Aplicacion::configdisenoApp];
         $datos[Aplicacion::configKeyApp] = $json[Aplicacion::configKeyApp];
-
-        $datos[UsuarioMetadato::PLATAFORMAS_SELECCIONADAS] = "";
-
-        $plataformas_seleccionadas = json_decode(User::obtenerValorMetadato(UsuarioMetadato::PLATAFORMAS_SELECCIONADAS, $app->id_usuario));
-
-        foreach ($plataformas_seleccionadas as $index => $plat) {
-            $datos[UsuarioMetadato::PLATAFORMAS_SELECCIONADAS].="<img style='height:30px;' src='" . URL::to('assets/img/' . $plat . '.png') . "'/>";
-        }
 
         return json_encode($datos);
     }

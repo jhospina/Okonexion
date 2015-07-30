@@ -161,5 +161,5 @@ return array(
     "info.actualizar" => "Actualizar",
     "info.procesado" => "Procesado",
     "info.sin_procesar" => "Sin procesar",
-    ""
+    "info.seleccionado"=>"Seleccionado"
 );

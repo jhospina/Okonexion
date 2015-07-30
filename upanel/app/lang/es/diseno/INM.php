@@ -1,6 +1,12 @@
 <?php
 
 return array(
+    "titulo"=>"Instytul Metro",
+    "descripcion"=>"<p>Aplicación con diseño en cuadricula especializada en la comunicación y acercamiento Empresa - Cliente a nivel coorporativo. Te permitira enviar información relevante acerca de tu empresa y tener un contacto más cercano con tus clientes. </p><ul><li><span class='glyphicon glyphicon-ok'></span> ".trans("fact.suscripcion.plan.item.disenos.apps.soluciones.noticias")."</li>".
+    "<li><span class='glyphicon glyphicon-ok'></span> ".trans("fact.suscripcion.plan.item.disenos.apps.soluciones.institucional")."</li>".
+    "<li><span class='glyphicon glyphicon-ok'></span> ".trans("fact.suscripcion.plan.item.disenos.apps.soluciones.encuestas")."</li>".
+    "<li><span class='glyphicon glyphicon-ok'></span> ".trans("fact.suscripcion.plan.item.disenos.apps.soluciones.pqr")."</li>".
+    "</ul>",
     "txt_info_titulo_sin_conexion" => "SIN CONEXION",
     "txt_info_descripcion_sin_conexion" => "No es posible conectarse al servidor.",
     "txt_info_cargando" => "Cargando, por favor espere...",
@@ -64,5 +70,5 @@ return array(
     "txt_info_reg_pregunta1" => "¿Eres hombre o mujer?",
     "txt_info_reg_pregunta1_resp_op1" => "Hombre",
     "txt_info_reg_pregunta1_resp_op2" => "Mujer",
-    "txt_info_reg_pregunta2" => "¿Cuantos años tienes?",
+    "txt_info_reg_pregunta2" => "¿Cuantos años tienes?"
 );

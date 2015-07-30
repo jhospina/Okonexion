@@ -6,6 +6,9 @@
     background: black;
     padding: 5px;
     font-size: 11px;
+    webkit-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.75);
 }
 
 #preview-app #nombreApp-INM {
@@ -24,19 +27,24 @@
 #preview-app #content-menu-INM{
     background-color: black;
     height: 191px;
+    margin-top: 1px;
 }
 
 
 #preview-app #content-menu-INM .btn-menu{
-    width: 76.6px;
-    height: 93.1px;
+    width: 77px;
+    height: 94.1px;
     background-color: white;
     padding-right: 0px;
-    display: inline-block;
     margin: 0px;
     text-align: center;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     vertical-align: top;
+    float: left;
+}
+
+#preview-app #content-menu-INM .btn-menu:first-child,#preview-app #content-menu-INM .btn-menu:nth-child(3){
+    margin-right: 3px;
 }
 
 #preview-app #content-menu-INM .btn-menu img{
@@ -46,5 +54,5 @@
 }
 
 #preview-app #content-menu-INM .btn-menu div{
- font-size: 10px;
+    font-size: 10px;
 }
