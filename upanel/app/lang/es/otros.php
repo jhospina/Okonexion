@@ -76,6 +76,7 @@ return array(
     "info.historicos" => "Historicos",
     "info.votos" => "Votos",
     "info.ver" => "Ver",
+    "info.leer.mas"=>"Leer más",
     "info.total" => "Total",
     "info.publicado_el" => "Publicado el",
     "info.finalizado_el" => "Finalizado el",

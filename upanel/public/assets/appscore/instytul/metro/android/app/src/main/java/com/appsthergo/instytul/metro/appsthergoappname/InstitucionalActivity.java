@@ -11,7 +11,6 @@ import libreria.complementos.Mensaje;
 import libreria.conexion.Conexion;
 import libreria.conexion.DescargarInstitucional;
 import libreria.sistema.App;
-import libreria.tipos_contenido.Encuesta;
 import libreria.tipos_contenido.Institucional;
 
 

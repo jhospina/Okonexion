@@ -76,4 +76,57 @@ function actualizarPreview() {
         $("#menu4-INM img").attr("src", $("#iconoMenu4-content .file-preview-image").attr("src"));
     else
         $("#menu4-INM img").attr("src", urlImagenBtnMenu4);
+
+
+    if ($("#modulo_institucional").val() == 0) {
+        $("#menu1-INM").hide();
+        $("#menu2-INM").css("width", "100%");
+    }
+    if ($("#modulo_institucional").val() == 1) {
+        $("#menu1-INM").show();
+        $("#menu2-INM").css("width", "77px");
+    }
+
+    if ($("#modulo_noticias").val() == 0) {
+        $("#menu2-INM").hide();
+        $("#menu1-INM").css("width", "100%");
+    } if ($("#modulo_noticias").val() == 1) {
+        $("#menu2-INM").show();
+        $("#menu1-INM").css("width", "77px");
+    }
+    
+    
+     if ($("#modulo_encuestas").val() == 0) {
+        $("#menu3-INM").hide();
+        $("#menu4-INM").css("width", "100%");
+    } if ($("#modulo_encuestas").val() == 1) {
+        $("#menu3-INM").show();
+        $("#menu4-INM").css("width", "77px");
+    }
+    
+    if ($("#modulo_pqr").val() == 0) {
+        $("#menu4-INM").hide();
+        $("#menu3-INM").css("width", "100%");
+    } if ($("#modulo_pqr").val() == 1) {
+        $("#menu4-INM").show();
+        $("#menu3-INM").css("width", "77px");
+    }
+    
+    
+    if ($("#modulo_institucional").val() == 0 && $("#modulo_noticias").val()==0) {
+        $("#menu3-INM").css("height", "190px");
+        $("#menu4-INM").css("height", "190px");
+    }else{
+        $("#menu3-INM").css("height", "94.1px");
+        $("#menu4-INM").css("height", "94.1px");
+    }
+    
+    if ($("#modulo_encuestas").val() == 0 && $("#modulo_pqr").val()==0) {
+        $("#menu1-INM").css("height", "190px");
+        $("#menu2-INM").css("height", "190px");
+    }else{
+        $("#menu1-INM").css("height", "94.1px");
+        $("#menu2-INM").css("height", "94.1px");
+    }
+
 }

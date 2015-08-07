@@ -14,9 +14,12 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.json.JSONObject;
@@ -38,7 +41,16 @@ public class MenuPrincipal extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_menu_principal);
+
+        if(!RegistroUsuarioActivity.registro) {
+            if(AppMeta.findByClave(MenuPrincipal.this,RegistroUsuarioActivity.reg_omitir)==null) {
+                Intent intent = new Intent(MenuPrincipal.this, RegistroUsuarioActivity.class);
+                startActivity(intent);
+            }
+        }
+
         App.establecerBarraAccion(this,null);
         establecerApariencia();
 
@@ -63,12 +75,30 @@ public class MenuPrincipal extends ActionBarActivity {
         LinearLayout layoutMenu4 = (LinearLayout) findViewById(R.id.lay_menu4);
 
 
+        /**
+         * OCULTA CADA SECCION DE LA APLICACIÓN DEPENDIENDO DEL A CONFIGURACIÓN
+         */
+        if(!AppConfig.modulo_institucional)
+            layoutMenu1.setVisibility(View.GONE);
+        if(!AppConfig.modulo_noticias)
+            layoutMenu2.setVisibility(View.GONE);
+        if(!AppConfig.modulo_encuestas)
+            layoutMenu3.setVisibility(View.GONE);
+        if(!AppConfig.modulo_pqr)
+            layoutMenu4.setVisibility(View.GONE);
+
+        if(!AppConfig.modulo_institucional && !AppConfig.modulo_noticias)
+            ((TableRow)findViewById(R.id.menuPrincipal_fila1)).setVisibility(View.GONE);
+        if(!AppConfig.modulo_encuestas && !AppConfig.modulo_pqr)
+            ((TableRow)findViewById(R.id.menuPrincipal_fila2)).setVisibility(View.GONE);
+
+
+
+
         //Institucional
         layoutMenu1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
 
                 Intent intent=new Intent(MenuPrincipal.this,InstitucionalActivity.class);
                 startActivity(intent);
@@ -157,6 +187,30 @@ public class MenuPrincipal extends ActionBarActivity {
         Conexion.conectar(App.URL_META_REGISTRAR, datos);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_usuario, menu);
+        ((MenuItem)menu.findItem(R.id.menu_accion_mis_datos)).setTitle(AppConfig.txt_info_menu_mis_datos);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.menu_accion_mis_datos) {
+            Intent intent = new Intent(MenuPrincipal.this, MisDatosActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }
 

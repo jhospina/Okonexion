@@ -50,12 +50,12 @@ class ControladorApp extends \BaseController {
         $id_encuesta = intval($data["id_encuesta"]);
 
         $app = Aplicacion::buscar($key_app);
-        
+
         if (is_null($app))
             return null;
-        
+
         if (!User::tieneEspacio($app->id_usuario))
-            return; 
+            return;
 
         return Contenido_Encuestas::contestar($respuesta, $id_encuesta, $id_dispositivo, $app->id_usuario);
     }
@@ -73,7 +73,7 @@ class ControladorApp extends \BaseController {
         $app = Aplicacion::buscar($key_app);
         if (is_null($app))
             return null;
-        
+
         return Contenido_PQR::registrar($app->id, $app->id_usuario, $dispositivo, $nombre, $email, $asunto, $descripcion, Contenido_PQR::tipo($tipo), $id_padre);
     }
 
@@ -84,27 +84,45 @@ class ControladorApp extends \BaseController {
         foreach ($data as $index => $id)
             if (strpos($index, "id_pqr") !== false)
                 $ids_pqr[] = $id;
-            
+
         return Contenido_PQR::obtenerPrqUsuario($ids_pqr);
     }
 
     function enviar_metaRegistrar() {
         $data = Input::all();
         $key_app = $data["key_app"];
-        $clave = $data["clave"];
-        $valor = $data["valor"];
-        
+        if (isset($data["clave"])) {
+            $clave = $data["clave"];
+            $valor = $data["valor"];
+        }
+
+
         $app = Aplicacion::buscar($key_app);
         if (is_null($app))
             return null;
-        
-        if (!User::tieneEspacio($app->id_usuario))
-            return; 
 
-        if (Aplicacion::existeMetadato($clave, $app->id))
+        if (!User::tieneEspacio($app->id_usuario))
+            return;
+
+        //Si la cadena JSON viene con más de un metadato a registrar, realiza el proceso de registro de todos los metadatos
+        if (count($data) > 3 && isset($data["clave0"])) {
+            $n = count($data) - 1;
+
+            for ($i = 0; $i < ($n / 2); $i++) {
+
+                $clave = $data["clave" . $i];
+                $valor = $data["valor" . $i];
+
+                if (Aplicacion::existeMetadato($clave, $app->id))
+                    continue;
+
+                Aplicacion::agregarMetadato($clave, $valor, $app->id, $app->id_usuario);
+            }
             return null;
-        
-        return json_encode(Aplicacion::agregarMetadato($clave, $valor, $app->id,$app->id_usuario));
+        }
+
+
+        return json_encode(Aplicacion::agregarMetadato($clave, $valor, $app->id, $app->id_usuario));
     }
 
     //RUTA DE ACCESO: usuarios/uploads/{usuario}/{imagen}/{mime_type}

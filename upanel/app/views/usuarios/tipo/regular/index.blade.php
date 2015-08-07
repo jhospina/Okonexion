@@ -62,7 +62,7 @@ $porcentajeEspacio = round(($espacioUtilizado / $espacioDiscoAsignado) * 100, 2)
     #msj-popup.alert.alert-danger.msj-header{
         margin-top: 0px;
         padding: 7px;
-    font-size: 11pt;
+        font-size: 11pt;
     }
 
 </style>
@@ -180,6 +180,46 @@ $porcentajeEspacio = round(($espacioUtilizado / $espacioDiscoAsignado) * 100, 2)
 
 </style>
 
+<style>
+    .noticia{
+        padding: 0px;
+        border-top: 1px #BDBDBD solid;
+        border-bottom: 1px #BDBDBD solid;
+        margin-top: 5px;
+        background: white;
+        cursor:pointer;
+    }
+
+    .noticia .fecha{
+        font-size: 9pt;
+        text-align: right;
+        padding: 5px;
+        color: gray;
+        font-family: calibri;
+    }
+
+    .noticia .titulo{
+        font-size: 10pt;
+        padding: 5px;
+        padding-bottom: 0px;
+        font-weight: bold;
+    }
+
+    .noticia .descripcion{
+        font-size: 9pt;
+        padding: 5px;
+        padding-bottom: 0px;
+        font-weight: 100;
+        color: gray;
+    }
+    
+    .noticia .leer-mas{
+            padding: 10px;
+    margin-top: 0px;
+    float: left;
+    width: 100%;
+    }
+</style>
 @stop
 
 @section("contenido") 
@@ -334,9 +374,14 @@ $porcentajeEspacio = round(($espacioUtilizado / $espacioDiscoAsignado) * 100, 2)
             <div class="col-lg-2" style="font-size:10px;height: 15px;padding:0;text-align: right;padding-right:5px;">{{$porcentajeEspacio}}%</div>
             <div class="col-lg-8" style="font-size:10px;height: 15px;padding:0;padding-top: 2px;">
                 <div class="progress">
-                    <?php if ($porcentajeEspacio <= 33.33) $colorProgreso = "progress-bar-success";
-                    elseif ($porcentajeEspacio > 33.33 && $porcentajeEspacio < 66.66) $colorProgreso = "progress-bar-warning";
-                    else $colorProgreso = "progress-bar-danger"; ?>
+                    <?php
+                    if ($porcentajeEspacio <= 33.33)
+                        $colorProgreso = "progress-bar-success";
+                    elseif ($porcentajeEspacio > 33.33 && $porcentajeEspacio < 66.66)
+                        $colorProgreso = "progress-bar-warning";
+                    else
+                        $colorProgreso = "progress-bar-danger";
+                    ?>
                     <div class="progress-bar {{$colorProgreso}}" role="progressbar" aria-valuenow="{{$porcentajeEspacio}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$porcentajeEspacio}}%;">
                     </div>
                 </div>
@@ -348,11 +393,25 @@ $porcentajeEspacio = round(($espacioUtilizado / $espacioDiscoAsignado) * 100, 2)
 
         <div class="panel panel-primary" id="content-noticias" style="border-bottom: 1px white solid;">
             <div class="panel-heading"><span class="glyphicon glyphicon-bullhorn"></span> {{trans("interfaz.menu.principal.ayuda.noticias")}}</div>
-            <div class="panel-body" style="height:250px;overflow-y: auto;overflow-x: hidden;">
+            <div class="panel-body" style="height:250px;overflow-y: auto;overflow-x: hidden;padding: 0px;background: gainsboro;">
 
-                <div class="text-center" style="  margin-top: 85px;">
+                @if(count($noticias)>0)
+
+                @foreach($noticias as $noticia)
+                <a class="col-lg-12 noticia" href="{{$noticia->guid}}" target="_blank">
+                    <div class="col-lg-12 titulo">{{$noticia->post_title}}</div>
+                    <div class="col-lg-12 descripcion"><?php echo Util::recortarTexto($noticia->post_content, 200); ?> </div>
+                    <div class="leer-mas text-right"><span class="btn-sm btn-primary">{{trans("otros.info.leer.mas")}}</span></div>
+                    <div class="col-lg-12 fecha"><span class="glyphicon glyphicon-calendar"></span> {{Fecha::formatear($noticia->post_date)}}</div>
+                </a>
+                @endforeach
+
+                @else
+                <div class="text-center" style="background-color: white;padding-top: 70px;height: 100%;">
                     <h3><span class="glyphicon glyphicon-bullhorn"></span> {{trans("pres.noticias.no")}}</h3>
                 </div>
+                @endif
+
 
             </div>
         </div>

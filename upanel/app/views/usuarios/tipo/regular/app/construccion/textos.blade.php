@@ -8,9 +8,7 @@ $textos = AppDesing::obtenerNombresTextoInfo();
 
 //Obtiene los textos configurados por el usuario, o si no, los establece por defectos
 foreach ($textos as $indice => $valor) {
-    if (ConfiguracionApp::existeConfig($valor))
-        $textos[$indice] = ConfiguracionApp::obtenerValorConfig($valor);
-    else
+   
         $textos[$indice] = AppDesing::obtenerTextoInfo($valor);
 }
 ?>

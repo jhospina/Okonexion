@@ -83,3 +83,4 @@ require app_path().'/filters.php';
 require app_path().'/global/translation.php';
 require app_path().'/global/userControl.php';
 require app_path().'/global/cronjobs.php';
+define("DATABASE_WEBPAGE","webpage");

@@ -158,4 +158,22 @@ public class Util {
         return fecha;
     }
 
+    /** Transforma un texto en cadena de referencia
+     *
+     * @param texto
+     * @return
+     */
+    public static String adecuarTextoParaRef(String texto){
+        texto=texto.replaceAll("á","a");
+        texto=texto.replaceAll("é","e");
+        texto=texto.replaceAll("í","i");
+        texto=texto.replaceAll("ó","o");
+        texto=texto.replaceAll("ú","u");
+        texto=texto.replaceAll("ñ","n");
+        texto=texto.replaceAll(" ","");
+        texto=texto.toLowerCase();
+
+        return texto;
+    }
+
 }

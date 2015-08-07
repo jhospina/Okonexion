@@ -62,6 +62,16 @@ return array(
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
 		),
+                'webpage' => array(
+			'driver'    => 'mysql',
+			'host'      => 'localhost',
+			'database'  => 'dgzhlbvq_appsthergo_web',
+			'username'  => 'dgzhlbvq_appsrot',
+			'password'  => 'ZVLkC1-wpUJf',
+			'charset'   => 'utf8',
+			'collation' => 'utf8_unicode_ci',
+			'prefix'    => '',
+		),
 
 		'pgsql' => array(
 			'driver'   => 'pgsql',

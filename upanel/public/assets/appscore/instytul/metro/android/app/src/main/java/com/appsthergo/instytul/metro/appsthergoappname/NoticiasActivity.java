@@ -7,7 +7,6 @@ import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ScrollView;
@@ -20,7 +19,6 @@ import libreria.conexion.Conexion;
 import libreria.conexion.DescargarNoticias;
 import libreria.servicios.ServicioNoticias;
 import libreria.sistema.App;
-import libreria.tipos_contenido.Encuesta;
 import libreria.tipos_contenido.Noticias;
 
 

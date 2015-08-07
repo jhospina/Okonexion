@@ -40,8 +40,11 @@ class UPanelControladorPresentacion extends Controller {
                 $serviciosProcesados++;
             $totalServicios++;
         }
+        
+        //Noticias [Obtiene las noticias de la base de datos de la pagina coorporativa]
+        $noticias = DB::connection(DATABASE_WEBPAGE)->select("SELECT * FROM wp_posts WHERE wp_posts.id IN (SELECT object_id FROM wp_term_relationships where term_taxonomy_id=5) and wp_posts.post_status='publish' ORDER BY id DESC");
 
-        return View::make("usuarios/tipo/regular/index")->with("tickets", $tickets)->with("facturas", $facturas)->with("totalTickets", $totalTickets)->with("totalServicios", $totalServicios)->with("serviciosProcesados", $serviciosProcesados);
+        return View::make("usuarios/tipo/regular/index")->with("noticias", $noticias)->with("tickets", $tickets)->with("facturas", $facturas)->with("totalTickets", $totalTickets)->with("totalServicios", $totalServicios)->with("serviciosProcesados", $serviciosProcesados);
     }
 
     function indexSoporteGeneral() {

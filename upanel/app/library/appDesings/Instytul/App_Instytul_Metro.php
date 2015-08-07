@@ -6,7 +6,7 @@ class App_Instytul_Metro {
     const package_default = "AppsthergoAppName";
 
     public static $tipos_contenidos = array(Contenido_Institucional::nombre, Contenido_Noticias::nombre, Contenido_Encuestas::nombre, Contenido_PQR::nombre); // Tipos de contenidos
-    public static $configDefecto = array("iconoMenu1" => "Predeterminado", "iconoMenu2" => "Predeterminado", "iconoMenu3" => "Predeterminado", "iconoMenu4" => "Predeterminado");
+    public static $configDefecto = array("iconoMenu1"=>"Predeterminado", "iconoMenu2"=>"Predeterminado", "iconoMenu3"=>"Predeterminado", "iconoMenu4"=>"Predeterminado");
     //Ids de configuracion que no se deben guardar cuando se establesca el diseño. Su guardado es especial y se realiza por ajax. 
     public static $configExcepciones = array("iconoMenu1", "iconoMenu2", "iconoMenu3", "iconoMenu4", "logoApp");
 
@@ -35,73 +35,96 @@ class App_Instytul_Metro {
     const iconoMenu2 = "iconoMenu2"; //Almacena la URL de la imagen a utilizar como icono de la opción #2 del botón del menú principal de la aplicación
     const iconoMenu3 = "iconoMenu3"; //Almacena la URL de la imagen a utilizar como icono de la opción #3 del botón del menú principal de la aplicación
     const iconoMenu4 = "iconoMenu4"; //Almacena la URL de la imagen a utilizar como icono de la opción #4 del botón del menú principal de la aplicación
+    const modulo_institucional = "modulo_institucional"; // Activa/Desactiva el modulo institucional
+    const modulo_noticias = "modulo_noticias"; // Activa/Desactiva el modulo de noticias
+    const modulo_encuestas = "modulo_encuestas"; // Activa/Desactiva el modulo de encuestas
+    const modulo_pqr = "modulo_pqr"; // Activa/Desactiva el modulo de PQR
+    
     //********************************************************
     //CONFIGURACIÓN DE TEXTOS*********************************
     //********************************************************
     const txt_info_titulo_sin_conexion = "txt_info_titulo_sin_conexion";
-    const txt_info_descripcion_sin_conexion = "txt_info_descripcion_sin_conexion";
-    const txt_info_cargando = "txt_info_cargando";
-    const txt_info_fecha_publicacion = "txt_info_fecha_publicacion";
-    const txt_info_no_hay_contenido = "txt_info_no_hay_contenido";
-    const txt_info_buscando_encuesta_vigente = "txt_info_buscando_encuesta_vigente";
-    const txt_info_boton_enviar = "txt_info_boton_enviar";
-    const txt_info_enviando = "txt_info_enviando";
-    const txt_info_respuesta_enviada = "txt_info_respuesta_enviada";
-    const txt_info_ver_resultados = "txt_info_ver_resultados";
-    const txt_info_encabezado_encuesta_vigente = "txt_info_encabezado_encuesta_vigente";
-    const txt_info_encabezado_responde_encuesta = "txt_info_encabezado_responde_encuesta";
-    const txt_info_resultados = "txt_info_resultados";
-    const txt_info_selecciona_respuesta = "txt_info_selecciona_respuesta";
-    const txt_info_historial_encuestas = "txt_info_historial_encuestas";
-    const txt_info_no_hay_contenido_vuelve_mas_tarde = "txt_info_no_hay_contenido_vuelve_mas_tarde";
-    const txt_info_pqr_peticiones = "txt_info_pqr_peticiones";
-    const txt_info_pqr_quejas = "txt_info_pqr_quejas";
-    const txt_info_pqr_reclamos = "txt_info_pqr_reclamos";
-    const txt_info_pqr_sugerencias = "txt_info_pqr_sugerencias";
-    const txt_info_btn_crear_peticion = "txt_info_btn_crear_peticion";
-    const txt_info_crear_queja = "txt_info_crear_queja";
-    const txt_info_btn_crear_reclamo = "txt_info_btn_crear_reclamo";
-    const txt_info_btn_crear_sugerencia = "txt_info_btn_crear_sugerencia";
-    const txt_info_editText_nombre = "txt_info_editText_nombre";
-    const txt_info_editText_email = "txt_info_editText_email";
-    const txt_info_editText_asunto = "txt_info_editText_asunto";
-    const txt_info_editText_descripcion_peticion = "txt_info_editText_descripcion_peticion";
-    const txt_info_editText_descripcion_queja = "txt_info_editText_descripcion_queja";
-    const txt_info_editText_descripcion_reclamo = "txt_info_editText_descripcion_reclamo";
-    const txt_info_editText_descripcion_sugerencia = "txt_info_editText_descripcion_sugerencia";
-    const txt_info_error = "txt_info_error";
-    const txt_info_nombre_error = "txt_info_nombre_error";
-    const txt_info_email_error = "txt_info_email_error";
-    const txt_info_asunto_error = "txt_info_asunto_error";
-    const txt_info_descripcion_error = "txt_info_descripcion_error";
-    const txt_info_peticion_enviada = "txt_info_peticion_enviada";
-    const txt_info_queja_enviada = "txt_info_queja_enviada";
-    const txt_info_reclamo_enviada = "txt_info_reclamo_enviada";
-    const txt_info_sugerencia_enviada = "txt_info_sugerencia_enviada";
-    const txt_info_informacion_enviada = "txt_info_informacion_enviada";
-    const txt_info_btn_aceptar = "txt_info_btn_aceptar";
-    const txt_info_mis_peticiones = "txt_info_mis_peticiones";
-    const txt_info_mis_quejas = "txt_info_mis_quejas";
-    const txt_info_mis_reclamos = "txt_info_mis_reclamos";
-    const txt_info_mis_sugerencias = "txt_info_mis_sugerencias";
-    const txt_info_peticion = "txt_info_peticion";
-    const txt_info_queja = "txt_info_queja";
-    const txt_info_reclamo = "txt_info_reclamo";
-    const txt_info_sugerencia = "txt_info_sugerencia";
-    const txt_info_asunto = "txt_info_asunto";
-    const txt_info_nombre = "txt_info_nombre";
-    const txt_info_email = "txt_info_email";
-    const txt_info_enviar_respuesta = "txt_info_enviar_respuesta";
-    const txt_info_escribir_respuesta = "txt_info_escribir_respuesta";
-    const txt_info_escribe_tu_respuesta = "txt_info_escribe_tu_respuesta";
-    const txt_info_usuario_soporte = "txt_info_usuario_soporte";
-    const txt_info_usuario = "txt_info_usuario";
-    const txt_info_reg_msj_inicial ="txt_info_reg_msj_inicial";
-    const txt_info_reg_pulsar_pantalla ="txt_info_reg_pulsar_pantalla";
-    const txt_info_reg_pregunta1 ="txt_info_reg_pregunta1";
-    const txt_info_reg_pregunta1_resp_op1 ="txt_info_reg_pregunta1_resp_op1";
-    const txt_info_reg_pregunta1_resp_op2 ="txt_info_reg_pregunta1_resp_op2";
-    const txt_info_reg_pregunta2 ="txt_info_reg_pregunta2";
+   const txt_info_descripcion_sin_conexion = "txt_info_descripcion_sin_conexion";
+   const txt_info_cargando = "txt_info_cargando";
+   const txt_info_fecha_publicacion = "txt_info_fecha_publicacion";
+   const txt_info_no_hay_contenido = "txt_info_no_hay_contenido";
+   const txt_info_buscando_encuesta_vigente = "txt_info_buscando_encuesta_vigente";
+   const txt_info_boton_enviar = "txt_info_boton_enviar";
+   const txt_info_enviando = "txt_info_enviando";
+   const txt_info_respuesta_enviada = "txt_info_respuesta_enviada";
+   const txt_info_ver_resultados = "txt_info_ver_resultados";
+   const txt_info_encabezado_encuesta_vigente = "txt_info_encabezado_encuesta_vigente";
+   const txt_info_encabezado_responde_encuesta = "txt_info_encabezado_responde_encuesta";
+   const txt_info_resultados = "txt_info_resultados";
+   const txt_info_selecciona_respuesta = "txt_info_selecciona_respuesta";
+   const txt_info_historial_encuestas = "txt_info_historial_encuestas";
+   const txt_info_no_hay_contenido_vuelve_mas_tarde = "txt_info_no_hay_contenido_vuelve_mas_tarde";
+   const txt_info_pqr_peticiones = "txt_info_pqr_peticiones";
+   const txt_info_pqr_quejas = "txt_info_pqr_quejas";
+   const txt_info_pqr_reclamos = "txt_info_pqr_reclamos";
+   const txt_info_pqr_sugerencias = "txt_info_pqr_sugerencias";
+   const txt_info_btn_crear_peticion = "txt_info_btn_crear_peticion";
+   const txt_info_crear_queja = "txt_info_crear_queja";
+   const txt_info_btn_crear_reclamo = "txt_info_btn_crear_reclamo";
+   const txt_info_btn_crear_sugerencia = "txt_info_btn_crear_sugerencia";
+   const txt_info_editText_nombre = "txt_info_editText_nombre";
+   const txt_info_editText_email = "txt_info_editText_email";
+   const txt_info_editText_asunto = "txt_info_editText_asunto";
+   const txt_info_editText_descripcion_peticion = "txt_info_editText_descripcion_peticion";
+   const txt_info_editText_descripcion_queja = "txt_info_editText_descripcion_queja";
+   const txt_info_editText_descripcion_reclamo = "txt_info_editText_descripcion_reclamo";
+   const txt_info_editText_descripcion_sugerencia = "txt_info_editText_descripcion_sugerencia";
+   const txt_info_error= "txt_info_error";
+   const txt_info_nombre_error= "txt_info_nombre_error";
+   const txt_info_email_error= "txt_info_email_error";
+   const txt_info_asunto_error= "txt_info_asunto_error";
+   const txt_info_descripcion_error= "txt_info_descripcion_error";
+   const txt_info_peticion_enviada= "txt_info_peticion_enviada";
+   const txt_info_queja_enviada= "txt_info_queja_enviada";
+   const txt_info_reclamo_enviada= "txt_info_reclamo_enviada";
+   const txt_info_sugerencia_enviada= "txt_info_sugerencia_enviada";
+   const txt_info_informacion_enviada= "txt_info_informacion_enviada";
+   const txt_info_btn_aceptar = "txt_info_btn_aceptar";
+   const txt_info_mis_peticiones= "txt_info_mis_peticiones";
+   const txt_info_mis_quejas= "txt_info_mis_quejas";
+   const txt_info_mis_reclamos= "txt_info_mis_reclamos";
+   const txt_info_mis_sugerencias= "txt_info_mis_sugerencias";
+   const txt_info_peticion= "txt_info_peticion";
+   const txt_info_queja= "txt_info_queja";
+   const txt_info_reclamo= "txt_info_reclamo";
+   const txt_info_sugerencia= "txt_info_sugerencia";
+   const txt_info_asunto= "txt_info_asunto";
+   const txt_info_nombre= "txt_info_nombre";
+   const txt_info_email= "txt_info_email";
+   const txt_info_enviar_respuesta= "txt_info_enviar_respuesta";
+   const txt_info_escribir_respuesta= "txt_info_escribir_respuesta";
+   const txt_info_escribe_tu_respuesta= "txt_info_escribe_tu_respuesta";
+   const txt_info_usuario_soporte= "txt_info_usuario_soporte";
+   const txt_info_usuario= "txt_info_usuario";
+   const txt_info_reg_msj_inicial = "txt_info_reg_msj_inicial";
+   const txt_info_reg_pregunta_registro = "txt_info_reg_pregunta_registro";
+   const txt_info_reg_pregunta1 = "txt_info_reg_pregunta1";
+   const txt_info_reg_pregunta1_resp_op1 = "txt_info_reg_pregunta1_resp_op1";
+   const txt_info_reg_pregunta1_resp_op2 = "txt_info_reg_pregunta1_resp_op2";
+   const txt_info_reg_pregunta2 = "txt_info_reg_pregunta2";
+   const txt_info_reg_pregunta3 = "txt_info_reg_pregunta3";
+   const txt_info_guardar = "txt_info_guardar";
+   const txt_info_omitir = "txt_info_omitir";
+   const txt_info_reg_fin = "txt_info_reg_fin";
+   const txt_info_msj_editar_perfil = "txt_info_msj_editar_perfil";
+   const txt_info_continuar= "txt_info_continuar";
+   const txt_info_placeholder_escribir_aqui = "txt_info_placeholder_escribir_aqui";
+   const txt_info_si= "txt_info_si";
+   const txt_info_no= "txt_info_no";
+   const txt_info_sin_definir= "txt_info_sin_definir";
+   const txt_info_mas_tarde= "txt_info_mas_tarde";
+   const txt_info_menu_mis_datos= "txt_info_menu_mis_datos";
+   const txt_info_reg_aficiones= "txt_info_reg_aficiones";
+   const txt_info_perfil_info_genero= "txt_info_perfil_info_genero";
+   const txt_info_perfil_info_edad= "txt_info_perfil_info_edad";
+   const txt_info_perfil_info_email= "txt_info_perfil_info_email";
+   const txt_info_perfil_info_aficiones= "txt_info_perfil_info_aficiones";
+   const txt_info_perfil_btn_editar_informacion= "txt_info_perfil_btn_editar_informacion";
     //********************************************************
     //HABILITACION DE PLATAFORMAS*****************************
     //********************************************************
@@ -331,7 +354,7 @@ class App_Instytul_Metro {
         $claves = array();
 
         foreach ($class->getConstants() as $index => $value) {
-            if (strpos($index, "txt_info_") !== false)
+            if (strpos($index,"txt_info_") !== false)
                 $claves[$index] = $value;
         }
 

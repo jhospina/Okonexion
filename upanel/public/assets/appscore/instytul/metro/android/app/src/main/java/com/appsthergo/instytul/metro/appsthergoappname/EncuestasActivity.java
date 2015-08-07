@@ -59,7 +59,7 @@ public class EncuestasActivity extends ActionBarActivity {
         Thread hilo = new Thread(new Runnable() {
             @Override
             public void run() {
-                Conexion.registrarActividad(EncuestasActivity.this,Encuesta.iden);
+                Conexion.registrarActividad(EncuestasActivity.this, Encuesta.iden);
             }
         });
         hilo.start();

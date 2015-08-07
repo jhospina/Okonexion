@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'appsthergo@gmail.com', 'name' => 'Appsthergo Technologies'),
+	'from' => array('address' => 'no-reply@appsthergo.com', 'name' => 'Appsthergo Technologies'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'jhonospina150@gmail.com',
+	'username' => 'appsthergo',
 
 	/*
 	|--------------------------------------------------------------------------

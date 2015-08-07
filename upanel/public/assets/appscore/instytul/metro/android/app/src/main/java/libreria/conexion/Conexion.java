@@ -135,9 +135,6 @@ public class Conexion {
 
     public static void registrarActividad(Activity activity,String tipo_contenido){
 
-        if(!Conexion.verificar(activity))
-            return;
-
         String regClave=App.obtenerIdDispositivo(activity)+"_"+tipo_contenido+"_"+Util.obtenerFechaActual("yyyyMMdd");
 
         if(AppMeta.findByClave(activity, regClave)!=null)
@@ -158,6 +155,69 @@ public class Conexion {
         datos[1][1] = regClave;
         datos[2][0] = "valor";
         datos[2][1] =  fecha;
+
+        if(!Conexion.verificar(activity))
+            return;
+
+        Conexion.conectar(App.URL_META_REGISTRAR, datos);
+
+    }
+
+
+    public static void registrarMetaDato(Activity activity,String[][] meta){
+
+        String[][] datos = new String[1+(meta.length*2)][2];
+        datos[0][0] = "key_app";
+        datos[0][1] = App.keyApp;
+
+        int n=0;
+        AppMeta appMeta;
+        Log.e("META",meta.length+"");
+        for(int i=0;i<meta.length;i++){
+            appMeta=AppMeta.findByClave(activity, meta[i][0]);
+            if(appMeta==null)
+               appMeta=new AppMeta(activity);
+
+            datos[n+1][0] = "clave"+i;
+            datos[n+1][1] = meta[i][0];
+            datos[n+2][0] = "valor"+i;
+            datos[n+2][1] = meta[i][1];
+
+            n+=2;
+            appMeta.setClave(meta[i][0]);
+            appMeta.setValor(meta[i][1]);
+            appMeta.save();
+        }
+
+        if(!Conexion.verificar(activity))
+          return;
+
+        Conexion.conectar(App.URL_META_REGISTRAR, datos);
+    }
+
+    public static void registrarMetaDato(Activity activity,String clave,String valor){
+
+        if(!Conexion.verificar(activity))
+            return;
+
+        String regClave=clave;
+
+        if(AppMeta.findByClave(activity, regClave)!=null)
+            return;
+
+        AppMeta meta=new AppMeta(activity);
+
+        meta.setClave(regClave);
+        meta.setValor(valor);
+        meta.save();
+
+        String[][] datos = new String[3][2];
+        datos[0][0] = "key_app";
+        datos[0][1] = App.keyApp;
+        datos[1][0] = "clave";
+        datos[1][1] = regClave;
+        datos[2][0] = "valor";
+        datos[2][1] =  valor;
 
         Conexion.conectar(App.URL_META_REGISTRAR, datos);
 

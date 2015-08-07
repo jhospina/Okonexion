@@ -51,7 +51,7 @@ public class App extends AppConfig {
     public static int encuestas_cargadas = 0;
 
     public static boolean descarga_iniciada = false;//Indica si existe un descarga iniciada
-
+    public static boolean flag_editar_perfil=false;
 
     /**
      * *******************************************************

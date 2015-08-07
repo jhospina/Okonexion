@@ -44,7 +44,7 @@ get_header();
 
 $apps = new Appsthergo("JHSJDJSI", "ES");
     $apps->setCompanyName("Appsthergo Technologies S.A.S");
-    $apps->printFormCreateUser(null, esc_url(get_permalink(get_page_by_title('Ingresar'))), "6LcHXwoTAAAAACD5xwshoUCd66Ap0hEialOwv-h2","https://appsthergo.com/terminos-y-condiciones-del-servicio/");
+    $apps->printFormCreateUser(null,"https://appsthergo.com/login/", "6LcHXwoTAAAAACD5xwshoUCd66Ap0hEialOwv-h2","https://appsthergo.com/terminos-y-condiciones-del-servicio/");
     ?>
 </div> 
 

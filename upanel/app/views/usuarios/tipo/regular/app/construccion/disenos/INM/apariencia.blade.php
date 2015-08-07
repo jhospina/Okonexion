@@ -109,6 +109,26 @@ if (ConfiguracionApp::existeConfig(App_Instytul_Metro::txt_menuBtn_4_color))
 else
     $txt_menuBtn_4_color = "rgb(0,0,0)";
 
+//MODULO INSTITUCIONAL
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::modulo_institucional))
+    $modulo_institucional = Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::modulo_institucional));
+else
+    $modulo_institucional = true;
+//MODULO NOTICIAS
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::modulo_noticias))
+    $modulo_noticias = Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::modulo_noticias));
+else
+    $modulo_noticias = true;
+//MODULO ENCUESTAS
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::modulo_encuestas))
+    $modulo_encuestas = Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::modulo_encuestas));
+else
+    $modulo_encuestas = true;
+//MODULO PQR
+if (ConfiguracionApp::existeConfig(App_Instytul_Metro::modulo_pqr))
+    $modulo_pqr = Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::modulo_pqr));
+else
+    $modulo_pqr = true;
 
 //******************************************************************************
 //******************************************************************************
@@ -133,10 +153,10 @@ else
 {{ HTML::style('assets/css/upanel/preview.css', array('media' => 'screen')) }}
 {{ HTML::style('assets/css/apps/Institytul/Metro.css', array('media' => 'screen')) }}
 {{ HTML::style('assets/plugins/colorpicket/css/colorpicker.css', array('media' => 'screen')) }}
-{{ HTML::style('assets/plugins/colorpicket/css/colorpicker.css', array('media' => 'screen')) }}
 {{ HTML::style('assets/plugins/colorpicket/css/layout.css', array('media' => 'screen')) }}
 {{ HTML::style('assets/plugins/fileinput/css/fileinput.css', array('media' => 'screen')) }}
 {{ HTML::style('assets/plugins/plunk/jquery.simplecolorpicker.css', array('media' => 'screen')) }}
+{{ HTML::style('assets/plugins/switchery/switchery.css', array('media' => 'screen')) }}
 
 @stop
 
@@ -185,11 +205,11 @@ else
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.barra_aplicacion")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.di.me.panel.titulo.barra_aplicacion.ayuda"))) </h3>
+                        <h3 class="panel-title">{{trans("app.config.di.inm.panel.titulo.barra_aplicacion")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.di.inm.panel.titulo.barra_aplicacion.ayuda"))) </h3>
                     </div>
                     <div class="panel-body">
                         {{--COLOR DEL FONDO DE LA BARRA (1)--}}
-                        <div class="col-lg-4 text-default input-lg">{{trans("app.config.di.me.info.colorbarraapp")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans('app.config.di.me.info.colorbarraapp.ayuda')))</div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("app.config.di.inm.info.colorbarraapp")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans('app.config.di.inm.info.colorbarraapp.ayuda')))</div>
                         <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Instytul_Metro::colorBarraApp}}"><div style="background-color:{{$colorBarraApp}}"></div></div>
                         </div>
@@ -198,17 +218,17 @@ else
 
                         {{--PROPIEDADES DEL NOMBRE--}}
                         <div class="col-lg-4 input-lg">
-                            {{trans("app.config.di.me.info.mostrar_nombre")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.di.me.info.mostrar_nombre.ayuda"))) 
+                            {{trans("app.config.di.inm.info.mostrar_nombre")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.di.inm.info.mostrar_nombre.ayuda"))) 
                         </div>
-                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Instytul_Metro::mostrarNombre}}" value="soloTexto" class="radio-inline" @if($mostrarNombre=="soloTexto") checked @endif> <span class="radio-value">{{trans("app.config.di.me.info.mostrar_nombre.op.solo_texto")}}</span></div>
-                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Instytul_Metro::mostrarNombre}}" value="textoLogo" class="radio-inline" @if($mostrarNombre=="textoLogo") checked @endif> <span class="radio-value">{{trans("app.config.di.me.info.mostrar_nombre.op.texto_logo")}}</span></div>
-                        <div class="col-lg-2 input-lg"><input type="radio" name="{{App_Instytul_Metro::mostrarNombre}}" value="soloLogo" class="radio-inline" @if($mostrarNombre=="soloLogo") checked @endif> <span class="radio-value">{{trans("app.config.di.me.info.mostrar_nombre.op.solo_logo")}}</span></div>
+                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Instytul_Metro::mostrarNombre}}" value="soloTexto" class="radio-inline" @if($mostrarNombre=="soloTexto") checked @endif> <span class="radio-value">{{trans("app.config.di.inm.info.mostrar_nombre.op.solo_texto")}}</span></div>
+                        <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Instytul_Metro::mostrarNombre}}" value="textoLogo" class="radio-inline" @if($mostrarNombre=="textoLogo") checked @endif> <span class="radio-value">{{trans("app.config.di.inm.info.mostrar_nombre.op.texto_logo")}}</span></div>
+                        <div class="col-lg-2 input-lg"><input type="radio" name="{{App_Instytul_Metro::mostrarNombre}}" value="soloLogo" class="radio-inline" @if($mostrarNombre=="soloLogo") checked @endif> <span class="radio-value">{{trans("app.config.di.inm.info.mostrar_nombre.op.solo_logo")}}</span></div>
 
 
                         {{--ALINEACIÓN--}}
                         @if(1!=1)
                         <div class="col-lg-4 input-lg">
-                            {{trans("app.config.di.me.info.alineacion_nombre")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.di.me.info.alineacion_nombre.ayuda"))) 
+                            {{trans("app.config.di.inm.info.alineacion_nombre")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.di.inm.info.alineacion_nombre.ayuda"))) 
                         </div>      
                         <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Instytul_Metro::alineacionNombre}}" value="izquierda" class="radio-inline" @if($alineacionNombre=="izquierda") checked @endif> <span class="radio-value">{{trans("otros.info.izquierda")}}</span></div>
                         <div class="col-lg-3 input-lg"><input type="radio" name="{{App_Instytul_Metro::alineacionNombre}}" value="centro" class="radio-inline" @if($alineacionNombre=="centro") checked @endif> <span class="radio-value">{{trans("otros.info.centro")}}</span></div>
@@ -216,7 +236,7 @@ else
                         @endif
 
                         {{--COLOR DEL NOMBRE DE LA APLICACIÒN--}}
-                        <div class="col-lg-4 text-default input-lg">{{trans("app.config.di.me.info.color_nombre")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.di.me.info.color_nombre.ayuda"))) </div>
+                        <div class="col-lg-4 text-default input-lg">{{trans("app.config.di.inm.info.color_nombre")}} @include("interfaz/util/tooltip-ayuda",array("descripcion"=>trans("app.config.di.inm.info.color_nombre.ayuda"))) </div>
                         <div class="col-lg-8 input-lg">
                             <div class="colorSelector" id="colorSelector_{{App_Instytul_Metro::colorNombreApp}}"><div style="background-color:{{$colorNombreApp}}"></div></div>
                         </div>
@@ -227,6 +247,59 @@ else
                 </div>
             </div>
         </div>
+
+
+        {{--**************************************************************************--}}
+        {{--MODULOS DE CONTENIDOS ****************************************************--}}
+        {{--**************************************************************************--}}
+
+
+        <div class="block">
+
+            <div class="col-lg-12">
+                <div class="panel panel-primary" style="clear: both;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{trans("app.config.di.panel.titulo.modulos")}}</h3>
+                    </div>
+                    <div class="panel-body">
+                        {{--INSTITUCIONAL--}}
+                        <div class="col-lg-1 input-lg">
+                             <input type="checkbox" class="js-switch" data-for="{{App_Instytul_Metro::modulo_institucional}}" {{HtmlControl::setCheck($modulo_institucional)}}> 
+                            <input type="hidden" id="{{App_Instytul_Metro::modulo_institucional}}" name="{{App_Instytul_Metro::modulo_institucional}}" value="{{$modulo_institucional}}"/> 
+                        </div>
+                        <div class="col-lg-11 input-lg">
+                            {{$txt_menuBtn_1}}
+                         </div>
+                        {{--NOTICIAS--}}
+                        <div class="col-lg-1 input-lg">
+                             <input type="checkbox" class="js-switch" data-for="{{App_Instytul_Metro::modulo_noticias}}" {{HtmlControl::setCheck($modulo_noticias)}}> 
+                            <input type="hidden" id="{{App_Instytul_Metro::modulo_noticias}}" name="{{App_Instytul_Metro::modulo_noticias}}" value="{{$modulo_noticias}}"/> 
+                        </div>
+                        <div class="col-lg-11 input-lg">
+                            {{$txt_menuBtn_2}}
+                         </div>
+                         {{--ENCUESTAS--}}
+                        <div class="col-lg-1 input-lg">
+                             <input type="checkbox" class="js-switch" data-for="{{App_Instytul_Metro::modulo_encuestas}}" {{HtmlControl::setCheck($modulo_encuestas)}}> 
+                            <input type="hidden" id="{{App_Instytul_Metro::modulo_encuestas}}" name="{{App_Instytul_Metro::modulo_encuestas}}" value="{{$modulo_encuestas}}"/> 
+                        </div>
+                        <div class="col-lg-11 input-lg">
+                            {{$txt_menuBtn_3}}
+                         </div>
+                          {{--PQR--}}
+                        <div class="col-lg-1 input-lg">
+                             <input type="checkbox" class="js-switch" data-for="{{App_Instytul_Metro::modulo_pqr}}" {{HtmlControl::setCheck($modulo_pqr)}}> 
+                            <input type="hidden" id="{{App_Instytul_Metro::modulo_pqr}}" name="{{App_Instytul_Metro::modulo_pqr}}" value="{{$modulo_pqr}}"/> 
+                        </div>
+                        <div class="col-lg-11 input-lg">
+                            {{$txt_menuBtn_4}}
+                         </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
         {{--**************************************************************************--}}
         {{--OPCIONES DEL MENU PRINCIPAL***********************************************--}}
@@ -239,16 +312,16 @@ else
 
             {{--OPCION #1 (UNO) DEL MENU***************************************************--}}
 
-            <div class="col-lg-12">
+            <div class="col-lg-12" id="{{App_Instytul_Metro::modulo_institucional}}-custom">
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.primera_opcion")}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-1.PNG")}}"/></h3>
+                        <h3 class="panel-title">{{trans("app.config.di.modulo")}} {{$txt_menuBtn_1}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-1.PNG")}}"/></h3>
                     </div>
                     <div class="panel-body">
 
                         <div class="well well-sm">
-                            {{trans("app.tipo.contenido.institucional.descripcion")}}
+                            {{trans("app.tipo.contenido.encuestas.descripcion")}}
                         </div>
 
                         <div class="col-lg-4 text-default input-lg">{{trans("otros.info.titulo")}}</div> <div class="col-lg-8"><input type="text" name="{{App_Instytul_Metro::txt_menuBtn_1}}" id="{{App_Instytul_Metro::txt_menuBtn_1}}" class="form-control input-lg" value="{{$txt_menuBtn_1}}"/></div>
@@ -282,11 +355,11 @@ else
 
             {{--OPCION #2 (UNO) DEL MENU***************************************************--}}
 
-            <div class="col-lg-12">
+            <div class="col-lg-12" id="{{App_Instytul_Metro::modulo_noticias}}-custom">
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.segunda_opcion")}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-2.PNG")}}"/></h3>
+                        <h3 class="panel-title">{{trans("app.config.di.modulo")}} {{$txt_menuBtn_2}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-2.PNG")}}"/></h3>
                     </div>
                     <div class="panel-body">
 
@@ -326,11 +399,11 @@ else
 
             {{--OPCION #3 (UNO) DEL MENU***************************************************--}}
 
-            <div class="col-lg-12">
+            <div class="col-lg-12" id="{{App_Instytul_Metro::modulo_encuestas}}-custom">
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.tercera_opcion")}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-3.PNG")}}"/></h3>
+                        <h3 class="panel-title">{{trans("app.config.di.modulo")}} {{$txt_menuBtn_3}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-3.PNG")}}"/></h3>
                     </div>
                     <div class="panel-body">
 
@@ -370,11 +443,11 @@ else
 
             {{--OPCION #4 (UNO) DEL MENU***************************************************--}}
 
-            <div class="col-lg-12">
+            <div class="col-lg-12" id="{{App_Instytul_Metro::modulo_pqr}}-custom">
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
-                        <h3 class="panel-title">{{trans("app.config.di.me.panel.titulo.cuarta_opcion")}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-4.PNG")}}"/></h3>
+                        <h3 class="panel-title">{{trans("app.config.di.modulo")}} {{$txt_menuBtn_4}} <img width="20" src="{{URL::to("assets/img/icons/cuadricula-4.PNG")}}"/></h3>
                     </div>
                     <div class="panel-body">
 
@@ -430,8 +503,33 @@ else
 {{ HTML::script('assets/plugins/colorpicket/js/colorpicker.js') }}
 {{ HTML::script('assets/plugins/plunk/jquery.simplecolorpicker.js') }}
 {{ HTML::script('assets/plugins/fileinput/js/fileinput.js') }}
+{{ HTML::script('assets/plugins/switchery/switchery.js') }}
 
 {{ HTML::script('assets/jscode/preview/'.$app->diseno.".js") }}
+
+
+<script>
+    var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+    elems.forEach(function (html) {
+        var switchery = new Switchery(html, {secondaryColor: '#FF5656', className: "switchery switchery-small"});
+    });
+
+    jQuery(".js-switch").change(function () {
+        var config = "#" + $(this).attr("data-for");
+        if ($(this).is(':checked')){
+            $(config).val("{{Util::convertirBooleanToInt(true)}}");
+             $(config+"-custom").fadeIn();
+        }
+        else{
+            $(config).val("{{Util::convertirBooleanToInt(false)}}");
+            $(config+"-custom").fadeOut();
+        }
+        
+       
+
+    });
+
+</script>
 
 
 <script>

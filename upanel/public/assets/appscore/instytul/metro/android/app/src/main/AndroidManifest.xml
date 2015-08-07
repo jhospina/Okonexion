@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.appsthergo.instytul.metro.nombreapp">
-
+    package="com.appsthergo.instytul.metro.appsthergoappname" >
 
     <uses-permission android:name="android.permission.INTERNET" >
     </uses-permission>
@@ -10,11 +10,11 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/appName"
+        android:label="@string/nombreApp"
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MenuPrincipal"
-            android:label="@string/appName" >
+            android:label="@string/nombreApp" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -75,6 +75,19 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+
+        <activity
+            android:name=".RegistroUsuarioActivity"
+            android:label="@string/title_activity_registro_usuario" >
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name=".MisDatosActivity"
+            android:label="@string/title_activity_mis_datos" >
+        </activity>
     </application>
 
 </manifest>

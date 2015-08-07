@@ -29,6 +29,11 @@ public class AppConfig {
     public static String colorFondoMenuBt_2 = "#FFFFFF";
     public static String colorFondoMenuBt_3 = "#FFFFFF";
     public static String colorFondoMenuBt_4 = "#FFFFFF";
+    public static boolean modulo_institucional=true;
+    public static boolean modulo_noticias=true;
+    public static boolean modulo_encuestas=true;
+    public static boolean modulo_pqr=false;
+
 
 
     /**
@@ -95,6 +100,33 @@ public class AppConfig {
     public static String txt_info_escribe_tu_respuesta="Escribe tu respuesta aquí...";
     public static String txt_info_usuario_soporte="Soporte";
     public static String txt_info_usuario="Usuario";
+    public static String txt_info_reg_msj_inicial ="¡Gracias por instalar nuestra aplicación!";
+    public static String txt_info_reg_pregunta_registro ="Quisiéramos conocerte un poco más. ¿Podemos hacerte unas preguntas? Solo te tomara unos segundos.";
+    public static String txt_info_reg_pregunta1 ="¿Eres hombre o mujer?";
+    public static String txt_info_reg_pregunta1_resp_op1 ="Hombre";
+    public static String txt_info_reg_pregunta1_resp_op2 ="Mujer";
+    public static String txt_info_reg_pregunta2 ="¿Cuantos años tienes?";
+    public static String txt_info_reg_pregunta3 ="¿Cual es tu correo electrónico?";
+    public static String txt_info_guardar ="Guardar";
+    public static String txt_info_omitir ="Omitir";
+    public static String txt_info_reg_fin ="Gracias por registrar tus datos. Ya puedes usar nuestra aplicación.";
+    public static String txt_info_msj_editar_perfil ="¡Has actualizado tus datos!";
+    public static String txt_info_continuar="Continuar";
+    public static String txt_info_placeholder_escribir_aqui ="Escribir aquí...";
+    public static String txt_info_si="Si";
+    public static String txt_info_no="No";
+    public static String txt_info_sin_definir="Sin definir";
+    public static String txt_info_mas_tarde="Más tarde";
+    public static String txt_info_menu_mis_datos="Mis datos";
+    public static String txt_info_reg_aficiones="Internet,Música,Libros,Aplicaciones Moviles,Videojuegos,Deportes,Televisión,Peliculas,Comida,Educación,Trabajo,Tecnólogia,Compras,Noticias";
+    public static String txt_info_perfil_info_genero="Genero";
+    public static String txt_info_perfil_info_edad="Edad";
+    public static String txt_info_perfil_info_email="Correo electrónico";
+    public static String txt_info_perfil_info_aficiones="Mis aficiones";
+    public static String txt_info_perfil_btn_editar_informacion="Editar información";
+
+
+
 
 
 }
