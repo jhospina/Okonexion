@@ -6,12 +6,9 @@
 
 {{ HTML::style('assets/css/upanel/estadisticas.css', array('media' => 'screen')) }}
 
-
-
 @stop
 
 @section("contenido")  
-
 
 
 <h1><span class="glyphicon glyphicon-stats"></span> {{trans("interfaz.menu.principal.mi_aplicacion.estadisticas")}} {{$app->nombre}}</h1>
@@ -29,8 +26,6 @@
         <span class="glyphicon glyphicon-magnet"></span> {{trans("app.estadisticas.nombre.actividad.hoy")}}</div>
     <div class="col-lg-6 cant">{{$actividad}}</div>
 </div>
-
-@include("usuarios/tipo/regular/app/estadisticas/avanzado",array("app"=>$app))
 
 <div class="col-lg-12" style="margin-top: 40px;margin-bottom: 40px;">
     <div class="col-lg-12 content-stats">

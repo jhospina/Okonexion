@@ -107,6 +107,10 @@ class UPanelControladorAplicacion extends Controller {
             return User::login();
         }
 
+        $tipo_suscripcion = User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_TIPO);
+        if ($tipo_suscripcion != ConfigInstancia::suscripcion_tipo_plata && $tipo_suscripcion != ConfigInstancia::suscripcion_tipo_oro)
+            return Redirect::to("");
+
 
         $app = Aplicacion::find($id);
 
@@ -140,6 +144,11 @@ class UPanelControladorAplicacion extends Controller {
             return User::login();
         }
 
+        $tipo_suscripcion = User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_TIPO);
+
+        //Unicamente para plan ORO
+        if ($tipo_suscripcion != ConfigInstancia::suscripcion_tipo_oro)
+            return Redirect::to("");
 
         $app = Aplicacion::find($id);
 
@@ -148,13 +157,51 @@ class UPanelControladorAplicacion extends Controller {
                 return Redirect::to("");
         }
 
-        $edades = DatosUsuarioApp::histograma($app->id, DatosUsuarioApp::EDAD,trans("otros.time.anos")); 
+        $edades = DatosUsuarioApp::histograma($app->id, DatosUsuarioApp::EDAD, trans("otros.time.anos"));
+        $generos = DatosUsuarioApp::histograma($app->id, DatosUsuarioApp::GENERO);
+        $aficiones = DatosUsuarioApp::histograma($app->id, DatosUsuarioApp::AFICIONES_CT . "_%");
 
         return View::make("usuarios/tipo/regular/app/estadisticas/base-usuarios")
                         ->with("app", $app)
                         ->with("edades", $edades)
-            ;
+                        ->with("generos", $generos)
+                        ->with("aficiones", $aficiones);
+        ;
+    }
+
+    public static function vista_estadisticas_seg_especifico($id) {
+
+        if (!Auth::check()) {
+            return User::login();
+        }
+
+        $app = Aplicacion::find($id);
+
+        $tipo_suscripcion = User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_TIPO);
         
+        //Unicamente para plan ORO
+        if ($tipo_suscripcion != ConfigInstancia::suscripcion_tipo_oro)
+            return Redirect::to("");
+
+        if (Auth::user()->tipo == User::USUARIO_REGULAR) {
+            if ($app->id_usuario != Auth::user()->id)
+                return Redirect::to("");
+        }
+
+
+        $view = View::make("usuarios/tipo/regular/app/estadisticas/seguimiento")
+                ->with("app", $app);
+
+        $tipos_contenidos = TipoContenido::obtenerTiposContenidoDelDiseno($app->diseno);
+
+        for ($i = 0; $i < count($tipos_contenidos); $i++) {
+            ${"act_" . $tipos_contenidos[$i]} = EstadisticasApp::obtenerActividadEspecificaPorDia($app->id, $tipos_contenidos[$i]);
+            $view->with("act_" . $tipos_contenidos[$i], ${"act_" . $tipos_contenidos[$i]});
+        }
+
+        $view->with("tipos_contenidos", $tipos_contenidos);
+
+        return $view;
     }
 
     public function vista_listado() {

@@ -35,10 +35,7 @@ class App_Instytul_Metro {
     const iconoMenu2 = "iconoMenu2"; //Almacena la URL de la imagen a utilizar como icono de la opción #2 del botón del menú principal de la aplicación
     const iconoMenu3 = "iconoMenu3"; //Almacena la URL de la imagen a utilizar como icono de la opción #3 del botón del menú principal de la aplicación
     const iconoMenu4 = "iconoMenu4"; //Almacena la URL de la imagen a utilizar como icono de la opción #4 del botón del menú principal de la aplicación
-    const modulo_institucional = "modulo_institucional"; // Activa/Desactiva el modulo institucional
-    const modulo_noticias = "modulo_noticias"; // Activa/Desactiva el modulo de noticias
-    const modulo_encuestas = "modulo_encuestas"; // Activa/Desactiva el modulo de encuestas
-    const modulo_pqr = "modulo_pqr"; // Activa/Desactiva el modulo de PQR
+   
     
     //********************************************************
     //CONFIGURACIÓN DE TEXTOS*********************************

@@ -5,6 +5,8 @@ if (Aplicacion::existe()) {
 } else {
     $version = 0;
 }
+
+$tipo_suscripcion = User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_TIPO);
 ?>
 
 
@@ -13,7 +15,7 @@ if (Aplicacion::existe()) {
 <li class="dropdown @if(Request::is('aplicacion/*')) active @endif"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-phone"></span> {{trans("interfaz.menu.principal.mi_aplicacion")}}<span class="caret"></span></a>
     <ul class="dropdown-menu">
         @if(!Aplicacion::existe())
-            <li><a href="{{URL::to("aplicacion/basico")}}"><span class="glyphicon glyphicon-plus-sign"></span> {{trans("otros.info.crear")}}</a></li>
+        <li><a href="{{URL::to("aplicacion/basico")}}"><span class="glyphicon glyphicon-plus-sign"></span> {{trans("otros.info.crear")}}</a></li>
         @else
         <li class="dropdown-submenu"><a tabindex="0" data-toggle="dropdown" aria-expanded="false"><span class="glyphicon glyphicon-cog"></span> {{trans("interfaz.menu.principal.mi_aplicacion.configuracion")}}</a>
             <ul class="dropdown-menu">
@@ -38,8 +40,8 @@ if (Aplicacion::existe()) {
             </a>
         </li>
         <li @if(intval($version)==0) class="disabled" @endif><a @if(intval($version)>0) href="{{URL::to("aplicacion/".$app->id."/versiones")}}" @endif><span class="glyphicon glyphicon-th"></span> {{trans("interfaz.menu.principal.mi_aplicacion.versiones")}}</a></li>
-        <li @if(intval($version)==0) class="disabled" @endif><a @if(intval($version)>0) href="{{URL::to("aplicacion/".$app->id."/estadisticas")}}" @endif><span class="glyphicon glyphicon-stats"></span> {{trans("interfaz.menu.principal.mi_aplicacion.estadisticas")}}</a></li>
-        
+        <li class="{{(intval($version)==0 || $tipo_suscripcion == ConfigInstancia::suscripcion_tipo_bronce)?"disabled":""}}"><a @if(intval($version)>0 && $tipo_suscripcion != ConfigInstancia::suscripcion_tipo_bronce) href="{{URL::to("aplicacion/".$app->id."/estadisticas")}}" @endif><span class="glyphicon glyphicon-stats"></span> {{trans("interfaz.menu.principal.mi_aplicacion.estadisticas")}}</a></li>
+
 
     </ul>
 </li>
@@ -63,7 +65,7 @@ if (Aplicacion::existe()) {
 <li class="dropdown @if(Request::is('servicios/*')) active @endif "><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-flash"></span> {{trans("interfaz.menu.principal.servicios")}}<span class="caret"></span></a>
     <ul class="dropdown-menu">
         <li><a href="{{URL::to("servicios")}}"><span class="glyphicon glyphicon-flash"></span> {{trans("interfaz.menu.principal.servicios.mis.servicios")}}</a></li>
-        
+
         <li><a href="{{URL::to("servicios/agregar")}}"><span class="glyphicon glyphicon-plus-sign"></span> {{trans("interfaz.menu.principal.servicios.agregar.servicio")}}</a></li>
     </ul>
 </li>

@@ -1,4 +1,6 @@
+<?php $tipo_suscripcion = User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_TIPO); ?>
 <ul class="nav nav-pills">
-  <li role="presentation" class="{{(Request::is('aplicacion/*/estadisticas'))?"active":""}}"><a href="{{URL::to("aplicacion/".$app->id."/estadisticas")}}">{{trans("otros.info.resumen")}}</a></li>
-  <li role="presentation" class="{{(Request::is('aplicacion/*/estadisticas/usuarios'))?"active":""}}"><a href="{{URL::to("aplicacion/".$app->id."/estadisticas/usuarios")}}">{{trans("app.estadisticas.titulo.base.usuarios")}} </a></li>
-</ul>
+    <li role="presentation" class="{{(Request::is('aplicacion/*/estadisticas'))?"active":""}}"><a href="{{URL::to("aplicacion/".$app->id."/estadisticas")}}"><span class="glyphicon glyphicon-dashboard"></span> {{trans("otros.info.resumen")}}</a></li>
+    <li role="presentation" title="{{($tipo_suscripcion != ConfigInstancia::suscripcion_tipo_oro)?trans("pres.suscripcion.solo.oro"):""}}" class="{{($tipo_suscripcion != ConfigInstancia::suscripcion_tipo_oro)?"disabled tooltip-top":""}} {{(Request::is('aplicacion/*/estadisticas/seguimiento'))?"active":""}}"><a href="{{($tipo_suscripcion == ConfigInstancia::suscripcion_tipo_oro)?URL::to("aplicacion/".$app->id."/estadisticas/seguimiento"):""}}"><span class="glyphicon glyphicon-stats"></span> {{trans("app.estadisticas.titulo.seguimiento.especifico")}}</a></li>
+    <li role="presentation" title="{{($tipo_suscripcion != ConfigInstancia::suscripcion_tipo_oro)?trans("pres.suscripcion.solo.oro"):""}}" class="{{($tipo_suscripcion != ConfigInstancia::suscripcion_tipo_oro)?"disabled tooltip-top":""}} {{(Request::is('aplicacion/*/estadisticas/usuarios'))?"active":""}}"><a href="{{($tipo_suscripcion == ConfigInstancia::suscripcion_tipo_oro)?URL::to("aplicacion/".$app->id."/estadisticas/usuarios"):""}}"><span class="glyphicon glyphicon-user"></span> {{trans("app.estadisticas.titulo.base.usuarios")}} </a></li>
+</ul> 

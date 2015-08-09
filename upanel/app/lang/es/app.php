@@ -36,7 +36,7 @@ return array(
     "config.info.verificar_errores" => "Verifica los siguientes errores:",
     "config.db.post.exito" => "Los datos básicos de tu aplicación han sido guardados. Tu aplicación ha pasado a estar en estado \"En diseño\". Esto significa que has iniciado el proceso de diseño.",
     "config.info.titulo.general" => "General",
-    "config.info.titulo.menu_principal" => "Menú principal",
+    "config.info.titulo.personalizacion.modulos" => "Personalización de modulos",
     "config.info.panel.titulo.logo_aplicacion" => "Logo de aplicación",
     "config.info.panel.titulo.logo_aplicacion.descripcion" => "<p><b>Atención:</b> El tamaño de la imagen debe ser mayor o igual a 256px.</p>",
     "config.info.logo_app" => "Logo App",
@@ -156,9 +156,13 @@ return array(
     "estadisticas.nombre.actividad.hoy" => "Actividad de hoy",
     "estadisticas.tipo.grafica.lineal" => "Lineal",
     "estadisticas.tipo.grafica.barras" => "Barras",
-    "estadisticas.titulo.actividad.especifica" => "Actividad especifica de hoy",
+    "estadisticas.titulo.seguimiento.especifico" => "Seguimiento especifico",
     "estadisticas.titulo.base.usuarios" => "Base de usuarios",
     "estadisticas.info.cantidad" => "Cantidad",
+    "estadisticas.info.falta.informacion"=>"Aun faltan datos para mostrar información estadistica",
     "info.usuario.edades" => "Edades",
-    "info.usuario.edad" => "Edad"
+    "info.usuario.edad" => "Edad",
+    "info.usuario.genero" => "Genero",
+    "info.usuario.generos" => "Generos",
+    "info.usuarios.aficiones" => "Aficiones o Pasatiempos"
 );

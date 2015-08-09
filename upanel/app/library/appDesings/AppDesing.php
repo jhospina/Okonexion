@@ -1,16 +1,21 @@
 <?php
 
 class AppDesing {
-    
-    const PLATAFORMA_ANDROID="android";
-    const PLATAFORMA_IOS="ios";
-    const PLATAFORMA_WINDOW="windows";
+
+    const PLATAFORMA_ANDROID = "android";
+    const PLATAFORMA_IOS = "ios";
+    const PLATAFORMA_WINDOW = "windows";
+    const modulo_institucional = "modulo_institucional"; // Activa/Desactiva el modulo institucional
+    const modulo_noticias = "modulo_noticias"; // Activa/Desactiva el modulo de noticias
+    const modulo_encuestas = "modulo_encuestas"; // Activa/Desactiva el modulo de encuestas
+    const modulo_pqr = "modulo_pqr"; // Activa/Desactiva el modulo de PQR
 
     /** Obtiene la disponibilidad de una plataforma dado por el ID del diseño
      * 
      * @param type $diseno La sigla del diseño
      * @return type
      */
+
     public static function obtenerDisponibilidadPlataformas($diseno) {
         switch ($diseno) {
             case App_Instytul_Metro::sigla:
@@ -181,5 +186,4 @@ class AppDesing {
                 break;
         }
     }
-
 }

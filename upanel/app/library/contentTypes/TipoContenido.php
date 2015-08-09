@@ -54,4 +54,23 @@ class TipoContenido {
         }
     }
 
+    static function estaActivo($tipo) {
+        switch ($tipo) {
+            case Contenido_Institucional::nombre:
+                return Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig((string) AppDesing::modulo_institucional));
+                break;
+            case Contenido_Noticias::nombre:
+                return Contenido_Noticias::icono;
+                return Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig((string) AppDesing::modulo_noticias));
+                break;
+            case Contenido_Encuestas::nombre:
+                return Contenido_Encuestas::icono;
+                return Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig((string) AppDesing::modulo_encuestas));
+                break;
+            case Contenido_PQR::nombre:
+                return Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig((string) AppDesing::modulo_pqr));
+                break;
+        }
+    }
+
 }

@@ -110,23 +110,23 @@ else
     $txt_menuBtn_4_color = "rgb(0,0,0)";
 
 //MODULO INSTITUCIONAL
-if (ConfiguracionApp::existeConfig(App_Instytul_Metro::modulo_institucional))
-    $modulo_institucional = Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::modulo_institucional));
+if (ConfiguracionApp::existeConfig(AppDesing::modulo_institucional))
+    $modulo_institucional = Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig(AppDesing::modulo_institucional));
 else
     $modulo_institucional = true;
 //MODULO NOTICIAS
-if (ConfiguracionApp::existeConfig(App_Instytul_Metro::modulo_noticias))
-    $modulo_noticias = Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::modulo_noticias));
+if (ConfiguracionApp::existeConfig(AppDesing::modulo_noticias))
+    $modulo_noticias = Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig(AppDesing::modulo_noticias));
 else
     $modulo_noticias = true;
 //MODULO ENCUESTAS
-if (ConfiguracionApp::existeConfig(App_Instytul_Metro::modulo_encuestas))
-    $modulo_encuestas = Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::modulo_encuestas));
+if (ConfiguracionApp::existeConfig(AppDesing::modulo_encuestas))
+    $modulo_encuestas = Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig(AppDesing::modulo_encuestas));
 else
     $modulo_encuestas = true;
 //MODULO PQR
-if (ConfiguracionApp::existeConfig(App_Instytul_Metro::modulo_pqr))
-    $modulo_pqr = Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig(App_Instytul_Metro::modulo_pqr));
+if (ConfiguracionApp::existeConfig(AppDesing::modulo_pqr))
+    $modulo_pqr = Util::convertirIntToBoolean(ConfiguracionApp::obtenerValorConfig(AppDesing::modulo_pqr));
 else
     $modulo_pqr = true;
 
@@ -264,32 +264,32 @@ else
                     <div class="panel-body">
                         {{--INSTITUCIONAL--}}
                         <div class="col-lg-1 input-lg">
-                             <input type="checkbox" class="js-switch" data-for="{{App_Instytul_Metro::modulo_institucional}}" {{HtmlControl::setCheck($modulo_institucional)}}> 
-                            <input type="hidden" id="{{App_Instytul_Metro::modulo_institucional}}" name="{{App_Instytul_Metro::modulo_institucional}}" value="{{$modulo_institucional}}"/> 
+                             <input type="checkbox" class="js-switch" data-for="{{AppDesing::modulo_institucional}}" {{HtmlControl::setCheck($modulo_institucional)}}> 
+                            <input type="hidden" id="{{AppDesing::modulo_institucional}}" name="{{AppDesing::modulo_institucional}}" value="{{$modulo_institucional}}"/> 
                         </div>
                         <div class="col-lg-11 input-lg">
                             {{$txt_menuBtn_1}}
                          </div>
                         {{--NOTICIAS--}}
                         <div class="col-lg-1 input-lg">
-                             <input type="checkbox" class="js-switch" data-for="{{App_Instytul_Metro::modulo_noticias}}" {{HtmlControl::setCheck($modulo_noticias)}}> 
-                            <input type="hidden" id="{{App_Instytul_Metro::modulo_noticias}}" name="{{App_Instytul_Metro::modulo_noticias}}" value="{{$modulo_noticias}}"/> 
+                             <input type="checkbox" class="js-switch" data-for="{{AppDesing::modulo_noticias}}" {{HtmlControl::setCheck($modulo_noticias)}}> 
+                            <input type="hidden" id="{{AppDesing::modulo_noticias}}" name="{{AppDesing::modulo_noticias}}" value="{{$modulo_noticias}}"/> 
                         </div>
                         <div class="col-lg-11 input-lg">
                             {{$txt_menuBtn_2}}
                          </div>
                          {{--ENCUESTAS--}}
                         <div class="col-lg-1 input-lg">
-                             <input type="checkbox" class="js-switch" data-for="{{App_Instytul_Metro::modulo_encuestas}}" {{HtmlControl::setCheck($modulo_encuestas)}}> 
-                            <input type="hidden" id="{{App_Instytul_Metro::modulo_encuestas}}" name="{{App_Instytul_Metro::modulo_encuestas}}" value="{{$modulo_encuestas}}"/> 
+                             <input type="checkbox" class="js-switch" data-for="{{AppDesing::modulo_encuestas}}" {{HtmlControl::setCheck($modulo_encuestas)}}> 
+                            <input type="hidden" id="{{AppDesing::modulo_encuestas}}" name="{{AppDesing::modulo_encuestas}}" value="{{$modulo_encuestas}}"/> 
                         </div>
                         <div class="col-lg-11 input-lg">
                             {{$txt_menuBtn_3}}
                          </div>
                           {{--PQR--}}
                         <div class="col-lg-1 input-lg">
-                             <input type="checkbox" class="js-switch" data-for="{{App_Instytul_Metro::modulo_pqr}}" {{HtmlControl::setCheck($modulo_pqr)}}> 
-                            <input type="hidden" id="{{App_Instytul_Metro::modulo_pqr}}" name="{{App_Instytul_Metro::modulo_pqr}}" value="{{$modulo_pqr}}"/> 
+                             <input type="checkbox" class="js-switch" data-for="{{AppDesing::modulo_pqr}}" {{HtmlControl::setCheck($modulo_pqr)}}> 
+                            <input type="hidden" id="{{AppDesing::modulo_pqr}}" name="{{AppDesing::modulo_pqr}}" value="{{$modulo_pqr}}"/> 
                         </div>
                         <div class="col-lg-11 input-lg">
                             {{$txt_menuBtn_4}}
@@ -308,11 +308,11 @@ else
 
         <div class="block">
 
-            <h3 class="text-right col-lg-12">{{trans("app.config.info.titulo.menu_principal")}}</h3>
+            <h3 class="text-right col-lg-12">{{trans("app.config.info.titulo.personalizacion.modulos")}}</h3>
 
             {{--OPCION #1 (UNO) DEL MENU***************************************************--}}
 
-            <div class="col-lg-12" id="{{App_Instytul_Metro::modulo_institucional}}-custom">
+            <div class="col-lg-12" id="{{AppDesing::modulo_institucional}}-custom">
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
@@ -355,7 +355,7 @@ else
 
             {{--OPCION #2 (UNO) DEL MENU***************************************************--}}
 
-            <div class="col-lg-12" id="{{App_Instytul_Metro::modulo_noticias}}-custom">
+            <div class="col-lg-12" id="{{AppDesing::modulo_noticias}}-custom">
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
@@ -399,7 +399,7 @@ else
 
             {{--OPCION #3 (UNO) DEL MENU***************************************************--}}
 
-            <div class="col-lg-12" id="{{App_Instytul_Metro::modulo_encuestas}}-custom">
+            <div class="col-lg-12" id="{{AppDesing::modulo_encuestas}}-custom">
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">
@@ -443,7 +443,7 @@ else
 
             {{--OPCION #4 (UNO) DEL MENU***************************************************--}}
 
-            <div class="col-lg-12" id="{{App_Instytul_Metro::modulo_pqr}}-custom">
+            <div class="col-lg-12" id="{{AppDesing::modulo_pqr}}-custom">
 
                 <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading">

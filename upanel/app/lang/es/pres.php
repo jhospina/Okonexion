@@ -22,9 +22,11 @@ return array(
     "ar.usuarios" => "Usuarios",
     "ar.usuarios.foot" => "Crear nuevo usuario",
     "ar.ventas.foot" => "Total de ventas",
-    "info.bienvenido"=>"¡Bienvenido!",
-    "info.bienvenido.descripcion"=>"Queremos darte la bievenida a Appsthergo, una plataforma amigable para crear y administrar tu aplicación móvil. En tan solo unos pasos podrás crear tu aplicación sin saber programar.",
-    "info.bienvenido.btn"=>"Crear aplicación",
-    "info.administrar.mi.aplicacion"=>"Administrar Mi aplicación",
-    "info.uso.espacio"=>"Uso del espacio en disco"
-        );
+    "info.bienvenido" => "¡Bienvenido!",
+    "info.bienvenido.descripcion" => "Queremos darte la bievenida a Appsthergo, una plataforma amigable para crear y administrar tu aplicación móvil. En tan solo unos pasos podrás crear tu aplicación sin saber programar.",
+    "info.bienvenido.btn" => "Crear aplicación",
+    "info.administrar.mi.aplicacion" => "Administrar Mi aplicación",
+    "info.uso.espacio" => "Uso del espacio en disco",
+    "suscripcion.solo.oro" => "Solo para usuarios con plan de suscrición 'Oro'",
+    "suscripcion.solo.plata" => "Solo para usuarios con plan de suscrición 'Plata' u 'Oro'",
+);

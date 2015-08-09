@@ -26,8 +26,8 @@ if (Aplicacion::existe()) {
     if (!isset($app))
         $app = Aplicacion::obtener();
     $version = ProcesoApp::obtenerNumeroVersion($app->id);
-}else{
-    $version=0;
+}else {
+    $version = 0;
 }
 ?>
 
@@ -108,7 +108,7 @@ if (Aplicacion::existe()) {
 
     <h2>{{trans("app.config.dep.info.aplicacion_disponible")}}</h2>
 
-
+    @if(strlen($app->url_android)>0)
     {{--APLICACION EN ANDROID--}}
     <div class="well well-lg" style="padding: 10px;" id="content-upload-android">
         <table class="table" style="margin-bottom:0px;">
@@ -124,7 +124,9 @@ if (Aplicacion::existe()) {
             </tr>
         </table>
     </div>
+    @endif
     {{--APLICACION EN WINDOWS--}}
+    @if(strlen($app->url_windows)>0)
     <div class="well well-lg" style="padding: 10px;" id="content-upload-windows">
         <table class="table" style="margin-bottom:0px;">
             <tr>
@@ -139,7 +141,9 @@ if (Aplicacion::existe()) {
             </tr>
         </table>
     </div>
+    @endif
     {{--APLICACION EN IOS--}}
+    @if(strlen($app->url_ios)>0)
     <div class="well well-lg" style="padding: 10px;" id="content-upload-ios">
         <table class="table" style="margin-bottom:0px;">
             <tr>
@@ -154,6 +158,7 @@ if (Aplicacion::existe()) {
             </tr>
         </table>
     </div>
+    @endif
 
 
 

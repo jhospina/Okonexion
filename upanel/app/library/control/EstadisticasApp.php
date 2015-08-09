@@ -82,18 +82,17 @@ class EstadisticasApp {
         return $cantActividad;
     }
 
-    
-    static function obtenerActividadEspecificaPorDia($id_app,$tipo_contenido,$fecha=null){
-         if (is_null($fecha))
-            $regActividad = AppMeta::where("id_app", $id_app)->where("clave", "LIKE", "%_".$tipo_contenido."_". date("Ymd"))->orderBy("id_app", "DESC")->get()->count();
+    static function obtenerActividadEspecificaPorDia($id_app, $tipo_contenido, $fecha = null) {
+        if (is_null($fecha))
+            $regActividad = AppMeta::where("id_app", $id_app)->where("clave", "LIKE", "%_" . $tipo_contenido . "_" . date("Ymd"))->orderBy("id_app", "DESC")->get()->count();
 
         if (is_array($fecha))
-            $regActividad = AppMeta::where("id_app", $id_app)->where("clave", "LIKE", "%_".$tipo_contenido."_". $fecha[0] . $fecha[1] . $fecha[2])->orderBy("id_app", "DESC")->get()->count();
+            $regActividad = AppMeta::where("id_app", $id_app)->where("clave", "LIKE", "%_" . $tipo_contenido . "_" . $fecha[0] . $fecha[1] . $fecha[2])->orderBy("id_app", "DESC")->get()->count();
 
-     
+
         return $regActividad;
     }
-    
+
     /** Obtiene un array indican el eje X y Y de una grafica de instalaciones por fecha. 
      * 
      * @param type $app Objeto de App
@@ -155,13 +154,13 @@ class EstadisticasApp {
         return array($ejeX, $ejeY);
     }
 
-     /** Obtiene un array indican el eje X y Y de una grafica de actividad por fecha. 
+    /** Obtiene un array indican el eje X y Y de una grafica de actividad por fecha. 
      * 
      * @param type $app Objeto de App
      * @param type $actividad_hoy [Null] Indica el cantidad de la fecha actual
      * @return type
      */
-    static function obtenerValoresGrafica_Actividad($app, $actividad_hoy=null) {
+    static function obtenerValoresGrafica_Actividad($app, $actividad_hoy = null) {
 
         $fecha = new Fecha(Util::obtenerTiempoActual());
 
@@ -192,6 +191,54 @@ class EstadisticasApp {
             $dia = Fecha::adecuarNumero($fecha->dia);
 
             $stat+=EstadisticasApp::obtenerActividadPorDia($app->id, array($fecha->ano, $mes, $dia));
+            $contador_interval++;
+            //Agrega al arreglo del Ejex el valor correspodiente indicado
+            if ($contador_interval >= $interval_tmp) {
+                if ($interval_tmp == 1)
+                    $ejeX[] = $fecha->dia . " " . Util::obtenerNombreMes($mes);
+                else if ($interval_tmp == 7)
+                    $ejeX[] = ceil($fecha->dia / 7) . "° " . trans("otros.time.semana") . " " . Util::obtenerNombreMes($mes);
+                else if ($interval_tmp == 30)
+                    $ejeX[] = Util::obtenerNombreMes($mes);
+                $ejeY[] = $stat;
+                $stat = 0;
+                $contador_interval = 0;
+            }
+        }
+
+        if (!count($ejeX) > 0) {
+            $ejeX[] = Util::obtenerNombreMes($mes);
+            $ejeY[] = $stat;
+        }
+
+        $ejeX = array_reverse($ejeX);
+        $ejeY = array_reverse($ejeY);
+
+        return array($ejeX, $ejeY);
+    }
+
+    static function histogramaDeActividadEspecifica($app, $tipo_contenido, $tmp = 7, $interval_tmp = 1) {
+        $fecha = new Fecha(Util::obtenerTiempoActual());
+        //Almacena las estadisticas de instalaciones
+        $ejeY = array();
+        $ejeY[] = EstadisticasApp::obtenerActividadEspecificaPorDia($app->id,$tipo_contenido);
+
+        $ejeX = array();
+
+        if ($interval_tmp == 1)
+            $ejeX[] = $fecha->dia . " " . Util::obtenerNombreMes(($fecha->mes < 10) ? "0" . $fecha->mes : $fecha->mes);
+
+        //Carga el array con el rango de tiempo indicado para las instalaciones
+        $stat = 0; //Acumula los datos de estadisticas por dia
+        $contador_interval = 0; //Contador de control de intervalo
+
+        for ($i = 1; $i < $tmp; $i++) {
+            $fecha = new Fecha(Util::obtenerTiempoActual());
+            $fecha->sustraerDias($i);
+            $mes = Fecha::adecuarNumero($fecha->mes);
+            $dia = Fecha::adecuarNumero($fecha->dia);
+
+            $stat+=EstadisticasApp::obtenerActividadEspecificaPorDia($app->id, $tipo_contenido, array($fecha->ano, $mes, $dia));
             $contador_interval++;
             //Agrega al arreglo del Ejex el valor correspodiente indicado
             if ($contador_interval >= $interval_tmp) {
