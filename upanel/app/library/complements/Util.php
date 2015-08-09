@@ -197,6 +197,8 @@ class Util {
     }
 
     static function crearUrl($url) {
+        if (!isset($_SERVER['HTTPS']))
+            return "http://" . $url;
         return($_SERVER['HTTPS']) ? "https://" . $url : "http://" . $url;
     }
 
@@ -334,7 +336,7 @@ class Util {
             "03" => trans("otros.fecha.marzo"),
             "04" => trans("otros.fecha.abril"),
             "05" => trans("otros.fecha.mayo"),
-            "06" => trans("otros.fecha.abril"),
+            "06" => trans("otros.fecha.junio"),
             "07" => trans("otros.fecha.julio"),
             "08" => trans("otros.fecha.agosto"),
             "09" => trans("otros.fecha.septiembre"),
@@ -468,4 +470,20 @@ class Util {
                 return number_format(($valor / 1099511627776), $decimales) . " Tb";
         }
     }
+
+    /** Agrega una varible por GET a una URL
+     * 
+     * @param type $url La url
+     * @param type $var La variable a agregar
+     * @param type $val El valor de la variable
+     */
+    static function Url_AgregarVariable($url, $var, $val) {
+        //Si encuentra la variable indicada en la url la elimina
+        if (strpos($url, "$var") !== false)
+            $url = (strpos($url, "?$var") !== false) ? preg_filter("/(&|\?)" . $var . "=[[:alnum:]]+&?/", "?", $url, 1) : preg_filter("/(&|\?)" . $var . "=[[:alnum:]]+&?/", "&", $url, 1);
+        $url = (strpos($url, "?") !== false) ? $url . "&" . $var . "=" . $val : $url . "?" . $var . "=" . $val;
+        $url = str_replace("&&", "&", $url);
+        return $url;
+    }
+
 }

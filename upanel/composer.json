@@ -24,6 +24,7 @@
             "app/library/enums",
             "app/library/control",
             "app/library/security",
+            "app/library/graph",
             "app/library/metPay",
             "app/library/plugins/",
             "app/library/plugins/2checkout/",

@@ -25,6 +25,11 @@ return array(
     "fecha.noviembre" => "Noviembre",
     "fecha.diciembre" => "Diciembre",
     "fecha.formato_01" => ":dia de :mes del :ano (:hora)",
+    "fecha.rango.7.dias"=>"Ultima semana",
+    "fecha.rango.30.dias"=>"Ultimo mes",
+    "fecha.rango.90.dias"=>"Ultimos 3 meses",
+    "fecha.rango.180.dias"=>"Ultimos 6 meses",
+    "fecha.rango.365.dias"=>"Ultimo año",
     "msj_responder.placeholder" => "Escribe aquí tu respuesta...",
     "info.cliente" => "Cliente",
     "info.soporte" => "Soporte",
@@ -109,6 +114,8 @@ return array(
     "time.horas" => "Horas",
     "time.dia" => "Día",
     "time.dias" => "Días",
+    "time.semanas"=>"Semanas",
+    "time.semana"=>"Semana",
     "time.mes" => "Mes",
     "time.meses" => "Meses",
     "time.ano" => "Año",
@@ -162,5 +169,6 @@ return array(
     "info.actualizar" => "Actualizar",
     "info.procesado" => "Procesado",
     "info.sin_procesar" => "Sin procesar",
-    "info.seleccionado"=>"Seleccionado"
+    "info.seleccionado"=>"Seleccionado",
+    "info.resumen"=>"Resumen"
 );

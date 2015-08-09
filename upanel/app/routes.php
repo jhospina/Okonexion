@@ -148,6 +148,7 @@ function control_aplicaciones() {
 function aplicacion_comp() {
     Route::get('aplicacion/{id}/versiones', 'UPanelControladorAplicacion@vista_versiones');
     Route::get('aplicacion/{id}/estadisticas', 'UPanelControladorAplicacion@vista_estadisticas');
+    Route::get('aplicacion/{id}/estadisticas/usuarios', 'UPanelControladorAplicacion@vista_estadisticas_usuarios');
 }
 
 //***************************************************************************

@@ -107,6 +107,7 @@ class UPanelControladorAplicacion extends Controller {
             return User::login();
         }
 
+
         $app = Aplicacion::find($id);
 
         if (Auth::user()->tipo == User::USUARIO_REGULAR) {
@@ -118,33 +119,42 @@ class UPanelControladorAplicacion extends Controller {
         $instalaciones = EstadisticasApp::obtenerTotalInstalaciones($app->id);
         $instalaciones_hoy = EstadisticasApp::obtenerNumeroInstalacionesPorDia($app->id);
 
-        $fecha = new Fecha(Util::obtenerTiempoActual());
-        $dias = array();
-        $dias[] = $fecha->dia . " " . Util::obtenerNombreMes(($fecha->mes < 10) ? "0" . $fecha->mes : $fecha->mes);
+        list($ejeX_instal, $stat_instalaciones) = EstadisticasApp::obtenerValoresGrafica_Instalaciones($app, $instalaciones_hoy);
+        list($ejeX_act, $stat_actividad) = EstadisticasApp::obtenerValoresGrafica_Actividad($app);
 
-        //Almacena las estadisticas de instalaciones
-        $stat_instalaciones = array();
-        //Almacena las estadisticas de actividad
-        $stat_actividad = array();
-        $stat_instalaciones[] = $instalaciones_hoy;
-        $stat_actividad[] = EstadisticasApp::obtenerActividadPorDia($app->id);
+        return View::make("usuarios/tipo/regular/app/estadisticas/index")
+                        ->with("app", $app)
+                        ->with("instalaciones", $instalaciones)
+                        ->with("instalaciones_hoy", $instalaciones_hoy)
+                        ->with("actividad", $stat_actividad[count($stat_actividad) - 1])
+                        ->with("stat_instalaciones", $stat_instalaciones)
+                        ->with("ejeX_instal", $ejeX_instal)
+                        ->with("stat_actividad", $stat_actividad)
+                        ->with("ejeX_act", $ejeX_act)
+        ;
+    }
 
-        for ($i = 1; $i < 6; $i++) {
-            $fecha = new Fecha(Util::obtenerTiempoActual());
-            $fecha->sustraerDias($i);
+    public static function vista_estadisticas_usuarios($id) {
 
-            $mes = ($fecha->mes < 10) ? "0" . $fecha->mes : $fecha->mes;
-            $dias[] = $fecha->dia . " " . Util::obtenerNombreMes($mes);
-            $stat_instalaciones[] = EstadisticasApp::obtenerNumeroInstalacionesPorDia($app->id, array($fecha->ano, $mes, $fecha->dia));
-            $stat_actividad[] = EstadisticasApp::obtenerActividadPorDia($app->id, array($fecha->ano, $mes, $fecha->dia));
+        if (!Auth::check()) {
+            return User::login();
         }
 
 
-        $dias = array_reverse($dias);
-        $stat_instalaciones = array_reverse($stat_instalaciones);
-        $stat_actividad = array_reverse($stat_actividad);
+        $app = Aplicacion::find($id);
 
-        return View::make("usuarios/tipo/regular/app/estadisticas")->with("app", $app)->with("instalaciones", $instalaciones)->with("instalaciones_hoy", $instalaciones_hoy)->with("actividad", $stat_actividad[count($stat_actividad)-1])->with("stat_instalaciones", $stat_instalaciones)->with("stat_actividad", $stat_actividad)->with("dias", $dias);
+        if (Auth::user()->tipo == User::USUARIO_REGULAR) {
+            if ($app->id_usuario != Auth::user()->id)
+                return Redirect::to("");
+        }
+
+        $edades = DatosUsuarioApp::histograma($app->id, DatosUsuarioApp::EDAD,trans("otros.time.anos")); 
+
+        return View::make("usuarios/tipo/regular/app/estadisticas/base-usuarios")
+                        ->with("app", $app)
+                        ->with("edades", $edades)
+            ;
+        
     }
 
     public function vista_listado() {

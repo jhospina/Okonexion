@@ -160,4 +160,8 @@ class Fecha {
         return intval(strtotime($fecha2) - strtotime($fecha1));
     }
 
+    
+    static function adecuarNumero($num){
+        return ($num < 10) ? "0" . $num : $num;
+    }
 }
