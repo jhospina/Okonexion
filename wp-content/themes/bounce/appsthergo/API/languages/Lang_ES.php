@@ -20,7 +20,7 @@ class Lang_ES {
     const CREATE_USER_FORM_ERROR_INPUT_REPEAT_PASSWORD = "Las contraseñas deben coincidir";
     const CREATE_USER_FORM_SUBMIT = "Crear Cuenta";
     const CREATE_USER_FORM_ERROR_EMAIL_EXISTS = "El correo eletrónico ingresado ya existe";
-    const CREATE_USER_FORM_MSJ_SUCCESS = "¡Tu cuenta esta casi lista! Por favor revisa tu correo electrónico <b>:email</b>, hemos enviado un mensaje con un enlace, haz clic en ese enlace y así podremos confirmar tu correo electrónico y activar tu cuenta. Luego de esto, tu cuenta quedara activada y podrás iniciar sesión en <a href=':link_login'>ingresar</a>.";
+    const CREATE_USER_FORM_MSJ_SUCCESS = "¡Tu cuenta esta casi lista! Por favor revisa tu correo electrónico <b>:email</b>, hemos enviado un mensaje con un enlace, haz clic en ese enlace y así podremos confirmar tu correo electrónico y activar tu cuenta. Luego de esto, tu cuenta quedara activada y podrás iniciar sesión en <a href=':link_login'>ingresar</a>.<br/><br/><b style='font-weight: bold;'>Atención:</b> Si ves que el mensaje no te llega, por favor revisa tu bandeja de correo no deseado o de SPAM, puede que el correo con el enlace del activación halla sido filtrado por los sistemas de mensajeria.";
     const CREATE_USER_FORM_CAPTCHA_KEY_ERROR = "Clave pública de Captcha invalida o no existe";
     const CREATE_USER_FORM_ACCEPT_TERMS = "Acepto que soy mayor de edad y que he leido los <a style='color: #2866FF;text-decoration: underline;' target='_blank' href=':link'>Términos y condiciones del servicio</a> y entiendo que esto vale como un contrato legal entre mi persona y :company.";
     const CREATE_USER_FORM_ACCEPT_TERMS_ERROR="Para crear una cuenta, debes estar de acuerdo con los términos y condiciones del servicio.";

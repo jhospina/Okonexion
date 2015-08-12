@@ -4,6 +4,7 @@ $productos = Facturacion::obtenerProductos($factura->id);
 $subtotal = 0; //Almacenara el subtotal de los productos
 $iva = $factura->iva;
 $paises = Paises::listado();
+$tipos_documento=User::obtenerTiposDocumento();
 array_unshift($paises, trans("otros.info.elegir"));
 ?>
 
@@ -45,8 +46,8 @@ array_unshift($paises, trans("otros.info.elegir"));
             <td>
                 <span class="glyphicon glyphicon-ok"></span> {{(strpos($id_producto,Servicio::CONFIG_NOMBRE)!==false)?Servicio::obtenerNombre($id_producto):trans("fact.producto.id.".$id_producto)}} 
                 @if(strpos($id_producto,"actualizacion")!==false)
-                    <?php $dias_suscripcion = round(Fecha::difSec(Util::obtenerTiempoActual(), Auth::user()->fin_suscripcion) / (60 * 60 * 24)); ?>
-                    ({{$dias_suscripcion." ".trans("otros.time.dias")}})
+                <?php $dias_suscripcion = round(Fecha::difSec(Util::obtenerTiempoActual(), Auth::user()->fin_suscripcion) / (60 * 60 * 24)); ?>
+                ({{$dias_suscripcion." ".trans("otros.time.dias")}})
                 @endif
             </td>
             <td class="text-right">
@@ -96,7 +97,7 @@ array_unshift($paises, trans("otros.info.elegir"));
     <div class="col-lg-6 input-lg">  {{trans("menu_usuario.mi_perfil.info.nombre")}} </div><div class="col-lg-6 input-lg">      {{ Form::text('nombres', Auth::user()->nombres, array('readonly'=>'readonly','placeholder' => trans("menu_usuario.mi_perfil.info.nombre.placeholder"), 'class' => 'form-control',"id"=>"nombres")) }}</div> 
     <div class="col-lg-6 input-lg">  {{trans("menu_usuario.mi_perfil.info.apellidos")}} </div><div class="col-lg-6 input-lg">  {{ Form::text('apellidos', Auth::user()->apellidos, array('readonly'=>'readonly','placeholder' => trans("menu_usuario.mi_perfil.info.apellidos.placeholder"), 'class' => 'form-control')) }}</div> 
     <div class="col-lg-6 input-lg">  {{trans("menu_usuario.mi_perfil.info.email")}}</div><div class="col-lg-6 input-lg">  {{ Form::text('email', Auth::user()->email, array('readonly'=>'readonly','placeholder' => trans("menu_usuario.mi_perfil.info.email.placeholder"), 'class' => 'form-control')) }}</div> 
-    <div class="col-lg-6 input-lg">{{trans("menu_usuario.mi_perfil.info.dni")}}</div><div class="col-lg-6 input-lg">{{ Form::text('dni', Auth::user()->dni, array('placeholder' => trans("menu_usuario.mi_perfil.info.dni.placeholder"), 'class' => 'form-control',"id"=>"dni")) }}</div> 
+    <div class="col-lg-4 input-lg">{{trans("menu_usuario.mi_perfil.info.dni")}}</div><div class="col-lg-4 input-lg">{{ Form::select('tipo_documento',$tipos_documento, null, array('placeholder' => trans("menu_usuario.mi_perfil.info.pais.placeholder"), 'class' => 'form-control')) }}</div><div class="col-lg-4 input-lg">{{ Form::text('numero_identificacion', null, array('placeholder' => trans("menu_usuario.mi_perfil.info.dni.placeholder"), 'class' => 'form-control')) }}</div>
     <div class="col-lg-6 input-lg">{{trans("menu_usuario.mi_perfil.info.empresa")}} </div><div class="col-lg-6 input-lg">{{ Form::text('empresa', Auth::user()->empresa, array('placeholder' => trans("menu_usuario.mi_perfil.info.empresa.placeholder"), 'class' => 'form-control',"id"=>"empresa")) }}</div> 
     <div class="col-lg-6 input-lg">  {{trans("menu_usuario.mi_perfil.info.pais")}}</div><div class="col-lg-6 input-lg">  {{ Form::select('pais',$paises, Auth::user()->pais, array('placeholder' => trans("menu_usuario.mi_perfil.info.pais.placeholder"), 'class' => 'form-control',"id"=>"pais")) }}</div> 
     <div class="col-lg-6 input-lg">  {{trans("menu_usuario.mi_perfil.info.region")}}</div><div class="col-lg-6 input-lg">  {{ Form::text('region', Auth::user()->region, array('placeholder' => trans("menu_usuario.mi_perfil.info.region.placeholder"), 'class' => 'form-control',"id"=>"region")) }}</div> 

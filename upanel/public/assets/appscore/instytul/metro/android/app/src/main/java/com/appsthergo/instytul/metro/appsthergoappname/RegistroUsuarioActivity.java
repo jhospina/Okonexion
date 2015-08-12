@@ -199,7 +199,7 @@ public class RegistroUsuarioActivity extends ActionBarActivity {
 
                         for(int i=0;i<resp_aficiones.size();i++){
                             datos[3+i][0]= App.obtenerIdDispositivo(RegistroUsuarioActivity.this)+"_"+RegistroUsuarioActivity.reg_aficiones+"_"+Util.adecuarTextoParaRef(resp_aficiones.get(i));
-                            datos[3+i][1]= Util.obtenerFechaActual();
+                            datos[3+i][1]= resp_aficiones.get(i);
                         }
 
                         Conexion.registrarMetaDato(RegistroUsuarioActivity.this,datos);

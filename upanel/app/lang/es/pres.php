@@ -23,7 +23,7 @@ return array(
     "ar.usuarios.foot" => "Crear nuevo usuario",
     "ar.ventas.foot" => "Total de ventas",
     "info.bienvenido" => "¡Bienvenido!",
-    "info.bienvenido.descripcion" => "Queremos darte la bievenida a Appsthergo, una plataforma amigable para crear y administrar tu aplicación móvil. En tan solo unos pasos podrás crear tu aplicación sin saber programar.",
+    "info.bienvenido.descripcion" => "Queremos darte la bienvenida a Appsthergo, una plataforma amigable para crear y administrar una aplicación movil que te ayudara a mejorar la competitividad de tu empresa o negocio. En tan solo unos pasos tendras una aplicación movil nativa lista para usar.",
     "info.bienvenido.btn" => "Crear aplicación",
     "info.administrar.mi.aplicacion" => "Administrar Mi aplicación",
     "info.uso.espacio" => "Uso del espacio en disco",

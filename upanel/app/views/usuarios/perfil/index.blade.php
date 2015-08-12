@@ -30,7 +30,7 @@
 <table class="table table-striped">
     <tr><th>{{trans("menu_usuario.mi_perfil.info.nombre")}}</th><td>{{$usuario->nombres}}</td></tr>
     <tr><th>{{trans("menu_usuario.mi_perfil.info.apellidos")}}</th><td>{{$usuario->apellidos}}</td></tr>
-    <tr><th>{{trans("menu_usuario.mi_perfil.info.dni")}}</th><td>{{$usuario->dni}}</td></tr>
+    <tr><th>{{trans("menu_usuario.mi_perfil.info.dni")}}</th><td>{{User::obtenerInfoTipoDocumento($usuario->tipo_documento,true)}} {{$usuario->numero_identificacion}}</td></tr>
     <tr><th>{{trans("menu_usuario.mi_perfil.info.email")}}</th><td>{{$usuario->email}}</td></tr>
     <tr><th>{{trans("menu_usuario.mi_perfil.info.empresa")}}</th><td>{{$usuario->empresa}}</td></tr>
     <tr><th>{{trans("menu_usuario.mi_perfil.info.pais")}}</th><td>{{Paises::obtenerNombre($usuario->pais)}}</td></tr>

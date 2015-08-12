@@ -11,8 +11,8 @@ $tieneApp = Aplicacion::existe();
             <a href="{{URL::to("aplicacion/apariencia")}}">2. {{trans("interfaz.menu.principal.mi_aplicacion.configuracion.apariencia")}}</a>
             @endif
         </li>
-        <li class="@if(Request::is('aplicacion/textos')) active @endif @if(!$tieneApp) disabled @endif">
-            @if(!$tieneApp) <a>3. {{trans("interfaz.menu.principal.mi_aplicacion.configuracion.textos")}}</a> @else 
+        <li class="@if(Request::is('aplicacion/textos')) active @endif @if(!$tieneApp || $app->estado==Aplicacion::ESTADO_EN_DISENO) disabled @endif">
+            @if(!$tieneApp || $app->estado==Aplicacion::ESTADO_EN_DISENO) <a>3. {{trans("interfaz.menu.principal.mi_aplicacion.configuracion.textos")}}</a> @else 
             <a href="{{URL::to("aplicacion/textos")}}">3. {{trans("interfaz.menu.principal.mi_aplicacion.configuracion.textos")}}</a>
             @endif
         </li>

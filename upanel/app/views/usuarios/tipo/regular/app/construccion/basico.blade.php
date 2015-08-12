@@ -1,5 +1,4 @@
 <?php
-$num_plats = Auth::user()->getNumeroPlataformas();
 $mockups = Aplicacion::mockups();
 $form_data = array('action' => 'UPanelControladorAplicacion@guardarBasico', 'method' => 'post', 'enctype' => 'multipart/form-data', "id" => "form", "style" => "clear: both;margin-top: 15px;");
 
@@ -79,7 +78,7 @@ if (Aplicacion::existe()) {
                             @endif
                         </div>
                         <div class="seleccion-app">
-                            <button class="btn {{($app->diseno==$nombre)?'btn-danger disabled':'btn-success'}}" type="button" onclick="seleccionarMockup('{{$nombre}}', this)">@if($app->diseno==$nombre) <span class="glyphicon glyphicon-ok"></span> {{trans("otros.info.seleccionado")}} @else <span class="glyphicon glyphicon-phone"></span> {{trans("otros.info.seleccionar")}} @endif</button>
+                            <button class="btn {{(!is_null($app) && $app->diseno==$nombre)?'btn-danger disabled':'btn-success'}}" type="button" onclick="seleccionarMockup('{{$nombre}}', this)">@if(!is_null($app) && $app->diseno==$nombre) <span class="glyphicon glyphicon-ok"></span> {{trans("otros.info.seleccionado")}} @else <span class="glyphicon glyphicon-phone"></span> {{trans("otros.info.seleccionar")}} @endif</button>
                         </div>
                     </div>
                 </div>

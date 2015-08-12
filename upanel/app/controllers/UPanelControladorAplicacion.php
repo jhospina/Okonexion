@@ -178,7 +178,7 @@ class UPanelControladorAplicacion extends Controller {
         $app = Aplicacion::find($id);
 
         $tipo_suscripcion = User::obtenerValorMetadato(UsuarioMetadato::SUSCRIPCION_TIPO);
-        
+
         //Unicamente para plan ORO
         if ($tipo_suscripcion != ConfigInstancia::suscripcion_tipo_oro)
             return Redirect::to("");
@@ -525,7 +525,6 @@ class UPanelControladorAplicacion extends Controller {
             return json_encode($output);
         }
 
-
         Input::file($logo)->move($path, $archivo);
 
         if (!is_null($app->url_logo)) {
@@ -537,11 +536,12 @@ class UPanelControladorAplicacion extends Controller {
 
         $app->url_logo = URL::to($path . $archivo);
 
+
         if ($height != $width) {
             $imagen = new Imagen(URL::to($path . $archivo));
+            $imagen->setCalidad(9);
             $imagen->crearCopia(256, 256, null, $imagen->getRuta(), true);
         }
-
         if (!$app->save()) {
             $output = ['error' => trans("otros.error_solicitud")];
             return json_encode($output);

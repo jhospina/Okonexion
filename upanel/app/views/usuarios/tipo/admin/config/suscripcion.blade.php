@@ -328,14 +328,13 @@ list($decimales, $sep_millar, $sep_decimal) = Monedas::formato($moneda);
                                         $("#{{ConfigInstancia::suscripcion_valor_6mes_bronce}}-{{$moneda}}").val(formatearNumero((precio * 6) - ((descuento6 / 100) * (precio * 6)), "{{$sep_millar}}", "{{$sep_decimal}}"));
                                         $("#{{ConfigInstancia::suscripcion_valor_12mes_bronce}}-{{$moneda}}").val(formatearNumero((precio * 12) - ((descuento12 / 100) * (precio * 12)), "{{$sep_millar}}", "{{$sep_decimal}}"));
                                         //VALORES DE PLATA
-                                        precio *= 2;
+                                        precio *= 1.5;
                                         $("#{{ConfigInstancia::suscripcion_valor_1mes_plata}}-{{$moneda}}").val(formatearNumero(precio, "{{$sep_millar}}", "{{$sep_decimal}}"));
                                         $("#{{ConfigInstancia::suscripcion_valor_3mes_plata}}-{{$moneda}}").val(formatearNumero((precio * 3) - ((descuento3 / 100) * (precio * 3)), "{{$sep_millar}}", "{{$sep_decimal}}"));
                                         $("#{{ConfigInstancia::suscripcion_valor_6mes_plata}}-{{$moneda}}").val(formatearNumero((precio * 6) - ((descuento6 / 100) * (precio * 6)), "{{$sep_millar}}", "{{$sep_decimal}}"));
                                         $("#{{ConfigInstancia::suscripcion_valor_12mes_plata}}-{{$moneda}}").val(formatearNumero((precio * 12) - ((descuento12 / 100) * (precio * 12)), "{{$sep_millar}}", "{{$sep_decimal}}"));
                                         //VALORES DE ORO
-                                        precio /= 2;
-                                        precio *= 3;
+                                        precio *= 2;
                                         $("#{{ConfigInstancia::suscripcion_valor_1mes_oro}}-{{$moneda}}").val(formatearNumero(precio, "{{$sep_millar}}", "{{$sep_decimal}}"));
                                         $("#{{ConfigInstancia::suscripcion_valor_3mes_oro}}-{{$moneda}}").val(formatearNumero((precio * 3) - ((descuento3 / 100) * (precio * 3)), "{{$sep_millar}}", "{{$sep_decimal}}"));
                                         $("#{{ConfigInstancia::suscripcion_valor_6mes_oro}}-{{$moneda}}").val(formatearNumero((precio * 6) - ((descuento6 / 100) * (precio * 6)), "{{$sep_millar}}", "{{$sep_decimal}}"));

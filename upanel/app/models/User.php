@@ -23,7 +23,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      * @var array
      */
     protected $hidden = array('password', 'remember_token');
-    protected $fillable = array('email', 'password', 'nombres', 'apellidos', 'dni', "empresa", "pais", "region", "ciudad", "direccion", "telefono", "celular", "instancia");
+    protected $fillable = array('email', 'password', 'nombres', 'apellidos', "tipo_documento", 'numero_identificacion', "empresa", "pais", "region", "ciudad", "direccion", "telefono", "celular", "instancia");
 
     //********************************************************
     //CONFIGURACION DE PLATAFORMA********************************
@@ -46,12 +46,42 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     const ESTADO_PRUEBA_FINALIZADA = "PF";
     const ESTADO_SUSCRIPCION_VIGENTE = "SV";
     const ESTADO_SUSCRIPCION_CADUCADA = "SC";
+    //*********************************************************
+    //TIPOS DE DOCUMENTOS************************************
+    //********************************************************
+    const TIPO_DOCUMENTO_CEDULA_CIUDADANIA = "CC";
+    const TIPO_DOCUMENTO_CEDULA_EXTRANJERIA = "CE";
+    const TIPO_DOCUMENTO_PASAPORTE = "PA";
+    const TIPO_DOCUMENTO_NUM_UNICO_ID_PERSONAL = "NP";
+    const TIPO_DOCUMENTO_NUMERO_IDENTIFICACION_TRIBUTARIA = "NI";
+    const TIPO_DOCUMENTO_OTRO = "OT";
     //********************************************************
     //METADATOS DE USUARIOS********************************
     //********************************************************
 
     const META_URL_ORIGEN = "url_origen";
     const META_URL_RECOVERY = "url_recovery";
+
+    /** Obtiene un array con los tipos de documentos disponibles para las cuentas de usuarios
+     * 
+     * @return array
+     */
+    public static function obtenerTiposDocumento() {
+
+
+        $class = new ReflectionClass(__CLASS__);
+        $tipos = array();
+        foreach ($class->getConstants() as $index => $value) {
+            if (strpos($index, "TIPO_DOCUMENTO") !== false) {
+                $tipos[$value] = User::obtenerInfoTipoDocumento($value);
+            }
+        }
+        return $tipos;
+    }
+
+    public static function obtenerInfoTipoDocumento($tipo, $sigla = false) {
+        return ($sigla) ? trans("usuario.tipo.documento.$tipo.sigla") : trans("usuario.tipo.documento.$tipo");
+    }
 
     /** Registra los datos de un usuario
      *  
@@ -469,7 +499,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      */
     public static function tieneEspacio($id_usuario = null) {
         $id_usuario = (is_null($id_usuario)) ? Auth::user()->id : $id_usuario;
-        $espacioDiscoAsignado = User::obtenerValorMetadato(UsuarioMetadato::ESPACIO_DISCO_ASIGNADO,$id_usuario);
+        $espacioDiscoAsignado = User::obtenerValorMetadato(UsuarioMetadato::ESPACIO_DISCO_ASIGNADO, $id_usuario);
         $espacioUtilizado = User::obtenerValorMetadato(UsuarioMetadato::ESPACIO_DISCO_UTILIZADO, $id_usuario);
         return ($espacioUtilizado < $espacioDiscoAsignado);
     }
@@ -481,14 +511,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
      */
     public static function obtenerPorcentajeOcupacionEspacio($id_usuario = null) {
         $id_usuario = (is_null($id_usuario)) ? Auth::user()->id : $id_usuario;
-        $espacioDiscoAsignado = User::obtenerValorMetadato(UsuarioMetadato::ESPACIO_DISCO_ASIGNADO,$id_usuario);
+        $espacioDiscoAsignado = User::obtenerValorMetadato(UsuarioMetadato::ESPACIO_DISCO_ASIGNADO, $id_usuario);
         $espacioUtilizado = User::obtenerValorMetadato(UsuarioMetadato::ESPACIO_DISCO_UTILIZADO, $id_usuario);
         return round(($espacioUtilizado / $espacioDiscoAsignado) * 100, 2);
     }
-    
-    public static function obtenerEspacioDiscoAsignado($id_usuario=null){
-         $id_usuario = (is_null($id_usuario)) ? Auth::user()->id : $id_usuario;
-        $espacioDiscoAsignado = User::obtenerValorMetadato(UsuarioMetadato::ESPACIO_DISCO_ASIGNADO,$id_usuario);
+
+    public static function obtenerEspacioDiscoAsignado($id_usuario = null) {
+        $id_usuario = (is_null($id_usuario)) ? Auth::user()->id : $id_usuario;
+        $espacioDiscoAsignado = User::obtenerValorMetadato(UsuarioMetadato::ESPACIO_DISCO_ASIGNADO, $id_usuario);
         return $espacioDiscoAsignado;
     }
 

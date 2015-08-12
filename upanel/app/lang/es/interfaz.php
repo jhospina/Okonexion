@@ -3,7 +3,8 @@
 //IDIOMA: ESPAÑOL
 
 return array(
-    "nombre" => "Appsthergo Technologies",
+    "nombre" => "Appsthergo Technologies S.A.S",
+    "nit"=>"NIT 900.875.315-4",
     "subfijo_titulo_pagina" => "- Appsthergo",
     "pie_pagina" => "Todos los derechos reservados",
     "pie_pagina.tiempo.prueba" => "Tiempo de prueba restante: ",

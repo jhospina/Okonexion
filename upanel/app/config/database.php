@@ -55,9 +55,9 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'dgzhlbvq_okonexion_upanel',
-			'username'  => 'dgzhlbvq_okonexi',
-			'password'  => 'lokopo.92',
+			'database'  => 'dgzhlbvq_appsthergo_upanel',
+			'username'  => 'dgzhlbvq_appsrot',
+			'password'  => 'ZVLkC1-wpUJf', 
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

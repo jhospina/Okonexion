@@ -16,8 +16,9 @@ class TablaUsuarios extends Migration {
             $table->bigIncrements('id');
             $table->string('nombres');
             $table->string('apellidos');
+            $table->char("tipo_documento",2)->default("CC");
+            $table->string('numero_identificacion',20)->nullable();
             $table->string('empresa')->nullable();
-            $table->string('dni',20)->nullable();
             $table->string('email', 100)->unique(); 
             $table->string('cod_ver_email', 30)->nullable(); // Codigo de verificacion de email
             $table->boolean('email_confirmado')->default(0); // Indica si el email del usuario ha sido confirmado

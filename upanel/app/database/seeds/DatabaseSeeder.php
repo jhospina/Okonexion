@@ -38,7 +38,7 @@ class Seed_IntanciasMetadatos extends Seeder {
         DB::table('instanciasMetadatos')->insert(array(
             'instancia' => '0',
             "clave" => "periodoPrueba_numero_dias",
-            "valor" => "7",
+            "valor" => "30",
         ));
     }
 

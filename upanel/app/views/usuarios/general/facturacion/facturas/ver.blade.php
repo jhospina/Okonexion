@@ -34,7 +34,8 @@ $iva = $factura->iva;
     <div class="col-lg-6">
         <div class="col-lg-12">{{trans("fact.factura.info.pagar.a")}}</div>
         <div class="block" style="padding: 10px;clear: both;">
-            {{trans("interfaz.nombre")}} (Appsthergo.com)
+            {{trans("interfaz.nombre")}} (Appsthergo.com)<br/>
+            {{trans("interfaz.nit")}}<br/>
         </div>
     </div>
 </div>

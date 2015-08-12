@@ -319,7 +319,7 @@ Class Facturacion extends Eloquent {
 
         $json = array();
         $json["empresa"] = $usuario->empresa;
-        $json["dni"] = $usuario->dni;
+        $json["numero_identificacion"] = User::obtenerInfoTipoDocumento($usuario->tipo_documento, true) . " " . $usuario->numero_identificacion;
         $json["nombre"] = $usuario->nombres . " " . $usuario->apellidos;
         $json["email"] = $usuario->email;
         $json["direccion"] = $usuario->direccion;

@@ -67,11 +67,16 @@
                                                                 <td align="left" valign="middle"><img src="<?php echo trans("otros.dominio"); ?>/upanel/public/assets/email/1/ico_fb.png" width="23" height="23" style="display:block;"></td>
                                                             </tr>
                                                         </table></td>
-                                                    <td align="left" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff; padding-left:10px;"><b>Hours:</b> Mon-Fri 9:30-5:30, Sat. 9:30-3:00, Sun. Closed <br>
-                                                        <b>Customer Support: </b>support@appsthergo.com<br>
+                                                    <td align="left" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:11px; color:#ffffff; padding-left:10px;"><b>Horario de atención: 8:00am - 6:00pm (Lunes - Viernes) // Sabado: 8:00am - 12:00pm<br>
+                                                        <b>Atención al cliente: </b>appsthergo@gmail.com<br>
                                                         <br>
-                                                        <b>Company Address </b><br>
-                                                        <b>Company URL:</b> <a style="color:white;" href=https://www.appsthergo.com">https://www.appsthergo.com</a> </td>
+                                                        <b>Appsthergo Technologies S.A.S</b> <br>
+                                                        <b>NIT:</b> 900875315-4 <br>
+                                                        <b>Dirección:</b> Cra 10 # 48 - 114 Maraya <br>
+                                                        Pereira - Colombia <br>
+                                                        </br>
+                                                        <b>Sitio web:</b><a style="color:white;" href=https://www.appsthergo.com">https://www.appsthergo.com</a> 
+                                                    </td>
                                                 </tr>
                                             </table></td>
                                     </tr>

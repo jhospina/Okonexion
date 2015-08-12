@@ -20,7 +20,7 @@ class Lang_EN {
     const CREATE_USER_FORM_ERROR_INPUT_REPEAT_PASSWORD = "Passwords not match";
     const CREATE_USER_FORM_SUBMIT = "Create Account";
     const CREATE_USER_FORM_ERROR_EMAIL_EXISTS = "The e-mail entered already exists";
-    const CREATE_USER_FORM_MSJ_SUCCESS = "Your account is almost ready! Please check your email <b>:email</b>, We have sent a message with a link, click on that link and we can confirm your email and activate your account. After that, your account will be activated and you can <a href=':link_login'>login</a>.";
+    const CREATE_USER_FORM_MSJ_SUCCESS = "Your account is almost ready! Please check your email <b>:email</b>, We have sent a message with a link, click on that link and we can confirm your email and activate your account. After that, your account will be activated and you can <a href=':link_login'>login</a>. <br/></br><b style='font-weight:bold;'>Note:</b> If you see that the message does not arrive, please check your mailbox spam or spam, can the mail with the activation link is been filtering messaging systems.";
     const CREATE_USER_FORM_CAPTCHA_KEY_ERROR = "Captcha public key invalid or not exist.";
     const CREATE_USER_FORM_ACCEPT_TERMS = "I accept that I am old and I have read the <a target='_blank' href=':link'>Terms of Service</a> and understand that this is true as a legal contract between myself and :company.";
     const CREATE_USER_FORM_ACCEPT_TERMS_ERROR = "To register, you must agree to the terms and conditions of service.";
